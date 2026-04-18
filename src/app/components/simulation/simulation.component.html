@@ -47,53 +47,49 @@
         <div class="compass-text">Viento ➔ {{ (variables$ | async)?.windDirection }}</div>
       </div>
 
-      <!-- Flechas Centrales del Ciclo Pulsares Clásicas -->
+      <!-- Esqueleto del Circuito Hidrológico (Anillo SVG Animado Fluido) -->
       <div class="cycle-indicators">
-        <!-- Izquierda: Evaporación (Sube) -->
-        <div class="c-wrapper arr-left pulse-1"><div class="c-arrow rotate-up">&#8594;</div></div>
-        
-        <!-- Arriba: Viento (Derecha o Izquierda) -->
-        <div class="c-wrapper arr-top pulse-2">
-          <div class="c-arrow" [class.rotate-left]="(variables$ | async)?.windDirection === 'W' || (variables$ | async)?.windDirection === 'NW' || (variables$ | async)?.windDirection === 'SW'">&#8594;</div>
-        </div>
-        
-        <!-- Derecha: Precipitación (Baja) -->
-        <div class="c-wrapper arr-right pulse-3"><div class="c-arrow rotate-down">&#8594;</div></div>
-        
-        <!-- Abajo: Escorrentía (Izquierda o Derecha) -->
-        <div class="c-wrapper arr-bottom pulse-4">
-          <div class="c-arrow rotate-left" [class.rotate-right]="(variables$ | async)?.windDirection === 'W' || (variables$ | async)?.windDirection === 'NW' || (variables$ | async)?.windDirection === 'SW'">&#8594;</div>
-        </div>
+        <svg viewBox="0 0 300 150" class="flow-svg-container">
+          <ellipse cx="150" cy="75" rx="140" ry="60" 
+                   class="flow-ring" 
+                   [class.reverse-flow]="['W','NW','SW'].includes((variables$ | async)?.windDirection || 'E')" />
+        </svg>
       </div>
 
       <!-- Main Cloud Cluster Over 8 Compass Points Container -->
       <div class="cloud-cluster" 
            [ngClass]="'cloud-pos-' + ((variables$ | async)?.windDirection | lowercase)">
         
-        <!-- Contrato Gráfico de Nubes: Muta tamaño e invisibilidad sin afectar los HUDs -->
-        <div class="cloud-graphics"
-             [style.opacity]="(rates$ | async)?.condensationRate! / 100 + 0.2" 
-             [style.transform]="'scale(' + ((rates$ | async)?.condensationRate! / 100 + 0.5) + ')' "
-             [class.storm-clouds]="(rates$ | async)?.precipitationRate! > 50">
+        <!-- Contrato Gráfico de Nubes -->
+        <div class="cloud-graphics" *ngIf="rates$ | async as rates"
+             [style.opacity]="rates.condensationRate / 100 + 0.2" 
+             [style.transform]="'scale(' + (rates.condensationRate / 100 + 0.5) + ')' "
+             [class.heavy-clouds]="rates.condensationRate > 50"
+             [class.storm-clouds]="rates.precipitationRate > 50">
+          <!-- Nubes Base (Siempe presentes proporcionalmente) -->
           <div class="real-cloud rcl-1"></div>
           <div class="real-cloud rcl-2"></div>
           <div class="real-cloud rcl-3"></div>
-        </div>
-
-        <!-- HUDs Voladores acoplados a la nube (Condensación y Precipitación) -->
-        <div class="hud-group" *ngIf="rates$ | async as rates">
-          <div class="hud-panel hud-cond">
-            <div class="hud-title"><span class="hud-dot bg-purple"></span> M. Condensación</div>
-            <div class="hud-value">{{ rates.condensationRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getCondState(rates.condensationRate) }}</span></div>
-          </div>
-          <div class="hud-panel hud-precip">
-            <div class="hud-title"><span class="hud-dot bg-cyan"></span> Lluvia Física</div>
-            <div class="hud-value">{{ rates.precipitationRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getPrecipState(rates.precipitationRate) }}</span></div>
-          </div>
+          <!-- Super-Cumulo (Aparecen proporcionalmente sólo si Condensación > 50%) -->
+          <div class="real-cloud rcl-4" [style.opacity]="rates.condensationRate > 50 ? (rates.condensationRate - 50) / 50 : 0"></div>
+          <div class="real-cloud rcl-5" [style.opacity]="rates.condensationRate > 50 ? (rates.condensationRate - 50) / 50 : 0"></div>
         </div>
       </div>
 
-      <!-- HUD Marino (Evaporación Atmosférica Constante) -->
+      <!-- HUDS FIJOS Y SEGUROS PARA MÓVIL Y ESCRITORIO -->
+      <!-- Esquina Superior Derecha: Cielos -->
+      <div class="hud-group" *ngIf="rates$ | async as rates">
+        <div class="hud-panel hud-cond">
+          <div class="hud-title"><span class="hud-dot bg-purple"></span> M. Condensación</div>
+          <div class="hud-value">{{ rates.condensationRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getCondState(rates.condensationRate) }}</span></div>
+        </div>
+        <div class="hud-panel hud-precip">
+          <div class="hud-title"><span class="hud-dot bg-cyan"></span> Lluvia Física</div>
+          <div class="hud-value">{{ rates.precipitationRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getPrecipState(rates.precipitationRate) }}</span></div>
+        </div>
+      </div>
+
+      <!-- Esquina Inferior Izquierda: Océano -->
       <div class="hud-panel hud-evap" *ngIf="rates$ | async as rates">
         <div class="hud-title"><span class="hud-dot bg-blue"></span> Evaporación Atmosférica</div>
         <div class="hud-value">{{ rates.evaporationRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getEvapState(rates.evaporationRate) }}</span></div>

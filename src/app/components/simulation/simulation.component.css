@@ -96,11 +96,15 @@
 .cloud-pos-nw { top: 15%; left: 25%; }
 .cloud-pos-nw .real-cloud { transform: scale(0.8); }
 
-.storm-clouds .real-cloud { background: rgba(80, 80, 100, 0.8); } /* Stormy dark grey */
+/* SISTEMA Tonalidad de Condensación Dinámica */
+.heavy-clouds .real-cloud { background: rgba(160, 160, 175, 0.7); filter: blur(12px); } /* Gris Denso (>50% Condensación) */
+.storm-clouds .real-cloud { background: rgba(80, 80, 100, 0.9); } /* Tormenta Lluvia Oscura */
 
 .rcl-1 { width: 300px; height: 150px; top: 0; right: 0; }
 .rcl-2 { width: 350px; height: 180px; top: -20px; right: 120px; }
 .rcl-3 { width: 250px; height: 120px; top: 40px; right: 280px; }
+.rcl-4 { width: 400px; height: 250px; top: -60px; right: 60px; } /* Cúpula masiva de Alta Condensación */
+.rcl-5 { width: 450px; height: 140px; bottom: -30px; right: 50px; } /* Base extendida de Alta Condensación */
 
 /* Remove old lateral wind-cloud moving CSS */
 
@@ -158,40 +162,32 @@
   100% { left: 42%; top: 90%; opacity: 0; }
 }
 
-/* CYCLE INDICATORS (Pulsating Arrows) */
+/* CYCLE INDICATOR RING (FLOWING SVG) */
 .cycle-indicators {
   position: absolute;
-  top: 50%; left: 50%; width: 45%; height: 50%;
+  top: 50%; left: 50%; 
+  width: 300px; height: 150px;
   transform: translate(-50%, -50%);
-  pointer-events: none; z-index: 10;
+  pointer-events: none; z-index: 5;
 }
-.c-wrapper { position: absolute; opacity: 0; }
-.arr-left { top: 50%; left: 0; transform: translateY(-50%); }
-.arr-top { top: 0; left: 50%; transform: translateX(-50%); }
-.arr-right { top: 50%; right: 0; transform: translateY(-50%); }
-.arr-bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
-
-.c-arrow {
-  font-size: 3rem; color: #ffffff; 
-  text-shadow: 0 0 20px rgba(255, 255, 255, 1);
-  font-family: Arial, sans-serif;
-  line-height: 1; transition: transform 0.5s ease;
+.flow-svg-container { width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(255,255,255,0.8)); }
+.flow-ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.8);
+  stroke-width: 5;
+  stroke-dasharray: 20, 15;
+  animation: streamFlow 12s linear infinite;
 }
-.rotate-up { transform: rotate(-90deg); }
-.rotate-down { transform: rotate(90deg); }
-.rotate-left { transform: rotate(180deg); }
-.rotate-right { transform: rotate(0deg) !important; }
+.reverse-flow { animation: streamFlowReverse 12s linear infinite; }
 
-@keyframes pulse-cycle {
-  0% { opacity: 0; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.6); }
-  100% { opacity: 0; transform: scale(0.8); }
+@keyframes streamFlow {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -350; }
 }
-
-.pulse-1 { animation: pulse-cycle 4s infinite 0s; }
-.pulse-2 { animation: pulse-cycle 4s infinite 1s; }
-.pulse-3 { animation: pulse-cycle 4s infinite 2s; }
-.pulse-4 { animation: pulse-cycle 4s infinite 3s; }
+@keyframes streamFlowReverse {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 350; }
+}
 
 /* IN-GAME HUD PANELS */
 .hud-panel {
@@ -212,15 +208,16 @@
 .bg-purple { background: #dddddd; color: #dddddd; }
 .bg-cyan { background: #bbbbbb; color: #bbbbbb; }
 
+/* FIJACIÓN A LAS ESQUINAS SEGURAS */
 .hud-evap {
-  position: absolute; bottom: 20%; left: 5%;
+  position: absolute; bottom: 15px; left: 15px;
 }
 .hud-runoff {
-  position: absolute; bottom: 12%; right: 15%;
+  position: absolute; bottom: 15px; right: 15px;
 }
 .hud-group {
-  position: absolute; top: 120px; left: 140px; transform: translateX(-50%);
-  display: flex; flex-direction: column; gap: 10px;
+  position: absolute; top: 15px; right: 15px;
+  display: flex; flex-direction: column; gap: 8px;
 }
 
 /* UI Controls remain Aero Neon */
@@ -294,9 +291,10 @@
 
   .realistic-bg {
     flex: 1;
-    min-height: 45vh; /* Garantizar que la simulación tome espacio adecuado */
-    background-image: url('../../../assets/landscape.png'); /* Retornar a la imagen cuadrada */
-    background-size: 100% 100%;
+    min-height: 45vh; 
+    background-image: url('../../../assets/landscape-aerial.png'); /* Retornar a la imagen de escritorio Isométrica */
+    background-size: cover;
+    background-position: center bottom;
   }
 
   .control-panel {
@@ -311,23 +309,42 @@
   .sun {
     width: 60px; height: 60px;
   }
-  .mountain-label {
-    font-size: 1rem;
-    right: 5%;
-  }
-  .ocean {
-    font-size: 1rem;
-    height: 20%;
-    padding-bottom: 5px;
-  }
   .header-nav {
     padding: 10px 15px;
   }
   .logo { font-size: 1.2rem; }
   
-  /* Achicar el cúmulo principal para q no desborde la pantalla en móviles */
-  .mountain-clouds { transform-origin: top right; transform: scale(0.6) !important;}
-  .rcl-1 { width: 150px; height: 75px; }
-  .rcl-2 { width: 175px; height: 90px; }
-  .rcl-3 { width: 125px; height: 60px; }
+  /* ESCALADO PERFECTO AL 50% EVITANDO RECORTES EN BORDES MÓVILES */
+  .compass-widget { 
+    transform: scale(0.5); transform-origin: top left; 
+    top: 5px; left: 5px;
+  }
+  .hud-evap { 
+    transform: scale(0.6); transform-origin: bottom left; 
+    bottom: 5px; left: 5px; 
+  }
+  .hud-runoff { 
+    transform: scale(0.6); transform-origin: bottom right; 
+    bottom: 5px; right: 5px; 
+  }
+  .hud-group { 
+    transform: scale(0.6); transform-origin: top right; 
+    top: 5px; right: 5px; 
+  }
+
+  /* Achicar las nubes principales para que no desborde la pantalla en móviles */
+  .cloud-cluster .real-cloud { 
+     /* Mitad del tamaño para las 3 nubes nativas */
+     transform: scale(0.6) !important;
+  }
+  .rcl-1 { width: 120px; height: 60px; }
+  .rcl-2 { width: 150px; height: 80px; }
+  .rcl-3 { width: 100px; height: 50px; }
+  .rcl-4 { width: 180px; height: 110px; }
+  .rcl-5 { width: 200px; height: 75px; }
+
+  /* Ajuste Dinámico Elíptica Central en Móvil */
+  .cycle-indicators {
+    transform: translate(-50%, -50%) scale(0.5);
+  }
 }
