@@ -20,6 +20,25 @@
         &#8594; Viento
       </div>
 
+      <!-- Flechas Centrales del Ciclo Pulsares -->
+      <div class="cycle-indicators">
+        <!-- Izquierda: Evaporación (Sube) -->
+        <div class="c-wrapper arr-left pulse-1"><div class="c-arrow rotate-up">&#10140;</div></div>
+        
+        <!-- Arriba: Viento (Derecha o Izquierda) -->
+        <div class="c-wrapper arr-top pulse-2">
+          <div class="c-arrow" [class.rotate-left]="(variables$ | async)?.windDirection === -1">&#10140;</div>
+        </div>
+        
+        <!-- Derecha: Precipitación (Baja) -->
+        <div class="c-wrapper arr-right pulse-3"><div class="c-arrow rotate-down">&#10140;</div></div>
+        
+        <!-- Abajo: Escorrentía (Izquierda o Derecha) -->
+        <div class="c-wrapper arr-bottom pulse-4">
+          <div class="c-arrow rotate-left" [class.rotate-right]="(variables$ | async)?.windDirection === -1">&#10140;</div>
+        </div>
+      </div>
+
       <!-- Evaporating Vapor (Left to Right or Right to Left) -->
       <div class="wind-clouds" *ngIf="(rates$ | async)?.evaporationRate! > 5" 
            [style.animationDuration]="150 / ((variables$ | async)?.windSpeed! || 1) + 's'"

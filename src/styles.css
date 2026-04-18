@@ -2,12 +2,12 @@
 
 :root {
   --bg-color: #0b132b; /* Dark Blue */
-  --neon-purple: #b026ff;
-  --neon-blue: #00f0ff;
+  --neon-purple: #ffffff;
+  --neon-blue: #f0f0f0;
   --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --text-main: #f0f0f0;
-  --text-muted: #8c9baf;
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --text-main: #ffffff;
+  --text-muted: #aaaaaa;
 }
 
 body, html {
@@ -17,9 +17,10 @@ body, html {
   background-color: var(--bg-color);
   color: var(--text-main);
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   overflow-x: hidden;
   background: radial-gradient(circle at center, #112044 0%, #060b19 100%);
+  box-sizing: border-box;
 }
 
 /* Glassmorphism Utilities */
@@ -35,12 +36,12 @@ body, html {
 /* Neon Text Utilities */
 .text-neon-blue {
   color: var(--neon-blue);
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
 .text-neon-purple {
   color: var(--neon-purple);
-  text-shadow: 0 0 10px rgba(176, 38, 255, 0.7);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
 /* Button Utilities */
@@ -53,14 +54,14 @@ body, html {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
   width: 100%;
 }
 
 .btn-neon:hover {
   background: var(--neon-blue);
   color: #000;
-  box-shadow: 0 0 20px rgba(0, 240, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Base form inputs */
@@ -78,5 +79,5 @@ input {
 
 input:focus {
   border-color: var(--neon-purple);
-  box-shadow: 0 0 15px rgba(176, 38, 255, 0.3);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }

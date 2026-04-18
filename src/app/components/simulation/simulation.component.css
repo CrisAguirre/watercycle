@@ -1,16 +1,19 @@
 /* Cleaned useless body scoped tag */
+* {
+  box-sizing: border-box;
+}
 
 .scrollable-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 .app-layout {
-  display: flex; flex-direction: column; height: 100vh; min-height: 800px; width: 100vw; overflow: hidden; flex-shrink: 0;
+  display: flex; flex-direction: column; height: 100vh; min-height: 800px; width: 100%; overflow: hidden; flex-shrink: 0;
 }
 .header-nav {
   display: flex; justify-content: space-between; align-items: center; padding: 10px 30px; border-radius: 0;
@@ -19,18 +22,19 @@
 .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 2px;}
 .btn-neon-outline { background: transparent; color: var(--neon-blue); border: 1px solid var(--neon-blue); padding: 8px 16px; border-radius: 6px; cursor: pointer; }
 .btn-neon-outline:hover { background: rgba(0, 240, 255, 0.2); box-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
-.main-content { display: flex; flex: 1; overflow: hidden; background: #111; }
+.main-content { display: flex; flex: 1; overflow: hidden; background: var(--bg-color); justify-content: center; }
 
 .relative { position: relative; }
 
 /* Realism specific */
 .realistic-bg {
-  flex: 3;
+  flex: 2;
   position: relative;
-  background-image: url('../../../assets/landscape.png');
-  background-size: cover;
-  background-position: center bottom;
+  background-image: url('../../../assets/landscape-hd.png');
+  background-size: cover; 
+  background-position: center center;
   background-repeat: no-repeat;
+  background-color: var(--bg-color);
   overflow: hidden;
 }
 
@@ -149,6 +153,41 @@
   100% { left: 42%; top: 90%; opacity: 0; }
 }
 
+/* CYCLE INDICATORS (Pulsating Arrows) */
+.cycle-indicators {
+  position: absolute;
+  top: 50%; left: 50%; width: 45%; height: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; z-index: 10;
+}
+.c-wrapper { position: absolute; opacity: 0; }
+.arr-left { top: 50%; left: 0; transform: translateY(-50%); }
+.arr-top { top: 0; left: 50%; transform: translateX(-50%); }
+.arr-right { top: 50%; right: 0; transform: translateY(-50%); }
+.arr-bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
+
+.c-arrow {
+  font-size: 3rem; color: #ffffff; 
+  text-shadow: 0 0 20px rgba(255, 255, 255, 1);
+  font-family: Arial, sans-serif;
+  line-height: 1; transition: transform 0.5s ease;
+}
+.rotate-up { transform: rotate(-90deg); }
+.rotate-down { transform: rotate(90deg); }
+.rotate-left { transform: rotate(180deg); }
+.rotate-right { transform: rotate(0deg) !important; }
+
+@keyframes pulse-cycle {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.6); }
+  100% { opacity: 0; transform: scale(0.8); }
+}
+
+.pulse-1 { animation: pulse-cycle 4s infinite 0s; }
+.pulse-2 { animation: pulse-cycle 4s infinite 1s; }
+.pulse-3 { animation: pulse-cycle 4s infinite 2s; }
+.pulse-4 { animation: pulse-cycle 4s infinite 3s; }
+
 /* UI Controls remain Aero Neon */
 .glass-select {
   width: 100%; background: rgba(0, 0, 0, 0.5); border: 1px solid var(--glass-border);
@@ -180,9 +219,9 @@
 .meter-row span { font-size: 0.8rem; color: #ddd; display: block; margin-bottom: 5px; }
 .meter-bar { width: 100%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
 .fill { height: 100%; transition: width 0.3s ease; }
-.fill.blue { background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
-.fill.purple { background: var(--neon-purple); box-shadow: 0 0 10px var(--neon-purple); }
-.fill.cyan { background: #00ffcc; box-shadow: 0 0 10px #00ffcc; }
+.fill.blue { background: #ffffff; box-shadow: 0 0 10px rgba(255,255,255,0.7); }
+.fill.purple { background: #dddddd; box-shadow: 0 0 10px rgba(221,221,221,0.7); }
+.fill.cyan { background: #bbbbbb; box-shadow: 0 0 10px rgba(187,187,187,0.7); }
 
 /* EDUCATIONAL FOOTER */
 .educational-guide {
@@ -212,7 +251,7 @@
 .expl { color: #999 !important; font-style: italic; margin-top: 0 !important; }
 .separator { border-color: rgba(255,255,255,0.05); margin: 15px 0;}
 
-/* Responsive Design for Mobile Devices */
+ /* Responsive Design for Mobile Devices */
 @media screen and (max-width: 800px) {
   .main-content {
     flex-direction: column;
@@ -221,6 +260,8 @@
   .realistic-bg {
     flex: 1;
     min-height: 45vh; /* Garantizar que la simulación tome espacio adecuado */
+    background-image: url('../../../assets/landscape.png'); /* Retornar a la imagen cuadrada */
+    background-size: 100% 100%;
   }
 
   .control-panel {
