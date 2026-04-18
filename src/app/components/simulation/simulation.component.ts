@@ -24,15 +24,19 @@ export class SimulationComponent implements OnInit, OnDestroy {
   private lightningInterval: any = null;
   private ratesSub!: Subscription;
 
-  // Audio System (HTML5 Audio HQ con MP3s reales)
-  private rainAudioLight = new Audio('assets/rain-light.mp3');
-  private rainAudioHeavy = new Audio('assets/rain-heavy.mp3');
-  private birdAudioMorning = new Audio('assets/birds-morning.mp3');
-  private birdAudioForest = new Audio('assets/birds-forest.mp3');
-  
+  // Rain Audio System (Web Audio API Procedural)
+  private audioCtx: AudioContext | null = null;
+  private rainGainLight: GainNode | null = null;
+  private rainGainHeavy: GainNode | null = null;
+  private rainNoiseLight: AudioBufferSourceNode | null = null;
+  private rainNoiseHeavy: AudioBufferSourceNode | null = null;
   private audioInitialized = false;
   private currentRainLevel: 'none' | 'light' | 'heavy' = 'none';
+
+  // Bird Chirping System
+  private birdGain: GainNode | null = null;
   private birdsActive = false;
+  private birdTimers: any[] = [];
 
   // Audio User Interaction Gate (browsers block autoplay)
   private userHasInteracted = false;
@@ -78,7 +82,7 @@ export class SimulationComponent implements OnInit, OnDestroy {
     }));
 
     // Rain: Distribuida en área sobre el mapa según coordenadas isométricas aéreas
-    const rainCount = Math.floor(rates.precipitationRate * 1.5); 
+    const rainCount = Math.floor(rates.precipitationRate * 1.5);
     let baseLeft = 55, rangeLeft = 35; // Este
     if (['W', 'NW', 'SW'].includes(rates.currentWindDir)) {
       baseLeft = 10; rangeLeft = 30; // Oeste Oceánico
@@ -177,118 +181,206 @@ export class SimulationComponent implements OnInit, OnDestroy {
   }
 
   // ==========================================
-  // AUDIO SYSTEM (HTML5 Audio HQ con MP3s Reales)
+  // RAIN AUDIO SYSTEM (Web Audio API Procedural)
   // ==========================================
   private initAudio() {
     if (this.audioInitialized) return;
-    
-    // Configure looping for all tracks
-    this.rainAudioLight.loop = true;
-    this.rainAudioHeavy.loop = true;
-    this.birdAudioMorning.loop = true;
-    this.birdAudioForest.loop = true;
+    const ctx = this.ensureAudioCtx();
 
-    // Start with volume 0
-    this.rainAudioLight.volume = 0;
-    this.rainAudioHeavy.volume = 0;
-    this.birdAudioMorning.volume = 0;
-    this.birdAudioForest.volume = 0;
+    // Create white noise buffer (2 seconds, loopable)
+    const bufferSize = ctx.sampleRate * 2;
+
+    // Light rain: higher frequency, softer
+    const lightBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const lightData = lightBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      lightData[i] = (Math.random() * 2 - 1) * 0.3;
+    }
+
+    // Heavy rain: full spectrum, louder
+    const heavyBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const heavyData = heavyBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      heavyData[i] = (Math.random() * 2 - 1) * 0.6;
+    }
+
+    // Light rain chain: noise → bandpass (higher) → gain
+    this.rainNoiseLight = ctx.createBufferSource();
+    this.rainNoiseLight.buffer = lightBuffer;
+    this.rainNoiseLight.loop = true;
+    const filterLight = ctx.createBiquadFilter();
+    filterLight.type = 'bandpass';
+    filterLight.frequency.value = 3000;  // Higher pitch = light rain drops
+    filterLight.Q.value = 0.5;
+    this.rainGainLight = ctx.createGain();
+    this.rainGainLight.gain.value = 0;
+    this.rainNoiseLight.connect(filterLight);
+    filterLight.connect(this.rainGainLight);
+    this.rainGainLight.connect(ctx.destination);
+    this.rainNoiseLight.start();
+
+    // Heavy rain chain: noise → lowpass (rumble) → gain
+    this.rainNoiseHeavy = ctx.createBufferSource();
+    this.rainNoiseHeavy.buffer = heavyBuffer;
+    this.rainNoiseHeavy.loop = true;
+    const filterHeavy = ctx.createBiquadFilter();
+    filterHeavy.type = 'lowpass';
+    filterHeavy.frequency.value = 1500;  // Lower = heavy downpour rumble
+    filterHeavy.Q.value = 0.3;
+    this.rainGainHeavy = ctx.createGain();
+    this.rainGainHeavy.gain.value = 0;
+    this.rainNoiseHeavy.connect(filterHeavy);
+    filterHeavy.connect(this.rainGainHeavy);
+    this.rainGainHeavy.connect(ctx.destination);
+    this.rainNoiseHeavy.start();
 
     this.audioInitialized = true;
   }
 
-  // Crossfade personalizado para transiciones orgánicas 
-  private fadeAudio(audio: HTMLAudioElement, targetVolume: number, durationMs = 1500) {
-    if (!this.userHasInteracted || !audio) return;
-    
-    // Si queremos subir volumen y no está sonando, darle play
-    if (audio.paused && targetVolume > 0) {
-      audio.play().catch(e => console.log('Autoplay blocked:', e));
-    }
-    
-    // Limpiar posibles fades anteriores guardados en propiedad custom
-    if ((audio as any)._fadeInterval) {
-      clearInterval((audio as any)._fadeInterval);
-    }
-    
-    const steps = 30; // 30 frames para el fade
-    const intervalMs = durationMs / steps;
-    const startVolume = audio.volume;
-    const diff = targetVolume - startVolume;
-    const stepGain = diff / steps;
-    
-    let currentStep = 0;
-    
-    const fadeInterval = setInterval(() => {
-      currentStep++;
-      let newVol = startVolume + (stepGain * currentStep);
-      newVol = Math.max(0, Math.min(1, newVol));
-      audio.volume = newVol;
-      
-      if (currentStep >= steps) {
-        clearInterval(fadeInterval);
-        audio.volume = targetVolume;
-        if (targetVolume === 0) {
-          audio.pause();
-        }
-      }
-    }, intervalMs);
-    
-    (audio as any)._fadeInterval = fadeInterval;
-  }
-
   private updateRainSound(precipitationRate: number) {
-    if (!this.userHasInteracted) return;
-    if (precipitationRate > 0 && !this.audioInitialized) this.initAudio();
+    if (precipitationRate > 0 && !this.audioInitialized) {
+      this.initAudio();
+    }
+    if (!this.audioCtx || !this.rainGainLight || !this.rainGainHeavy) return;
+
+    const now = this.audioCtx.currentTime;
+    const fadeTime = 0.5; // 500ms crossfade
 
     if (precipitationRate <= 0) {
       // Sin lluvia: silencio total
-      if (this.currentRainLevel !== 'none') {
-        this.fadeAudio(this.rainAudioLight, 0, 1500);
-        this.fadeAudio(this.rainAudioHeavy, 0, 1500);
-        this.currentRainLevel = 'none';
-      }
+      this.rainGainLight.gain.linearRampToValueAtTime(0, now + fadeTime);
+      this.rainGainHeavy.gain.linearRampToValueAtTime(0, now + fadeTime);
+      this.currentRainLevel = 'none';
     } else if (precipitationRate <= 50) {
-      // Lluvia ligera (0–50%)
-      if (this.currentRainLevel !== 'light') {
-        this.fadeAudio(this.rainAudioLight, 0.5, 1500);
-        this.fadeAudio(this.rainAudioHeavy, 0, 1500);
-        this.currentRainLevel = 'light';
-      }
+      // Lluvia ligera (0–50%): solo canal light, volumen proporcional
+      const vol = (precipitationRate / 50) * 0.35; // Max 0.35 para lluvia suave
+      this.rainGainLight.gain.linearRampToValueAtTime(vol, now + fadeTime);
+      this.rainGainHeavy.gain.linearRampToValueAtTime(0, now + fadeTime);
+      this.currentRainLevel = 'light';
     } else {
-      // Lluvia intensa (50–100%)
-      if (this.currentRainLevel !== 'heavy') {
-        this.fadeAudio(this.rainAudioLight, 0.3, 1000); // Lluvia ligera de fondo
-        this.fadeAudio(this.rainAudioHeavy, 0.8, 1000); // Lluvia pesada principal
-        this.currentRainLevel = 'heavy';
-      }
-    }
-  }
-
-  private updateBirdSound(precipitationRate: number, condensationRate: number) {
-    if (!this.userHasInteracted) return;
-    if (!this.audioInitialized) this.initAudio();
-    
-    const shouldSing = precipitationRate <= 0 && condensationRate < 30;
-
-    if (shouldSing && !this.birdsActive) {
-      this.birdsActive = true;
-      // Ambos audios de pajaritos cantan juntos, a diferente volumen para dar cuerpo
-      this.fadeAudio(this.birdAudioMorning, 0.6, 2500); // Ambientación inmersiva 
-      this.fadeAudio(this.birdAudioForest, 0.3, 3500);  // Un ave ocasional en primer plano
-    } else if (!shouldSing && this.birdsActive) {
-      this.birdsActive = false;
-      this.fadeAudio(this.birdAudioMorning, 0, 2000);
-      this.fadeAudio(this.birdAudioForest, 0, 2000);
+      // Lluvia intensa (50–100%): ambos canales, heavy dominante
+      const heavyVol = ((precipitationRate - 50) / 50) * 0.6; // Max 0.6
+      this.rainGainLight.gain.linearRampToValueAtTime(0.2, now + fadeTime);
+      this.rainGainHeavy.gain.linearRampToValueAtTime(heavyVol, now + fadeTime);
+      this.currentRainLevel = 'heavy';
     }
   }
 
   private destroyAudio() {
-    this.fadeAudio(this.rainAudioLight, 0, 200);
-    this.fadeAudio(this.rainAudioHeavy, 0, 200);
-    this.fadeAudio(this.birdAudioMorning, 0, 200);
-    this.fadeAudio(this.birdAudioForest, 0, 200);
+    this.stopBirds();
+    if (this.rainNoiseLight) { try { this.rainNoiseLight.stop(); } catch (e) { } }
+    if (this.rainNoiseHeavy) { try { this.rainNoiseHeavy.stop(); } catch (e) { } }
+    if (this.audioCtx) { this.audioCtx.close(); }
     this.audioInitialized = false;
+  }
+
+  // ==========================================
+  // BIRD CHIRPING SYSTEM (Web Audio API Synth)
+  // Pajaritos cantan cuando el cielo está despejado
+  // (precipitación = 0on, condensación < 30%)
+  // ==========================================
+  private ensureAudioCtx() {
+    if (!this.audioCtx) {
+      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    return this.audioCtx;
+  }
+
+  private updateBirdSound(precipitationRate: number, condensationRate: number) {
+    const shouldSing = precipitationRate <= 0 && condensationRate < 30;
+
+    if (shouldSing && !this.birdsActive) {
+      this.startBirds();
+    } else if (!shouldSing && this.birdsActive) {
+      this.stopBirds();
+    }
+  }
+
+  private startBirds() {
+    if (!this.userHasInteracted) return; // No iniciar sin interacción del usuario
+    const ctx = this.ensureAudioCtx();
+    if (ctx.state === 'suspended') ctx.resume();
+    if (!this.audioInitialized) this.initAudio();
+    this.birdGain = ctx.createGain();
+    this.birdGain.gain.value = 0;
+    this.birdGain.connect(ctx.destination);
+    // Fade in suave
+    this.birdGain.gain.linearRampToValueAtTime(0.15, ctx.currentTime + 2);
+    this.birdsActive = true;
+
+    // Programar 3 "aves" con patrones diferentes
+    for (let bird = 0; bird < 3; bird++) {
+      this.scheduleBirdLoop(bird);
+    }
+  }
+
+  private scheduleBirdLoop(birdId: number) {
+    if (!this.birdsActive) return;
+    // Cada ave tiene un intervalo base diferente con variación aleatoria
+    const baseIntervals = [2500, 4000, 6000];
+    const interval = baseIntervals[birdId] + Math.random() * 3000;
+
+    const timer = setTimeout(() => {
+      if (!this.birdsActive || !this.audioCtx || !this.birdGain) return;
+      this.playChirpSequence(birdId);
+      this.scheduleBirdLoop(birdId); // Reprogramar
+    }, interval);
+    this.birdTimers.push(timer);
+  }
+
+  private playChirpSequence(birdId: number) {
+    if (!this.audioCtx || !this.birdGain) return;
+    const ctx = this.audioCtx;
+    const now = ctx.currentTime;
+
+    // Cada ave tiene un rango de frecuencia diferente (especies distintas)
+    const birdProfiles = [
+      { freqBase: 3200, freqRange: 1200, noteCount: 3, noteLen: 0.08, gap: 0.1 },  // Gorrión: trinos rápidos agudos
+      { freqBase: 2400, freqRange: 800, noteCount: 2, noteLen: 0.15, gap: 0.2 },   // Mirlo: notas largas graves
+      { freqBase: 4000, freqRange: 1500, noteCount: 5, noteLen: 0.05, gap: 0.06 }, // Canario: cascada rápida
+    ];
+    const profile = birdProfiles[birdId % birdProfiles.length];
+
+    for (let i = 0; i < profile.noteCount; i++) {
+      const startTime = now + i * (profile.noteLen + profile.gap);
+      const freq1 = profile.freqBase + Math.random() * profile.freqRange;
+      const freq2 = freq1 + (Math.random() - 0.4) * 600; // Sweep ascendente o descendente
+
+      // Oscilador principal (tono puro del trino)
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq1, startTime);
+      osc.frequency.linearRampToValueAtTime(freq2, startTime + profile.noteLen);
+
+      // Envolvente de amplitud (ataque rápido, decay natural)
+      const env = ctx.createGain();
+      env.gain.setValueAtTime(0, startTime);
+      env.gain.linearRampToValueAtTime(0.6 + Math.random() * 0.4, startTime + 0.01);
+      env.gain.exponentialRampToValueAtTime(0.001, startTime + profile.noteLen);
+
+      osc.connect(env);
+      env.connect(this.birdGain);
+      osc.start(startTime);
+      osc.stop(startTime + profile.noteLen + 0.01);
+    }
+  }
+
+  private stopBirds() {
+    // Fade out suave
+    if (this.birdGain && this.audioCtx) {
+      this.birdGain.gain.linearRampToValueAtTime(0, this.audioCtx.currentTime + 1.5);
+    }
+    // Limpiar timers
+    this.birdTimers.forEach(t => clearTimeout(t));
+    this.birdTimers = [];
+    this.birdsActive = false;
+    // Desconectar gain después del fade
+    setTimeout(() => {
+      if (this.birdGain) {
+        try { this.birdGain.disconnect(); } catch (e) { }
+        this.birdGain = null;
+      }
+    }, 2000);
   }
 
   ngOnDestroy() {
@@ -311,7 +403,10 @@ export class SimulationComponent implements OnInit, OnDestroy {
   private setupUserInteractionListener() {
     this.interactionListener = () => {
       this.userHasInteracted = true;
-      // Resumir AudioContext si ya existe (removido, ya no usamos AudioContext)
+      // Resumir AudioContext si ya existe
+      if (this.audioCtx && this.audioCtx.state === 'suspended') {
+        this.audioCtx.resume();
+      }
       // Remover listeners tras primera interacción
       if (this.interactionListener) {
         document.removeEventListener('click', this.interactionListener);
