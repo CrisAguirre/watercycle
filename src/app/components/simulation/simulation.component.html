@@ -202,41 +202,59 @@
   </div>
 </div>
 
-  <!-- Pie de página: Guía Dinámica -->
+  <!-- Pie de página: Guía de Usuario y Taller Meteorológico -->
   <footer class="educational-guide">
     <div class="guide-content glass-panel">
-      <h2 class="text-neon-blue">Guía Práctica del Simulador</h2>
+      <h2 class="text-neon-blue">Manual de Operación Meteorológica: H₂OSysModel PRO</h2>
       
       <section>
-        <h3 class="text-neon-purple mt-4">1. ¿Cómo utilizar esta herramienta?</h3>
-        <p>Este laboratorio virtual ha sido diseñado bajo los principios de la <strong>Dinámica de Sistemas</strong>. En lugar de ser una animación pasiva, el ciclo del agua reacciona matemáticamente a tus parámetros. Juega con los controles deslizables (sliders) ubicados a la derecha. Tu objetivo como estudiante es encontrar el punto de equilibrio termodinámico perfecto para generar un ciclo cerrado ininterrumpido (evaporación, condensación visible y precipitación constante).</p>
-      </section>
-      
-      <section>
-        <h3 class="text-neon-purple mt-4">2. Partes del Entorno Interactivo</h3>
+        <h3 class="text-neon-purple mt-4">1. La Vista Geográfica: Perspectiva Aérea Isométrica</h3>
+        <p>El simulador utiliza una <strong>cámara de drone en ángulo de 45°</strong> (proyección isométrica) para ofrecer una comprensión espacial completa. En esta vista:</p>
         <ul>
-          <li><strong>Océano y Montaña:</strong> Representan los ecosistemas base. El océano (izquierda) es nuestra principal fuente biomasa y la montaña genera el "efecto orográfico", ayudando al estancamiento de nubes.</li>
-          <li><strong>Dirección del Viento:</strong> Un pilar fundamental para trasladar el gas (vapor) desde el mar abierto hasta las cumbres, o arrastrarlo a alta mar perdiendo la humedad continental.</li>
-          <li><strong>Monitores (Output):</strong> Te indican en vivo la saturación existente en cada estado termodinámico calculados por la computadora local.</li>
+          <li><strong>Oeste (Izquierda):</strong> Ubicación del océano. Es la zona donde se origina la evaporación.</li>
+          <li><strong>Este (Derecha):</strong> Cordillera montañosa. Actúa como barrera física (orográfica) para la formación de nubes.</li>
+          <li><strong>Profundidad:</strong> Los elementos situados al <em>Norte</em> se ven más alejados y pequeños, mientras que al <em>Sur</em> se aprecian en primer plano, permitiendo visualizar el viento en 3D.</li>
         </ul>
       </section>
 
       <section>
-        <h3 class="text-neon-purple mt-4">3. El Modelo Matemático Subyacente (Fórmulas)</h3>
-        <p>Las representaciones visuales están dictadas permanentemente por un motor algebraico de cálculo en tiempo real que obedece leyes naturales. Las dinámicas detrás de la interfaz son:</p>
-        
-        <div class="math-box">
-          <p class="formula"><span class="text-neon-blue">Tasa de Evaporación</span> ∝ Temperatura + Radiación Solar + Vel. Viento - Humedad Base - Alta Presión</p>
-          <p class="expl"><small>El calor y el viento levantan el agua, pero si hay mucha Humedad Inicial o una Presión atmosférica extrema pesando sobre el mar, el vapor experimenta serias dificultades para subir.</small></p>
-          <hr class="separator">
-          
-          <p class="formula"><span class="text-neon-purple">Condensación (Densidad de Nubes)</span> ∝ Vapor Recibido - Exceso de Temperatura Termal</p>
-          <p class="expl"><small>Las nubes ganan biomasa si logran recibir vapor del mar. No obstante, un exceso crónico de temperatura ambiental dificultará que el vapor logre enfriarse y transicionar a su forma masiva semifluida, bloqueando el proceso.</small></p>
-          <hr class="separator">
-          
-          <p class="formula"><span style="color:#00ffcc">Precipitación (Lluvia)</span> ∝ (Masa de Condensación Estancada > Límite Peso) + Baja Presión</p>
-          <p class="expl"><small>Efecto saturación. Cuando la masa condensada en el tope montañoso supera una tolerancia física (nubes negras), colapsa precipitándose en cascada, siendo impulsada fuertemente si interviene un sistema de bajas presiones (tormenta). Además, <strong>la precipitación desgasta a la condensación</strong>, lo cual explica por qué las nubes mágicamente reducen su tamaño y se despejan a medida que drenan hidrológicamente a tierra firme.</small></p>
-        </div>
+        <h3 class="text-neon-purple mt-4">2. Funcionamiento de los Selectores (Variables de Entrada)</h3>
+        <p>Cada control modifica una ley física del ecosistema en tiempo real:</p>
+        <ul>
+          <li><strong>Temperatura (°C):</strong> Aumenta la energía para la evaporación, pero si es extrema, dificulta el enfriamiento necesario para la condensación.</li>
+          <li><strong>Radiación Solar (%):</strong> Determina la potencia con la que el sol calienta el agua oceánica.</li>
+          <li><strong>Velocidad del Viento (km/h):</strong> Acelera el transporte de humedad y la tasa de evaporación superficial.</li>
+          <li><strong>Presión Atmosférica (hPa):</strong> Una presión baja (Borrasca) inestabiliza el aire facilitando nubes y lluvia fuerte; una presión alta (Anticiclón) estabiliza el aire y despeja el cielo.</li>
+          <li><strong>Humedad Ambiental (%):</strong> Es la saturación base del aire. Si es muy alta, "bloquea" la evaporación porque el aire ya no admite más vapor.</li>
+          <li><strong>Brújula (Rosa de los Vientos):</strong> Dirige el flujo de humedad. Vientos hacia el Este (Montaña) generan más lluvia terrestre.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 class="text-neon-purple mt-4">3. Interpretación de Estados y Porcentajes (HUDs)</h3>
+        <p>Los monitores en las esquinas indican el estado del ciclo. A diferencia de las animaciones simples, aquí los porcentajes representan <strong>Stocks (almacenamiento)</strong> y <strong>Flows (flujos)</strong>:</p>
+        <ul>
+          <li><strong>Evaporación Atmosférica:</strong> Representa qué tan rápido está ascendiendo el agua del mar en este instante.</li>
+          <li><strong>Condensación (Masa de Nubes):</strong> Es un <em>acumulador</em>. Si sube de 50%, las nubes se tornan densas y grises. Al llegar a niveles altos, el "peso" del agua provoca lluvia.</li>
+          <li><strong>Precipitación:</strong> Intensidad de la caída de agua. Al llover, este proceso "vacia" la masa de la nube, por lo que verás el porcentaje de condensación bajar solo hasta que la nube se agote.</li>
+          <li><strong>Escorrentía:</strong> Representa el agua corriendo por los ríos hacia el mar tras la lluvia en la montaña.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 class="text-neon-purple mt-4">4. Guía de Efectos Visuales</h3>
+        <ul>
+          <li><strong>Anillo Elíptico de Flujo:</strong> Rodea el mapa y fluye según el viento, indicando la dirección del ciclo del agua.</li>
+          <li><strong>Burbujas Ascendentes:</strong> Representan físicamente la tasa de evaporación en el océano.</li>
+          <li><strong>Cortina de Lluvia:</strong> Su densidad y velocidad dependen directamente del porcentaje de precipitación.</li>
+          <li><strong>Nubes Dinámicas:</strong> Su opacidad y tamaño son proporcionales a la condensación. Al superar el 50%, aparecen cúmulos extra más oscuros.</li>
+          <li><strong>Brújula Interactiva:</strong> La aguja magnética roja siempre te indica hacia dónde has configurado el desplazamiento de las nubes.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 class="text-neon-purple mt-4">5. Dinámica de Sistemas: El Ciclo Autónomo</h3>
+        <p>Si dejas de mover los controles, el simulador seguirá funcionando. Verás cómo las nubes se cargan lentamente, se oscurecen al llenarse, descargan lluvia hasta vaciarse y vuelven a empezar el ciclo, comportándose como un verdadero <strong>ecosistema vivo y autorregulado</strong>.</p>
       </section>
     </div>
   </footer>
