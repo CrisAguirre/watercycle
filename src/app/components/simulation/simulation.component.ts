@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SimulationService, SystemVariables, CycleRates } from '../../services/simulation.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-simulation',
   templateUrl: './simulation.component.html',
   styleUrls: ['./simulation.component.css']
 })
-export class SimulationComponent implements OnInit {
+export class SimulationComponent implements OnInit, OnDestroy {
   variables$!: Observable<SystemVariables>;
   rates$!: Observable<CycleRates>;
 
@@ -19,13 +19,27 @@ export class SimulationComponent implements OnInit {
   private lastEvap = -1;
   private lastWindDir = '';
 
+  // Lightning Flash System
+  lightningFlash = false;
+  private lightningInterval: any = null;
+  private ratesSub!: Subscription;
+
+  // Rain Audio System (Web Audio API Procedural)
+  private audioCtx: AudioContext | null = null;
+  private rainGainLight: GainNode | null = null;
+  private rainGainHeavy: GainNode | null = null;
+  private rainNoiseLight: AudioBufferSourceNode | null = null;
+  private rainNoiseHeavy: AudioBufferSourceNode | null = null;
+  private audioInitialized = false;
+  private currentRainLevel: 'none' | 'light' | 'heavy' = 'none';
+
   constructor(public simService: SimulationService) { }
 
   ngOnInit(): void {
     this.variables$ = this.simService.variables$;
     this.rates$ = this.simService.rates$;
 
-    this.rates$.subscribe(rates => {
+    this.ratesSub = this.rates$.subscribe(rates => {
       // Optimizador: Solo regenera las gotas de partículas si cambió drásticamente el nivel de agua o el viento
       if (
         Math.abs(this.lastPrecip - rates.precipitationRate) > 8 ||
@@ -37,6 +51,10 @@ export class SimulationComponent implements OnInit {
         this.lastWindDir = rates.currentWindDir;
         this.updateParticles(rates);
       }
+      // Lightning Flash Logic
+      this.updateLightning(rates.condensationRate);
+      // Rain Sound Logic
+      this.updateRainSound(rates.precipitationRate);
     });
   }
 
@@ -122,6 +140,135 @@ export class SimulationComponent implements OnInit {
       'S': '180deg', 'SW': '225deg', 'W': '270deg', 'NW': '315deg'
     };
     return angleMap[dir || 'N'] || '0deg';
+  }
+
+  // Lightning Flash Management
+  private updateLightning(condensation: number) {
+    if (condensation >= 80) {
+      const interval = condensation >= 90 ? 7000 : 15000;
+      // Only reset if interval changed or not running
+      if (!this.lightningInterval || this.lightningInterval._interval !== interval) {
+        this.clearLightning();
+        this.triggerFlash();
+        const id = setInterval(() => this.triggerFlash(), interval);
+        this.lightningInterval = { id, _interval: interval };
+      }
+    } else {
+      this.clearLightning();
+    }
+  }
+
+  private triggerFlash() {
+    this.lightningFlash = true;
+    // 200 milisegundos de duración del rayo
+    setTimeout(() => this.lightningFlash = false, 200);
+  }
+
+  private clearLightning() {
+    if (this.lightningInterval) {
+      clearInterval(this.lightningInterval.id);
+      this.lightningInterval = null;
+    }
+    this.lightningFlash = false;
+  }
+
+  // ==========================================
+  // RAIN AUDIO SYSTEM (Web Audio API Procedural)
+  // ==========================================
+  private initAudio() {
+    if (this.audioInitialized) return;
+    this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    
+    // Create white noise buffer (2 seconds, loopable)
+    const bufferSize = this.audioCtx.sampleRate * 2;
+    
+    // Light rain: higher frequency, softer
+    const lightBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+    const lightData = lightBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      lightData[i] = (Math.random() * 2 - 1) * 0.3;
+    }
+    
+    // Heavy rain: full spectrum, louder
+    const heavyBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+    const heavyData = heavyBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      heavyData[i] = (Math.random() * 2 - 1) * 0.6;
+    }
+
+    // Light rain chain: noise → bandpass (higher) → gain
+    this.rainNoiseLight = this.audioCtx.createBufferSource();
+    this.rainNoiseLight.buffer = lightBuffer;
+    this.rainNoiseLight.loop = true;
+    const filterLight = this.audioCtx.createBiquadFilter();
+    filterLight.type = 'bandpass';
+    filterLight.frequency.value = 3000;  // Higher pitch = light rain drops
+    filterLight.Q.value = 0.5;
+    this.rainGainLight = this.audioCtx.createGain();
+    this.rainGainLight.gain.value = 0;
+    this.rainNoiseLight.connect(filterLight);
+    filterLight.connect(this.rainGainLight);
+    this.rainGainLight.connect(this.audioCtx.destination);
+    this.rainNoiseLight.start();
+
+    // Heavy rain chain: noise → lowpass (rumble) → gain
+    this.rainNoiseHeavy = this.audioCtx.createBufferSource();
+    this.rainNoiseHeavy.buffer = heavyBuffer;
+    this.rainNoiseHeavy.loop = true;
+    const filterHeavy = this.audioCtx.createBiquadFilter();
+    filterHeavy.type = 'lowpass';
+    filterHeavy.frequency.value = 1500;  // Lower = heavy downpour rumble
+    filterHeavy.Q.value = 0.3;
+    this.rainGainHeavy = this.audioCtx.createGain();
+    this.rainGainHeavy.gain.value = 0;
+    this.rainNoiseHeavy.connect(filterHeavy);
+    filterHeavy.connect(this.rainGainHeavy);
+    this.rainGainHeavy.connect(this.audioCtx.destination);
+    this.rainNoiseHeavy.start();
+
+    this.audioInitialized = true;
+  }
+
+  private updateRainSound(precipitationRate: number) {
+    if (precipitationRate > 0 && !this.audioInitialized) {
+      this.initAudio();
+    }
+    if (!this.audioCtx || !this.rainGainLight || !this.rainGainHeavy) return;
+
+    const now = this.audioCtx.currentTime;
+    const fadeTime = 0.5; // 500ms crossfade
+
+    if (precipitationRate <= 0) {
+      // Sin lluvia: silencio total
+      this.rainGainLight.gain.linearRampToValueAtTime(0, now + fadeTime);
+      this.rainGainHeavy.gain.linearRampToValueAtTime(0, now + fadeTime);
+      this.currentRainLevel = 'none';
+    } else if (precipitationRate <= 50) {
+      // Lluvia ligera (0–50%): solo canal light, volumen proporcional
+      const vol = (precipitationRate / 50) * 0.35; // Max 0.35 para lluvia suave
+      this.rainGainLight.gain.linearRampToValueAtTime(vol, now + fadeTime);
+      this.rainGainHeavy.gain.linearRampToValueAtTime(0, now + fadeTime);
+      this.currentRainLevel = 'light';
+    } else {
+      // Lluvia intensa (50–100%): ambos canales, heavy dominante
+      const heavyVol = ((precipitationRate - 50) / 50) * 0.6; // Max 0.6
+      this.rainGainLight.gain.linearRampToValueAtTime(0.2, now + fadeTime);
+      this.rainGainHeavy.gain.linearRampToValueAtTime(heavyVol, now + fadeTime);
+      this.currentRainLevel = 'heavy';
+    }
+  }
+
+  private destroyAudio() {
+    if (this.rainNoiseLight) { try { this.rainNoiseLight.stop(); } catch(e) {} }
+    if (this.rainNoiseHeavy) { try { this.rainNoiseHeavy.stop(); } catch(e) {} }
+    if (this.audioCtx) { this.audioCtx.close(); }
+    this.audioInitialized = false;
+  }
+
+  ngOnDestroy() {
+    this.clearLightning();
+    this.destroyAudio();
+    if (this.ratesSub) this.ratesSub.unsubscribe();
   }
 }
 

@@ -84,7 +84,7 @@
           <div class="hud-value">{{ rates.condensationRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getCondState(rates.condensationRate) }}</span></div>
         </div>
         <div class="hud-panel hud-precip">
-          <div class="hud-title"><span class="hud-dot bg-cyan"></span> Lluvia Física</div>
+          <div class="hud-title"><span class="hud-dot bg-cyan"></span> Precipitación</div>
           <div class="hud-value">{{ rates.precipitationRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getPrecipState(rates.precipitationRate) }}</span></div>
         </div>
       </div>
@@ -123,6 +123,14 @@
            [style.animationDuration]="r.duration" 
            [style.animationDelay]="r.delay">
       </div>
+
+      <!-- Storm Darkening Overlay (Condensación >= 80%) -->
+      <div class="storm-darken" *ngIf="rates$ | async as rates"
+           [class.darken-moderate]="rates.condensationRate >= 80 && rates.condensationRate < 90"
+           [class.darken-heavy]="rates.condensationRate >= 90"></div>
+
+      <!-- Lightning Flash - Full Screen White Burst (1/8s) -->
+      <div class="lightning-fullscreen" *ngIf="lightningFlash"></div>
 
     </div>
 
@@ -194,7 +202,7 @@
           <div class="meter-bar"><div class="fill purple" [style.width.%]="rates.condensationRate"></div></div>
         </div>
         <div class="meter-row">
-          <span>Tasa de Lluvia</span>
+          <span>Precipitación</span>
           <div class="meter-bar"><div class="fill cyan" [style.width.%]="rates.precipitationRate"></div></div>
         </div>
       </div>

@@ -100,6 +100,35 @@
 .heavy-clouds .real-cloud { background: rgba(160, 160, 175, 0.7); filter: blur(12px); } /* Gris Denso (>50% Condensación) */
 .storm-clouds .real-cloud { background: rgba(80, 80, 100, 0.9); } /* Tormenta Lluvia Oscura */
 
+/* LIGHTNING FULLSCREEN FLASH (Rayo - Pantalla completa blanca 1/8s) */
+.cloud-graphics { position: relative; }
+.lightning-fullscreen {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: white;
+  z-index: 50;
+  pointer-events: none;
+  animation: flashBurst 0.2s ease-out forwards;
+}
+
+@keyframes flashBurst {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* STORM DARKENING OVERLAY (Oscurecimiento por condensación alta) */
+.storm-darken {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 1.5s ease;
+}
+.storm-darken.darken-moderate { opacity: 0.10; } /* 80-90% condensación → 10% oscuro */
+.storm-darken.darken-heavy { opacity: 0.20; }    /* >90% condensación → 20% oscuro */
+
 .rcl-1 { width: 300px; height: 150px; top: 0; right: 0; }
 .rcl-2 { width: 350px; height: 180px; top: -20px; right: 120px; }
 .rcl-3 { width: 250px; height: 120px; top: 40px; right: 280px; }
