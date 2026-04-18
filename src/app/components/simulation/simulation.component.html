@@ -1,0 +1,124 @@
+<div class="app-layout">
+  <header class="glass-panel header-nav">
+    <div class="logo">
+      <span class="text-neon-blue">H₂O</span> <span class="text-neon-purple">SysModel PRO</span>
+    </div>
+    <div class="links">
+      <button class="btn-neon-outline" routerLink="/login">Cerrar Sesión</button>
+    </div>
+  </header>
+
+  <div class="main-content">
+    
+    <!-- Simulation Area -->
+    <div class="sim-area relative realistic-bg">
+      <div class="sun" [style.opacity]="(variables$ | async)?.solarRadiation! / 100 + 0.1"></div>
+      
+      <!-- Wind direction indicator -->
+      <div class="wind-arrow" [class.wind-reverse]="(variables$ | async)?.windDirection === -1">
+        &#8594; Viento
+      </div>
+
+      <!-- Evaporating Vapor (Left to Right or Right to Left) -->
+      <div class="wind-clouds" *ngIf="(rates$ | async)?.evaporationRate! > 5" 
+           [style.animationDuration]="150 / ((variables$ | async)?.windSpeed! || 1) + 's'"
+           [class.anim-reverse]="(variables$ | async)?.windDirection === -1">
+        <div class="real-cloud cl-left-1"></div>
+        <div class="real-cloud cl-left-2"></div>
+      </div>
+
+      <!-- Main Cloud Cluster Over Mountain -->
+      <!-- Turns darker grey when precipitating highly -->
+      <div class="cloud-cluster mountain-clouds" 
+           [style.opacity]="(rates$ | async)?.condensationRate! / 100 + 0.2" 
+           [style.transform]="'scale(' + ((rates$ | async)?.condensationRate! / 100 + 0.5) + ')' "
+           [class.storm-clouds]="(rates$ | async)?.precipitationRate! > 50">
+        <div class="real-cloud rcl-1"></div>
+        <div class="real-cloud rcl-2"></div>
+        <div class="real-cloud rcl-3"></div>
+      </div>
+
+      <!-- 1. Evaporation Vapor -->
+      <div class="particle evap-vapor" 
+           *ngFor="let p of evaporationParticles" 
+           [style.left]="p.left" 
+           [style.animationDuration]="p.duration" 
+           [style.animationDelay]="p.delay">
+      </div>
+
+      <!-- 2. Rain Drops -->
+      <div class="particle real-rain" 
+           *ngFor="let p of rainDropParticles" 
+           [style.left]="p.left" 
+           [style.animationDuration]="p.duration" 
+           [style.animationDelay]="p.delay">
+      </div>
+      
+      <!-- 3. Runoff Flow -->
+      <div class="runoff-stream" 
+           *ngFor="let r of runoffParticles"
+           [style.animationDuration]="r.duration" 
+           [style.animationDelay]="r.delay">
+      </div>
+
+    </div>
+
+    <!-- Control Panel -->
+    <div class="control-panel glass-panel">
+      <h3 class="text-neon-purple panel-title">Taller: Realidad y Sistemas</h3>
+      <div class="controls-wrapper" *ngIf="variables$ | async as vars">
+        
+        <div class="slider-group">
+          <label>Temperatura (°C): {{vars.temperature}}</label>
+          <input type="range" min="0" max="100" [value]="vars.temperature" (input)="onVarChange($event, 'temperature')" class="neon-slider" />
+        </div>
+
+        <div class="slider-group">
+          <label>Radiación Solar (%): {{vars.solarRadiation}}</label>
+          <input type="range" min="0" max="100" [value]="vars.solarRadiation" (input)="onVarChange($event, 'solarRadiation')" class="neon-slider" />
+        </div>
+
+        <div class="slider-group">
+          <label>Velocidad Viento (km/h): {{vars.windSpeed}}</label>
+          <input type="range" min="1" max="100" [value]="vars.windSpeed" (input)="onVarChange($event, 'windSpeed')" class="neon-slider" />
+        </div>
+
+        <div class="slider-group mt-2">
+          <label>Presión Atmosférica (hPa): {{vars.atmosphericPressure}}</label>
+          <input type="range" min="900" max="1100" [value]="vars.atmosphericPressure" (input)="onVarChange($event, 'atmosphericPressure')" class="neon-slider" />
+        </div>
+
+        <div class="slider-group">
+          <label>Humedad Ambiental (%): {{vars.humidity}}</label>
+          <input type="range" min="0" max="100" [value]="vars.humidity" (input)="onVarChange($event, 'humidity')" class="neon-slider" />
+        </div>
+
+        <div class="slider-group mt-2">
+          <label>Dirección del Viento:</label>
+          <select [value]="vars.windDirection" (change)="onVarChange($event, 'windDirection')" class="glass-select">
+            <option value="1">Mar -> Montaña</option>
+            <option value="-1">Montaña -> Mar</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Monitors -->
+      <div class="monitor-panel" *ngIf="rates$ | async as rates">
+        <h4 class="text-muted">Desempeño Sistémico</h4>
+        <div class="meter-row">
+          <span>Evaporación Real</span>
+          <div class="meter-bar"><div class="fill blue" [style.width.%]="rates.evaporationRate"></div></div>
+        </div>
+        <div class="meter-row">
+          <span>Saturación de Nubes</span>
+          <div class="meter-bar"><div class="fill purple" [style.width.%]="rates.condensationRate"></div></div>
+        </div>
+        <div class="meter-row">
+          <span>Tasa de Lluvia</span>
+          <div class="meter-bar"><div class="fill cyan" [style.width.%]="rates.precipitationRate"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
