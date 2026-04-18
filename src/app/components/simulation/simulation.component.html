@@ -15,48 +15,67 @@
     <div class="sim-area relative realistic-bg">
       <div class="sun" [style.opacity]="(variables$ | async)?.solarRadiation! / 100 + 0.1"></div>
       
-      <!-- Wind direction indicator -->
-      <div class="wind-arrow" [class.wind-reverse]="(variables$ | async)?.windDirection === -1">
-        &#8594; Viento
+      <!-- Compass/Wind Direction Indicator -->
+      <div class="wind-arrow">
+        <span class="compass-icon" [ngClass]="'compass-' + ((variables$ | async)?.windDirection | lowercase)">&#8594;</span> Viento: {{ (variables$ | async)?.windDirection }}
       </div>
 
-      <!-- Flechas Centrales del Ciclo Pulsares -->
+      <!-- Flechas Centrales del Ciclo Pulsares Clásicas -->
       <div class="cycle-indicators">
         <!-- Izquierda: Evaporación (Sube) -->
-        <div class="c-wrapper arr-left pulse-1"><div class="c-arrow rotate-up">&#10140;</div></div>
+        <div class="c-wrapper arr-left pulse-1"><div class="c-arrow rotate-up">&#8594;</div></div>
         
         <!-- Arriba: Viento (Derecha o Izquierda) -->
         <div class="c-wrapper arr-top pulse-2">
-          <div class="c-arrow" [class.rotate-left]="(variables$ | async)?.windDirection === -1">&#10140;</div>
+          <div class="c-arrow" [class.rotate-left]="(variables$ | async)?.windDirection === 'W' || (variables$ | async)?.windDirection === 'NW' || (variables$ | async)?.windDirection === 'SW'">&#8594;</div>
         </div>
         
         <!-- Derecha: Precipitación (Baja) -->
-        <div class="c-wrapper arr-right pulse-3"><div class="c-arrow rotate-down">&#10140;</div></div>
+        <div class="c-wrapper arr-right pulse-3"><div class="c-arrow rotate-down">&#8594;</div></div>
         
         <!-- Abajo: Escorrentía (Izquierda o Derecha) -->
         <div class="c-wrapper arr-bottom pulse-4">
-          <div class="c-arrow rotate-left" [class.rotate-right]="(variables$ | async)?.windDirection === -1">&#10140;</div>
+          <div class="c-arrow rotate-left" [class.rotate-right]="(variables$ | async)?.windDirection === 'W' || (variables$ | async)?.windDirection === 'NW' || (variables$ | async)?.windDirection === 'SW'">&#8594;</div>
         </div>
       </div>
 
-      <!-- Evaporating Vapor (Left to Right or Right to Left) -->
-      <div class="wind-clouds" *ngIf="(rates$ | async)?.evaporationRate! > 5" 
-           [style.animationDuration]="150 / ((variables$ | async)?.windSpeed! || 1) + 's'"
-           [class.anim-reverse]="(variables$ | async)?.windDirection === -1">
-        <div class="real-cloud cl-left-1"></div>
-        <div class="real-cloud cl-left-2"></div>
+      <!-- Main Cloud Cluster Over 8 Compass Points Container -->
+      <div class="cloud-cluster" 
+           [ngClass]="'cloud-pos-' + ((variables$ | async)?.windDirection | lowercase)">
+        
+        <!-- Contrato Gráfico de Nubes: Muta tamaño e invisibilidad sin afectar los HUDs -->
+        <div class="cloud-graphics"
+             [style.opacity]="(rates$ | async)?.condensationRate! / 100 + 0.2" 
+             [style.transform]="'scale(' + ((rates$ | async)?.condensationRate! / 100 + 0.5) + ')' "
+             [class.storm-clouds]="(rates$ | async)?.precipitationRate! > 50">
+          <div class="real-cloud rcl-1"></div>
+          <div class="real-cloud rcl-2"></div>
+          <div class="real-cloud rcl-3"></div>
+        </div>
+
+        <!-- HUDs Voladores acoplados a la nube (Condensación y Precipitación) -->
+        <div class="hud-group" *ngIf="rates$ | async as rates">
+          <div class="hud-panel hud-cond">
+            <div class="hud-title"><span class="hud-dot bg-purple"></span> M. Condensación</div>
+            <div class="hud-value">{{ rates.condensationRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getCondState(rates.condensationRate) }}</span></div>
+          </div>
+          <div class="hud-panel hud-precip">
+            <div class="hud-title"><span class="hud-dot bg-cyan"></span> Lluvia Física</div>
+            <div class="hud-value">{{ rates.precipitationRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getPrecipState(rates.precipitationRate) }}</span></div>
+          </div>
+        </div>
       </div>
 
-      <!-- Main Cloud Cluster Over Accumulation Point -->
-      <!-- Turns darker grey when precipitating highly -->
-      <div class="cloud-cluster" 
-           [ngClass]="(variables$ | async)?.windDirection === 1 ? 'mountain-clouds' : 'ocean-clouds'"
-           [style.opacity]="(rates$ | async)?.condensationRate! / 100 + 0.2" 
-           [style.transform]="'scale(' + ((rates$ | async)?.condensationRate! / 100 + 0.5) + ')' "
-           [class.storm-clouds]="(rates$ | async)?.precipitationRate! > 50">
-        <div class="real-cloud rcl-1"></div>
-        <div class="real-cloud rcl-2"></div>
-        <div class="real-cloud rcl-3"></div>
+      <!-- HUD Marino (Evaporación Atmosférica Constante) -->
+      <div class="hud-panel hud-evap" *ngIf="rates$ | async as rates">
+        <div class="hud-title"><span class="hud-dot bg-blue"></span> Evaporación Atmosférica</div>
+        <div class="hud-value">{{ rates.evaporationRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getEvapState(rates.evaporationRate) }}</span></div>
+      </div>
+
+      <!-- Cuarto HUD (Escorrentía y Retorno Fluvial Constante) -->
+      <div class="hud-panel hud-runoff" *ngIf="rates$ | async as rates">
+        <div class="hud-title"><span class="hud-dot" style="background: #aaffcc;"></span> Escorrentía y Filtración</div>
+        <div class="hud-value">{{ getRunoffRate(rates) | number:'1.0-0' }}% <span class="hud-sub">| {{ getRunoffState(getRunoffRate(rates)) }}</span></div>
       </div>
 
       <!-- 1. Evaporation Vapor -->
@@ -115,20 +134,36 @@
         </div>
 
         <div class="slider-group mt-2">
-          <label>Dirección del Viento:</label>
+          <label>Rosa de los Vientos (Brújula):</label>
           <select [value]="vars.windDirection" (change)="onVarChange($event, 'windDirection')" class="glass-select">
-            <option value="1">Mar -> Montaña</option>
-            <option value="-1">Montaña -> Mar</option>
+            <option value="N">Norte (Paralelo a costa)</option>
+            <option value="NE">Noreste (Diagonal Montaña)</option>
+            <option value="E">Este (Hacia la Montaña)</option>
+            <option value="SE">Sureste (Diagonal Montaña)</option>
+            <option value="S">Sur (Paralelo a costa)</option>
+            <option value="SW">Suroeste (Diagonal Océano)</option>
+            <option value="W">Oeste (Hacia el Océano)</option>
+            <option value="NW">Noroeste (Diagonal Océano)</option>
           </select>
         </div>
 
       </div>
 
-      <!-- Monitors -->
+      <!-- Monitors & Instruments -->
       <div class="monitor-panel" *ngIf="rates$ | async as rates">
-        <h4 class="text-muted">Desempeño Sistémico</h4>
+        <h4 class="text-muted" style="margin-bottom: 5px;">Estación Meteorológica</h4>
+        
+        <div class="weather-instruments" style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+          <div style="font-size: 0.85rem; color: #fff;">
+            <strong>Barómetro:</strong> {{ rates.barometerState }}
+          </div>
+          <div style="font-size: 0.85rem; color: #fff; margin-top: 5px;">
+            <strong>T. Punto de Rocío:</strong> {{ rates.dewPoint }} °C
+          </div>
+        </div>
+
         <div class="meter-row">
-          <span>Evaporación Real</span>
+          <span>Evaporación Atmosférica</span>
           <div class="meter-bar"><div class="fill blue" [style.width.%]="rates.evaporationRate"></div></div>
         </div>
         <div class="meter-row">
