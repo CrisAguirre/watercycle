@@ -38,11 +38,18 @@ export class SimulationComponent implements OnInit, OnDestroy {
   private birdsActive = false;
   private birdTimers: any[] = [];
 
+  // Audio User Interaction Gate (browsers block autoplay)
+  private userHasInteracted = false;
+  private interactionListener: (() => void) | null = null;
+
   constructor(public simService: SimulationService) { }
 
   ngOnInit(): void {
     this.variables$ = this.simService.variables$;
     this.rates$ = this.simService.rates$;
+
+    // Setup listener para desbloquear audio del navegador
+    this.setupUserInteractionListener();
 
     this.ratesSub = this.rates$.subscribe(rates => {
       // Optimizador: Solo regenera las gotas de partículas si cambió drásticamente el nivel de agua o el viento
@@ -178,53 +185,53 @@ export class SimulationComponent implements OnInit, OnDestroy {
   // ==========================================
   private initAudio() {
     if (this.audioInitialized) return;
-    this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const ctx = this.ensureAudioCtx();
     
     // Create white noise buffer (2 seconds, loopable)
-    const bufferSize = this.audioCtx.sampleRate * 2;
+    const bufferSize = ctx.sampleRate * 2;
     
     // Light rain: higher frequency, softer
-    const lightBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+    const lightBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const lightData = lightBuffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
       lightData[i] = (Math.random() * 2 - 1) * 0.3;
     }
     
     // Heavy rain: full spectrum, louder
-    const heavyBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+    const heavyBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const heavyData = heavyBuffer.getChannelData(0);
     for (let i = 0; i < bufferSize; i++) {
       heavyData[i] = (Math.random() * 2 - 1) * 0.6;
     }
 
     // Light rain chain: noise → bandpass (higher) → gain
-    this.rainNoiseLight = this.audioCtx.createBufferSource();
+    this.rainNoiseLight = ctx.createBufferSource();
     this.rainNoiseLight.buffer = lightBuffer;
     this.rainNoiseLight.loop = true;
-    const filterLight = this.audioCtx.createBiquadFilter();
+    const filterLight = ctx.createBiquadFilter();
     filterLight.type = 'bandpass';
     filterLight.frequency.value = 3000;  // Higher pitch = light rain drops
     filterLight.Q.value = 0.5;
-    this.rainGainLight = this.audioCtx.createGain();
+    this.rainGainLight = ctx.createGain();
     this.rainGainLight.gain.value = 0;
     this.rainNoiseLight.connect(filterLight);
     filterLight.connect(this.rainGainLight);
-    this.rainGainLight.connect(this.audioCtx.destination);
+    this.rainGainLight.connect(ctx.destination);
     this.rainNoiseLight.start();
 
     // Heavy rain chain: noise → lowpass (rumble) → gain
-    this.rainNoiseHeavy = this.audioCtx.createBufferSource();
+    this.rainNoiseHeavy = ctx.createBufferSource();
     this.rainNoiseHeavy.buffer = heavyBuffer;
     this.rainNoiseHeavy.loop = true;
-    const filterHeavy = this.audioCtx.createBiquadFilter();
+    const filterHeavy = ctx.createBiquadFilter();
     filterHeavy.type = 'lowpass';
     filterHeavy.frequency.value = 1500;  // Lower = heavy downpour rumble
     filterHeavy.Q.value = 0.3;
-    this.rainGainHeavy = this.audioCtx.createGain();
+    this.rainGainHeavy = ctx.createGain();
     this.rainGainHeavy.gain.value = 0;
     this.rainNoiseHeavy.connect(filterHeavy);
     filterHeavy.connect(this.rainGainHeavy);
-    this.rainGainHeavy.connect(this.audioCtx.destination);
+    this.rainGainHeavy.connect(ctx.destination);
     this.rainNoiseHeavy.start();
 
     this.audioInitialized = true;
@@ -290,7 +297,9 @@ export class SimulationComponent implements OnInit, OnDestroy {
   }
 
   private startBirds() {
+    if (!this.userHasInteracted) return; // No iniciar sin interacción del usuario
     const ctx = this.ensureAudioCtx();
+    if (ctx.state === 'suspended') ctx.resume();
     if (!this.audioInitialized) this.initAudio();
     this.birdGain = ctx.createGain();
     this.birdGain.gain.value = 0;
@@ -378,6 +387,35 @@ export class SimulationComponent implements OnInit, OnDestroy {
     this.clearLightning();
     this.destroyAudio();
     if (this.ratesSub) this.ratesSub.unsubscribe();
+    // Limpiar listener de interacción
+    if (this.interactionListener) {
+      document.removeEventListener('click', this.interactionListener);
+      document.removeEventListener('touchstart', this.interactionListener);
+      document.removeEventListener('keydown', this.interactionListener);
+    }
+  }
+
+  // ==========================================
+  // USER INTERACTION GATE
+  // Navegadores modernos bloquean AudioContext
+  // hasta que el usuario interactúe con la página
+  // ==========================================
+  private setupUserInteractionListener() {
+    this.interactionListener = () => {
+      this.userHasInteracted = true;
+      // Resumir AudioContext si ya existe
+      if (this.audioCtx && this.audioCtx.state === 'suspended') {
+        this.audioCtx.resume();
+      }
+      // Remover listeners tras primera interacción
+      if (this.interactionListener) {
+        document.removeEventListener('click', this.interactionListener);
+        document.removeEventListener('touchstart', this.interactionListener);
+        document.removeEventListener('keydown', this.interactionListener);
+      }
+    };
+    document.addEventListener('click', this.interactionListener);
+    document.addEventListener('touchstart', this.interactionListener);
+    document.addEventListener('keydown', this.interactionListener);
   }
 }
-
