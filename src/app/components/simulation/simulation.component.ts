@@ -49,22 +49,22 @@ export class SimulationComponent implements OnInit {
       delay: Math.random() * 2 + 's'
     }));
 
-    // Rain: Posicionada según hacia donde se haya agrupado la tormenta guiada por la rosa de los vientos
+    // Rain: Distribuida en área sobre el mapa según coordenadas isométricas aéreas
     const rainCount = Math.floor(rates.precipitationRate * 1.5); 
-    let minLeft = 55, maxLeftWidth = 35; // Base Este (Montaña)
+    let baseLeft = 55, rangeLeft = 35; // Este
     if (['W', 'NW', 'SW'].includes(rates.currentWindDir)) {
-      minLeft = 5; maxLeftWidth = 30; // Viento la lleva al Océano
+      baseLeft = 10; rangeLeft = 30; // Oeste Oceánico
     } else if (['N', 'S'].includes(rates.currentWindDir)) {
-      minLeft = 35; maxLeftWidth = 30; // Centro Paralelo
+      baseLeft = 40; rangeLeft = 20; // Paralelo Centro
     }
 
     this.rainDropParticles = Array(rainCount).fill(0).map((_, i) => ({
-      left: minLeft + Math.random() * maxLeftWidth + '%',
+      left: baseLeft + Math.random() * rangeLeft + '%',
       duration: 0.5 + Math.random() * 0.4 + 's',
-      delay: Math.random() * 0.5 + 's' // Ajustado para ser más fluido sin parpadear en loops lentos
+      delay: Math.random() * 0.5 + 's'
     }));
 
-    // Escorrentía: montañas a mar (solo tiene sentido visual si llovió en la cordillera = viento E, NE, SE)
+    // Escorrentía: Desde las montañas hacia el centro
     const runoffCount = ['E', 'NE', 'SE'].includes(rates.currentWindDir) ? Math.floor(rates.precipitationRate / 1.5) : 0;
     this.runoffParticles = Array(runoffCount).fill(0).map((_, i) => ({
       duration: 3 + Math.random() * 3 + 's',
@@ -103,10 +103,9 @@ export class SimulationComponent implements OnInit {
   // Cuarta Fase: Escorrentía Analítica
   getRunoffRate(rates: any): number {
     const wind = rates.currentWindDir;
-    // La escorrentía es la lluvia que corre la tierra firme
     if (['E', 'NE', 'SE'].includes(wind)) return rates.precipitationRate; 
     if (['N', 'S'].includes(wind)) return rates.precipitationRate * 0.4;
-    return 0; // Llovió cien porciento sobre el mar abierto (Cero rios)
+    return 0;
   }
 
   getRunoffState(rRate: number): string {
@@ -114,6 +113,15 @@ export class SimulationComponent implements OnInit {
     if (rRate < 30) return 'Flujo de Ríos Moderado';
     if (rRate < 60) return 'Corriente Terrestre Alta';
     return 'Desbordamiento e Infiltración';
+  }
+
+  // Animación del Widget Brújula
+  getCompassRotation(dir: string | undefined | null): string {
+    const angleMap: Record<string, string> = {
+      'N': '0deg', 'NE': '45deg', 'E': '90deg', 'SE': '135deg',
+      'S': '180deg', 'SW': '225deg', 'W': '270deg', 'NW': '315deg'
+    };
+    return angleMap[dir || 'N'] || '0deg';
   }
 }
 

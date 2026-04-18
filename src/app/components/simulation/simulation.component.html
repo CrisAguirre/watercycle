@@ -15,9 +15,36 @@
     <div class="sim-area relative realistic-bg">
       <div class="sun" [style.opacity]="(variables$ | async)?.solarRadiation! / 100 + 0.1"></div>
       
-      <!-- Compass/Wind Direction Indicator -->
-      <div class="wind-arrow">
-        <span class="compass-icon" [ngClass]="'compass-' + ((variables$ | async)?.windDirection | lowercase)">&#8594;</span> Viento: {{ (variables$ | async)?.windDirection }}
+      <!-- Majestic Compass Overlayer -->
+      <div class="compass-widget">
+        <svg viewBox="0 0 100 100" class="compass-svg">
+          <!-- Anillo exterior y cristal oscuro -->
+          <circle cx="50" cy="50" r="45" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="rgba(0,0,0,0.5)"/>
+          <circle cx="50" cy="50" r="35" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/>
+          
+          <!-- Puntos Cardinales de la Rosa (Fijos) -->
+          <text x="50" y="19" fill="#00ffff" font-size="13" text-anchor="middle" font-weight="bold">N</text>
+          <text x="86" y="55" fill="#ffffff" font-size="13" text-anchor="middle" font-weight="bold">E</text>
+          <text x="50" y="91" fill="#ffffff" font-size="13" text-anchor="middle" font-weight="bold">S</text>
+          <text x="14" y="55" fill="#ffffff" font-size="13" text-anchor="middle" font-weight="bold">W</text>
+          
+          <!-- Aguja Magnética Dinámica Animada -->
+          <g [style.transformOrigin]="'50px 50px'" 
+             [style.transform]="'rotate(' + getCompassRotation((variables$ | async)?.windDirection) + ')'" 
+             style="transition: transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1.5);">
+            <!-- Flecha Norte (Roja de navegante) -->
+            <path d="M50 24 L56 50 L44 50 Z" fill="#ff3333"/>
+            <!-- Sombra Aguja -->
+            <path d="M50 24 L50 50 L44 50 Z" fill="#aa0000"/>
+            <!-- Cola Sur -->
+            <path d="M50 76 L56 50 L44 50 Z" fill="#cccccc"/>
+            <path d="M50 76 L50 50 L44 50 Z" fill="#999999"/>
+            
+            <circle cx="50" cy="50" r="4" fill="#ffffff" />
+            <circle cx="50" cy="50" r="2" fill="#000000" />
+          </g>
+        </svg>
+        <div class="compass-text">Viento ➔ {{ (variables$ | async)?.windDirection }}</div>
       </div>
 
       <!-- Flechas Centrales del Ciclo Pulsares Clásicas -->

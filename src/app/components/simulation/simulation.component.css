@@ -26,13 +26,13 @@
 
 .relative { position: relative; }
 
-/* Realism specific */
+/* Realism specific Phase 6: Aerial Drone Camera */
 .realistic-bg {
   flex: 2;
   position: relative;
-  background-image: url('../../../assets/landscape-hd.png');
+  background-image: url('../../../assets/landscape-aerial.png');
   background-size: cover; 
-  background-position: center center;
+  background-position: center bottom;
   background-repeat: no-repeat;
   background-color: var(--bg-color);
   overflow: hidden;
@@ -44,21 +44,21 @@
   transition: opacity 0.5s ease;
 }
 
-.wind-arrow {
-  position: absolute; top: 20px; right: 20px;
-  color: rgba(255,255,255,0.9); font-size: 1.2rem; letter-spacing: 1px;
-  font-weight: 600; text-shadow: 0 2px 5px rgba(0,0,0,0.8);
-  display: flex; align-items: center; gap: 8px; z-index: 20;
+/* MAJESTIC COMPASS WIDGET */
+.compass-widget {
+  position: absolute; top: 15px; left: 15px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  z-index: 20; color: white; user-select: none;
 }
-.compass-icon { display: inline-block; transition: transform 0.5s ease; font-size: 1.5rem; }
-.compass-n { transform: rotate(-90deg); }
-.compass-ne { transform: rotate(-45deg); }
-.compass-e { transform: rotate(0deg); }
-.compass-se { transform: rotate(45deg); }
-.compass-s { transform: rotate(90deg); }
-.compass-sw { transform: rotate(135deg); }
-.compass-w { transform: rotate(180deg); }
-.compass-nw { transform: rotate(-135deg); }
+.compass-svg {
+  width: 90px; height: 90px;
+  filter: drop-shadow(0 0 10px rgba(0,255,255,0.3));
+}
+.compass-text {
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  padding: 4px 12px; border-radius: 12px; font-size: 0.8rem;
+  font-weight: 600; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.2);
+}
 
 /* REAL CLOUDS */
 .real-cloud {
@@ -70,30 +70,31 @@
 
 .cloud-cluster { position: absolute; z-index: 5; transition: all 1s ease; }
 
-/* 8 Direction Cloud Positioning Matrix with 3D Depth Perception */
-.cloud-pos-n { top: 0%; left: 40%; }
-.cloud-pos-n .real-cloud { transform: scale(0.5); } /* Alejadas (Fondo) */
+/* 8 DIRECTION AERIAL GRID (ISOMETRIC / BIRD'S EYE VIEW) */
+/* Norte: Al fondo // Este: A la derecha // Sur: De frente // Oeste: A la Izquierda */
+.cloud-pos-n { top: 5%; left: 45%; }
+.cloud-pos-n .real-cloud { transform: scale(0.6); }
 
-.cloud-pos-ne { top: 5%; left: 70%; }
-.cloud-pos-ne .real-cloud { transform: scale(0.7); }
+.cloud-pos-ne { top: 15%; left: 70%; }
+.cloud-pos-ne .real-cloud { transform: scale(0.8); }
 
-.cloud-pos-e { top: 20%; left: 75%; }
-.cloud-pos-e .real-cloud { transform: scale(1); } /* Normal (Derecha) */
+.cloud-pos-e { top: 35%; left: 75%; }
+.cloud-pos-e .real-cloud { transform: scale(1.0); }
 
-.cloud-pos-se { top: 40%; left: 80%; }
-.cloud-pos-se .real-cloud { transform: scale(1.3); }
+.cloud-pos-se { top: 60%; left: 70%; }
+.cloud-pos-se .real-cloud { transform: scale(1.2); }
 
-.cloud-pos-s { top: 50%; left: 40%; }
-.cloud-pos-s .real-cloud { transform: scale(1.7); } /* Acercadas (Frente) */
+.cloud-pos-s { top: 75%; left: 45%; }
+.cloud-pos-s .real-cloud { transform: scale(1.4); } 
 
-.cloud-pos-sw { top: 40%; left: 5%; }
-.cloud-pos-sw .real-cloud { transform: scale(1.3); }
+.cloud-pos-sw { top: 60%; left: 20%; }
+.cloud-pos-sw .real-cloud { transform: scale(1.2); }
 
-.cloud-pos-w { top: 20%; left: 5%; }
-.cloud-pos-w .real-cloud { transform: scale(1); } /* Normal (Izquierda) */
+.cloud-pos-w { top: 35%; left: 15%; }
+.cloud-pos-w .real-cloud { transform: scale(1.0); }
 
-.cloud-pos-nw { top: 5%; left: 15%; }
-.cloud-pos-nw .real-cloud { transform: scale(0.7); }
+.cloud-pos-nw { top: 15%; left: 25%; }
+.cloud-pos-nw .real-cloud { transform: scale(0.8); }
 
 .storm-clouds .real-cloud { background: rgba(80, 80, 100, 0.8); } /* Stormy dark grey */
 
