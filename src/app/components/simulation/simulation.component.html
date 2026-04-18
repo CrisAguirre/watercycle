@@ -98,7 +98,7 @@
       <!-- Cuarto HUD (Escorrentía y Retorno Fluvial Constante) -->
       <div class="hud-panel hud-runoff" *ngIf="rates$ | async as rates">
         <div class="hud-title"><span class="hud-dot" style="background: #aaffcc;"></span> Escorrentía y Filtración</div>
-        <div class="hud-value">{{ getRunoffRate(rates) | number:'1.0-0' }}% <span class="hud-sub">| {{ getRunoffState(getRunoffRate(rates)) }}</span></div>
+        <div class="hud-value">{{ rates.runoffRate | number:'1.0-0' }}% <span class="hud-sub">| {{ getRunoffState(rates.runoffRate) }}</span></div>
       </div>
 
       <!-- 1. Evaporation Vapor -->

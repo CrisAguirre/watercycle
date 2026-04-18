@@ -33,6 +33,11 @@ export class SimulationComponent implements OnInit, OnDestroy {
   private audioInitialized = false;
   private currentRainLevel: 'none' | 'light' | 'heavy' = 'none';
 
+  // Bird Chirping System
+  private birdGain: GainNode | null = null;
+  private birdsActive = false;
+  private birdTimers: any[] = [];
+
   constructor(public simService: SimulationService) { }
 
   ngOnInit(): void {
@@ -55,6 +60,8 @@ export class SimulationComponent implements OnInit, OnDestroy {
       this.updateLightning(rates.condensationRate);
       // Rain Sound Logic
       this.updateRainSound(rates.precipitationRate);
+      // Bird Chirping Logic (cielo despejado)
+      this.updateBirdSound(rates.precipitationRate, rates.condensationRate);
     });
   }
 
@@ -118,19 +125,13 @@ export class SimulationComponent implements OnInit, OnDestroy {
     return 'Precipitación Torrencial';
   }
 
-  // Cuarta Fase: Escorrentía Analítica
-  getRunoffRate(rates: any): number {
-    const wind = rates.currentWindDir;
-    if (['E', 'NE', 'SE'].includes(wind)) return rates.precipitationRate; 
-    if (['N', 'S'].includes(wind)) return rates.precipitationRate * 0.4;
-    return 0;
-  }
-
+  // Cuarta Fase: Escorrentía (ahora calculada en el servicio con inercia)
   getRunoffState(rRate: number): string {
     if (rRate <= 0) return 'Cauces Secos';
-    if (rRate < 30) return 'Flujo de Ríos Moderado';
-    if (rRate < 60) return 'Corriente Terrestre Alta';
-    return 'Desbordamiento e Infiltración';
+    if (rRate < 15) return 'Infiltración Subterránea';
+    if (rRate < 40) return 'Flujo de Ríos Moderado';
+    if (rRate < 70) return 'Corriente Terrestre Alta';
+    return 'Desbordamiento e Inundación';
   }
 
   // Animación del Widget Brújula
@@ -259,10 +260,118 @@ export class SimulationComponent implements OnInit, OnDestroy {
   }
 
   private destroyAudio() {
+    this.stopBirds();
     if (this.rainNoiseLight) { try { this.rainNoiseLight.stop(); } catch(e) {} }
     if (this.rainNoiseHeavy) { try { this.rainNoiseHeavy.stop(); } catch(e) {} }
     if (this.audioCtx) { this.audioCtx.close(); }
     this.audioInitialized = false;
+  }
+
+  // ==========================================
+  // BIRD CHIRPING SYSTEM (Web Audio API Synth)
+  // Pajaritos cantan cuando el cielo está despejado
+  // (precipitación = 0on, condensación < 30%)
+  // ==========================================
+  private ensureAudioCtx() {
+    if (!this.audioCtx) {
+      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    return this.audioCtx;
+  }
+
+  private updateBirdSound(precipitationRate: number, condensationRate: number) {
+    const shouldSing = precipitationRate <= 0 && condensationRate < 30;
+
+    if (shouldSing && !this.birdsActive) {
+      this.startBirds();
+    } else if (!shouldSing && this.birdsActive) {
+      this.stopBirds();
+    }
+  }
+
+  private startBirds() {
+    const ctx = this.ensureAudioCtx();
+    if (!this.audioInitialized) this.initAudio();
+    this.birdGain = ctx.createGain();
+    this.birdGain.gain.value = 0;
+    this.birdGain.connect(ctx.destination);
+    // Fade in suave
+    this.birdGain.gain.linearRampToValueAtTime(0.15, ctx.currentTime + 2);
+    this.birdsActive = true;
+
+    // Programar 3 "aves" con patrones diferentes
+    for (let bird = 0; bird < 3; bird++) {
+      this.scheduleBirdLoop(bird);
+    }
+  }
+
+  private scheduleBirdLoop(birdId: number) {
+    if (!this.birdsActive) return;
+    // Cada ave tiene un intervalo base diferente con variación aleatoria
+    const baseIntervals = [2500, 4000, 6000];
+    const interval = baseIntervals[birdId] + Math.random() * 3000;
+
+    const timer = setTimeout(() => {
+      if (!this.birdsActive || !this.audioCtx || !this.birdGain) return;
+      this.playChirpSequence(birdId);
+      this.scheduleBirdLoop(birdId); // Reprogramar
+    }, interval);
+    this.birdTimers.push(timer);
+  }
+
+  private playChirpSequence(birdId: number) {
+    if (!this.audioCtx || !this.birdGain) return;
+    const ctx = this.audioCtx;
+    const now = ctx.currentTime;
+
+    // Cada ave tiene un rango de frecuencia diferente (especies distintas)
+    const birdProfiles = [
+      { freqBase: 3200, freqRange: 1200, noteCount: 3, noteLen: 0.08, gap: 0.1 },  // Gorrión: trinos rápidos agudos
+      { freqBase: 2400, freqRange: 800, noteCount: 2, noteLen: 0.15, gap: 0.2 },   // Mirlo: notas largas graves
+      { freqBase: 4000, freqRange: 1500, noteCount: 5, noteLen: 0.05, gap: 0.06 }, // Canario: cascada rápida
+    ];
+    const profile = birdProfiles[birdId % birdProfiles.length];
+
+    for (let i = 0; i < profile.noteCount; i++) {
+      const startTime = now + i * (profile.noteLen + profile.gap);
+      const freq1 = profile.freqBase + Math.random() * profile.freqRange;
+      const freq2 = freq1 + (Math.random() - 0.4) * 600; // Sweep ascendente o descendente
+
+      // Oscilador principal (tono puro del trino)
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq1, startTime);
+      osc.frequency.linearRampToValueAtTime(freq2, startTime + profile.noteLen);
+
+      // Envolvente de amplitud (ataque rápido, decay natural)
+      const env = ctx.createGain();
+      env.gain.setValueAtTime(0, startTime);
+      env.gain.linearRampToValueAtTime(0.6 + Math.random() * 0.4, startTime + 0.01);
+      env.gain.exponentialRampToValueAtTime(0.001, startTime + profile.noteLen);
+
+      osc.connect(env);
+      env.connect(this.birdGain);
+      osc.start(startTime);
+      osc.stop(startTime + profile.noteLen + 0.01);
+    }
+  }
+
+  private stopBirds() {
+    // Fade out suave
+    if (this.birdGain && this.audioCtx) {
+      this.birdGain.gain.linearRampToValueAtTime(0, this.audioCtx.currentTime + 1.5);
+    }
+    // Limpiar timers
+    this.birdTimers.forEach(t => clearTimeout(t));
+    this.birdTimers = [];
+    this.birdsActive = false;
+    // Desconectar gain después del fade
+    setTimeout(() => {
+      if (this.birdGain) {
+        try { this.birdGain.disconnect(); } catch(e) {}
+        this.birdGain = null;
+      }
+    }, 2000);
   }
 
   ngOnDestroy() {
