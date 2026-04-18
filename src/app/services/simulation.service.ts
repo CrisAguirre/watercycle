@@ -14,6 +14,7 @@ export interface CycleRates {
   evaporationRate: number;
   condensationRate: number;
   precipitationRate: number;
+  currentWindDir: number;
 }
 
 @Injectable({
@@ -52,14 +53,19 @@ export class SimulationService {
       condensationRate = Math.max(0, condensationRate);
 
       // 3. Precipitación: Efecto alcancía. Si la condensación supera el punto de rocío y peso.
-      // La presión atmosférica baja favorece fuertes tormentas.
       let precipFactor = condensationRate > 30 ? condensationRate * 1.5 : 0;
       let precipitationRate = precipFactor + (1013 - vars.atmosphericPressure) * 0.2;
+
+      // Dinámica de Despeje: Si llueve mucho, la nube "se descarga" y pierde condensación
+      if (precipitationRate > 20) {
+        condensationRate -= (precipitationRate * 0.4); 
+      }
 
       return {
         evaporationRate: Math.max(0, Math.min(100, evaporationRate)),
         condensationRate: Math.max(0, Math.min(100, condensationRate)),
-        precipitationRate: Math.max(0, Math.min(100, precipitationRate))
+        precipitationRate: Math.max(0, Math.min(100, precipitationRate)),
+        currentWindDir: vars.windDirection
       };
     })
   );
@@ -67,4 +73,9 @@ export class SimulationService {
   updateVariable(key: keyof SystemVariables, value: number) {
     this.variables.next({ ...this.variables.value, [key]: value });
   }
+
+  getCurrentWindDir(): number {
+    return this.variables.value.windDirection;
+  }
 }
+

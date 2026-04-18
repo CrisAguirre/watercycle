@@ -1,3 +1,4 @@
+<div class="scrollable-wrapper">
 <div class="app-layout">
   <header class="glass-panel header-nav">
     <div class="logo">
@@ -27,9 +28,10 @@
         <div class="real-cloud cl-left-2"></div>
       </div>
 
-      <!-- Main Cloud Cluster Over Mountain -->
+      <!-- Main Cloud Cluster Over Accumulation Point -->
       <!-- Turns darker grey when precipitating highly -->
-      <div class="cloud-cluster mountain-clouds" 
+      <div class="cloud-cluster" 
+           [ngClass]="(variables$ | async)?.windDirection === 1 ? 'mountain-clouds' : 'ocean-clouds'"
            [style.opacity]="(rates$ | async)?.condensationRate! / 100 + 0.2" 
            [style.transform]="'scale(' + ((rates$ | async)?.condensationRate! / 100 + 0.5) + ')' "
            [class.storm-clouds]="(rates$ | async)?.precipitationRate! > 50">
@@ -121,4 +123,44 @@
       </div>
     </div>
   </div>
+</div>
+
+  <!-- Pie de página: Guía Dinámica -->
+  <footer class="educational-guide">
+    <div class="guide-content glass-panel">
+      <h2 class="text-neon-blue">Guía Práctica del Simulador</h2>
+      
+      <section>
+        <h3 class="text-neon-purple mt-4">1. ¿Cómo utilizar esta herramienta?</h3>
+        <p>Este laboratorio virtual ha sido diseñado bajo los principios de la <strong>Dinámica de Sistemas</strong>. En lugar de ser una animación pasiva, el ciclo del agua reacciona matemáticamente a tus parámetros. Juega con los controles deslizables (sliders) ubicados a la derecha. Tu objetivo como estudiante es encontrar el punto de equilibrio termodinámico perfecto para generar un ciclo cerrado ininterrumpido (evaporación, condensación visible y precipitación constante).</p>
+      </section>
+      
+      <section>
+        <h3 class="text-neon-purple mt-4">2. Partes del Entorno Interactivo</h3>
+        <ul>
+          <li><strong>Océano y Montaña:</strong> Representan los ecosistemas base. El océano (izquierda) es nuestra principal fuente biomasa y la montaña genera el "efecto orográfico", ayudando al estancamiento de nubes.</li>
+          <li><strong>Dirección del Viento:</strong> Un pilar fundamental para trasladar el gas (vapor) desde el mar abierto hasta las cumbres, o arrastrarlo a alta mar perdiendo la humedad continental.</li>
+          <li><strong>Monitores (Output):</strong> Te indican en vivo la saturación existente en cada estado termodinámico calculados por la computadora local.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 class="text-neon-purple mt-4">3. El Modelo Matemático Subyacente (Fórmulas)</h3>
+        <p>Las representaciones visuales están dictadas permanentemente por un motor algebraico de cálculo en tiempo real que obedece leyes naturales. Las dinámicas detrás de la interfaz son:</p>
+        
+        <div class="math-box">
+          <p class="formula"><span class="text-neon-blue">Tasa de Evaporación</span> ∝ Temperatura + Radiación Solar + Vel. Viento - Humedad Base - Alta Presión</p>
+          <p class="expl"><small>El calor y el viento levantan el agua, pero si hay mucha Humedad Inicial o una Presión atmosférica extrema pesando sobre el mar, el vapor experimenta serias dificultades para subir.</small></p>
+          <hr class="separator">
+          
+          <p class="formula"><span class="text-neon-purple">Condensación (Densidad de Nubes)</span> ∝ Vapor Recibido - Exceso de Temperatura Termal</p>
+          <p class="expl"><small>Las nubes ganan biomasa si logran recibir vapor del mar. No obstante, un exceso crónico de temperatura ambiental dificultará que el vapor logre enfriarse y transicionar a su forma masiva semifluida, bloqueando el proceso.</small></p>
+          <hr class="separator">
+          
+          <p class="formula"><span style="color:#00ffcc">Precipitación (Lluvia)</span> ∝ (Masa de Condensación Estancada > Límite Peso) + Baja Presión</p>
+          <p class="expl"><small>Efecto saturación. Cuando la masa condensada en el tope montañoso supera una tolerancia física (nubes negras), colapsa precipitándose en cascada, siendo impulsada fuertemente si interviene un sistema de bajas presiones (tormenta). Además, <strong>la precipitación desgasta a la condensación</strong>, lo cual explica por qué las nubes mágicamente reducen su tamaño y se despejan a medida que drenan hidrológicamente a tierra firme.</small></p>
+        </div>
+      </section>
+    </div>
+  </footer>
 </div>
