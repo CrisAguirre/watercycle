@@ -1,0 +1,307 @@
+<app-simulation-wrapper
+  simTitle="Condensación"
+  simDescription="Modelado del punto de rocío y enfriamiento atmosférico para formación de nubes."
+  [simNumber]="2"
+  lineamientos="Lineamiento 2: Causalidad"
+  bloque="agua">
+
+  <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
+  <div actividad>
+    <div class="activity-content">
+      <h2>📋 Actividad: Formación de Nubes y Punto de Rocío</h2>
+      <p>En esta actividad explorarás cómo el <strong>enfriamiento atmosférico</strong> y el
+        <strong>punto de rocío</strong> determinan cuándo y dónde se forman las nubes en la atmósfera.</p>
+      <div class="activity-steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <p>Observa el indicador <strong>ΔT − Td</strong> (delta punto de rocío). Cuando esta diferencia se acerca a
+            0, el aire está casi saturado. Ajusta la humedad y observa qué pasa.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <p>Aumenta la <strong>Altitud</strong> gradualmente. Observa cómo la temperatura desciende
+            (gradiente adiabático: −6.5°C/km) y la humedad relativa aumenta hasta alcanzar la saturación.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <p>Reduce la <strong>Presión Atmosférica</strong> por debajo de 1000 hPa. ¿Cómo afecta la baja presión
+            (borrasca) a la formación de nubes?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <p>Intenta generar <strong>niebla</strong>: mantén la altitud baja (&lt;500m) y acerca la temperatura al
+            punto de rocío (ΔT−Td &lt; 2.5°C).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 2: SIMULADOR ═══════════ -->
+  <div simulador>
+    <div class="sim-container">
+      <div class="sim-main">
+
+        <!-- ====== ÁREA VISUAL ====== -->
+        <div class="sim-visual-area">
+
+          <!-- Sky gradient (changes with cloud mass) -->
+          <div class="sky-gradient"
+            [style.opacity]="1 - outputs.cloudMass / 200">
+          </div>
+
+          <!-- Altitude Indicator (side bar) -->
+          <div class="altitude-scale">
+            <div class="alt-label" style="top: 5%;">5000m</div>
+            <div class="alt-label" style="top: 25%;">4000m</div>
+            <div class="alt-label" style="top: 45%;">2500m</div>
+            <div class="alt-label" style="top: 65%;">1500m</div>
+            <div class="alt-label" style="top: 85%;">500m</div>
+            <div class="alt-label" style="top: 97%;">0m</div>
+            <div class="alt-marker" [style.top]="(1 - vars.altitude / 5000) * 92 + 4 + '%'">
+              <span class="alt-arrow">◀</span> {{ vars.altitude }}m
+            </div>
+            <div class="lcl-line" *ngIf="outputs.cloudBaseAltitude <= 5000"
+              [style.top]="(1 - outputs.cloudBaseAltitude / 5000) * 92 + 4 + '%'">
+              <span class="lcl-tag">LCL {{ outputs.cloudBaseAltitude }}m</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Clouds -->
+          <div class="cloud-formation"
+            [class.heavy-clouds]="outputs.cloudMass > 50"
+            [class.storm-clouds]="outputs.cloudMass > 80">
+            <div class="dynamic-cloud" *ngFor="let c of cloudParticles"
+              [style.left]="c.left"
+              [style.top]="c.top"
+              [style.width]="c.width"
+              [style.height]="c.height"
+              [style.opacity]="c.opacity"
+              [style.animationDelay]="c.delay"
+              [style.background]="getCondColor()">
+            </div>
+          </div>
+
+          <!-- Fog Effect (near surface when T ≈ Td) -->
+          <div class="fog-layer" *ngIf="fogActive">
+            <div class="fog-stream" *ngFor="let m of mistParticles"
+              [style.left]="m.left"
+              [style.animationDuration]="m.duration"
+              [style.animationDelay]="m.delay">
+            </div>
+          </div>
+
+          <!-- Background landscape -->
+          <div class="landscape-bg"></div>
+
+          <!-- Storm darkening overlay -->
+          <div class="storm-darken"
+            [class.darken-moderate]="outputs.cloudMass >= 70 && outputs.cloudMass < 85"
+            [class.darken-heavy]="outputs.cloudMass >= 85"></div>
+
+          <!-- ====== HUD PANELS ====== -->
+          <div class="hud-group-top">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #aa88ff;"></span> Punto de Rocío (Td)
+              </div>
+              <div class="hud-value">{{ outputs.dewPoint }} °C</div>
+            </div>
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" [style.background]="getDeltaColor()"></span> ΔT − Td</div>
+              <div class="hud-value" [style.color]="getDeltaColor()">{{ outputs.deltaTdew }} °C
+                <span class="hud-sub">{{ outputs.deltaTdew <= 2 ? '🟢 Saturado' : outputs.deltaTdew <= 5 ? '🟡 Cercano' : '🔴 Lejos' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-left">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #00c8ff;"></span> Masa de Nubes</div>
+              <div class="hud-value">{{ outputs.cloudMass }}% <span class="hud-sub">|
+                  {{ outputs.cloudState }}</span></div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-right">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #ffaa00;"></span> T° a {{ vars.altitude
+                }}m</div>
+              <div class="hud-value">{{ outputs.tempAtAltitude }} °C</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ====== PANEL DE CONTROLES ====== -->
+        <div class="sim-controls glass-panel">
+          <h3 class="panel-title">Variables Atmosféricas</h3>
+
+          <div class="slider-group">
+            <label>🌡️ Temperatura del Aire (°C): <strong>{{ vars.airTemperature }}</strong></label>
+            <input type="range" min="-10" max="50" [value]="vars.airTemperature"
+              (input)="onVarChange($event, 'airTemperature')" class="neon-slider" />
+            <div class="slider-hint">Temperatura a nivel del suelo</div>
+          </div>
+
+          <div class="slider-group">
+            <label>💧 Humedad Relativa (%): <strong>{{ vars.humidity }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.humidity"
+              (input)="onVarChange($event, 'humidity')" class="neon-slider" />
+            <div class="slider-hint">Contenido de vapor de agua en el aire</div>
+          </div>
+
+          <div class="slider-group">
+            <label>🔻 Presión Atmosférica (hPa): <strong>{{ vars.atmosphericPressure }}</strong></label>
+            <input type="range" min="900" max="1100" [value]="vars.atmosphericPressure"
+              (input)="onVarChange($event, 'atmosphericPressure')" class="neon-slider" />
+            <div class="slider-hint">Baja = borrasca (facilita ascenso) | Alta = anticiclón (inhibe nubes)</div>
+          </div>
+
+          <div class="slider-group">
+            <label>⛰️ Altitud de Observación (m): <strong>{{ vars.altitude }}</strong></label>
+            <input type="range" min="0" max="5000" step="100" [value]="vars.altitude"
+              (input)="onVarChange($event, 'altitude')" class="neon-slider" />
+            <div class="slider-hint">Simula el ascenso del aire. −6.5°C por cada 1000m</div>
+          </div>
+
+          <!-- Estación de Monitoreo -->
+          <div class="monitor-panel">
+            <h4 class="monitor-title">Instrumentación Meteorológica</h4>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Estabilidad Atmosférica</span>
+              <span class="monitor-value">{{ outputs.atmosphericStability }}</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">HR a {{ vars.altitude }}m</span>
+              <span class="monitor-value" [class.highlight]="outputs.relativeHumidityAtAlt >= 95">
+                {{ outputs.relativeHumidityAtAlt }}%</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Base de Nubes (LCL)</span>
+              <span class="monitor-value">{{ outputs.cloudBaseAltitude }}m</span>
+            </div>
+
+            <div class="meter-row">
+              <span>Masa de Nubes</span>
+              <div class="meter-bar">
+                <div class="fill purple" [style.width.%]="outputs.cloudMass"></div>
+              </div>
+            </div>
+
+            <div class="meter-row">
+              <span>Tasa de Condensación</span>
+              <div class="meter-bar">
+                <div class="fill cyan" [style.width.%]="outputs.condensationRate"></div>
+              </div>
+            </div>
+
+            <div class="monitor-row" *ngIf="fogActive">
+              <span class="monitor-label fog-label">🌫️ NIEBLA DETECTADA</span>
+              <span class="monitor-value fog-value">T ≈ Td</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====== GUÍA EDUCATIVA / FOOTER ====== -->
+      <footer class="educational-guide">
+        <div class="guide-content glass-panel">
+          <h2 class="text-neon-blue">Manual de Operación: Simulador de Condensación</h2>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">1. ¿Qué es la Condensación?</h3>
+            <p>La condensación es el proceso inverso a la evaporación: las moléculas de vapor de agua en la
+              atmósfera <strong>liberan energía</strong> y se agrupan formando gotas microscópicas de agua líquida.
+              Este proceso es responsable de la <strong>formación de nubes, niebla y rocío</strong>.</p>
+            <p>La condensación ocurre cuando la temperatura del aire desciende hasta el
+              <strong>punto de rocío (Td)</strong>, es decir, cuando el aire se satura al 100% de humedad relativa.</p>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">2. Fórmulas del Simulador</h3>
+
+            <div class="math-box">
+              <p class="formula">α = (17.27 × T) / (237.3 + T) + ln(HR / 100)</p>
+              <p class="formula">Td = (237.3 × α) / (17.27 − α) [°C]</p>
+              <p class="expl">Fórmula de Magnus — Calcula el punto de rocío a partir de la temperatura y humedad
+                relativa. Cuando T = Td, el aire está saturado.</p>
+              <hr class="separator" />
+              <p class="formula">T<sub>alt</sub> = T<sub>sup</sub> − (h / 1000) × 6.5 [°C]</p>
+              <p class="expl">Gradiente adiabático seco — La temperatura disminuye ~6.5°C por cada 1000m de ascenso.
+                Esto explica por qué las montañas altas tienen nubes.</p>
+              <hr class="separator" />
+              <p class="formula">LCL ≈ 125 × (T − Td) [metros]</p>
+              <p class="expl">Nivel de Condensación por Ascenso (LCL) — Es la altitud a la cual el aire ascendente
+                alcanza la saturación y empiezan a formarse las nubes.</p>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">3. Funcionamiento de los Controles</h3>
+            <ul>
+              <li><strong>Temperatura del Aire (°C):</strong> Determina cuánto vapor puede contener el aire.
+                Aire caliente → más capacidad → menos condensación. Aire frío → rápida saturación.</li>
+              <li><strong>Humedad Relativa (%):</strong> Cuánto vapor hay actualmente. A 100%, cualquier enfriamiento
+                genera condensación inmediata. A valores bajos, se necesita mucho enfriamiento para saturar.</li>
+              <li><strong>Presión Atmosférica (hPa):</strong> Baja presión (borrasca) favorece el ascenso convectivo
+                del aire, enfriándolo y formando nubes. Alta presión inhibe el ascenso y disipa nubes.</li>
+              <li><strong>Altitud (m):</strong> Simula el ascenso orográfico. A mayor altitud, el aire se enfría
+                por expansión adiabática y la HR aumenta hasta alcanzar el 100% (formación de nubes).</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">4. Interpretación de los Indicadores</h3>
+            <ul>
+              <li><strong>Punto de Rocío (Td):</strong> La temperatura a la cual el aire se satura. Si T baja hasta
+                Td = condensación.</li>
+              <li><strong>ΔT − Td:</strong> La "distancia" al punto de saturación. 🟢 &lt; 2°C: saturación inmediata.
+                🟡 2-5°C: cercano. 🔴 &gt; 10°C: lejos de condensar.</li>
+              <li><strong>LCL (Nivel de Condensación):</strong> La altitud donde se forma la base de las nubes.
+                Aparece como línea punteada azul en el indicador lateral de altitud.</li>
+              <li><strong>Masa de Nubes:</strong> Un <em>acumulador</em> (stock). Se llena con condensación y se
+                vacía por disipación natural, alta presión o calentamiento.</li>
+              <li><strong>Tipos de Nubes:</strong> Cirros (&lt;20%), Cúmulos (20-45%), Estratocúmulos (45-70%),
+                Nimboestratos (70-90%), Cumulonimbos (&gt;90%).</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">5. Experimentos Sugeridos</h3>
+            <ul>
+              <li>🧪 <strong>Generar niebla:</strong> T = 15°C, HR = 95%, Altitud = 0m, Presión = 1013 hPa.
+                Observa cómo aparece la niebla cuando ΔT−Td &lt; 2.5°C.</li>
+              <li>🧪 <strong>Formación orográfica:</strong> T = 25°C, HR = 60%, P = 1013 hPa. Sube la altitud
+                lentamente y observa cuándo la HR llega al 100% y se forman nubes.</li>
+              <li>🧪 <strong>Efecto anticiclón:</strong> Con nubes formadas, sube la presión a 1060 hPa. Observa
+                cómo las nubes se disipan por subsidencia anticiclónica.</li>
+            </ul>
+          </section>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 3: EVALUACIÓN ═══════════ -->
+  <div evaluacion>
+    <div class="eval-content">
+      <h2>📝 Evaluación: Condensación</h2>
+      <p>Responde las siguientes preguntas basándote en tu experimentación con el simulador:</p>
+      <div class="eval-placeholder">
+        <p><strong>Pregunta 1:</strong> ¿Qué condiciones atmosféricas favorecen la condensación? Describe al menos
+          3 factores y su relación causal.</p>
+        <p><strong>Pregunta 2:</strong> ¿Cómo se altera el equilibrio del sistema si la temperatura atmosférica
+          aumenta globalmente? ¿Qué pasa con el punto de rocío y la formación de nubes?</p>
+        <p><strong>Pregunta 3:</strong> Explica la diferencia entre niebla y nubes usando los conceptos de altitud
+          y punto de rocío.</p>
+        <p><strong>Pregunta 4:</strong> Si un aire húmedo asciende por una montaña de 3000m de altura con T = 30°C
+          y HR = 50%, ¿a qué altitud se formarán las nubes? Usa la fórmula del LCL.</p>
+        <div class="placeholder-badge">🔧 Cuestionario interactivo — Próximamente</div>
+      </div>
+    </div>
+  </div>
+
+</app-simulation-wrapper>

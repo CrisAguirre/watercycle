@@ -1,0 +1,49 @@
+<div class="recursos-page">
+  <div class="rec-header">
+    <h1 class="rec-title">Recursos y Evidencias</h1>
+    <p class="rec-subtitle">Biblioteca de materiales de apoyo y módulo de carga de evidencias</p>
+  </div>
+
+  <!-- Section Tabs -->
+  <div class="rec-tabs">
+    <button class="rec-tab" [class.active]="activeSection === 'videos'" (click)="setSection('videos')">
+      🎬 Videos
+    </button>
+    <button class="rec-tab" [class.active]="activeSection === 'guias'" (click)="setSection('guias')">
+      📖 Guías Digitales
+    </button>
+    <button class="rec-tab" [class.active]="activeSection === 'evidencias'" (click)="setSection('evidencias')">
+      📸 Mis Evidencias
+    </button>
+  </div>
+
+  <!-- Videos Section -->
+  <div class="rec-content" *ngIf="activeSection === 'videos'">
+    <div class="empty-state">
+      <div class="empty-icon">🎬</div>
+      <h3>Videos Educativos</h3>
+      <p>Próximamente se agregarán videos de apoyo como "Cómo los lobos cambiaron los ríos" y otros recursos multimedia para cada sesión.</p>
+    </div>
+  </div>
+
+  <!-- Guías Section -->
+  <div class="rec-content" *ngIf="activeSection === 'guias'">
+    <div class="empty-state">
+      <div class="empty-icon">📖</div>
+      <h3>Guías Digitales</h3>
+      <p>Aquí encontrarás las guías digitales de cada sesión, infografías interactivas y materiales descargables.</p>
+    </div>
+  </div>
+
+  <!-- Evidencias Section -->
+  <div class="rec-content" *ngIf="activeSection === 'evidencias'">
+    <div class="empty-state">
+      <div class="empty-icon">📸</div>
+      <h3>Mis Evidencias</h3>
+      <p>Próximamente podrás cargar capturas de pantalla de tus resultados de simulación, diagramas y reportes.</p>
+      <button class="btn-upload" disabled>
+        📤 Subir Evidencia (Próximamente)
+      </button>
+    </div>
+  </div>
+</div>

@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       if (email === 'ciclodelagua@mail.com' && password === '1234567') {
-        this.router.navigate(['/simulation']);
+        this.router.navigate(['/dashboard']);
       } else {
         this.errorMessage = 'Credenciales inválidas. Por favor intente de nuevo.';
       }

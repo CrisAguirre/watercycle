@@ -1,0 +1,56 @@
+<div class="dashboard-page">
+  <div class="dash-header">
+    <h1 class="dash-title">Mis Sesiones</h1>
+    <p class="dash-subtitle">Tu progreso en la secuencia didáctica de pensamiento sistémico</p>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width]="'14%'"></div>
+      </div>
+      <span class="progress-text">1 de 7 sesiones disponibles</span>
+    </div>
+  </div>
+
+  <!-- Sessions Timeline -->
+  <div class="sessions-timeline">
+    <div class="timeline-line"></div>
+    
+    <div class="session-card" 
+         *ngFor="let session of sessions; let i = index"
+         [class.completed]="session.status === 'completed'"
+         [class.available]="session.status === 'available'"
+         [class.locked]="session.status === 'locked'">
+      
+      <!-- Timeline Node -->
+      <div class="timeline-node">
+        <div class="node-circle">
+          <span *ngIf="session.status === 'completed'">✓</span>
+          <span *ngIf="session.status === 'available'">{{ session.number }}</span>
+          <span *ngIf="session.status === 'locked'">🔒</span>
+        </div>
+      </div>
+
+      <!-- Card Content -->
+      <div class="session-content" [routerLink]="session.status !== 'locked' ? session.route : null">
+        <div class="session-top">
+          <span class="session-number">Sesión {{ session.number }}</span>
+          <span class="session-status">{{ getStatusLabel(session.status) }}</span>
+        </div>
+        
+        <h3 class="session-title">{{ session.title }}</h3>
+        <p class="session-subtitle">{{ session.subtitle }}</p>
+        
+        <div class="session-meta">
+          <span class="meta-item">⏱ {{ session.duration }}</span>
+          <span class="meta-item">🔬 {{ session.simulations }}</span>
+          <span class="meta-item">📐 {{ session.lineamientos }}</span>
+        </div>
+
+        <div class="session-action" *ngIf="session.status === 'available'">
+          <button class="btn-start" [routerLink]="session.route">Comenzar Sesión →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

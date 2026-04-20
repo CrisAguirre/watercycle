@@ -1,0 +1,30 @@
+<nav class="eva-navbar">
+  <div class="nav-brand">
+    <span class="brand-icon">💧</span>
+    <span class="brand-name"><span class="brand-highlight">EVA</span> <span class="brand-sub">Entorno Virtual de Aprendizaje</span></span>
+  </div>
+
+  <div class="nav-tabs">
+    <a class="nav-tab" routerLink="/landing" routerLinkActive="active">
+      <span class="tab-icon">🏠</span>
+      <span class="tab-label">Inicio</span>
+    </a>
+    <a class="nav-tab" routerLink="/dashboard" routerLinkActive="active">
+      <span class="tab-icon">📊</span>
+      <span class="tab-label">Mis Sesiones</span>
+    </a>
+    <a class="nav-tab" routerLink="/laboratorio" routerLinkActive="active">
+      <span class="tab-icon">🔬</span>
+      <span class="tab-label">Laboratorio</span>
+    </a>
+    <a class="nav-tab" routerLink="/recursos" routerLinkActive="active">
+      <span class="tab-icon">📁</span>
+      <span class="tab-label">Recursos</span>
+    </a>
+  </div>
+
+  <button class="btn-logout" (click)="logout()">
+    <span class="logout-icon">🚪</span>
+    <span class="logout-text">Salir</span>
+  </button>
+</nav>

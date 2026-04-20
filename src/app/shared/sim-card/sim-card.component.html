@@ -1,0 +1,17 @@
+<a class="sim-card" 
+   [class.agua]="bloque === 'agua'" 
+   [class.agro]="bloque === 'agro'"
+   [class.disabled]="!available"
+   [routerLink]="available ? routePath : null">
+  <div class="card-glow"></div>
+  <div class="card-number">{{ simNumber }}</div>
+  <div class="card-icon">{{ icon }}</div>
+  <h3 class="card-title">{{ title }}</h3>
+  <p class="card-desc">{{ description }}</p>
+  <div class="card-status" *ngIf="!available">
+    <span class="status-badge">🔒 Próximamente</span>
+  </div>
+  <div class="card-status" *ngIf="available">
+    <span class="status-badge active">✅ Disponible</span>
+  </div>
+</a>

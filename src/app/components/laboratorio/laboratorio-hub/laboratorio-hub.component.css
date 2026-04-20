@@ -1,0 +1,78 @@
+.lab-hub-page {
+  padding: 32px 24px 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #e0e0e0;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.lab-header {
+  margin-bottom: 40px;
+}
+
+.lab-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, #fff, #a0d0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lab-subtitle {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* Block Header */
+.sim-block {
+  margin-bottom: 48px;
+}
+
+.block-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.block-icon {
+  font-size: 2rem;
+}
+
+.block-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.block-desc {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 2px 0 0;
+}
+
+/* Grid */
+.sim-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .lab-hub-page {
+    padding: 20px 16px 60px;
+  }
+
+  .lab-title {
+    font-size: 1.4rem;
+  }
+
+  .sim-grid {
+    grid-template-columns: 1fr;
+  }
+}

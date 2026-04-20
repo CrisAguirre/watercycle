@@ -1,0 +1,280 @@
+<app-simulation-wrapper
+  simTitle="Evaporación"
+  simDescription="Control de radiación solar y temperatura. Visualización del cambio de fase líquido-gaseoso."
+  [simNumber]="1"
+  lineamientos="Lineamientos 1 y 2: Componentes y Causalidad"
+  bloque="agua">
+
+  <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
+  <div actividad>
+    <div class="activity-content">
+      <h2>📋 Actividad: Agente Causal Térmico</h2>
+      <p>En esta actividad explorarás cómo la <strong>radiación solar</strong> y la <strong>temperatura</strong> actúan
+        como agentes causales principales de la evaporación, provocando el cambio de fase del agua de líquido a gas.</p>
+      <div class="activity-steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <p>Explora el simulador aumentando y reduciendo la <strong>Temperatura del Agua</strong>. Observa cómo cambia
+            el estado de fase y la tasa de evaporación.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <p>Incrementa la <strong>Radiación Solar</strong> al máximo. ¿Qué sucede con la temperatura superficial del
+            agua y las partículas de vapor?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <p>Sube la <strong>Humedad Ambiental</strong> al 100%. ¿El agua sigue evaporándose? Reflexiona sobre por qué
+            el aire saturado bloquea la evaporación.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <p>Experimenta con el <strong>Viento</strong>. ¿Cómo afecta la velocidad del viento a la evaporación? Piensa
+            en el concepto de "capa límite de aire".</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 2: SIMULADOR ═══════════ -->
+  <div simulador>
+    <div class="sim-container">
+      <div class="sim-main">
+
+        <!-- ====== ÁREA VISUAL ====== -->
+        <div class="sim-visual-area">
+          <!-- Sol dinámico -->
+          <div class="evap-sun" [style.opacity]="vars.solarRadiation / 100 * 0.7 + 0.3"
+            [style.transform]="'scale(' + (0.7 + vars.solarRadiation / 100 * 0.5) + ')'">
+          </div>
+
+          <!-- Rayos solares dinámicos -->
+          <div class="solar-rays" [style.opacity]="vars.solarRadiation / 100 * 0.6">
+            <div class="ray ray-1"></div>
+            <div class="ray ray-2"></div>
+            <div class="ray ray-3"></div>
+            <div class="ray ray-4"></div>
+            <div class="ray ray-5"></div>
+          </div>
+
+          <!-- Heat shimmer overlay -->
+          <div class="heat-shimmer" *ngIf="heatShimmerActive"></div>
+
+          <!-- Boiling bubbles overlay -->
+          <div class="boiling-overlay" *ngIf="boilingActive"></div>
+
+          <!-- Vapor Particles (Rising from water) -->
+          <div class="vapor-particle" *ngFor="let p of vaporParticles"
+            [style.left]="p.left"
+            [style.width]="p.size"
+            [style.height]="p.size"
+            [style.animationDuration]="p.duration"
+            [style.animationDelay]="p.delay">
+          </div>
+
+          <!-- Water Surface (animated) -->
+          <div class="water-body"
+            [style.background]="'linear-gradient(180deg, ' + getPhaseColor() + '33 0%, ' + getPhaseColor() + '88 50%, #001a33 100%)'">
+            <div class="wave wave-1"></div>
+            <div class="wave wave-2"></div>
+            <div class="wave wave-3"></div>
+          </div>
+
+          <!-- Ice overlay (when frozen) -->
+          <div class="ice-overlay" *ngIf="vars.waterTemperature <= 0"></div>
+
+          <!-- ====== HUD PANELS ====== -->
+          <div class="hud-group-top">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #00c8ff;"></span> Tasa de Evaporación
+              </div>
+              <div class="hud-value">{{ outputs.evaporationRate }}% <span class="hud-sub">|
+                  {{ getEvapState(outputs.evaporationRate) }}</span></div>
+            </div>
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #ff9500;"></span> T° Superficial del Agua
+              </div>
+              <div class="hud-value">{{ outputs.waterSurfaceTemp }} °C</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-left">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #aa88ff;"></span> Estado de Fase</div>
+              <div class="hud-value hud-value-sm">{{ outputs.phaseState }}</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-right">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #00ffa5;"></span> Déficit de P. Vapor
+              </div>
+              <div class="hud-value">{{ outputs.vaporPressureDeficit }} kPa</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ====== PANEL DE CONTROLES ====== -->
+        <div class="sim-controls glass-panel">
+          <h3 class="panel-title">Variables de Entrada</h3>
+
+          <div class="slider-group">
+            <label>🌡️ Temperatura del Agua (°C): <strong>{{ vars.waterTemperature }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.waterTemperature"
+              (input)="onVarChange($event, 'waterTemperature')" class="neon-slider" />
+            <div class="slider-hint">Controla la energía cinética de las moléculas</div>
+          </div>
+
+          <div class="slider-group">
+            <label>☀️ Radiación Solar (%): <strong>{{ vars.solarRadiation }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.solarRadiation"
+              (input)="onVarChange($event, 'solarRadiation')" class="neon-slider" />
+            <div class="slider-hint">Energía electromagnética que calienta la superficie</div>
+          </div>
+
+          <div class="slider-group">
+            <label>💨 Velocidad del Viento (km/h): <strong>{{ vars.windSpeed }}</strong></label>
+            <input type="range" min="1" max="100" [value]="vars.windSpeed"
+              (input)="onVarChange($event, 'windSpeed')" class="neon-slider" />
+            <div class="slider-hint">Renueva la capa límite de aire sobre el agua</div>
+          </div>
+
+          <div class="slider-group">
+            <label>💧 Humedad Ambiental (%): <strong>{{ vars.humidity }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.humidity"
+              (input)="onVarChange($event, 'humidity')" class="neon-slider" />
+            <div class="slider-hint">Si HR = 100%, el aire está saturado y bloquea la evaporación</div>
+          </div>
+
+          <!-- Estación de Monitoreo -->
+          <div class="monitor-panel">
+            <h4 class="monitor-title">Estación de Monitoreo</h4>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Actividad Molecular</span>
+              <span class="monitor-value">{{ outputs.molecularActivity }}</span>
+            </div>
+
+            <div class="meter-row">
+              <span>Evaporación</span>
+              <div class="meter-bar">
+                <div class="fill blue" [style.width.%]="outputs.evaporationRate"></div>
+              </div>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">P. Vapor Saturación</span>
+              <span class="monitor-value">{{ outputs.saturationVaporPressure }} kPa</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">P. Vapor Actual</span>
+              <span class="monitor-value">{{ outputs.vaporPressure }} kPa</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Déficit VP (Fuerza Motriz)</span>
+              <span class="monitor-value highlight">{{ outputs.vaporPressureDeficit }} kPa</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====== GUÍA EDUCATIVA / FOOTER ====== -->
+      <footer class="educational-guide">
+        <div class="guide-content glass-panel">
+          <h2 class="text-neon-blue">Manual de Operación: Simulador de Evaporación</h2>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">1. ¿Qué es la Evaporación?</h3>
+            <p>La evaporación es el proceso físico mediante el cual las moléculas de agua en la superficie adquieren
+              suficiente <strong>energía cinética</strong> para superar las fuerzas intermoleculares (puentes de
+              hidrógeno) y escapar al aire en forma de vapor. Es el primer paso fundamental del ciclo hidrológico.</p>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">2. Fórmulas Implementadas en el Simulador</h3>
+
+            <div class="math-box">
+              <p class="formula">Ps = 0.6108 × e<sup>(17.27 × T) / (T + 237.3)</sup> [kPa]</p>
+              <p class="expl">Ecuación de Antoine/Magnus — Presión de vapor de saturación. A mayor temperatura, mayor
+                presión de saturación, mayor capacidad del aire de "absorber" agua.</p>
+              <hr class="separator" />
+              <p class="formula">VPD = Ps − Pa [kPa]</p>
+              <p class="expl">Déficit de presión de vapor — La <strong>fuerza motriz</strong> de la evaporación. Si
+                VPD = 0, el aire está saturado y la evaporación cesa.</p>
+              <hr class="separator" />
+              <p class="formula">E = f(v) × VPD × R<sub>sol</sub> × C(T) × (1 − HR/100)<sup>1.3</sup></p>
+              <p class="expl">Modelo Penman simplificado — Integra el efecto del viento (función de Dalton), la radiación, la
+                respuesta exponencial de Clausius-Clapeyron y el bloqueo por humedad.</p>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">3. Funcionamiento de los Controles</h3>
+            <ul>
+              <li><strong>Temperatura del Agua (°C):</strong> Controla la energía térmica de las moléculas. A 0°C el
+                agua se congela (evaporación casi nula por sublimación). A 100°C entra en ebullición total.</li>
+              <li><strong>Radiación Solar (%):</strong> Energía electromagnética que calienta la capa superficial del
+                agua. Incrementa la temperatura de superficie hasta +12°C respecto al volumen.</li>
+              <li><strong>Velocidad del Viento (km/h):</strong> Renueva la capa límite de aire cercana a la superficie.
+                Más viento = más transporte advectivo = más evaporación (hasta saturarse).</li>
+              <li><strong>Humedad Ambiental (%):</strong> Si el aire ya contiene mucho vapor (HR alta), pierde
+                capacidad de "absorber" más agua. A HR = 100%, la evaporación cesa completamente (VPD = 0).</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">4. Interpretación de los Indicadores</h3>
+            <ul>
+              <li><strong>Tasa de Evaporación (%):</strong> Mide la velocidad con la que el agua pasa a vapor en este
+                instante. Es un <em>flujo</em>, no un stock.</li>
+              <li><strong>T° Superficial:</strong> Diferente a la temperatura del volumen. La superficie se calienta más
+                rápido por radiación directa.</li>
+              <li><strong>Presión de Vapor de Saturación (Ps):</strong> La máxima presión de vapor que el aire puede
+                sostener a esa temperatura.</li>
+              <li><strong>Déficit de Presión de Vapor (VPD):</strong> La diferencia entre lo que el aire <em>puede</em>
+                contener y lo que <em>actualmente</em> contiene. Es la fuerza que "jala" el agua hacia el aire.</li>
+              <li><strong>Estado de Fase:</strong> Indica si el agua está sólida, líquida o gaseosa según la
+                temperatura.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">5. Experimentos Sugeridos</h3>
+            <ul>
+              <li>🧪 <strong>Experimento 1:</strong> Fija la radiación en 0% y sube la temperatura lentamente de 0°C a
+                100°C. Observa la curva exponencial de la evaporación (Clausius-Clapeyron).</li>
+              <li>🧪 <strong>Experimento 2:</strong> Con T = 25°C, sube la humedad de 0% a 100%. Nota cómo el VPD llega
+                a cero y la evaporación se detiene.</li>
+              <li>🧪 <strong>Experimento 3:</strong> Compara evaporación con viento = 5 km/h vs viento = 80 km/h.
+                ¿Cuánto cambia la tasa?</li>
+            </ul>
+          </section>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 3: EVALUACIÓN ═══════════ -->
+  <div evaluacion>
+    <div class="eval-content">
+      <h2>📝 Evaluación: Evaporación</h2>
+      <p>Responde las siguientes preguntas basándote en tu experimentación con el simulador:</p>
+      <div class="eval-placeholder">
+        <p><strong>Pregunta 1:</strong> ¿Cómo se relaciona la radiación solar con la tasa de evaporación? Describe la
+          relación causal observada.</p>
+        <p><strong>Pregunta 2:</strong> ¿Qué sucede con la evaporación cuando la temperatura del agua alcanza 100°C?
+          ¿Y cuando baja a 0°C?</p>
+        <p><strong>Pregunta 3:</strong> Explica por qué la humedad ambiental "bloquea" la evaporación. Usa el concepto
+          de <em>déficit de presión de vapor</em> en tu respuesta.</p>
+        <p><strong>Pregunta 4:</strong> Identifica los componentes bióticos y abióticos del sistema de evaporación.
+          ¿Cuáles son las entradas y salidas del sistema?</p>
+        <div class="placeholder-badge">🔧 Cuestionario interactivo — Próximamente</div>
+      </div>
+    </div>
+  </div>
+
+</app-simulation-wrapper>

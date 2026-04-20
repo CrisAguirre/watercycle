@@ -1,0 +1,39 @@
+<div class="sim-wrapper" [class.bloque-agua]="bloque === 'agua'" [class.bloque-agro]="bloque === 'agro'">
+  <!-- Header -->
+  <div class="sim-header">
+    <button class="btn-back" routerLink="/laboratorio">
+      <span class="back-arrow">←</span> Laboratorio
+    </button>
+    <div class="sim-title-block">
+      <span class="sim-badge">Simulación {{ simNumber }}</span>
+      <h1 class="sim-title">{{ simTitle }}</h1>
+      <p class="sim-lineamientos">{{ lineamientos }}</p>
+    </div>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="sim-tabs">
+    <button class="sim-tab" [class.active]="activeTab === 'actividad'" (click)="setTab('actividad')">
+      <span class="tab-icon">📋</span> Actividad
+    </button>
+    <button class="sim-tab" [class.active]="activeTab === 'simulador'" (click)="setTab('simulador')">
+      <span class="tab-icon">🔬</span> Simulador
+    </button>
+    <button class="sim-tab" [class.active]="activeTab === 'evaluacion'" (click)="setTab('evaluacion')">
+      <span class="tab-icon">📝</span> Evaluación
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="sim-tab-content">
+    <div class="tab-panel" *ngIf="activeTab === 'actividad'">
+      <ng-content select="[actividad]"></ng-content>
+    </div>
+    <div class="tab-panel" *ngIf="activeTab === 'simulador'">
+      <ng-content select="[simulador]"></ng-content>
+    </div>
+    <div class="tab-panel" *ngIf="activeTab === 'evaluacion'">
+      <ng-content select="[evaluacion]"></ng-content>
+    </div>
+  </div>
+</div>

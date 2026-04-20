@@ -1,0 +1,276 @@
+<app-simulation-wrapper
+  simTitle="Escalas Productivas"
+  simDescription="Simulador matemático de rendimiento. Cálculo de agua y fertilizante por área de siembra."
+  [simNumber]="7"
+  lineamientos="Lineamiento 3: Escalas"
+  bloque="agro">
+
+  <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
+  <div actividad>
+    <div class="activity-content">
+      <h2>📋 Actividad: Proporciones de Producción</h2>
+      <p>Resuelve el problema de escala: <strong>¿Cuánta agua necesita una hectárea de cultivo comparada con una
+        maceta de casa?</strong> Aprende a escalar proporciones agrícolas.</p>
+      <div class="activity-steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <p>Comienza con <strong>1 m²</strong> (maceta). Anota cuánta agua se requiere. Luego sube a
+            <strong>10000 m²</strong> (hectárea). ¿Es proporcional?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <p>Compara los 3 métodos de riego: Goteo, Aspersión y Gravedad. ¿Cuál usa menos agua para el mismo
+            rendimiento?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <p>Con Papa y 1 hectárea, busca la fertilización que maximiza el <strong>margen de ganancia</strong>.
+            ¿Más fertilizante siempre es mejor?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <p>Compara Papa vs Café. ¿Cuál genera más ingreso por hectárea? ¿Cuál usa más agua? Calcula la
+            <strong>eficiencia del agua</strong> (kg/m³).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 2: SIMULADOR ═══════════ -->
+  <div simulador>
+    <div class="sim-container">
+      <div class="sim-main">
+
+        <!-- ====== ÁREA VISUAL ====== -->
+        <div class="sim-visual-area">
+
+          <!-- Background -->
+          <div class="landscape-bg"></div>
+
+          <!-- Scale Visualization -->
+          <div class="scale-display">
+            <div class="scale-header">
+              <span class="scale-emoji">{{ outputs.cropEmoji }}</span>
+              <span class="scale-name">{{ outputs.scaleLabel }}</span>
+              <span class="scale-area">{{ vars.productionScale | number }} m²</span>
+            </div>
+
+            <!-- Scale Grid Icons -->
+            <div class="scale-grid">
+              <span class="scale-icon" *ngFor="let icon of scaleIcons">{{ icon }}</span>
+            </div>
+          </div>
+
+          <!-- Bar Chart Display -->
+          <div class="chart-area">
+            <div class="chart-container">
+              <!-- Yield Bar -->
+              <div class="chart-bar-group">
+                <div class="chart-label">Rendimiento</div>
+                <div class="chart-bar-wrap">
+                  <div class="chart-bar yield" [style.width.%]="yieldBar"></div>
+                </div>
+                <div class="chart-value">{{ outputs.yieldEstimate }} ton/ha</div>
+              </div>
+
+              <!-- Water Bar -->
+              <div class="chart-bar-group">
+                <div class="chart-label">Agua Requerida</div>
+                <div class="chart-bar-wrap">
+                  <div class="chart-bar water" [style.width.%]="waterBar"></div>
+                </div>
+                <div class="chart-value">{{ outputs.waterRequired | number }} m³</div>
+              </div>
+
+              <!-- Cost Bar -->
+              <div class="chart-bar-group">
+                <div class="chart-label">Costo Total</div>
+                <div class="chart-bar-wrap">
+                  <div class="chart-bar cost" [style.width.%]="costBar"></div>
+                </div>
+                <div class="chart-value">{{ formatCOP(outputs.productionCost) }}</div>
+              </div>
+
+              <!-- Profit Bar -->
+              <div class="chart-bar-group">
+                <div class="chart-label">Margen</div>
+                <div class="chart-bar-wrap">
+                  <div class="chart-bar profit" [style.width.%]="profitBar"
+                    [style.background]="getProfitColor()"></div>
+                </div>
+                <div class="chart-value" [style.color]="getProfitColor()">{{ outputs.profitMargin }}%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ====== HUD PANELS ====== -->
+          <div class="hud-group-top">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #ffaa00;"></span> Eficiencia del Agua</div>
+              <div class="hud-value">{{ outputs.waterEfficiency }} kg/m³</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-left">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #44aaff;"></span> Agua/Planta</div>
+              <div class="hud-value">{{ outputs.waterPerPlant }} L</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-right">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" [style.background]="getProfitColor()"></span> Ingreso</div>
+              <div class="hud-value" [style.color]="getProfitColor()">{{ formatCOP(outputs.revenueEstimate) }}</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ====== PANEL DE CONTROLES ====== -->
+        <div class="sim-controls glass-panel">
+          <h3 class="panel-title">Variables de Entrada</h3>
+
+          <!-- Crop Type Selector -->
+          <div class="selector-group">
+            <label>🌾 Tipo de Cultivo:</label>
+            <div class="selector-buttons">
+              <button *ngFor="let c of cropTypes"
+                [class.active]="vars.cropType === c"
+                (click)="onCropChange(c)"
+                class="sel-btn">{{ getCropLabel(c) }}</button>
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <label>📐 Escala de Producción (m²): <strong>{{ vars.productionScale | number }}</strong></label>
+            <input type="range" min="1" max="10000" [value]="vars.productionScale"
+              (input)="onVarChange($event, 'productionScale')" class="neon-slider" />
+            <div class="slider-hint">1m² = maceta, 100m² = huerta, 10000m² = 1 hectárea</div>
+          </div>
+
+          <!-- Irrigation Selector -->
+          <div class="selector-group">
+            <label>💧 Método de Riego:</label>
+            <div class="selector-buttons">
+              <button *ngFor="let m of irrigationMethods"
+                [class.active]="vars.irrigationMethod === m"
+                (click)="onIrrigChange(m)"
+                class="sel-btn">{{ getIrrigLabel(m) }}</button>
+            </div>
+          </div>
+
+          <div class="slider-group">
+            <label>🧪 Fertilización (kg/ha): <strong>{{ vars.fertilization }}</strong></label>
+            <input type="range" min="0" max="200" [value]="vars.fertilization"
+              (input)="onVarChange($event, 'fertilization')" class="neon-slider" />
+            <div class="slider-hint">Óptimo ≈ 120 kg/ha. Más no siempre es mejor (rendimientos decrecientes)</div>
+          </div>
+
+          <!-- Monitor -->
+          <div class="monitor-panel">
+            <h4 class="monitor-title">Calculadora de Producción</h4>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Eficiencia del Riego</span>
+              <span class="monitor-value">{{ outputs.irrigationEfficiency }}%</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Costo de Agua</span>
+              <span class="monitor-value">{{ formatCOP(outputs.waterCost) }}</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Costo de Fertilizante</span>
+              <span class="monitor-value">{{ formatCOP(outputs.fertilizerCost) }}</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Ingreso Estimado</span>
+              <span class="monitor-value highlight">{{ formatCOP(outputs.revenueEstimate) }}</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Margen de Ganancia</span>
+              <span class="monitor-value" [style.color]="getProfitColor()">{{ outputs.profitMargin }}%</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====== GUÍA EDUCATIVA ====== -->
+      <footer class="educational-guide">
+        <div class="guide-content glass-panel">
+          <h2 class="text-accent">Manual de Operación: Simulador de Escalas Productivas</h2>
+
+          <section>
+            <h3 class="text-accent-2 mt-4">1. ¿Qué son las Escalas Productivas?</h3>
+            <p>Las escalas productivas permiten comparar sistemas agrícolas de diferentes tamaños: desde una maceta
+              doméstica hasta una finca comercial. Al escalar, los recursos necesarios (agua, fertilizante, mano de
+              obra) no siempre crecen proporcionalmente — existen economías y deseconomías de escala.</p>
+          </section>
+
+          <section>
+            <h3 class="text-accent-2 mt-4">2. Fórmulas Implementadas</h3>
+            <div class="math-box">
+              <p class="formula">Y = Y<sub>max</sub> × (1 − e<sup>−k×F/F<sub>opt</sub></sup>) × η<sub>riego</sub></p>
+              <p class="expl">Rendimiento en función de fertilización y riego — Curva asintótica donde rendimientos
+                decrecientes limitan el beneficio de más insumos.</p>
+              <hr class="separator" />
+              <p class="formula">V<sub>agua</sub> = ETc × Área / η<sub>riego</sub> [m³]</p>
+              <p class="expl">Volumen de agua requerido — La necesidad neta dividida por la eficiencia del método
+                de riego. Goteo (90%) vs Gravedad (50%).</p>
+              <hr class="separator" />
+              <p class="formula">Margen = (Ingreso − Costo) / Ingreso × 100 [%]</p>
+              <p class="expl">Margen de ganancia — Indica la rentabilidad. Un margen negativo indica pérdidas.</p>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="text-accent-2 mt-4">3. Métodos de Riego</h3>
+            <ul>
+              <li><strong>Goteo (90%):</strong> Agua directamente a la raíz. Mínimo desperdicio, máximo costo
+                de instalación. Ideal para frutales y hortalizas.</li>
+              <li><strong>Aspersión (75%):</strong> Simula lluvia sobre el cultivo. Versatilidad media, bueno
+                para pastos y cereales.</li>
+              <li><strong>Gravedad (50%):</strong> Canales e inundación. Bajo costo, alta pérdida por evaporación
+                e infiltración profunda.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-accent-2 mt-4">4. Experimentos Sugeridos</h3>
+            <ul>
+              <li>🧪 <strong>Experimento 1:</strong> ¿Cuántos litros de agua necesita 1 m² de papa vs 1 hectárea?
+                Calcula la razón.</li>
+              <li>🧪 <strong>Experimento 2:</strong> Busca el punto de fertilización que maximiza el margen de
+                ganancia para cada cultivo. ¿Es el mismo para todos?</li>
+              <li>🧪 <strong>Experimento 3:</strong> Si cambias de riego por gravedad a goteo, ¿cuántos metros
+                cúbicos de agua ahorras en 1 hectárea de café?</li>
+            </ul>
+          </section>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 3: EVALUACIÓN ═══════════ -->
+  <div evaluacion>
+    <div class="eval-content">
+      <h2>📝 Evaluación: Escalas Productivas</h2>
+      <div class="eval-placeholder">
+        <p><strong>Pregunta 1:</strong> ¿Cuántos litros de agua se necesitan por hectárea de papa con riego por
+          aspersión? Muestra tu cálculo.</p>
+        <p><strong>Pregunta 2:</strong> Explica por qué la "representación a escala" ayuda a entender un sistema
+          complejo como un agroecosistema.</p>
+        <p><strong>Pregunta 3:</strong> Compara la rentabilidad de papa vs café. ¿Cuál recomendarías para un
+          pequeño productor? Justifica con datos.</p>
+        <p><strong>Pregunta 4:</strong> ¿Qué método de riego elegirías para una zona con escasez de agua? ¿Por qué?</p>
+        <div class="placeholder-badge">🔧 Cuestionario interactivo — Próximamente</div>
+      </div>
+    </div>
+  </div>
+
+</app-simulation-wrapper>

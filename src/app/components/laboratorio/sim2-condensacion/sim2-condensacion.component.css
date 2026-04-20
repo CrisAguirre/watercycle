@@ -1,0 +1,352 @@
+/* ═══════════════════════════════════════════════════════
+   SIMULACIÓN 2: CONDENSACIÓN — Estilos Premium
+   Misma línea de diseño que Sim5 (Ciclo Consolidado)
+   ═══════════════════════════════════════════════════════ */
+
+/* ───── Shared tab content styles ───── */
+.activity-content, .eval-content {
+  max-width: 700px;
+}
+.activity-content h2, .eval-content h2 {
+  font-size: 1.3rem; color: #fff; margin: 0 0 12px;
+}
+.activity-content p, .eval-content p {
+  color: #9ca3af; line-height: 1.7; font-size: 0.9rem;
+}
+.activity-steps {
+  margin-top: 20px; display: flex; flex-direction: column; gap: 12px;
+}
+.step {
+  display: flex; align-items: flex-start; gap: 14px; padding: 16px;
+  border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+}
+.step-num {
+  min-width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #6633cc, #aa88ff);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.85rem;
+}
+.step p { margin: 0; color: #d1d5db; font-size: 0.88rem; }
+.eval-placeholder {
+  margin-top: 16px; padding: 20px; border-radius: 12px;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+}
+.eval-placeholder p { margin: 0 0 12px; }
+.placeholder-badge {
+  display: inline-block; padding: 6px 16px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 600; color: #fbbf24;
+  background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2);
+}
+
+/* ───── Simulation Layout ───── */
+.sim-container {
+  display: flex; flex-direction: column;
+  margin: -24px;
+}
+
+.sim-main {
+  display: flex; min-height: 70vh; background: #0a0e1a;
+}
+
+/* ───── Visual Area ───── */
+.sim-visual-area {
+  flex: 2; position: relative; overflow: hidden;
+  background: linear-gradient(180deg,
+    #0a1628 0%,
+    #0f2040 20%,
+    #163060 40%,
+    #204880 60%,
+    #2a6090 75%,
+    #3a7a60 90%,
+    #2a5030 100%
+  );
+  min-height: 500px;
+}
+
+/* ───── Sky Gradient (clear sky overlay) ───── */
+.sky-gradient {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(180deg,
+    rgba(30,80,180,0.3) 0%,
+    rgba(60,140,220,0.2) 30%,
+    rgba(100,180,240,0.15) 50%,
+    transparent 70%
+  );
+  transition: opacity 1.5s ease;
+  pointer-events: none; z-index: 2;
+}
+
+/* ───── Landscape Background (bottom) ───── */
+.landscape-bg {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 30%;
+  background-image: url('../../../../assets/sim2-condensacion-bg.png');
+  background-size: cover;
+  background-position: center bottom;
+  z-index: 1;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
+}
+
+/* ───── Altitude Scale (left side) ───── */
+.altitude-scale {
+  position: absolute; left: 8px; top: 0; bottom: 0; width: 70px;
+  z-index: 20; pointer-events: none;
+}
+.alt-label {
+  position: absolute; left: 0;
+  font-size: 0.6rem; color: rgba(255,255,255,0.3);
+  font-family: 'Inter', monospace; letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+.alt-marker {
+  position: absolute; left: 0;
+  font-size: 0.7rem; color: #00c8ff; font-weight: 700;
+  padding: 3px 8px;
+  background: rgba(0,200,255,0.1);
+  border-left: 3px solid #00c8ff;
+  border-radius: 0 6px 6px 0;
+  transition: top 0.5s ease;
+  white-space: nowrap;
+}
+.alt-arrow { margin-right: 3px; }
+
+/* ───── LCL Line (Lifted Condensation Level) ───── */
+.lcl-line {
+  position: absolute; left: 70px; right: 0;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, rgba(0,200,255,0.4) 0px, rgba(0,200,255,0.4) 8px, transparent 8px, transparent 16px);
+  transition: top 0.8s ease;
+  z-index: 18;
+}
+.lcl-tag {
+  position: absolute; right: 10px; top: -18px;
+  font-size: 0.65rem; color: #00c8ff; font-weight: 700;
+  background: rgba(0,0,0,0.5); padding: 2px 8px; border-radius: 4px;
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* ───── Dynamic Clouds ───── */
+.cloud-formation {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 10; pointer-events: none;
+}
+.dynamic-cloud {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(15px);
+  animation: cloudDrift 20s ease-in-out infinite alternate;
+  transition: opacity 1s ease, background 1.5s ease;
+}
+.heavy-clouds .dynamic-cloud { filter: blur(12px); }
+.storm-clouds .dynamic-cloud {
+  filter: blur(10px);
+  background: rgba(60,65,80,0.85) !important;
+}
+
+@keyframes cloudDrift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(20px); }
+}
+
+/* ───── Fog Layer ───── */
+.fog-layer {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
+  z-index: 12; pointer-events: none;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    rgba(200,220,240,0.05) 30%,
+    rgba(200,220,240,0.15) 60%,
+    rgba(200,220,240,0.25) 100%
+  );
+}
+.fog-stream {
+  position: absolute; bottom: 10%;
+  width: 300px; height: 60px;
+  background: radial-gradient(ellipse, rgba(200,220,240,0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: fogDrift infinite linear;
+}
+@keyframes fogDrift {
+  0% { transform: translateX(-150px); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateX(150px); opacity: 0; }
+}
+
+/* ───── Storm Darkening ───── */
+.storm-darken {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: black; opacity: 0;
+  pointer-events: none; z-index: 3;
+  transition: opacity 1.5s ease;
+}
+.storm-darken.darken-moderate { opacity: 0.12; }
+.storm-darken.darken-heavy { opacity: 0.25; }
+
+/* ───── HUD Panels ───── */
+.hud-panel {
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px; padding: 10px 14px;
+  color: #fff; font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  pointer-events: none; z-index: 15;
+  min-width: 180px;
+}
+.hud-title {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px;
+  color: #bbb; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;
+}
+.hud-value {
+  font-size: 1.15rem; font-weight: bold;
+  text-shadow: 0 0 8px rgba(255,255,255,0.2);
+  transition: color 0.5s ease;
+}
+.hud-sub { font-size: 0.75rem; font-weight: normal; color: #aaa; }
+.hud-dot {
+  display: inline-block; width: 9px; height: 9px;
+  border-radius: 50%; box-shadow: 0 0 8px currentColor;
+}
+
+.hud-group-top {
+  position: absolute; top: 12px; right: 12px;
+  display: flex; flex-direction: column; gap: 8px; z-index: 15;
+}
+.hud-group-bot-left {
+  position: absolute; bottom: 12px; left: 80px; z-index: 15;
+}
+.hud-group-bot-right {
+  position: absolute; bottom: 12px; right: 12px; z-index: 15;
+}
+
+/* ───── Control Panel ───── */
+.sim-controls {
+  flex: 1; min-width: 300px; max-width: 380px;
+  padding: 20px; display: flex; flex-direction: column; gap: 12px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(255,255,255,0.08);
+  overflow-y: auto; z-index: 10;
+}
+.panel-title {
+  text-align: center; font-size: 1.1rem; font-weight: 700;
+  color: var(--neon-purple, #b026ff); margin: 0 0 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px;
+}
+.slider-group { margin-bottom: 2px; }
+.slider-group label {
+  font-weight: 600; font-size: 0.82rem; color: #e0e0e0;
+  display: block; margin-bottom: 4px;
+}
+.slider-group label strong { color: #aa88ff; }
+.slider-hint {
+  font-size: 0.7rem; color: #666; margin-top: 2px; font-style: italic;
+}
+.neon-slider {
+  -webkit-appearance: none; width: 100%; height: 6px;
+  background: rgba(255,255,255,0.1); border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.08); margin-top: 4px;
+}
+.neon-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: #aa88ff; cursor: pointer;
+  box-shadow: 0 0 10px rgba(170,136,255,0.6); transition: transform 0.2s;
+}
+.neon-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+/* ───── Monitor Panel ───── */
+.monitor-panel {
+  margin-top: auto; background: rgba(0,0,0,0.4);
+  padding: 14px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.monitor-title {
+  color: #888; font-size: 0.85rem; margin: 0 0 10px; font-weight: 600;
+}
+.monitor-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.monitor-label { font-size: 0.75rem; color: #999; }
+.monitor-value { font-size: 0.78rem; color: #ddd; font-weight: 600; text-align: right; }
+.monitor-value.highlight { color: #00ff88; }
+.fog-label { color: #88ccee !important; font-weight: 700 !important; }
+.fog-value { color: #88ccee !important; }
+
+.meter-row { margin: 8px 0; }
+.meter-row span { font-size: 0.78rem; color: #bbb; display: block; margin-bottom: 4px; }
+.meter-bar {
+  width: 100%; height: 8px; background: rgba(255,255,255,0.08);
+  border-radius: 4px; overflow: hidden;
+}
+.fill { height: 100%; transition: width 0.4s ease; border-radius: 4px; }
+.fill.purple {
+  background: linear-gradient(90deg, #6633cc, #aa88ff);
+  box-shadow: 0 0 8px rgba(170,136,255,0.5);
+}
+.fill.cyan {
+  background: linear-gradient(90deg, #0077cc, #00c8ff);
+  box-shadow: 0 0 8px rgba(0,200,255,0.5);
+}
+
+/* ───── Educational Footer ───── */
+.educational-guide {
+  background: linear-gradient(180deg, #0b132b 0%, #050a17 100%);
+  padding: 50px 5%;
+  border-top: 3px solid var(--neon-purple, #b026ff);
+  box-shadow: inset 0 10px 30px rgba(0,0,0,0.8);
+  display: flex; justify-content: center;
+}
+.guide-content {
+  width: 100%; max-width: 1000px; padding: 40px; border-radius: 12px;
+  background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
+}
+.guide-content p { color: #ccc; line-height: 1.6; font-size: 1rem; margin-top: 10px; }
+.guide-content ul { color: #ccc; line-height: 1.8; margin-top: 10px; }
+.guide-content strong { color: #fff; }
+.guide-content h2 {
+  margin-top: 0; font-size: 1.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;
+}
+.text-neon-blue { color: var(--neon-blue, #00f0ff); }
+.text-neon-purple { color: var(--neon-purple, #b026ff); }
+.mt-4 { margin-top: 35px; font-weight: 600; font-size: 1.2rem; }
+
+.math-box {
+  background: rgba(0,0,0,0.6); padding: 25px; border-radius: 8px;
+  border-left: 3px solid #aa88ff; margin-top: 20px;
+}
+.formula {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.05rem !important; margin-bottom: 5px !important;
+  color: #fff !important;
+}
+.expl { color: #999 !important; font-style: italic; margin-top: 0 !important; font-size: 0.9rem !important; }
+.separator { border-color: rgba(255,255,255,0.05); margin: 12px 0; }
+
+/* ───── RESPONSIVE ───── */
+@media screen and (max-width: 800px) {
+  .sim-main {
+    flex-direction: column;
+  }
+  .sim-visual-area {
+    min-height: 50vh;
+  }
+  .sim-controls {
+    max-width: 100%; min-width: 0;
+    border-left: none;
+    border-top: 2px solid var(--neon-purple, #b026ff);
+  }
+  .altitude-scale {
+    transform: scale(0.8); transform-origin: top left;
+  }
+  .hud-group-top { transform: scale(0.65); transform-origin: top right; }
+  .hud-group-bot-left { transform: scale(0.65); transform-origin: bottom left; }
+  .hud-group-bot-right { transform: scale(0.65); transform-origin: bottom right; }
+  .guide-content { padding: 20px; }
+  .guide-content h2 { font-size: 1.3rem; }
+}

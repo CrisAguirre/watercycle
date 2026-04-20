@@ -1,0 +1,304 @@
+<app-simulation-wrapper
+  simTitle="Infiltración y Escorrentía"
+  simDescription="Modelado de suelos (arcilloso, arenoso) para observar el flujo de agua superficial y profunda."
+  [simNumber]="4"
+  lineamientos="Lineamiento 4: Representación"
+  bloque="agua">
+
+  <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
+  <div actividad>
+    <div class="activity-content">
+      <h2>📋 Actividad: Tipos de Suelo y Flujo Hídrico</h2>
+      <p>Explora cómo los diferentes <strong>tipos de suelo</strong> afectan la infiltración y escorrentía del agua,
+        y cómo factores como la pendiente y la vegetación modifican la partición del agua de lluvia.</p>
+      <div class="activity-steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <p>Selecciona <strong>Suelo Arenoso</strong> y observa cómo se infiltra rápidamente. Luego cambia a
+            <strong>Arcilla</strong>. ¿Qué cambia en las flechas de flujo y la escorrentía?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <p>Con suelo Franco, incrementa la <strong>Intensidad de lluvia</strong> gradualmente. Identifica el punto
+            en que la escorrentía supera la infiltración (exceso de Horton).</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <p>Aumenta la <strong>Pendiente</strong> a 40°. ¿Cómo afecta el ángulo del terreno la distribución
+            entre infiltración y escorrentía?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <p>Sube la <strong>Cobertura Vegetal</strong> al 100%. ¿Cuánto disminuye la escorrentía? Reflexiona sobre
+            la importancia de la vegetación en la conservación del suelo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 2: SIMULADOR ═══════════ -->
+  <div simulador>
+    <div class="sim-container">
+      <div class="sim-main">
+
+        <!-- ====== ÁREA VISUAL — CORTE TRANSVERSAL ====== -->
+        <div class="sim-visual-area">
+
+          <!-- Sky area -->
+          <div class="sky-area">
+            <!-- Rain drops -->
+            <div class="rain-drop" *ngFor="let d of rainDrops"
+              [style.left]="d.left"
+              [style.animationDuration]="d.duration"
+              [style.animationDelay]="d.delay">
+            </div>
+          </div>
+
+          <!-- Surface with vegetation -->
+          <div class="surface-layer">
+            <div class="vegetation-cover" [style.opacity]="vars.vegetationCover / 100">
+              <div class="tree tree-1">🌳</div>
+              <div class="tree tree-2">🌿</div>
+              <div class="tree tree-3">🌱</div>
+              <div class="tree tree-4">🌳</div>
+              <div class="tree tree-5">🌿</div>
+            </div>
+
+            <!-- Runoff flow -->
+            <div class="runoff-flow" *ngIf="outputs.runoffRate > 0"
+              [style.height.px]="runoffFlowWidth * 0.3 + 2"
+              [style.opacity]="Math.min(1, outputs.runoffRate / 30)">
+              <div class="runoff-arrow">→→→</div>
+            </div>
+          </div>
+
+          <!-- Soil Cross Section -->
+          <div class="soil-section">
+            <!-- Horizon A (Topsoil) -->
+            <div class="soil-horizon horizon-a" [style.background]="getSoilColor('A')">
+              <span class="horizon-label">A — Capa Orgánica</span>
+            </div>
+
+            <!-- Horizon B (Subsoil) -->
+            <div class="soil-horizon horizon-b" [style.background]="getSoilColor('B')">
+              <span class="horizon-label">B — Subsuelo</span>
+              <!-- Wetting front -->
+              <div class="wetting-front" [style.top.%]="wettingDepthPercent">
+                <div class="wetting-line"></div>
+                <span class="wetting-tag">▼ Frente húmedo: {{ outputs.wettingFrontDepth }} cm</span>
+              </div>
+            </div>
+
+            <!-- Horizon C (Parent material) -->
+            <div class="soil-horizon horizon-c" [style.background]="getSoilColor('C')">
+              <span class="horizon-label">C — Roca Madre</span>
+            </div>
+
+            <!-- Water Table -->
+            <div class="water-table" [style.top.%]="waterTableLevel">
+              <div class="water-table-line"></div>
+              <span class="water-table-tag">〰️ Nivel Freático</span>
+            </div>
+
+            <!-- Infiltration Arrows -->
+            <div class="infil-arrow" *ngFor="let a of infiltrationArrows"
+              [style.left]="a.left"
+              [style.animationDelay]="a.delay">
+              ↓
+            </div>
+          </div>
+
+          <!-- Background image overlay -->
+          <div class="landscape-bg-overlay"></div>
+
+          <!-- ====== HUD PANELS ====== -->
+          <div class="hud-group-top">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #00cc88;"></span> Infiltración</div>
+              <div class="hud-value">{{ outputs.infiltrationRate }} mm/h</div>
+            </div>
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #ff6644;"></span> Escorrentía</div>
+              <div class="hud-value">{{ outputs.runoffRate }} mm/h</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-left">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #aa8844;"></span> Saturación del Suelo</div>
+              <div class="hud-value">{{ outputs.soilSaturation }}%</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-right">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #4488ff;"></span> Frente Húmedo</div>
+              <div class="hud-value">{{ outputs.wettingFrontDepth }} cm</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ====== PANEL DE CONTROLES ====== -->
+        <div class="sim-controls glass-panel">
+          <h3 class="panel-title">Variables de Entrada</h3>
+
+          <!-- Soil Type Selector -->
+          <div class="soil-selector">
+            <label>🏔️ Tipo de Suelo:</label>
+            <div class="soil-buttons">
+              <button *ngFor="let s of soilTypes"
+                [class.active]="vars.soilType === s"
+                (click)="onSoilChange(s)"
+                class="soil-btn">
+                {{ getSoilLabel() === s ? s : s }}
+                <span *ngIf="s === 'arena'">🏖️</span>
+                <span *ngIf="s === 'limo'">🌾</span>
+                <span *ngIf="s === 'arcilla'">🧱</span>
+                <span *ngIf="s === 'franco'">🌱</span>
+              </button>
+            </div>
+            <div class="slider-hint">{{ outputs.soilDescription }}</div>
+          </div>
+
+          <div class="slider-group">
+            <label>🌧️ Intensidad de Lluvia (mm/h): <strong>{{ vars.rainIntensity }}</strong></label>
+            <input type="range" min="0" max="80" [value]="vars.rainIntensity"
+              (input)="onVarChange($event, 'rainIntensity')" class="neon-slider" />
+            <div class="slider-hint">Aporte de agua que llega al suelo</div>
+          </div>
+
+          <div class="slider-group">
+            <label>⛰️ Pendiente del Terreno (°): <strong>{{ vars.slopeAngle }}</strong></label>
+            <input type="range" min="0" max="45" [value]="vars.slopeAngle"
+              (input)="onVarChange($event, 'slopeAngle')" class="neon-slider" />
+            <div class="slider-hint">A mayor pendiente, menor infiltración y más escorrentía</div>
+          </div>
+
+          <div class="slider-group">
+            <label>🌿 Cobertura Vegetal (%): <strong>{{ vars.vegetationCover }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.vegetationCover"
+              (input)="onVarChange($event, 'vegetationCover')" class="neon-slider" />
+            <div class="slider-hint">Raíces crean macroporos; hojarasca intercepta lluvia</div>
+          </div>
+
+          <!-- Estación de Monitoreo -->
+          <div class="monitor-panel">
+            <h4 class="monitor-title">Estación Hidrológica</h4>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Balance Hídrico</span>
+              <span class="monitor-value">{{ outputs.waterBalance }}</span>
+            </div>
+
+            <div class="meter-row">
+              <span>Infiltración vs Escorrentía</span>
+              <div class="meter-bar dual">
+                <div class="fill green" [style.width.%]="100 - outputs.runoffCoefficient * 100"></div>
+                <div class="fill red" [style.width.%]="outputs.runoffCoefficient * 100"></div>
+              </div>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Conductividad Hidráulica (Ks)</span>
+              <span class="monitor-value">{{ outputs.hydraulicConductivity }} mm/h</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Porosidad del Suelo</span>
+              <span class="monitor-value">{{ outputs.soilPorosity }}%</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Coeficiente Escorrentía</span>
+              <span class="monitor-value highlight">{{ outputs.runoffCoefficient }}</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Infiltración Acumulada</span>
+              <span class="monitor-value">{{ outputs.cumulativeInfiltration }} mm</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====== GUÍA EDUCATIVA ====== -->
+      <footer class="educational-guide">
+        <div class="guide-content glass-panel">
+          <h2 class="text-neon-green">Manual de Operación: Simulador de Infiltración y Escorrentía</h2>
+
+          <section>
+            <h3 class="text-accent mt-4">1. ¿Qué es la Infiltración?</h3>
+            <p>La infiltración es el proceso por el cual el agua de lluvia penetra en el suelo a través de los poros
+              y fisuras. Es fundamental para la recarga de acuíferos subterráneos y la disponibilidad de agua para
+              las plantas. La tasa de infiltración depende del tipo de suelo, la humedad previa y la intensidad de
+              la lluvia.</p>
+          </section>
+
+          <section>
+            <h3 class="text-accent mt-4">2. Fórmulas Implementadas</h3>
+            <div class="math-box">
+              <p class="formula">f(t) = f<sub>c</sub> + (f<sub>0</sub> − f<sub>c</sub>) × e<sup>−kt</sup></p>
+              <p class="expl">Modelo de Horton — La tasa de infiltración comienza alta (f₀) y decae exponencialmente
+                hasta un valor mínimo constante (fc ≈ conductividad hidráulica). El suelo se satura con el tiempo.</p>
+              <hr class="separator" />
+              <p class="formula">P = I + R + E<sub>int</sub></p>
+              <p class="expl">Partición hidráulica — La precipitación (P) se divide en infiltración (I), escorrentía
+                (R) e intercepción vegetal (Eint). Si P > capacidad del suelo → escorrentía.</p>
+              <hr class="separator" />
+              <p class="formula">z<sub>f</sub> = F / (θ<sub>s</sub> − θ<sub>i</sub>)</p>
+              <p class="expl">Green-Ampt — La profundidad del frente de humedecimiento (zf) es proporcional a la
+                infiltración acumulada (F) dividida por el cambio en contenido de humedad.</p>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="text-accent mt-4">3. Tipos de Suelo y sus Propiedades</h3>
+            <ul>
+              <li><strong>Arena (Ks ≈ 60 mm/h):</strong> Partículas gruesas, grandes poros. Alta infiltración,
+                baja retención. El agua pasa rápidamente al subsuelo.</li>
+              <li><strong>Limo (Ks ≈ 15 mm/h):</strong> Partículas intermedias. Buena retención de humedad,
+                infiltración moderada. Común en valles aluviales.</li>
+              <li><strong>Arcilla (Ks ≈ 2 mm/h):</strong> Partículas ultrafinas. Poros muy pequeños, alta
+                retención pero muy baja infiltración. Se compacta con agua → más escorrentía.</li>
+              <li><strong>Franco (Ks ≈ 25 mm/h):</strong> Mezcla equilibrada. Ideal para agricultura: buena
+                infiltración y retención de nutrientes.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-accent mt-4">4. Experimentos Sugeridos</h3>
+            <ul>
+              <li>🧪 <strong>Experimento 1:</strong> Con lluvia = 30 mm/h, compara la escorrentía entre arena y
+                arcilla. ¿Cuántas veces más escorrentía genera la arcilla?</li>
+              <li>🧪 <strong>Experimento 2:</strong> Fija suelo Franco y pendiente = 0°. Incrementa la lluvia
+                hasta que la escorrentía supere la infiltración. ¿A qué intensidad ocurre?</li>
+              <li>🧪 <strong>Experimento 3:</strong> Compara la infiltración con vegetación al 0% vs 100%.
+                ¿Cuánto protege la vegetación contra la escorrentía?</li>
+            </ul>
+          </section>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 3: EVALUACIÓN ═══════════ -->
+  <div evaluacion>
+    <div class="eval-content">
+      <h2>📝 Evaluación: Infiltración y Escorrentía</h2>
+      <p>Responde basándote en tu experimentación:</p>
+      <div class="eval-placeholder">
+        <p><strong>Pregunta 1:</strong> ¿Cuánta agua se infiltra en 100m² de suelo arcilloso vs arenoso con 30 mm/h de lluvia?</p>
+        <p><strong>Pregunta 2:</strong> Dibuja un diagrama de flujo del agua usando flechas para representar dirección
+          y magnitud (infiltración vs escorrentía).</p>
+        <p><strong>Pregunta 3:</strong> ¿Por qué la tasa de infiltración disminuye con el tiempo según Horton?
+          Relaciona con la saturación del suelo.</p>
+        <p><strong>Pregunta 4:</strong> ¿Cuál es el rol de la cobertura vegetal en la prevención de la erosión?
+          Explica usando datos del simulador.</p>
+        <div class="placeholder-badge">🔧 Cuestionario interactivo — Próximamente</div>
+      </div>
+    </div>
+  </div>
+
+</app-simulation-wrapper>

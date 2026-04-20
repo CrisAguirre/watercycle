@@ -1,0 +1,4 @@
+.layout-content {
+  min-height: calc(100vh - 60px);
+  background: linear-gradient(180deg, #0a0e1a 0%, #111827 100%);
+}

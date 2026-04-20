@@ -1,0 +1,328 @@
+/* ═══════════════════════════════════════════════════════
+   SIMULACIÓN 1: EVAPORACIÓN — Estilos Premium
+   Misma línea de diseño que el Ciclo Consolidado (Sim5)
+   ═══════════════════════════════════════════════════════ */
+
+/* ───── Shared tab content styles ───── */
+.activity-content, .eval-content {
+  max-width: 700px;
+}
+.activity-content h2, .eval-content h2 {
+  font-size: 1.3rem; color: #fff; margin: 0 0 12px;
+}
+.activity-content p, .eval-content p {
+  color: #9ca3af; line-height: 1.7; font-size: 0.9rem;
+}
+.activity-steps {
+  margin-top: 20px; display: flex; flex-direction: column; gap: 12px;
+}
+.step {
+  display: flex; align-items: flex-start; gap: 14px; padding: 16px;
+  border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+}
+.step-num {
+  min-width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #0077cc, #00aaff);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.85rem;
+}
+.step p { margin: 0; color: #d1d5db; font-size: 0.88rem; }
+.eval-placeholder {
+  margin-top: 16px; padding: 20px; border-radius: 12px;
+  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+}
+.eval-placeholder p { margin: 0 0 12px; }
+.placeholder-badge {
+  display: inline-block; padding: 6px 16px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 600; color: #fbbf24;
+  background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2);
+}
+
+/* ───── Simulation Layout ───── */
+.sim-container {
+  display: flex; flex-direction: column; gap: 0;
+  margin: -24px; /* Negate wrapper padding for full-width immersion */
+}
+
+.sim-main {
+  display: flex; min-height: 70vh; background: #0a0e1a;
+}
+
+/* ───── Visual Area ───── */
+.sim-visual-area {
+  flex: 2; position: relative; overflow: hidden;
+  background-image: url('../../../../assets/sim1-evaporacion-bg.png');
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-color: #0a0e1a;
+  min-height: 500px;
+}
+
+/* ───── Dynamic Sun ───── */
+.evap-sun {
+  position: absolute; top: 6%; left: 8%;
+  width: 140px; height: 140px;
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,1) 0%,
+    rgba(255,230,150,0.85) 30%,
+    rgba(255,200,50,0.3) 60%,
+    transparent 75%
+  );
+  border-radius: 50%;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  z-index: 5;
+  filter: blur(2px);
+}
+
+/* ───── Solar Rays ───── */
+.solar-rays {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 40%;
+  pointer-events: none; z-index: 4;
+  transition: opacity 0.8s ease;
+}
+.ray {
+  position: absolute; top: 12%; left: 13%;
+  width: 3px; height: 200px;
+  background: linear-gradient(to bottom, rgba(255,220,100,0.5), transparent);
+  transform-origin: top center;
+}
+.ray-1 { transform: rotate(-20deg); }
+.ray-2 { transform: rotate(-5deg); left: 15%; }
+.ray-3 { transform: rotate(10deg); left: 17%; }
+.ray-4 { transform: rotate(25deg); left: 11%; }
+.ray-5 { transform: rotate(40deg); left: 9%; height: 170px; }
+
+/* ───── Heat Shimmer ───── */
+.heat-shimmer {
+  position: absolute; bottom: 28%; left: 0; right: 0; height: 120px;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    rgba(255,200,100,0.03) 4px,
+    transparent 8px
+  );
+  animation: shimmerWave 2s ease-in-out infinite;
+  pointer-events: none; z-index: 6;
+}
+@keyframes shimmerWave {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(-5px) scaleY(1.05); }
+}
+
+/* ───── Boiling Effect ───── */
+.boiling-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 38%;
+  background: radial-gradient(
+    ellipse at 50% 80%,
+    rgba(255,100,50,0.15) 0%,
+    transparent 60%
+  );
+  animation: boilPulse 0.5s ease-in-out infinite alternate;
+  pointer-events: none; z-index: 7;
+}
+@keyframes boilPulse {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* ───── Water Body ───── */
+.water-body {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
+  overflow: hidden;
+  z-index: 3;
+  transition: background 1s ease;
+}
+.wave {
+  position: absolute; width: 200%; height: 40px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+  animation: waveMove infinite linear;
+}
+.wave-1 { top: 0; left: -50%; animation-duration: 8s; }
+.wave-2 { top: 12px; left: -30%; animation-duration: 11s; opacity: 0.5; }
+.wave-3 { top: 24px; left: -70%; animation-duration: 14s; opacity: 0.3; }
+@keyframes waveMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+
+/* ───── Ice Overlay ───── */
+.ice-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 35%;
+  background: linear-gradient(180deg, rgba(160,220,255,0.4) 0%, rgba(200,240,255,0.6) 100%);
+  z-index: 8; pointer-events: none;
+  border-top: 3px solid rgba(200,240,255,0.5);
+}
+
+/* ───── Vapor Particles ───── */
+.vapor-particle {
+  position: absolute; bottom: 35%;
+  background: radial-gradient(circle, rgba(255,255,255,0.45) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: riseVapor infinite linear;
+  pointer-events: none; z-index: 10;
+}
+@keyframes riseVapor {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  15% { opacity: 0.8; }
+  100% { transform: translateY(-350px) scale(2.5); opacity: 0; }
+}
+
+/* ───── HUD Panels ───── */
+.hud-panel {
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px; padding: 10px 14px;
+  color: #fff; font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  pointer-events: none; z-index: 15;
+  min-width: 180px;
+}
+.hud-title {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px;
+  color: #bbb; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;
+}
+.hud-value {
+  font-size: 1.15rem; font-weight: bold;
+  text-shadow: 0 0 8px rgba(255,255,255,0.2);
+}
+.hud-value-sm { font-size: 0.95rem; }
+.hud-sub { font-size: 0.75rem; font-weight: normal; color: #aaa; }
+.hud-dot {
+  display: inline-block; width: 9px; height: 9px;
+  border-radius: 50%; box-shadow: 0 0 8px currentColor;
+}
+
+.hud-group-top {
+  position: absolute; top: 12px; right: 12px;
+  display: flex; flex-direction: column; gap: 8px; z-index: 15;
+}
+.hud-group-bot-left {
+  position: absolute; bottom: 38%; left: 12px; z-index: 15;
+}
+.hud-group-bot-right {
+  position: absolute; bottom: 38%; right: 12px; z-index: 15;
+}
+
+/* ───── Control Panel (Right Side) ───── */
+.sim-controls {
+  flex: 1; min-width: 300px; max-width: 380px;
+  padding: 20px; display: flex; flex-direction: column; gap: 12px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(255,255,255,0.08);
+  overflow-y: auto; z-index: 10;
+}
+.panel-title {
+  text-align: center; font-size: 1.1rem; font-weight: 700;
+  color: var(--neon-purple, #b026ff); margin: 0 0 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px;
+}
+.slider-group { margin-bottom: 2px; }
+.slider-group label {
+  font-weight: 600; font-size: 0.82rem; color: #e0e0e0;
+  display: block; margin-bottom: 4px;
+}
+.slider-group label strong { color: #00c8ff; }
+.slider-hint {
+  font-size: 0.7rem; color: #666; margin-top: 2px; font-style: italic;
+}
+.neon-slider {
+  -webkit-appearance: none; width: 100%; height: 6px;
+  background: rgba(255,255,255,0.1); border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.08); margin-top: 4px;
+}
+.neon-slider::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--neon-blue, #00f0ff); cursor: pointer;
+  box-shadow: 0 0 10px var(--neon-blue, #00f0ff); transition: transform 0.2s;
+}
+.neon-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+/* ───── Monitor Panel ───── */
+.monitor-panel {
+  margin-top: auto; background: rgba(0,0,0,0.4);
+  padding: 14px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.monitor-title {
+  color: #888; font-size: 0.85rem; margin: 0 0 10px; font-weight: 600;
+}
+.monitor-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.monitor-label { font-size: 0.75rem; color: #999; }
+.monitor-value { font-size: 0.78rem; color: #ddd; font-weight: 600; text-align: right; }
+.monitor-value.highlight { color: #00c8ff; }
+
+.meter-row { margin: 8px 0; }
+.meter-row span { font-size: 0.78rem; color: #bbb; display: block; margin-bottom: 4px; }
+.meter-bar {
+  width: 100%; height: 8px; background: rgba(255,255,255,0.08);
+  border-radius: 4px; overflow: hidden;
+}
+.fill { height: 100%; transition: width 0.4s ease; border-radius: 4px; }
+.fill.blue {
+  background: linear-gradient(90deg, #0077cc, #00c8ff);
+  box-shadow: 0 0 8px rgba(0,200,255,0.5);
+}
+
+/* ───── Educational Footer ───── */
+.educational-guide {
+  background: linear-gradient(180deg, #0b132b 0%, #050a17 100%);
+  padding: 50px 5%;
+  border-top: 3px solid var(--neon-purple, #b026ff);
+  box-shadow: inset 0 10px 30px rgba(0,0,0,0.8);
+  display: flex; justify-content: center;
+}
+.guide-content {
+  width: 100%; max-width: 1000px; padding: 40px; border-radius: 12px;
+  background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
+}
+.guide-content p { color: #ccc; line-height: 1.6; font-size: 1rem; margin-top: 10px; }
+.guide-content ul { color: #ccc; line-height: 1.8; margin-top: 10px; }
+.guide-content strong { color: #fff; }
+.guide-content h2 {
+  margin-top: 0; font-size: 1.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px;
+}
+.text-neon-blue { color: var(--neon-blue, #00f0ff); }
+.text-neon-purple { color: var(--neon-purple, #b026ff); }
+.mt-4 { margin-top: 35px; font-weight: 600; font-size: 1.2rem; }
+
+.math-box {
+  background: rgba(0,0,0,0.6); padding: 25px; border-radius: 8px;
+  border-left: 3px solid var(--neon-blue, #00f0ff); margin-top: 20px;
+}
+.formula {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.05rem !important; margin-bottom: 5px !important;
+  color: #fff !important;
+}
+.expl { color: #999 !important; font-style: italic; margin-top: 0 !important; font-size: 0.9rem !important; }
+.separator { border-color: rgba(255,255,255,0.05); margin: 12px 0; }
+
+/* ───── RESPONSIVE ───── */
+@media screen and (max-width: 800px) {
+  .sim-main {
+    flex-direction: column;
+  }
+  .sim-visual-area {
+    min-height: 45vh;
+  }
+  .sim-controls {
+    max-width: 100%; min-width: 0;
+    border-left: none;
+    border-top: 2px solid var(--neon-purple, #b026ff);
+  }
+  .evap-sun { width: 80px; height: 80px; }
+  .hud-group-top { transform: scale(0.65); transform-origin: top right; }
+  .hud-group-bot-left { transform: scale(0.65); transform-origin: bottom left; }
+  .hud-group-bot-right { transform: scale(0.65); transform-origin: bottom right; }
+  .guide-content { padding: 20px; }
+  .guide-content h2 { font-size: 1.3rem; }
+}

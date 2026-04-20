@@ -1,0 +1,175 @@
+.sim-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e1a 0%, #111827 50%, #0a0e1a 100%);
+  color: #e0e0e0;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* Header */
+.sim-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 24px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-back {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #a0aec0;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: rgba(0, 200, 255, 0.3);
+}
+
+.back-arrow {
+  margin-right: 4px;
+}
+
+.sim-title-block {
+  flex: 1;
+}
+
+.sim-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.bloque-agua .sim-badge {
+  background: linear-gradient(135deg, rgba(0, 150, 255, 0.25), rgba(0, 200, 255, 0.15));
+  color: #00c8ff;
+  border: 1px solid rgba(0, 200, 255, 0.3);
+}
+
+.bloque-agro .sim-badge {
+  background: linear-gradient(135deg, rgba(0, 200, 100, 0.25), rgba(180, 200, 0, 0.15));
+  color: #7cff36;
+  border: 1px solid rgba(100, 200, 0, 0.3);
+}
+
+.sim-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 2px 0;
+  background: linear-gradient(90deg, #fff, #a0d0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bloque-agro .sim-title {
+  background: linear-gradient(90deg, #fff, #a0ffb0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sim-lineamientos {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Tabs */
+.sim-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 24px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sim-tab {
+  flex: 1;
+  padding: 14px 20px;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #6b7280;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sim-tab:hover {
+  color: #d1d5db;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sim-tab.active {
+  color: #00c8ff;
+  border-bottom-color: #00c8ff;
+  background: rgba(0, 200, 255, 0.05);
+}
+
+.bloque-agro .sim-tab.active {
+  color: #7cff36;
+  border-bottom-color: #7cff36;
+  background: rgba(100, 255, 50, 0.05);
+}
+
+.tab-icon {
+  font-size: 1.1rem;
+}
+
+/* Content */
+.sim-tab-content {
+  padding: 24px;
+  min-height: calc(100vh - 160px);
+}
+
+.tab-panel {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sim-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .sim-title {
+    font-size: 1.1rem;
+  }
+
+  .sim-tabs {
+    padding: 0 8px;
+  }
+
+  .sim-tab {
+    padding: 10px 8px;
+    font-size: 0.8rem;
+  }
+
+  .sim-tab-content {
+    padding: 16px;
+  }
+}

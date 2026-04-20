@@ -1,0 +1,281 @@
+<app-simulation-wrapper
+  simTitle="Precipitación"
+  simDescription="Ajuste de variables pluviales (intensidad, tiempo) con reporte de cantidades numéricas."
+  [simNumber]="3"
+  lineamientos="Lineamiento 3: Escalas"
+  bloque="agua">
+
+  <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
+  <div actividad>
+    <div class="activity-content">
+      <h2>📋 Actividad: Medición de Volúmenes Pluviales</h2>
+      <p>En esta actividad aprenderás a <strong>cuantificar la precipitación</strong> y comprender cómo las
+        escalas permiten medir fenómenos naturales. Explorarás la relación entre intensidad, duración y volumen.</p>
+      <div class="activity-steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <p>Comienza con intensidad baja (5 mm/h). Observa el tipo de precipitación clasificado y el tamaño de las gotas
+            según Marshall-Palmer.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <p>Incrementa la <strong>Intensidad</strong> progresivamente hasta 80 mm/h. ¿Cómo cambia el cielo, la
+            energía cinética de las gotas y la escorrentía estimada?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <p>Experimenta con la <strong>Duración</strong>: ¿Cuánto volumen se acumula en 30 minutos vs 6 horas
+            con la misma intensidad? Calcula mentalmente y compara.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <p>Modifica el <strong>Área de Captación</strong> de 1 m² a 10000 m². Reflexiona sobre la escala:
+            ¿Cuántos litros caen sobre tu colegio en una tormenta?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 2: SIMULADOR ═══════════ -->
+  <div simulador>
+    <div class="sim-container">
+      <div class="sim-main">
+
+        <!-- ====== ÁREA VISUAL ====== -->
+        <div class="sim-visual-area" [style.background]="getSkyGradient()">
+
+          <!-- Lightning Flash -->
+          <div class="lightning-flash" *ngIf="lightningActive"></div>
+
+          <!-- Storm Darkening Overlay -->
+          <div class="storm-overlay" [style.opacity]="stormOverlayOpacity"></div>
+
+          <!-- Rain Curtain (heavy rain fog) -->
+          <div class="rain-curtain" *ngIf="vars.rainIntensity > 50"
+            [style.opacity]="(vars.rainIntensity - 50) / 50 * 0.4"></div>
+
+          <!-- Rain Drops -->
+          <div class="rain-drop" *ngFor="let d of rainDrops"
+            [style.left]="d.left"
+            [style.animationDuration]="d.duration"
+            [style.animationDelay]="d.delay"
+            [style.height]="d.height"
+            [style.opacity]="d.opacity"
+            [style.transform]="'rotate(' + outputs.windDriftAngle + 'deg)'">
+          </div>
+
+          <!-- Splash Particles -->
+          <div class="splash-particle" *ngFor="let s of splashParticles"
+            [style.left]="s.left"
+            [style.animationDelay]="s.delay">
+          </div>
+
+          <!-- Ground with puddles -->
+          <div class="ground-surface">
+            <div class="puddle puddle-1" [style.opacity]="puddleLevel / 100 * 0.7"></div>
+            <div class="puddle puddle-2" [style.opacity]="puddleLevel / 100 * 0.5"></div>
+            <div class="puddle puddle-3" [style.opacity]="puddleLevel / 100 * 0.6"></div>
+          </div>
+
+          <!-- Background landscape -->
+          <div class="landscape-bg"></div>
+
+          <!-- ====== HUD PANELS ====== -->
+          <div class="hud-group-top">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #00aaff;"></span> Intensidad Instantánea
+              </div>
+              <div class="hud-value" [style.color]="getIntensityColor()">{{ outputs.instantIntensity }} mm/h
+                <span class="hud-sub">| {{ outputs.precipitationType }}</span>
+              </div>
+            </div>
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #00ff88;"></span> Volumen Acumulado</div>
+              <div class="hud-value">{{ outputs.accumulatedVolume | number }} L</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-left">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #ffaa00;"></span> Energía Cinética</div>
+              <div class="hud-value">{{ outputs.kineticEnergy }} J/m²/h</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-right">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #ff5555;"></span> Escorrentía</div>
+              <div class="hud-value">{{ outputs.runoffEstimate }} L/min</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ====== PANEL DE CONTROLES ====== -->
+        <div class="sim-controls glass-panel">
+          <h3 class="panel-title">Variables de Entrada</h3>
+
+          <div class="slider-group">
+            <label>🌧️ Intensidad de Lluvia (mm/h): <strong>{{ vars.rainIntensity }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.rainIntensity"
+              (input)="onVarChange($event, 'rainIntensity')" class="neon-slider" />
+            <div class="slider-hint">Volumen de agua por unidad de área por hora</div>
+          </div>
+
+          <div class="slider-group">
+            <label>⏱️ Duración (minutos): <strong>{{ vars.duration }}</strong></label>
+            <input type="range" min="5" max="360" [value]="vars.duration"
+              (input)="onVarChange($event, 'duration')" class="neon-slider" />
+            <div class="slider-hint">Tiempo total del evento pluvial</div>
+          </div>
+
+          <div class="slider-group">
+            <label>📐 Área de Captación (m²): <strong>{{ vars.catchmentArea }}</strong></label>
+            <input type="range" min="1" max="10000" [value]="vars.catchmentArea"
+              (input)="onVarChange($event, 'catchmentArea')" class="neon-slider" />
+            <div class="slider-hint">Superficie sobre la que se mide la precipitación</div>
+          </div>
+
+          <div class="slider-group">
+            <label>💨 Velocidad del Viento (km/h): <strong>{{ vars.windSpeed }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.windSpeed"
+              (input)="onVarChange($event, 'windSpeed')" class="neon-slider" />
+            <div class="slider-hint">Desvía las gotas de lluvia según la velocidad</div>
+          </div>
+
+          <!-- Estación de Monitoreo -->
+          <div class="monitor-panel">
+            <h4 class="monitor-title">Estación Pluviométrica</h4>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Tipo de Precipitación</span>
+              <span class="monitor-value">{{ outputs.precipitationType }}</span>
+            </div>
+
+            <div class="meter-row">
+              <span>Intensidad</span>
+              <div class="meter-bar">
+                <div class="fill blue" [style.width.%]="vars.rainIntensity"></div>
+              </div>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Tamaño de Gota (D₀)</span>
+              <span class="monitor-value">{{ outputs.dropSize }} mm</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Lámina de Agua Total</span>
+              <span class="monitor-value">{{ outputs.rainfallDepth }} mm</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Ángulo de Deriva (Viento)</span>
+              <span class="monitor-value">{{ outputs.windDriftAngle }}°</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Volumen Total</span>
+              <span class="monitor-value highlight">{{ outputs.accumulatedVolume | number }} L</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====== GUÍA EDUCATIVA / FOOTER ====== -->
+      <footer class="educational-guide">
+        <div class="guide-content glass-panel">
+          <h2 class="text-neon-blue">Manual de Operación: Simulador de Precipitación</h2>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">1. ¿Qué es la Precipitación?</h3>
+            <p>La precipitación es toda forma de agua (líquida o sólida) que cae desde las nubes a la superficie
+              terrestre. Es el mecanismo principal por el cual el agua atmosférica retorna al suelo, cerrando el
+              ciclo hidrológico. La lluvia es la forma más común, pero incluye granizo, nieve y llovizna.</p>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">2. Fórmulas Implementadas</h3>
+            <div class="math-box">
+              <p class="formula">N(D) = N₀ × e<sup>(-ΛD)</sup> donde Λ = 4.1 × R<sup>-0.21</sup></p>
+              <p class="expl">Distribución de Marshall-Palmer (1948) — Describe cómo se distribuyen los tamaños de
+                gota según la intensidad R. A mayor intensidad, gotas más grandes.</p>
+              <hr class="separator" />
+              <p class="formula">KE = (11.87 + 8.73 × log₁₀(I)) × I [J/m²/h]</p>
+              <p class="expl">Ecuación de Wischmeier — Energía cinética de la lluvia. Determina la erosividad
+                (capacidad de la lluvia de erosionar el suelo).</p>
+              <hr class="separator" />
+              <p class="formula">V = I × A × t / 1000 [litros]</p>
+              <p class="expl">Modelo volumétrico — El volumen total de agua que cae sobre un área A en un tiempo t.
+                Fundamental para diseño de drenajes y gestión del recurso hídrico.</p>
+              <hr class="separator" />
+              <p class="formula">Q = C × I × A / 360 [L/s]</p>
+              <p class="expl">Método Racional — Estima la escorrentía superficial. C es el coeficiente de escorrentía
+                (0.5 para suelo promedio), que depende del tipo de superficie.</p>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">3. Funcionamiento de los Controles</h3>
+            <ul>
+              <li><strong>Intensidad de Lluvia (mm/h):</strong> Cantidad de agua por metro cuadrado por hora. 2.5 mm/h
+                es llovizna, >50 mm/h es tormenta torrencial. Clasifica automáticamente según la escala WMO.</li>
+              <li><strong>Duración (minutos):</strong> Tiempo del evento pluvial. Determina el volumen total acumulado
+                y la lámina de agua.</li>
+              <li><strong>Área de Captación (m²):</strong> Superficie sobre la que se mide. Escalas: 1 m² (pluviómetro),
+                100 m² (techo), 10000 m² (hectárea).</li>
+              <li><strong>Velocidad del Viento (km/h):</strong> Desvía las gotas en un ángulo calculado mediante la
+                velocidad terminal (~9 m/s para gotas medianas).</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">4. Interpretación de los Indicadores</h3>
+            <ul>
+              <li><strong>Volumen Acumulado (L):</strong> Total de agua recogida. Multiplica intensidad × área × tiempo.</li>
+              <li><strong>Tamaño de Gota (D₀):</strong> Diámetro mediano según Marshall-Palmer. Gotas grandes = más
+                energía cinética = más erosión.</li>
+              <li><strong>Energía Cinética (J/m²/h):</strong> Fuerza de impacto de la lluvia. Relacionada directamente
+                con la erosión del suelo.</li>
+              <li><strong>Escorrentía (L/min):</strong> Agua que no se infiltra y fluye por la superficie. Depende del
+                coeficiente de escorrentía del suelo.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">5. Experimentos Sugeridos</h3>
+            <ul>
+              <li>🧪 <strong>Experimento 1:</strong> Fija área = 100 m² y duración = 60 min. Incrementa la intensidad
+                de 0 a 100 mm/h. Registra el volumen acumulado a cada 10 mm/h. ¿Es lineal?</li>
+              <li>🧪 <strong>Experimento 2:</strong> Con intensidad = 30 mm/h, compara el volumen a 30 min, 60 min,
+                120 min y 360 min. Grafica la relación.</li>
+              <li>🧪 <strong>Experimento 3:</strong> ¿Cuántos litros caen sobre el área de tu colegio (≈5000 m²) en
+                una tormenta de 1 hora a 40 mm/h? Calcula primero manualmente.</li>
+            </ul>
+          </section>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 3: EVALUACIÓN ═══════════ -->
+  <div evaluacion>
+    <div class="eval-content">
+      <h2>📝 Evaluación: Precipitación</h2>
+      <p>Responde las siguientes preguntas basándote en tu experimentación con el simulador:</p>
+      <div class="eval-placeholder">
+        <p><strong>Pregunta 1:</strong> ¿Cuánta agua se precipita en una tormenta de 30 minutos sobre un área de 100m²
+          con intensidad de 40 mm/h? Muestra tu cálculo.</p>
+        <p><strong>Pregunta 2:</strong> ¿Cómo cambia la energía cinética al duplicar la intensidad de la lluvia?
+          ¿La relación es lineal?</p>
+        <p><strong>Pregunta 3:</strong> Explica la relación entre tamaño de gota e intensidad usando la distribución
+          de Marshall-Palmer.</p>
+        <p><strong>Pregunta 4:</strong> Si el coeficiente de escorrentía es 0.5, ¿qué porcentaje del agua se infiltra?
+          ¿Qué factores del suelo podrían cambiar este coeficiente?</p>
+        <div class="placeholder-badge">🔧 Cuestionario interactivo — Próximamente</div>
+      </div>
+    </div>
+  </div>
+
+</app-simulation-wrapper>

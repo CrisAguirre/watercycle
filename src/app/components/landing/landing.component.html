@@ -1,0 +1,72 @@
+<div class="landing-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-particles">
+      <div class="particle-dot" *ngFor="let i of [1,2,3,4,5,6,7,8]" [style.animationDelay]="i * 0.8 + 's'"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">🎓 Proyecto de Investigación — Maestría UDES</div>
+      <h1 class="hero-title">
+        Plataforma de <span class="gradient-text">Pensamiento Sistémico</span>
+      </h1>
+      <p class="hero-subtitle">
+        Simuladores interactivos del ciclo del agua y agroecosistemas para el fortalecimiento de 
+        habilidades de pensamiento sistémico en estudiantes de básica secundaria.
+      </p>
+
+      <div class="hero-actions">
+        <a routerLink="/dashboard" class="btn-primary">
+          <span>📊</span> Ir a Mis Sesiones
+        </a>
+        <a routerLink="/laboratorio" class="btn-secondary">
+          <span>🔬</span> Explorar Laboratorio
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <h2 class="section-title">¿Qué puedes hacer en la plataforma?</h2>
+    
+    <div class="features-grid">
+      <div class="feature-card" routerLink="/dashboard">
+        <div class="feature-icon">📊</div>
+        <h3>Mis Sesiones</h3>
+        <p>7 sesiones guiadas que te llevarán desde los conceptos básicos de sistema hasta la toma de decisiones complejas.</p>
+      </div>
+
+      <div class="feature-card" routerLink="/laboratorio">
+        <div class="feature-icon">🔬</div>
+        <h3>Laboratorio Virtual</h3>
+        <p>8 simulaciones interactivas donde puedes experimentar con evaporación, precipitación, infiltración y agroecosistemas.</p>
+      </div>
+
+      <div class="feature-card" routerLink="/recursos">
+        <div class="feature-icon">📁</div>
+        <h3>Recursos y Evidencias</h3>
+        <p>Videos, guías digitales y el espacio para cargar tus capturas de pantalla y resultados de simulación.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="stat-item">
+      <div class="stat-number">8</div>
+      <div class="stat-label">Simulaciones Interactivas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">7</div>
+      <div class="stat-label">Sesiones Didácticas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">7</div>
+      <div class="stat-label">Lineamientos Sistémicos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2</div>
+      <div class="stat-label">Bloques Temáticos</div>
+    </div>
+  </section>
+</div>

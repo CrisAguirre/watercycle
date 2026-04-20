@@ -1,0 +1,290 @@
+<app-simulation-wrapper
+  simTitle="Factores del Cultivo"
+  simDescription="Identificación de interacciones entre componentes bióticos (cultivo, plagas) y abióticos (suelo, nutrientes)."
+  [simNumber]="6"
+  lineamientos="Lineamientos 1 y 2: Componentes y Causalidad"
+  bloque="agro">
+
+  <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
+  <div actividad>
+    <div class="activity-content">
+      <h2>📋 Actividad: Componentes del Agroecosistema</h2>
+      <p>Identifica los componentes <strong>bióticos y abióticos</strong> de un cultivo regional y sus relaciones
+        de causalidad. Comprende cómo interactúan temperatura, agua, nutrientes y plagas.</p>
+      <div class="activity-steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <p>Observa el cultivo con los valores por defecto. Identifica visualmente: ¿qué componentes son
+            <strong>bióticos</strong> (planta, plagas) y cuáles <strong>abióticos</strong> (temperatura, agua)?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <p>Reduce el <strong>Agua Disponible</strong> a 10%. ¿Qué observas en la planta? Esto demuestra la
+            causalidad: agua baja → estrés hídrico → marchitamiento.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <p>Sube la <strong>Presión de Plagas</strong> al 80%. ¿Cuánto disminuye la salud? ¿Es un componente
+            biótico o abiótico?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <p>Busca el <strong>factor limitante</strong> en el panel de monitoreo. Experimenta: ¿cuál de las 4
+            variables tiene el mayor impacto negativo cuando está en su peor valor?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 2: SIMULADOR ═══════════ -->
+  <div simulador>
+    <div class="sim-container">
+      <div class="sim-main">
+
+        <!-- ====== ÁREA VISUAL ====== -->
+        <div class="sim-visual-area">
+
+          <!-- Sky -->
+          <div class="crop-sky">
+            <div class="crop-sun"
+              [style.opacity]="vars.temperature > 20 ? 0.8 : 0.3"
+              [style.transform]="'scale(' + (0.6 + vars.temperature / 40 * 0.6) + ')'">
+            </div>
+          </div>
+
+          <!-- Plant Area -->
+          <div class="crop-field">
+            <!-- Main Plant -->
+            <div class="plant-container">
+              <div class="plant"
+                [style.height.%]="plantHeight"
+                [style.filter]="'hue-rotate(' + (outputs.cropHealth < 50 ? (50 - outputs.cropHealth) * 1.5 : 0) + 'deg)'">
+                <!-- Leaves -->
+                <div class="leaf leaf-left" [style.background]="leafColor"></div>
+                <div class="leaf leaf-right" [style.background]="leafColor"></div>
+                <div class="leaf leaf-left-2" [style.background]="leafColor" *ngIf="plantHeight > 45"></div>
+                <div class="leaf leaf-right-2" [style.background]="leafColor" *ngIf="plantHeight > 45"></div>
+                <div class="leaf leaf-top" [style.background]="leafColor" *ngIf="plantHeight > 60"></div>
+                <!-- Stem -->
+                <div class="stem"></div>
+              </div>
+
+              <!-- Roots (underground) -->
+              <div class="roots" [style.height.%]="rootDepth">
+                <div class="root root-1"></div>
+                <div class="root root-2"></div>
+                <div class="root root-3"></div>
+              </div>
+            </div>
+
+            <!-- Secondary Plants -->
+            <div class="plant-bg plant-bg-1" [style.opacity]="plantHeight / 100 * 0.6"></div>
+            <div class="plant-bg plant-bg-2" [style.opacity]="plantHeight / 100 * 0.5"></div>
+            <div class="plant-bg plant-bg-3" [style.opacity]="plantHeight / 100 * 0.4"></div>
+
+            <!-- Pest Icons -->
+            <div class="pest-icon" *ngFor="let p of pestIcons"
+              [style.left]="p.left"
+              [style.top]="p.top"
+              [style.animationDelay]="p.delay">
+              🐛
+            </div>
+
+            <!-- Water droplets on soil -->
+            <div class="soil-moisture-indicator"
+              [style.opacity]="vars.waterAvailability / 100 * 0.6">
+              💧
+            </div>
+          </div>
+
+          <!-- Soil -->
+          <div class="crop-soil" [style.background]="soilMoistureColor">
+            <div class="soil-nutrient-bar">
+              <div class="nutrient-fill" [style.width.%]="vars.nutrients"
+                [style.background]="vars.nutrients > 60 ? '#44aa44' : vars.nutrients > 30 ? '#aaaa44' : '#aa4444'">
+              </div>
+            </div>
+          </div>
+
+          <!-- Background -->
+          <div class="landscape-bg"></div>
+
+          <!-- ====== HUD PANELS ====== -->
+          <div class="hud-group-top">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" [style.background]="getHealthBarColor()"></span> Salud del Cultivo</div>
+              <div class="hud-value" [style.color]="getHealthBarColor()">{{ outputs.cropHealth }}%
+                <span class="hud-sub">| {{ outputs.cropStatus }}</span>
+              </div>
+            </div>
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #88cc44;"></span> Biomasa</div>
+              <div class="hud-value">{{ outputs.biomass }} kg/m²</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-left">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #ffaa00;"></span> Factor Limitante</div>
+              <div class="hud-value hud-value-sm">{{ outputs.limitingFactor }}</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-right">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #44aaff;"></span> Evapotranspiración</div>
+              <div class="hud-value">{{ outputs.evapotranspiration }} mm/día</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ====== PANEL DE CONTROLES ====== -->
+        <div class="sim-controls glass-panel">
+          <h3 class="panel-title">Variables de Entrada</h3>
+
+          <div class="slider-group">
+            <label>🌡️ Temperatura Promedio (°C): <strong>{{ vars.temperature }}</strong></label>
+            <input type="range" min="5" max="40" [value]="vars.temperature"
+              (input)="onVarChange($event, 'temperature')" class="neon-slider" />
+            <div class="slider-hint">Rango óptimo: 15–30°C. Fuera de este rango → estrés térmico</div>
+          </div>
+
+          <div class="slider-group">
+            <label>💧 Disponibilidad de Agua (%): <strong>{{ vars.waterAvailability }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.waterAvailability"
+              (input)="onVarChange($event, 'waterAvailability')" class="neon-slider" />
+            <div class="slider-hint">Contenido hídrico disponible para las raíces</div>
+          </div>
+
+          <div class="slider-group">
+            <label>🧪 Nutrientes N-P-K (%): <strong>{{ vars.nutrients }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.nutrients"
+              (input)="onVarChange($event, 'nutrients')" class="neon-slider" />
+            <div class="slider-hint">Índice compuesto de Nitrógeno, Fósforo y Potasio</div>
+          </div>
+
+          <div class="slider-group">
+            <label>🐛 Presión de Plagas (%): <strong>{{ vars.pestPressure }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.pestPressure"
+              (input)="onVarChange($event, 'pestPressure')" class="neon-slider" />
+            <div class="slider-hint">Severidad del ataque de plagas sobre el cultivo</div>
+          </div>
+
+          <!-- Monitor -->
+          <div class="monitor-panel">
+            <h4 class="monitor-title">Monitoreo del Agroecosistema</h4>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Etapa de Crecimiento</span>
+              <span class="monitor-value">{{ outputs.growthStage }}</span>
+            </div>
+
+            <div class="meter-row">
+              <span>Salud del Cultivo</span>
+              <div class="meter-bar">
+                <div class="fill health" [style.width.%]="outputs.cropHealth"
+                  [style.background]="getHealthBarColor()"></div>
+              </div>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Estrés Térmico</span>
+              <span class="monitor-value">{{ outputs.thermalStress * 100 | number:'1.0-0' }}%</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Estrés Hídrico</span>
+              <span class="monitor-value">{{ outputs.waterStress * 100 | number:'1.0-0' }}%</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Eficiencia Nutricional</span>
+              <span class="monitor-value">{{ outputs.nutrientEfficiency }}%</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Rendimiento Estimado</span>
+              <span class="monitor-value highlight">{{ outputs.yieldEstimate }} ton/ha</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====== GUÍA EDUCATIVA ====== -->
+      <footer class="educational-guide">
+        <div class="guide-content glass-panel">
+          <h2 class="text-neon-green">Manual de Operación: Simulador de Factores del Cultivo</h2>
+
+          <section>
+            <h3 class="text-accent mt-4">1. Componentes del Agroecosistema</h3>
+            <p>Un agroecosistema es un sistema ecológico modificado por el ser humano para producir alimentos.
+              Tiene componentes <strong>bióticos</strong> (planta, plagas, microorganismos del suelo) y
+              <strong>abióticos</strong> (temperatura, agua, nutrientes, pH del suelo, radiación solar).</p>
+          </section>
+
+          <section>
+            <h3 class="text-accent mt-4">2. Fórmulas Implementadas</h3>
+            <div class="math-box">
+              <p class="formula">ETc = Kc × ET0 [mm/día]</p>
+              <p class="expl">FAO-56 — Evapotranspiración del cultivo. Kc depende de la etapa de crecimiento
+                (0.4 en germinación, 1.1 en maduración).</p>
+              <hr class="separator" />
+              <p class="formula">dB/dt = r × B × (1 − B/K) × Π(factores)</p>
+              <p class="expl">Crecimiento logístico — La biomasa crece siguiendo una curva S limitada por la
+                capacidad de carga (K) y modulada por todos los factores de estrés.</p>
+              <hr class="separator" />
+              <p class="formula">Rendimiento = f(min(T, W, N, P))</p>
+              <p class="expl">Ley de Liebig — El rendimiento se limita por el factor en menor disponibilidad,
+                como una cadena que se rompe por su eslabón más débil.</p>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="text-accent mt-4">3. Relaciones de Causalidad</h3>
+            <ul>
+              <li><strong>T° → Metabolismo:</strong> La temperatura regula la velocidad de las reacciones
+                enzimáticas. Fuera del rango óptimo (15-30°C), la planta entra en estrés.</li>
+              <li><strong>Agua → Turgencia:</strong> El agua mantiene la presión celular. Sin agua, las células
+                colapsan y las hojas se marchitan.</li>
+              <li><strong>Nutrientes → Crecimiento:</strong> N es esencial para proteínas, P para raíces, K para
+                resistencia a enfermedades.</li>
+              <li><strong>Plagas → Daño:</strong> Los insectos reducen área foliar y compiten por nutrientes,
+                reduciendo la fotosíntesis.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-accent mt-4">4. Experimentos Sugeridos</h3>
+            <ul>
+              <li>🧪 <strong>Experimento 1:</strong> Encuentra la combinación de variables que maximiza la salud
+                del cultivo al 100%. ¿Cuáles son los valores óptimos?</li>
+              <li>🧪 <strong>Experimento 2:</strong> Con temperatura = 38°C y agua = 10%, ¿sobrevive el cultivo?
+                ¿Cuál es el factor limitante?</li>
+              <li>🧪 <strong>Experimento 3:</strong> Clasifica los 4 factores del más al menos impactante en la
+                salud del cultivo.</li>
+            </ul>
+          </section>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 3: EVALUACIÓN ═══════════ -->
+  <div evaluacion>
+    <div class="eval-content">
+      <h2>📝 Evaluación: Factores del Cultivo</h2>
+      <div class="eval-placeholder">
+        <p><strong>Pregunta 1:</strong> Clasifica correctamente los componentes bióticos y abióticos del simulador.</p>
+        <p><strong>Pregunta 2:</strong> ¿Cómo afecta la falta de agua en el ciclo del agua a la producción del
+          agroecosistema? Usa datos del simulador.</p>
+        <p><strong>Pregunta 3:</strong> Explica la Ley de Liebig usando un ejemplo con las variables del simulador.</p>
+        <p><strong>Pregunta 4:</strong> Dibuja un diagrama de causalidad mostrando las relaciones entre los 4 factores
+          y la salud del cultivo.</p>
+        <div class="placeholder-badge">🔧 Cuestionario interactivo — Próximamente</div>
+      </div>
+    </div>
+  </div>
+
+</app-simulation-wrapper>

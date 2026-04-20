@@ -1,0 +1,301 @@
+<app-simulation-wrapper
+  simTitle="Resiliencia Agrícola"
+  simDescription="Escenario de crisis (plagas o sequía extrema). Ajusta variables sistémicas para evitar el colapso del cultivo."
+  [simNumber]="8"
+  lineamientos="Lineamiento 7: Estabilidad y Resiliencia"
+  bloque="agro">
+
+  <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
+  <div actividad>
+    <div class="activity-content">
+      <h2>📋 Actividad: Decisiones ante Crisis Climática</h2>
+      <p>Reflexiona sobre el <strong>propósito del agroecosistema</strong>: alimentación comunitaria y estabilidad
+        ambiental ante escenarios de crisis. Toma decisiones como un agricultor real.</p>
+      <div class="activity-steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <p>Selecciona el escenario de <strong>Sequía</strong> con severidad 5. Observa cómo la salud del sistema
+            disminuye con el tiempo. ¿Cuántos "días" resiste sin intervención?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <p>Activa la intervención de <strong>Riego</strong> al 80%. ¿El sistema se estabiliza? ¿Se recupera?
+            Observa el concepto de <strong>resiliencia</strong>.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <p>Prueba aplicar <strong>Biocontrol</strong> contra una sequía. ¿Es eficaz? Reflexiona: ¿por qué
+            cada crisis requiere una intervención específica?</p>
+        </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <p>Deja que la salud baje de 15%. ¿Qué sucede? Este es el <strong>punto de inflexión</strong> (tipping
+            point): un umbral donde el daño se vuelve irreversible.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 2: SIMULADOR ═══════════ -->
+  <div simulador>
+    <div class="sim-container">
+      <div class="sim-main">
+
+        <!-- ====== ÁREA VISUAL ====== -->
+        <div class="sim-visual-area">
+
+          <!-- Sky changes with crisis -->
+          <div class="crisis-sky"
+            [class.sky-drought]="vars.crisisType === 'sequia'"
+            [class.sky-flood]="vars.crisisType === 'inundacion'"
+            [class.sky-frost]="vars.crisisType === 'helada'"
+            [class.sky-pest]="vars.crisisType === 'plaga'">
+          </div>
+
+          <!-- Shield Effect -->
+          <div class="shield-effect" *ngIf="shieldActive"
+            [style.opacity]="outputs.interventionEfficacy / 100 * 0.4">
+          </div>
+
+          <!-- Crisis-specific overlays -->
+          <!-- Drought cracks -->
+          <div class="crack-overlay" *ngIf="crackLevel > 20"
+            [style.opacity]="crackLevel / 100 * 0.8">
+            <div class="crack crack-1"></div>
+            <div class="crack crack-2"></div>
+            <div class="crack crack-3"></div>
+          </div>
+
+          <!-- Flood water -->
+          <div class="flood-overlay" *ngIf="floodLevel > 10"
+            [style.height.%]="floodLevel">
+          </div>
+
+          <!-- Frost -->
+          <div class="frost-overlay" *ngIf="frostLevel > 10"
+            [style.opacity]="frostLevel / 100 * 0.7">
+          </div>
+
+          <!-- Pest swarm -->
+          <div class="pest-swarm" *ngIf="pestLevel > 10">
+            <div class="pest-bug" *ngFor="let i of [1,2,3,4,5,6]"
+              [style.animationDelay]="i * 0.5 + 's'"
+              [style.opacity]="pestLevel / 100">🐛</div>
+          </div>
+
+          <!-- Field/Crops -->
+          <div class="resilience-field"
+            [style.filter]="'saturate(' + (fieldGreen / 100) + ') brightness(' + (0.5 + fieldGreen / 200) + ')'">
+            <div class="crop-row" *ngFor="let r of [1,2,3]">
+              <span class="field-plant"
+                [style.transform]="'rotate(' + (Math.random() * plantSway - plantSway/2) + 'deg)'">🌿</span>
+              <span class="field-plant"
+                [style.transform]="'rotate(' + (Math.random() * plantSway - plantSway/2) + 'deg)'">🌾</span>
+              <span class="field-plant"
+                [style.transform]="'rotate(' + (Math.random() * plantSway - plantSway/2) + 'deg)'">🌿</span>
+              <span class="field-plant"
+                [style.transform]="'rotate(' + (Math.random() * plantSway - plantSway/2) + 'deg)'">🌾</span>
+              <span class="field-plant"
+                [style.transform]="'rotate(' + (Math.random() * plantSway - plantSway/2) + 'deg)'">🌿</span>
+            </div>
+          </div>
+
+          <!-- Health Bar (large, centered) -->
+          <div class="health-bar-container">
+            <div class="health-bar-label">SALUD DEL SISTEMA</div>
+            <div class="health-bar-track">
+              <div class="health-bar-fill" [style.width.%]="outputs.systemHealth"
+                [style.background]="getHealthColor()">
+              </div>
+              <span class="health-bar-text">{{ outputs.systemHealth }}%</span>
+            </div>
+            <div class="health-bar-status" [style.color]="getHealthColor()">{{ outputs.systemStatus }}</div>
+          </div>
+
+          <!-- Tipping Point Warning -->
+          <div class="tipping-warning" *ngIf="outputs.tippingPointReached">
+            ⚠️ PUNTO DE INFLEXIÓN ALCANZADO — Daño irreversible sin intervención
+          </div>
+
+          <!-- ====== HUD PANELS ====== -->
+          <div class="hud-group-top">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" [style.background]="getHealthColor()"></span> Resiliencia</div>
+              <div class="hud-value" [style.color]="getHealthColor()">{{ outputs.resilience }}</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-left">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #ff6644;"></span> Daño Acumulado</div>
+              <div class="hud-value">{{ outputs.accumulatedDamage }}%</div>
+            </div>
+          </div>
+
+          <div class="hud-group-bot-right">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" style="background: #44aaff;"></span> Día de Crisis</div>
+              <div class="hud-value">{{ outputs.daysInCrisis }}</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ====== PANEL DE CONTROLES ====== -->
+        <div class="sim-controls glass-panel">
+          <h3 class="panel-title">Variables del Escenario</h3>
+
+          <!-- Crisis Selector -->
+          <div class="selector-group">
+            <label>⚠️ Escenario de Crisis:</label>
+            <div class="selector-buttons">
+              <button *ngFor="let c of crisisTypes"
+                [class.active]="vars.crisisType === c"
+                (click)="onCrisisChange(c)"
+                class="sel-btn crisis-btn">{{ getCrisisLabel(c) }}</button>
+            </div>
+            <div class="slider-hint">{{ outputs.crisisDescription }}</div>
+          </div>
+
+          <div class="slider-group">
+            <label>📊 Severidad de la Crisis: <strong>{{ vars.crisisSeverity }}/10</strong></label>
+            <input type="range" min="1" max="10" [value]="vars.crisisSeverity"
+              (input)="onVarChange($event, 'crisisSeverity')" class="neon-slider danger" />
+            <div class="slider-hint">1 = leve, 10 = extrema. Mayor severidad → daño más rápido</div>
+          </div>
+
+          <!-- Intervention Selector -->
+          <div class="selector-group">
+            <label>🛡️ Tipo de Intervención:</label>
+            <div class="selector-buttons">
+              <button *ngFor="let i of interventionTypes"
+                [class.active]="vars.intervention === i"
+                (click)="onInterventionChange(i)"
+                class="sel-btn int-btn">{{ getInterventionLabel(i) }}</button>
+            </div>
+            <div class="slider-hint">{{ outputs.interventionDescription }}</div>
+          </div>
+
+          <div class="slider-group">
+            <label>💪 Intensidad de Intervención (%): <strong>{{ vars.interventionIntensity }}</strong></label>
+            <input type="range" min="0" max="100" [value]="vars.interventionIntensity"
+              (input)="onVarChange($event, 'interventionIntensity')" class="neon-slider rescue" />
+            <div class="slider-hint">Recursos dedicados a la intervención</div>
+          </div>
+
+          <!-- Reset button -->
+          <button class="reset-btn" (click)="resetSimulation()">🔄 Reiniciar Simulación</button>
+
+          <!-- Monitor -->
+          <div class="monitor-panel">
+            <h4 class="monitor-title">Panel de Crisis</h4>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Estado del Sistema</span>
+              <span class="monitor-value">{{ outputs.systemStatus }}</span>
+            </div>
+
+            <div class="meter-row">
+              <span>Salud</span>
+              <div class="meter-bar">
+                <div class="fill health" [style.width.%]="outputs.systemHealth"
+                  [style.background]="getHealthColor()"></div>
+              </div>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Eficacia de Intervención</span>
+              <span class="monitor-value">{{ outputs.interventionEfficacy }}%</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Tasa de Recuperación</span>
+              <span class="monitor-value">{{ outputs.recoveryRate }}</span>
+            </div>
+
+            <div class="monitor-row">
+              <span class="monitor-label">Punto de Inflexión</span>
+              <span class="monitor-value" [style.color]="outputs.tippingPointReached ? '#ff4444' : '#44cc66'">
+                {{ outputs.tippingPointReached ? '⚠️ ALCANZADO' : '✅ No alcanzado' }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ====== GUÍA EDUCATIVA ====== -->
+      <footer class="educational-guide">
+        <div class="guide-content glass-panel">
+          <h2 class="text-accent">Manual de Operación: Simulador de Resiliencia Agrícola</h2>
+
+          <section>
+            <h3 class="text-accent-2 mt-4">1. ¿Qué es la Resiliencia?</h3>
+            <p>La resiliencia es la capacidad de un sistema para absorber perturbaciones y reorganizarse, manteniendo
+              esencialmente su estructura y funciones. En agricultura, es la capacidad del agroecosistema de
+              <strong>resistir y recuperarse</strong> de eventos extremos como sequías, plagas o heladas.</p>
+          </section>
+
+          <section>
+            <h3 class="text-accent-2 mt-4">2. Conceptos Clave</h3>
+            <div class="math-box">
+              <p class="formula">Salud = 100 − Σ(D<sub>crisis</sub> × severidad × t) + Σ(Recuperación)</p>
+              <p class="expl">Modelo de estrés acumulativo — La salud del sistema decrece con el daño de la crisis
+                y se recupera con intervenciones apropiadas.</p>
+              <hr class="separator" />
+              <p class="formula">Punto de Inflexión: Salud < 15% → Colapso irreversible</p>
+              <p class="expl">Tipping Point — Umbral crítico donde el sistema pierde su capacidad natural de
+                recuperación. Sin intervención fuerte, el colapso es inevitable.</p>
+              <hr class="separator" />
+              <p class="formula">Eficacia = Match(crisis, intervención) × Intensidad</p>
+              <p class="expl">Cada crisis tiene una intervención óptima. Aplicar la intervención incorrecta
+                (ej: drenaje contra sequía) tiene eficacia cercana a cero.</p>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="text-accent-2 mt-4">3. Escenarios de Crisis</h3>
+            <ul>
+              <li><strong>☀️ Sequía:</strong> Déficit hídrico. Intervención óptima: Riego de emergencia.
+                Daño progresivo pero relativamente lento.</li>
+              <li><strong>🐛 Plaga:</strong> Ataque de insectos. Intervención óptima: Biocontrol.
+                Daño acelerado (retroalimentación: más plagas → menos resistencia → más plagas).</li>
+              <li><strong>🌊 Inundación:</strong> Exceso de agua. Intervención óptima: Drenaje.
+                Daño rápido e inicial pero se estabiliza.</li>
+              <li><strong>❄️ Helada:</strong> Congelación. Intervención óptima: Protección térmica.
+                Daño muy rápido pero de corta duración.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-accent-2 mt-4">4. Experimentos Sugeridos</h3>
+            <ul>
+              <li>🧪 <strong>Experimento 1:</strong> Sin intervención, ¿cuántos días resiste el sistema ante cada
+                tipo de crisis con severidad 5? Ordénalos del más al menos devastador.</li>
+              <li>🧪 <strong>Experimento 2:</strong> ¿Cuál es la intensidad mínima de intervención correcta que
+                estabiliza el sistema contra una sequía severa (severidad 8)?</li>
+              <li>🧪 <strong>Experimento 3:</strong> Deja caer la salud al 10%, luego activa la intervención
+                correcta al 100%. ¿Se recupera? ¿Qué aprende esto sobre prevención vs reacción?</li>
+            </ul>
+          </section>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 3: EVALUACIÓN — POSTEST ═══════════ -->
+  <div evaluacion>
+    <div class="eval-content">
+      <h2>📝 Evaluación — Postest Digital</h2>
+      <div class="eval-placeholder">
+        <p><strong>Evaluación Final:</strong> Este módulo incluirá el Postest Digital de la tesis para recolectar
+          los datos finales de la investigación.</p>
+        <p><strong>Criterio 1:</strong> Eficacia en la toma de decisiones para mantener la estabilidad del sistema.</p>
+        <p><strong>Criterio 2:</strong> Comprensión del concepto de resiliencia y puntos de inflexión.</p>
+        <p><strong>Criterio 3:</strong> Capacidad de proponer estrategias de adaptación basadas en evidencia.</p>
+        <div class="placeholder-badge">🔧 Postest Digital — Próximamente</div>
+      </div>
+    </div>
+  </div>
+
+</app-simulation-wrapper>

@@ -1,0 +1,162 @@
+.eva-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 60px;
+  background: rgba(8, 12, 28, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Brand */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  font-size: 1.4rem;
+}
+
+.brand-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #a0aec0;
+}
+
+.brand-highlight {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #00c8ff, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-sub {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .brand-sub {
+    display: inline;
+  }
+}
+
+/* Tabs */
+.nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 100%;
+}
+
+.nav-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  height: 100%;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-tab:hover {
+  color: #d1d5db;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.nav-tab.active {
+  color: #00c8ff;
+  border-bottom-color: #00c8ff;
+  background: rgba(0, 200, 255, 0.05);
+}
+
+.tab-icon {
+  font-size: 1.05rem;
+}
+
+.tab-label {
+  font-size: 0.82rem;
+}
+
+/* Logout */
+.btn-logout {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+.logout-icon {
+  font-size: 1rem;
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+  .eva-navbar {
+    padding: 0 12px;
+    height: 54px;
+  }
+
+  .nav-brand {
+    gap: 6px;
+  }
+
+  .brand-name {
+    font-size: 0.75rem;
+  }
+
+  .brand-highlight {
+    font-size: 0.9rem;
+  }
+
+  .nav-tab {
+    padding: 0 8px;
+    gap: 0;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .tab-label {
+    font-size: 0.6rem;
+    line-height: 1;
+  }
+
+  .tab-icon {
+    font-size: 0.95rem;
+  }
+
+  .logout-text {
+    display: none;
+  }
+
+  .btn-logout {
+    padding: 6px 10px;
+  }
+}

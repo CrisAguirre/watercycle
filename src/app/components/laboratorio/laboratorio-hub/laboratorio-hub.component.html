@@ -1,0 +1,80 @@
+<div class="lab-hub-page">
+  <div class="lab-header">
+    <h1 class="lab-title">Laboratorio de Simulaciones</h1>
+    <p class="lab-subtitle">Experimenta libremente con los 8 módulos interactivos de agua y agroecosistemas</p>
+  </div>
+
+  <!-- Bloque 1: Ciclo del Agua -->
+  <section class="sim-block">
+    <div class="block-header">
+      <span class="block-icon">💧</span>
+      <div>
+        <h2 class="block-title">Bloque 1: Ciclo del Agua</h2>
+        <p class="block-desc">Procesos y Síntesis — Simulaciones 1 a 5</p>
+      </div>
+    </div>
+
+    <div class="sim-grid">
+      <app-sim-card
+        [simNumber]="1" title="Evaporación"
+        description="Control de radiación solar y temperatura. Visualización del cambio de fase líquido-gaseoso."
+        icon="☀️" bloque="agua" [available]="true" routePath="/laboratorio/evaporacion">
+      </app-sim-card>
+
+      <app-sim-card
+        [simNumber]="2" title="Condensación"
+        description="Modelado del punto de rocío y enfriamiento atmosférico para formación de nubes."
+        icon="☁️" bloque="agua" [available]="true" routePath="/laboratorio/condensacion">
+      </app-sim-card>
+
+      <app-sim-card
+        [simNumber]="3" title="Precipitación"
+        description="Ajuste de variables pluviales con reporte de cantidades numéricas."
+        icon="🌧️" bloque="agua" [available]="true" routePath="/laboratorio/precipitacion">
+      </app-sim-card>
+
+      <app-sim-card
+        [simNumber]="4" title="Infiltración y Escorrentía"
+        description="Modelado de suelos (arcilloso, arenoso) para observar el flujo de agua superficial y profunda."
+        icon="🏔️" bloque="agua" [available]="true" routePath="/laboratorio/infiltracion">
+      </app-sim-card>
+
+      <app-sim-card
+        [simNumber]="5" title="Ciclo Consolidado"
+        description="El simulador 3D definitivo. Integra los 4 procesos en un relieve geográfico completo."
+        icon="🌍" bloque="agua" [available]="true" routePath="/laboratorio/ciclo-consolidado">
+      </app-sim-card>
+    </div>
+  </section>
+
+  <!-- Bloque 2: Agroecosistemas -->
+  <section class="sim-block">
+    <div class="block-header">
+      <span class="block-icon">🌱</span>
+      <div>
+        <h2 class="block-title">Bloque 2: Agroecosistemas</h2>
+        <p class="block-desc">Transferencia — Simulaciones 6 a 8</p>
+      </div>
+    </div>
+
+    <div class="sim-grid">
+      <app-sim-card
+        [simNumber]="6" title="Factores del Cultivo"
+        description="Identificación de interacciones entre componentes bióticos y abióticos del agroecosistema."
+        icon="🌿" bloque="agro" [available]="true" routePath="/laboratorio/factores-cultivo">
+      </app-sim-card>
+
+      <app-sim-card
+        [simNumber]="7" title="Escalas Productivas"
+        description="Simulador matemático de rendimiento. Cálculo de agua y fertilizante por área de siembra."
+        icon="📊" bloque="agro" [available]="true" routePath="/laboratorio/escalas-productivas">
+      </app-sim-card>
+
+      <app-sim-card
+        [simNumber]="8" title="Resiliencia Agrícola"
+        description="Escenario de crisis (plagas o sequía). Ajusta variables sistémicas para evitar el colapso."
+        icon="🛡️" bloque="agro" [available]="true" routePath="/laboratorio/resiliencia-agricola">
+      </app-sim-card>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,226 @@
+﻿--- CONTENT OF Propuesta Pedagógica y Técnica Integral.docx ---
+Propuesta Pedagógica y Técnica Integral - Plataforma de pensamiento sistémico con simuladores de ciclo de agua y agrosistemas
+Este documento constituye el cuerpo completo, detallado y sinóptico de la investigación para el trabajo de grado de maestría. Ha sido reconstruido íntegramente para evitar cualquier tipo de resumen, integrando cada sección con la profundidad académica y técnica requerida para la sustentación ante la Universidad de Santander (UDES).
+1. Justificación de la Investigación
+La presente investigación surge ante la imperativa necesidad de transformar la enseñanza de las ciencias naturales hacia un modelo de pensamiento sistémico. Los métodos tradicionales han fragmentado el conocimiento en procesos aislados, impidiendo que el estudiante comprenda la complejidad de la realidad planetaria.
+1.1. Conveniencia y Relevancia Social
+El proyecto es conveniente porque ofrece una solución tangible al vacío pedagógico que existe entre la teoría de sistemas y la práctica escolar. Socialmente, beneficia a los estudiantes de básica secundaria en el municipio de Pasto, Nariño, democratizando el acceso a tecnología de punta (Angular, Node.js) en un contexto donde los laboratorios físicos suelen ser insuficientes. Permite que el estudiante se convierta en un experimentador activo de su propio entorno.
+1.2. Implicaciones Prácticas y Valor Teórico
+Prácticamente, el uso de un ecosistema de 8 simulaciones permite observar fenómenos que ocurren en escalas temporales y espaciales imposibles de ver en el aula (evaporación microscópica o cambios climáticos globales). Teóricamente, el proyecto valida el modelo de "andamiaje sistémico": una progresión cognitiva que parte de la identificación de componentes individuales hasta alcanzar la visión de "totalidad" y "resiliencia", fundamentada en los 7 lineamientos del Dr. Eliécer Pineda Ballesteros.
+2. Objetivos de la Investigación
+Objetivo General: Fortalecer el pensamiento sistémico en estudiantes de básica secundaria mediante la implementación de una secuencia didáctica mediada por un entorno virtual de aprendizaje basado en simulaciones interactivas sobre el ciclo del agua y agroecosistemas.
+Objetivos Específicos:
+Diagnosticar: Identificar el nivel inicial de habilidades de pensamiento sistémico (visión de totalidad, causalidad, estabilidad) mediante la aplicación de un pretest validado por el macroproyecto.
+Diseñar: Desarrollar un Entorno Virtual de Aprendizaje (EVA) interactivo que integre 8 módulos de simulación bajo una arquitectura API REST moderna.
+Implementar: Ejecutar una secuencia didáctica de 7 sesiones estructuradas que guíen al estudiante desde el análisis de procesos aislados hasta la toma de decisiones complejas en agroecosistemas.
+Evaluar: Determinar el impacto de la intervención tecnológica mediante un postest y el análisis de la persistencia de datos en MongoDB, comparando estadísticamente el progreso cognitivo.
+3. Arquitectura Técnica y Stack Tecnológico
+La infraestructura del proyecto ha sido diseñada para soportar una alta demanda visual y una gestión de datos científica:
+Frontend (Angular CLI): Se utiliza Angular por su robustez en la gestión de interfaces dinámicas. La arquitectura de componentes permite una ejecución fluida de animaciones de partículas (vapor de agua, lluvia, flujo de nutrientes) que son esenciales para que el estudiante visualice el lineamiento de "Causalidad" y "Escalas".
+Backend (Node.js & Express): Configurado bajo una arquitectura de API REST. Node.js garantiza una comunicación asíncrona y de baja latencia, permitiendo que las variables manipuladas en el simulador se sincronicen instantáneamente con el servidor.
+Base de Datos (MongoDB): Como gestor NoSQL, MongoDB almacena cada interacción del estudiante como un objeto JSON. Esto incluye no solo respuestas a cuestionarios, sino también los "logs" de cómo el estudiante manipuló las variables (temperatura, radiación, fertilización), proporcionando una fuente de datos rica para el análisis de la tesis.
+Hosting e Infraestructura: Control de versiones en GitHub, despliegue del frontend en Vercel y servicios de backend/DB en Railway, garantizando una disponibilidad del 99.9% durante las sesiones de clase.
+4. Arquitectura de la Plataforma y Acceso de Usuarios
+El diseño UX/UI responde a la realidad técnica de estudiantes de 8° grado en Pasto, eliminando la barrera del correo electrónico: Quiero que la un documento para ver si es entendible
+4.1. Registro y Autenticación
+El acceso se realiza mediante un registro obligatorio por una única vez. Los campos requeridos son: Nombre Completo, Edad, Grado, Número de Tarjeta de Identidad (que funciona como ID único de acceso) y un teléfono opcional. El sistema no requiere email, facilitando la inclusión de estudiantes que no gestionan cuentas de correo personal.
+4.2. Sitemap (Navegación por Pestañas)
+Sección
+Funcionalidad Detallada
+Inicio (Landing)
+Presentación motivacional del proyecto y acceso/registro al sistema.
+Mis Sesiones (Dashboard)
+Panel interactivo donde aparecen las 7 sesiones del cronograma. El estudiante ve su progreso y las sesiones se desbloquean secuencialmente.
+Laboratorio de Simulaciones
+Espacio para la experimentación libre con los 8 módulos ( Agua y Agro).
+Recursos y Evidencias
+Biblioteca de videos, guías digitales y el módulo para cargar capturas de pantalla de los resultados de simulación.
+5. Ecosistema de 8 Simulaciones Interactivas
+El motor del aprendizaje son estos 8 módulos desarrollados en Angular:
+Bloque 1: Ciclo del Agua (Procesos y Síntesis)
+Simulación 1 (Evaporación): Control de radiación solar y temperatura. Visualización del cambio de fase líquido-gaseoso (Lineamientos 1 y 2).
+Simulación 2 (Condensación): Modelado del punto de rocío y enfriamiento atmosférico para formación de nubes (Lineamiento 2).
+Simulación 3 (Precipitación): Ajuste de variables pluviales (intensidad, tiempo) con reporte de cantidades numéricas (Lineamiento 3: Escalas).
+Simulación 4 (Infiltración/Escorrentía): Modelado de suelos (arcilloso, arenoso) para observar el flujo de agua superficial y profunda (Lineamiento 4: Representación).
+Simulación 5 (Plataforma de pensamiento sistémico con simuladores de ciclo de agua y agrosistemas En): El simulador 3D definitivo. Integra los 4 procesos en un relieve geográfico. El estudiante analiza la **Conservación de la Materia (L5)**, el **Propósito (L6)** y la **Estabilidad (L7)** ante cambios climáticos inducidos.
+Bloque 2: Agroecosistema (Transferencia)
+Simulación 6 (Factores del Cultivo): Identificación de interacciones entre componentes bióticos (cultivo, plagas) y abióticos (suelo, nutrientes).
+Simulación 7 (Escalas Productivas): Simulador matemático de rendimiento. El estudiante calcula cuánta agua y fertilizante se requiere por área de siembra (Lineamiento 3).
+Simulación 8 (Resiliencia Agrícola): Escenario de crisis (plagas o sequía extrema). El estudiante debe ajustar variables sistémicas para evitar el colapso del cultivo (Lineamiento 7).
+6. Secuencia Didáctica de 7 Sesiones
+Cada sesión tiene una duración de 90 minutos y se divide internamente en: Explorar (Inicio), Apropiar (Desarrollo), Reflexionar (Cierre) y Evaluar.
+Sesión 1: Concepto de Sistema: Introducción al pensamiento sistémico. Video "Lobby de los Lobos" y foro de discusión inicial sobre interconexiones.
+Sesión 2: Componentes y Causalidad I: Uso No de Simulaciones 1 y 2 para entender cómo el sol causa el movimiento del agua.
+Sesión 3: Escalas y Representación I: Uso de Simulaciones 3 y 4. El estudiante mide cantidades y dibuja el flujo del agua en el suelo.
+Sesión 4: Visión de Totalidad: Uso de Plataforma de pensamiento sistémico con simuladores de ciclo de agua y agrosistemas. El estudiante manipula todo el ciclo global y analiza la conservación de la materia.
+Sesión 5: Transferencia al Agro I: Identificación de componentes en un cultivo regional (Papa/Café) mediante la Simulación 6.
+Sesión 6: Transferencia al Agro II: Modelado de escalas productivas y diagramas de influencia agrícola usando la Simulación 7.
+Sesión 7: Sostenibilidad y Cierre: Toma de decisiones ante crisis con la Simulación 8 y aplicación del Postest Digital.
+7. Marco Metodológico y Recolección de Datos
+Enfoque Mixto: Cuantitativo (análisis de datos de MongoDB y Pretest/Postest) y Cualitativo (análisis de Diarios de Campo).
+Investigación-Acción Pedagógica (IAP): Ciclos de transformación de la práctica docente mediante la intervención TIC.
+Técnicas:
+Encuesta: Cuestionarios digitales estandarizados por el macroproyecto.
+Observación: Diarios de campo digitales registrados en la plataforma.
+Log Analysis: Análisis de los registros de interacción del estudiante con las variables del simulador.
+8. Antecedentes
+El proyecto se respalda en antecedentes del MIT (simulaciones sistémicas) y los lineamientos nacionales de la UDES.
+==========================
+--- CONTENT OF Secuencia Didáctica 1 - Ciclo del Agua.docx ---
+Propuesta Pedagógica 1: Ciclo del Agua - Secuencia Didáctica
+Este documento presenta la planificación detallada y definitiva de las primeras cuatro secuencias didácticas del proyecto. Se ha estructurado bajo los lineamientos del Dr. Eliécer Pineda (UDES), integrando el rol del docente, el rol del estudiante y la interacción técnica con el entorno virtual Plataforma de pensamiento sistémico con simuladores de ciclo de agua y agrosistemas.
+Identificación General de la Propuesta
+Estrategia: Plataforma de pensamiento sistémico con simuladores de ciclo de agua y agrosistemas - Entorno Virtual de Aprendizaje (EVA).
+Objetivo: Fortalecer el pensamiento sistémico mediante simulaciones interactivas del ciclo del agua.
+Población: Estudiantes de Grado Octavo (8°).
+Contexto: Pasto, Nariño, Colombia.
+Area: Ciencias Naturales y Educación Ambiental.
+Sesión 1: El Concepto de Sistema (Introducción)
+Duración: 90 minutos. | Objetivo: Transitar de una visión fragmentada a una visión de totalidad.
+Momento
+Acciones y Actividades
+Recursos en Plataforma
+Inicio: Explorar (20 min)
+Docente: Presenta el video "Cómo los lobos cambiaron los ríos" y plantea la pregunta: ¿Cómo un animal altera la geografía de un río?
+Estudiante: Observa el video en el visor de la plataforma y anota al menos 3 interconexiones detectadas entre componentes bióticos y abióticos.
+Visor de Video (Pestaña Explorar).
+Desarrollo: Apropiar (50 min)
+Docente: Modera el foro digital. Guía al estudiante para clasificar "Entradas" y "Salidas" del sistema observado.
+Estudiante: Accede al foro con su ID. Publica su análisis sobre el propósito del sistema y debate con al menos dos compañeros sobre la interdependencia de los elementos.
+Módulo de Foro (Persistencia en MongoDB).
+Cierre: Reflexionar (20 min)
+Docente: Solicita una síntesis final.
+Estudiante: Redacta una conclusión personal comparando su visión inicial de "grupo de cosas" frente a la nueva visión de "totalidad interconectada".
+Cuadro de texto de síntesis (Sesión 1).
+Evaluación
+Formativa. Criterios:
+1. Capacidad de identificar relaciones multicausales en el ecosistema.
+2. Participación argumentada en el foro digital.
+Logs de actividad y rúbrica de participación.
+Sesión 2: Componentes y Causalidad (Lineamientos 1 y 2)
+Duración: 90 minutos. | Objetivo: Identificar partes del ciclo y relaciones de causa-efecto térmico.
+Momento
+Acciones y Actividades
+Recursos en Plataforma
+Inicio: Explorar (15 min)
+Docente: Explica el concepto de "agente causal" térmico.
+Estudiante: Revisa la infografía interactiva sobre radiación solar en la plataforma.
+Módulo de Infografía.
+Desarrollo: Apropiar (60 min)
+Docente: Supervisa la experimentación en los simuladores.
+Estudiante: Manipula variables en la Simulación 1 (Evaporación) y Simulación 2 (Condensación). Observa cambios de estado y formación de nubes según el ajuste de temperatura.
+Simuladores 1 y 2 (Angular).
+Cierre: Reflexionar (15 min)
+Estudiante: Responde: ¿Cómo se altera el equilibrio del sistema si la temperatura atmosférica aumenta globalmente?
+Módulo de respuesta abierta.
+Evaluación
+Sumativa. Criterios:
+1. Asociación correcta entre radiación y tasa de evaporación.
+2. Identificación de componentes bióticos/abióticos del ciclo.
+Cuestionario interactivo (MongoDB).
+Sesión 3: Escalas y Representación (Lineamientos 3 y 4)
+Duración: 90 minutos. | Objetivo: Cuantificar volúmenes y modelar flujos de agua.
+Momento
+Acciones y Actividades
+Recursos en Plataforma
+Inicio: Explorar (20 min)
+Docente: Presenta el reto: ¿Cuánta agua se infiltra en 100m² de suelo arcilloso vs arenoso?
+Estudiante: Usa la calculadora de escalas para estimar volúmenes.
+Calculadora de Escalas.
+Desarrollo: Apropiar (50 min)
+Docente: Guía el uso de simuladores de suelo.
+Estudiante: Experimenta con la Simulación 3 (Precipitación) y Simulación 4 (Infiltración). Toma datos numéricos de los flujos.
+Simuladores 3 y 4.
+Cierre: Reflexionar (20 min)
+Estudiante: Utiliza el lienzo digital para dibujar el diagrama de flujo del agua, usando flechas para representar la dirección y magnitud del movimiento.
+Lienzo de dibujo (Canvas).
+Evaluación
+Formativa. Criterios:
+1. Precisión en la medición de volúmenes simulados.
+2. Coherencia lógica en la representación gráfica del sistema.
+Diagrama cargado en Evidencias.
+Sesión 4: Visión de Totalidad (Lineamientos 5, 6 y 7)
+Duración: 120 minutos. | Objetivo: Comprender la conservación, el propósito y la estabilidad del sistema global.
+Momento
+Acciones y Actividades
+Recursos en Plataforma
+Inicio: Explorar (20 min)
+Docente: Introduce la Ley de Conservación de la Materia en el ciclo del agua.
+Estudiante: Observa el video de síntesis global en la plataforma.
+Visor Multimedia.
+Desarrollo: Apropiar (70 min)
+Docente: Plantea escenarios de crisis climática.
+Estudiante: Explora el simulador 3D del ciclo de agua consolidado (Simulación 5). Analiza cómo el sistema mantiene la estabilidad ante variaciones extremas inducidas.
+Plataforma de pensamiento sistémico con simuladores de ciclo de agua y agrosistemas
+Cierre: Reflexionar (30 min)
+Estudiante: Redacta el informe técnico de síntesis sistémica y lo carga en formato PDF a través de la plataforma.
+Gestor de carga de archivos.
+Evaluación
+Sumativa. Criterios:
+1. Comprensión de la conservación de la materia en el ciclo.
+2. Análisis de la resiliencia y estabilidad del sistema global.
+Informe técnico y logs de simulación.
+==========================
+--- CONTENT OF Secuencia Didáctica 2 - Agroecosistemas.docx ---
+Propuesta Pedagógica 2: Agroecosistemas - Secuencia Didáctica 
+Este documento contiene el diligenciamiento formal del formato de secuencia didáctica para la segunda parte de la intervención, enfocada en la transferencia de habilidades sistémicas al contexto de los agroecosistemas (Sesiones 5 a 7). Se han integrado los lineamientos del Dr. Pineda y la infraestructura técnica de la plataforma desarrollada.
+Identificación General de la Propuesta Pedagógica
+Nombre estrategia: Entorno Virtual de Aprendizaje para el Fortalecimiento del Pensamiento Sistémico (Plataforma de pensamiento sistémico con simuladores de ciclo de agua y agrosistemas - Entorno Virtual de Aprendizaje (EVA).
+Objetivo: Transferir las habilidades de pensamiento sistémico adquiridas en el estudio del ciclo del agua a la comprensión de sistemas productivos locales (agroecosistemas), evaluando el impacto final mediante un postest.
+Institución educativa (IE): Institución Educativa de Pasto (Por definir).
+Ubicación IE: Municipio: Pasto | Departamento: Nariño.
+Grado de estudio: Octavo (8°) de Secundaria.
+Area de conocimiento: Ciencias Naturales y Educación Ambiental.
+Objeto de estudio o tema 2: Agroecosistemas (Cultivos Regionales).
+Descripción de la Secuencia Didáctica 5: Componentes y Causalidad (Tema 2)
+Texto de introducción: Sesión de 90 minutos enfocada en los Lineamientos 1 y 2. El estudiante debe identificar que un cultivo no es una planta aislada, sino un conjunto de subsistemas en interacción constante.
+Momento
+Actividades
+Recursos
+Inicio (explorar)
+El docente proyecta imágenes de cultivos locales (Papa o Café). El estudiante debe realizar una lluvia de ideas digital sobre qué elementos necesita el cultivo para sobrevivir y qué elementos pueden dañarlo.
+Pizarra digital interactiva y fotografías de cultivos regionales.
+Desarrollo (apropiar)
+El estudiante interactúa con la Simulación 6 (Factores del Cultivo). Debe clasificar componentes bióticos y abióticos y establecer relaciones de causalidad térmica y nutricional entre el suelo y la planta.
+Plataforma Angular (Simulación 6), Dashboard de sesiones.
+Cierre (reflexionar)
+Debate grupal: "¿Cómo afecta la falta de agua en el ciclo del agua a la producción de nuestro agroecosistema?". Se busca conectar los dos temas del proyecto.
+Módulo de foros de la plataforma.
+Evaluación
+Formativa. Criterios: 1. Capacidad de clasificar correctamente los componentes bióticos/abióticos. 2. Descripción de al menos dos cadenas de causalidad en el cultivo.
+Registro de interacciones en MongoDB y observación del docente.
+Descripción de la Secuencia Didáctica 6: Escalas y Representación (Tema 2)
+Texto de introducción: Sesión de 90 minutos enfocada en los Lineamientos 3 y 4. El estudiante cuantifica la producción y utiliza modelos gráficos para representar la complejidad agrícola.
+Momento
+Actividades
+Recursos
+Inicio (explorar)
+El docente plantea un problema de escala: "¿Cuánta agua necesita una hectárea de cultivo comparada con una maceta de casa?". Se discuten proporciones.
+Infografía digital sobre escalas de producción agrícola.
+Desarrollo (apropiar)
+El estudiante utiliza la Simulación 7 (Escalas Productivas) para calcular rendimientos basados en variables de área y fertilización. Posteriormente, dibuja un diagrama de influencias del agroecosistema en el módulo de dibujo de la plataforma.
+Simulación 7, Herramienta de diagramación digital (Angular).
+Cierre (reflexionar)
+El estudiante carga una captura de su diagrama y explica por qué la "representación" ayuda a entender un sistema complejo.
+Sección de "Recursos y Evidencias" de la plataforma.
+Evaluación
+Sumativa. Criterios: 1. Precisión en los cálculos de rendimiento. 2. Calidad y coherencia sistémica del diagrama de influencias.
+Diagrama cargado en la plataforma y logs de resultados en la API REST.
+Descripción de la Secuencia Didáctica 7: Sostenibilidad y Cierre (Tema 2)
+Texto de introducción: Sesión final de 120 minutos que integra los Lineamientos 5, 6 y 7. Se evalúa la toma de decisiones ante crisis y se aplica el instrumento final de evaluación de la tesis.
+Momento
+Actividades
+Recursos
+Inicio (explorar)
+Reflexión final sobre el propósito (L6) del agroecosistema: La alimentación comunitaria y la estabilidad ambiental. El docente presenta un escenario de crisis climática.
+Video introductorio sobre cambio climático y agricultura.
+Desarrollo (apropiar)
+El estudiante interactúa con la Simulación 8 (Resiliencia Agrícola), donde debe mantener la estabilidad (L7) de un cultivo ante una plaga. Debe aplicar conceptos de conservación del suelo (L5).
+Simulación 8 de la plataforma virtual.
+Cierre (reflexionar)
+Evaluación Final de la Tesis: Los estudiantes proceden a completar el Postest Digital alojado en la plataforma para recolectar los datos finales de la investigación.
+Módulo de evaluación conectado a MongoDB.
+Evaluación
+Sumativa / Final. Criterios: 1. Eficacia en la toma de decisiones para mantener la estabilidad del sistema. 2. Completitud y seriedad en el diligenciamiento del Postest.
+Cuestionario Postest Digital y logs de la simulación 8.
+==========================
