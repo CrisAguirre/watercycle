@@ -1,0 +1,50 @@
+{
+  "examName": "evaporacion",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué factor principal impulsa el proceso de evaporación en el ciclo del agua?",
+      "options": [
+        "La energía solar térmica",
+        "La gravedad terrestre",
+        "El viento superficial",
+        "La presión atmosférica"
+      ],
+      "correctAnswers": ["La energía solar térmica"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q2",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS elementos que afectan directamente la tasa de evaporación en una superficie acuática:",
+      "options": [
+        "La temperatura del agua y del aire",
+        "La profundidad total del cuerpo de agua",
+        "La humedad relativa del aire circundante",
+        "La salinidad del océano"
+      ],
+      "correctAnswers": [
+        "La temperatura del agua y del aire",
+        "La humedad relativa del aire circundante"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q3",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si una piscina de 50 m² pierde 2 mm de agua por evaporación diaria debido a una radiación neta de 15 MJ/m², ¿cuántos litros de agua se evaporan en total al día? (Recuerda: 1 mm = 1 L/m²)",
+      "options": [
+        "50 Litros",
+        "100 Litros",
+        "200 Litros",
+        "25 Litros"
+      ],
+      "correctAnswers": ["100 Litros"],
+      "timeLimit": 180
+    }
+  ]
+}

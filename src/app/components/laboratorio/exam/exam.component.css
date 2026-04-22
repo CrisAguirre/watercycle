@@ -1,0 +1,245 @@
+.exam-container {
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: #fff;
+}
+
+.state-card {
+  max-width: 800px;
+  width: 100%;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.instructions {
+  text-align: left;
+}
+
+.instructions h1 {
+  color: #3b82f6;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.rules-box {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid #ef4444;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.rules-box h3 {
+  color: #ef4444;
+  margin-bottom: 15px;
+}
+
+.rules-box ul {
+  padding-left: 20px;
+}
+
+.rules-box li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  color: #d1d5db;
+}
+
+.btn-start, .btn-primary, .btn-secondary, .btn-next {
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-start, .btn-primary, .btn-next {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+}
+
+.btn-start:hover, .btn-primary:hover, .btn-next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.exam-board {
+  max-width: 800px;
+  width: 100%;
+}
+
+.exam-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.progress-info {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.q-type-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.q-type-badge.theory {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.q-type-badge.practice {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.timer-box {
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: monospace;
+  color: #34d399;
+}
+
+.timer-box.danger {
+  color: #ef4444;
+  animation: pulse 1s infinite;
+}
+
+.question-card {
+  padding: 40px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.question-text {
+  font-size: 1.5rem;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.question-hint {
+  color: #9ca3af;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.option-item.selected {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: #3b82f6;
+}
+
+.checkbox-mock {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #6b7280;
+  border-radius: 6px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.option-item.selected .checkbox-mock {
+  border-color: #3b82f6;
+  background: #3b82f6;
+}
+
+.radio-mock {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #6b7280;
+  border-radius: 50%;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-inner {
+  width: 12px;
+  height: 12px;
+  background: #3b82f6;
+  border-radius: 50%;
+}
+
+.option-item.selected .radio-mock {
+  border-color: #3b82f6;
+}
+
+.option-text {
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.exam-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.score-text {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #34d399;
+  margin: 20px 0;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}

@@ -1,0 +1,107 @@
+<div class="exam-container">
+  
+  <!-- Loading State -->
+  <div *ngIf="state === 'loading'" class="state-card loading">
+    <div class="spinner"></div>
+    <p>Cargando evaluación...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="state === 'error'" class="state-card error">
+    <h2>Aviso</h2>
+    <p>{{ errorMessage }}</p>
+    <button class="btn-primary" routerLink="/laboratorio">Volver al Laboratorio</button>
+  </div>
+
+  <!-- Instructions State -->
+  <div *ngIf="state === 'instructions'" class="state-card instructions glass-panel">
+    <h1>Evaluación: {{ examName }}</h1>
+    <div class="rules-box">
+      <h3>⚠️ Recomendaciones Técnicas y Reglas</h3>
+      <ul>
+        <li><strong>Enfoque Total:</strong> Estando en esta página NO puedes abrir otras pestañas (tabs) en el navegador. El sistema detectará si sales de la pestaña y enviará la evaluación automáticamente.</li>
+        <li><strong>Intentos:</strong> Cada evaluación solo se podrá repetir una vez (Máximo 2 intentos totales) para mejorar el puntaje.</li>
+        <li><strong>Tiempos Estrictos:</strong> 
+          <ul>
+            <li>Preguntas teóricas: 1 minuto y medio (90s).</li>
+            <li>Preguntas prácticas (resolución de problemas): 3 minutos (180s).</li>
+          </ul>
+          Si el tiempo se agota, se avanzará a la siguiente pregunta automáticamente.
+        </li>
+        <li><strong>Materiales:</strong> Para las preguntas prácticas debes tener 📝 papel y lápiz a mano para aplicar fórmulas y no demorarte más del tiempo estimado.</li>
+        <li><strong>Tipos de Preguntas:</strong>
+          <ul>
+            <li>Selección múltiple (Única respuesta).</li>
+            <li>Teóricas de Respuesta Doble (Debes marcar 2 opciones).</li>
+          </ul>
+        </li>
+        <li><strong>Secuencial:</strong> Las preguntas avanzan una a una y no se puede retroceder.</li>
+      </ul>
+    </div>
+    <button class="btn-start" (click)="startExam()">Entendido, Iniciar Evaluación</button>
+  </div>
+
+  <!-- Playing State -->
+  <div *ngIf="state === 'playing'" class="exam-board">
+    
+    <div class="exam-header glass-panel">
+      <div class="progress-info">
+        Pregunta {{ currentQuestionIndex + 1 }} de {{ examData?.questions?.length }}
+        <span class="q-type-badge" [ngClass]="currentQuestion.type">
+          {{ currentQuestion.type === 'theory' ? '📚 Teórica' : '⚙️ Práctica' }}
+        </span>
+      </div>
+      <div class="timer-box" [class.danger]="timeLeft <= 10">
+        ⏱️ {{ formatTime(timeLeft) }}
+      </div>
+    </div>
+
+    <div class="question-card glass-panel">
+      <h2 class="question-text">{{ currentQuestion.text }}</h2>
+      <p class="question-hint" *ngIf="currentQuestion.subtype === 'multiple'">
+        (Selecciona 2 opciones correctas)
+      </p>
+
+      <div class="options-grid">
+        <div class="option-item" 
+             *ngFor="let option of currentQuestion.options; let i = index"
+             [class.selected]="isOptionSelected(option)"
+             (click)="toggleOption(option)">
+          
+          <div class="checkbox-mock" *ngIf="currentQuestion.subtype === 'multiple'">
+            <span *ngIf="isOptionSelected(option)">✔️</span>
+          </div>
+          <div class="radio-mock" *ngIf="currentQuestion.subtype === 'single'">
+            <div class="radio-inner" *ngIf="isOptionSelected(option)"></div>
+          </div>
+          
+          <span class="option-text">{{ option }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-footer">
+      <button class="btn-next" (click)="nextQuestion()">
+        {{ currentQuestionIndex === (examData?.questions?.length ?? 1) - 1 ? 'Finalizar' : 'Siguiente Pregunta' }} ➔
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Submitting State -->
+  <div *ngIf="state === 'submitting'" class="state-card loading">
+    <div class="spinner"></div>
+    <p>Enviando resultados...</p>
+  </div>
+
+  <!-- Result State -->
+  <div *ngIf="state === 'result'" class="state-card success glass-panel">
+    <h2>Evaluación Completada</h2>
+    <p class="score-text">{{ errorMessage }}</p>
+    <div class="action-buttons">
+      <button class="btn-primary" routerLink="/dashboard">Ver Mis Sesiones</button>
+      <button class="btn-secondary" routerLink="/laboratorio">Volver al Laboratorio</button>
+    </div>
+  </div>
+
+</div>

@@ -22,6 +22,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsersListComponent } from './components/dashboard/users-list/users-list.component';
 import { LaboratorioHubComponent } from './components/laboratorio/laboratorio-hub/laboratorio-hub.component';
 import { RecursosComponent } from './components/recursos/recursos.component';
+import { ExamComponent } from './components/laboratorio/exam/exam.component';
 
 // Shared
 import { SimulationWrapperComponent } from './shared/simulation-wrapper/simulation-wrapper.component';
@@ -73,6 +74,9 @@ import { Sim8ResilienciaAgricolaComponent } from './components/laboratorio/sim8-
     Sim6FactoresCultivoComponent,
     Sim7EscalasProductivasComponent,
     Sim8ResilienciaAgricolaComponent,
+
+    // Exam
+    ExamComponent
   ],
   imports: [
     BrowserModule,
