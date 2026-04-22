@@ -1,207 +1,178 @@
-<div class="scrollable-wrapper">
-  <div class="app-layout">
-    <div class="main-content">
+<app-simulation-wrapper
+  simTitle="Ciclo del Agua Consolidado"
+  simDescription="Simulación sistémica completa que integra evaporación, condensación, precipitación y escorrentía en un solo modelo dinámico."
+  [simNumber]="5"
+  lineamientos="Lineamiento 5: Sistemicidad"
+  bloque="agua">
 
-      <!-- Simulation Area -->
-      <div class="sim-area relative realistic-bg">
-        <div class="sun" [style.opacity]="(variables$ | async)?.solarRadiation! / 100 + 0.1"></div>
-
-        <!-- Majestic Compass Overlayer -->
-        <div class="compass-widget">
-          <svg viewBox="0 0 100 100" class="compass-svg">
-            <!-- Anillo exterior y cristal oscuro -->
-            <circle cx="50" cy="50" r="45" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="rgba(0,0,0,0.5)" />
-            <circle cx="50" cy="50" r="35" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none" />
-
-            <!-- Puntos Cardinales de la Rosa (Fijos) -->
-            <text x="50" y="19" fill="#00ffff" font-size="13" text-anchor="middle" font-weight="bold">N</text>
-            <text x="86" y="55" fill="#ffffff" font-size="13" text-anchor="middle" font-weight="bold">E</text>
-            <text x="50" y="91" fill="#ffffff" font-size="13" text-anchor="middle" font-weight="bold">S</text>
-            <text x="14" y="55" fill="#ffffff" font-size="13" text-anchor="middle" font-weight="bold">W</text>
-
-            <!-- Aguja Magnética Dinámica Animada -->
-            <g [style.transformOrigin]="'50px 50px'"
-              [style.transform]="'rotate(' + getCompassRotation((variables$ | async)?.windDirection) + ')'"
-              style="transition: transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1.5);">
-              <!-- Flecha Norte (Roja de navegante) -->
-              <path d="M50 24 L56 50 L44 50 Z" fill="#ff3333" />
-              <!-- Sombra Aguja -->
-              <path d="M50 24 L50 50 L44 50 Z" fill="#aa0000" />
-              <!-- Cola Sur -->
-              <path d="M50 76 L56 50 L44 50 Z" fill="#cccccc" />
-              <path d="M50 76 L50 50 L44 50 Z" fill="#999999" />
-
-              <circle cx="50" cy="50" r="4" fill="#ffffff" />
-              <circle cx="50" cy="50" r="2" fill="#000000" />
-            </g>
-          </svg>
-          <div class="compass-text">Viento ➔ {{ (variables$ | async)?.windDirection }}</div>
+  <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
+  <div actividad>
+    <div class="activity-content">
+      <h2>📋 Actividad: Análisis Sistémico del Ciclo</h2>
+      <p>Observa el ciclo del agua no como procesos aislados, sino como un <strong>sistema interconectado</strong> donde cada variable afecta el equilibrio global.</p>
+      
+      <div class="activity-steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <p><strong>Evaporación:</strong> Sube la radiación y temperatura. Observa cómo las partículas de vapor ascienden desde el océano hacia la atmósfera.</p>
         </div>
-
-        <!-- Esqueleto del Circuito Hidrológico (Anillo SVG Animado Fluido) -->
-        <div class="cycle-indicators">
-          <svg viewBox="0 0 300 150" class="flow-svg-container">
-            <ellipse cx="150" cy="75" rx="140" ry="60" class="flow-ring"
-              [class.reverse-flow]="['W','NW','SW'].includes((variables$ | async)?.windDirection || 'E')" />
-          </svg>
+        <div class="step">
+          <span class="step-num">2</span>
+          <p><strong>Transporte:</strong> Usa la brújula para dirigir el viento hacia la montaña (Este). Observa el movimiento de las nubes.</p>
         </div>
-
-        <!-- Main Cloud Cluster Over 8 Compass Points Container -->
-        <div class="cloud-cluster" [ngClass]="'cloud-pos-' + ((variables$ | async)?.windDirection | lowercase)">
-
-          <!-- Contrato Gráfico de Nubes -->
-          <div class="cloud-graphics" *ngIf="rates$ | async as rates"
-            [style.opacity]="rates.condensationRate / 100 + 0.2"
-            [style.transform]="'scale(' + (rates.condensationRate / 100 + 0.5) + ')' "
-            [class.heavy-clouds]="rates.condensationRate > 50" [class.storm-clouds]="rates.precipitationRate > 50">
-            <!-- Nubes Base (Siempe presentes proporcionalmente) -->
-            <div class="real-cloud rcl-1"></div>
-            <div class="real-cloud rcl-2"></div>
-            <div class="real-cloud rcl-3"></div>
-            <!-- Super-Cumulo (Aparecen proporcionalmente sólo si Condensación > 50%) -->
-            <div class="real-cloud rcl-4"
-              [style.opacity]="rates.condensationRate > 50 ? (rates.condensationRate - 50) / 50 : 0"></div>
-            <div class="real-cloud rcl-5"
-              [style.opacity]="rates.condensationRate > 50 ? (rates.condensationRate - 50) / 50 : 0"></div>
-          </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <p><strong>Precipitación:</strong> Deja que las nubes se carguen (Condensación > 80%). Observa cómo la lluvia descarga el agua sobre el continente.</p>
         </div>
-
-        <!-- HUDS FIJOS Y SEGUROS PARA MÓVIL Y ESCRITORIO -->
-        <!-- Esquina Superior Derecha: Cielos -->
-        <div class="hud-group" *ngIf="rates$ | async as rates">
-          <div class="hud-panel hud-cond">
-            <div class="hud-title"><span class="hud-dot bg-purple"></span> M. Condensación</div>
-            <div class="hud-value">{{ rates.condensationRate | number:'1.0-0' }}% <span class="hud-sub">| {{
-                getCondState(rates.condensationRate) }}</span></div>
-          </div>
-          <div class="hud-panel hud-precip">
-            <div class="hud-title"><span class="hud-dot bg-cyan"></span> Precipitación</div>
-            <div class="hud-value">{{ rates.precipitationRate | number:'1.0-0' }}% <span class="hud-sub">| {{
-                getPrecipState(rates.precipitationRate) }}</span></div>
-          </div>
+        <div class="step">
+          <span class="step-num">4</span>
+          <p><strong>Retorno:</strong> Observa la escorrentía fluyendo por los ríos de regreso al mar, cerrando el ciclo perpetuo.</p>
         </div>
-
-        <!-- Esquina Inferior Izquierda: Océano -->
-        <div class="hud-panel hud-evap" *ngIf="rates$ | async as rates">
-          <div class="hud-title"><span class="hud-dot bg-blue"></span> Evaporación Atmosférica</div>
-          <div class="hud-value">{{ rates.evaporationRate | number:'1.0-0' }}% <span class="hud-sub">| {{
-              getEvapState(rates.evaporationRate) }}</span></div>
-        </div>
-
-        <!-- Cuarto HUD (Escorrentía y Retorno Fluvial Constante) -->
-        <div class="hud-panel hud-runoff" *ngIf="rates$ | async as rates">
-          <div class="hud-title"><span class="hud-dot" style="background: #aaffcc;"></span> Escorrentía y Filtración
-          </div>
-          <div class="hud-value">{{ rates.runoffRate | number:'1.0-0' }}% <span class="hud-sub">| {{
-              getRunoffState(rates.runoffRate) }}</span></div>
-        </div>
-
-        <!-- 1. Evaporation Vapor -->
-        <div class="particle evap-vapor" *ngFor="let p of evaporationParticles" [style.left]="p.left"
-          [style.animationDuration]="p.duration" [style.animationDelay]="p.delay">
-        </div>
-
-        <!-- 2. Rain Drops -->
-        <div class="particle real-rain" *ngFor="let p of rainDropParticles" [style.left]="p.left"
-          [style.animationDuration]="p.duration" [style.animationDelay]="p.delay">
-        </div>
-
-        <!-- 3. Runoff Flow -->
-        <div class="runoff-stream" *ngFor="let r of runoffParticles" [style.animationDuration]="r.duration"
-          [style.animationDelay]="r.delay">
-        </div>
-
-        <!-- Storm Darkening Overlay (Condensación >= 80%) -->
-        <div class="storm-darken" *ngIf="rates$ | async as rates"
-          [class.darken-moderate]="rates.condensationRate >= 80 && rates.condensationRate < 90"
-          [class.darken-heavy]="rates.condensationRate >= 90"></div>
-
-        <!-- Lightning Flash - Full Screen White Burst (1/8s) -->
-        <div class="lightning-fullscreen" *ngIf="lightningFlash"></div>
-
       </div>
 
-      <!-- Control Panel -->
-      <div class="control-panel glass-panel">
-        <h3 class="text-neon-purple panel-title">Taller: Realidad y Sistemas</h3>
-        <div class="controls-wrapper" *ngIf="variables$ | async as vars">
+      <hr class="my-8 border-white/10" />
 
-          <div class="slider-group">
-            <label>Temperatura (°C): {{vars.temperature}}</label>
-            <input type="range" min="0" max="100" [value]="vars.temperature"
-              (input)="onVarChange($event, 'temperature')" class="neon-slider" />
+      <section class="educational-guide-alt">
+        <h3 class="text-neon-purple">1. La Vista Geográfica</h3>
+        <p>El simulador utiliza una cámara aérea en ángulo de 45° (isométrica). El <strong>Oeste (Izquierda)</strong> es el océano y el <strong>Este (Derecha)</strong> es la cordillera montañosa.</p>
+        
+        <h3 class="text-neon-purple mt-4">2. Dinámica de Sistemas</h3>
+        <p>A diferencia de las animaciones simples, aquí los porcentajes representan <strong>Stocks (almacenamiento)</strong> y <strong>Flows (flujos)</strong>. Si dejas de mover los controles, el sistema se autorregula.</p>
+      </section>
+    </div>
+  </div>
+
+  <!-- ═══════════ TAB 2: SIMULADOR ═══════════ -->
+  <div simulador>
+    <div class="sim-container">
+      <div class="sim-main">
+        
+        <!-- Simulation Area -->
+        <div class="sim-area relative realistic-bg">
+          <div class="sun" [style.opacity]="(variables$ | async)?.solarRadiation! / 100 + 0.1"></div>
+
+          <!-- Compass Widget -->
+          <div class="compass-widget">
+            <svg viewBox="0 0 100 100" class="compass-svg">
+              <circle cx="50" cy="50" r="45" stroke="rgba(255,255,255,0.4)" stroke-width="2" fill="rgba(0,0,0,0.5)" />
+              <text x="50" y="19" fill="#00ffff" font-size="13" text-anchor="middle" font-weight="bold">N</text>
+              <text x="86" y="55" fill="#ffffff" font-size="13" text-anchor="middle" font-weight="bold">E</text>
+              <text x="50" y="91" fill="#ffffff" font-size="13" text-anchor="middle" font-weight="bold">S</text>
+              <text x="14" y="55" fill="#ffffff" font-size="13" text-anchor="middle" font-weight="bold">W</text>
+              <g [style.transformOrigin]="'50px 50px'"
+                [style.transform]="'rotate(' + getCompassRotation((variables$ | async)?.windDirection) + ')'"
+                style="transition: transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1.5);">
+                <path d="M50 24 L56 50 L44 50 Z" fill="#ff3333" />
+                <path d="M50 76 L56 50 L44 50 Z" fill="#cccccc" />
+                <circle cx="50" cy="50" r="4" fill="#ffffff" />
+              </g>
+            </svg>
+            <div class="compass-text">{{ (variables$ | async)?.windDirection }}</div>
           </div>
 
-          <div class="slider-group">
-            <label>Radiación Solar (%): {{vars.solarRadiation}}</label>
-            <input type="range" min="0" max="100" [value]="vars.solarRadiation"
-              (input)="onVarChange($event, 'solarRadiation')" class="neon-slider" />
+          <!-- Flow Ring -->
+          <div class="cycle-indicators">
+            <svg viewBox="0 0 300 150" class="flow-svg-container">
+              <ellipse cx="150" cy="75" rx="140" ry="60" class="flow-ring"
+                [class.reverse-flow]="['W','NW','SW'].includes((variables$ | async)?.windDirection || 'E')" />
+            </svg>
           </div>
 
-          <div class="slider-group">
-            <label>Velocidad Viento (km/h): {{vars.windSpeed}}</label>
-            <input type="range" min="1" max="100" [value]="vars.windSpeed" (input)="onVarChange($event, 'windSpeed')"
-              class="neon-slider" />
+          <!-- Clouds -->
+          <div class="cloud-cluster" [ngClass]="'cloud-pos-' + ((variables$ | async)?.windDirection | lowercase)">
+            <div class="cloud-graphics" *ngIf="rates$ | async as rates"
+              [style.opacity]="rates.condensationRate / 100 + 0.2"
+              [style.transform]="'scale(' + (rates.condensationRate / 100 + 0.5) + ')' "
+              [class.heavy-clouds]="rates.condensationRate > 50" [class.storm-clouds]="rates.precipitationRate > 50">
+              <div class="real-cloud rcl-1"></div>
+              <div class="real-cloud rcl-2"></div>
+              <div class="real-cloud rcl-3"></div>
+              <div class="real-cloud rcl-4" [style.opacity]="rates.condensationRate > 50 ? (rates.condensationRate - 50) / 50 : 0"></div>
+              <div class="real-cloud rcl-5" [style.opacity]="rates.condensationRate > 50 ? (rates.condensationRate - 50) / 50 : 0"></div>
+            </div>
           </div>
 
-          <div class="slider-group mt-2">
-            <label>Presión Atmosférica (hPa): {{vars.atmosphericPressure}}</label>
-            <input type="range" min="900" max="1100" [value]="vars.atmosphericPressure"
-              (input)="onVarChange($event, 'atmosphericPressure')" class="neon-slider" />
+          <!-- HUDs -->
+          <div class="hud-group" *ngIf="rates$ | async as rates">
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot bg-purple"></span> Condensación</div>
+              <div class="hud-value">{{ rates.condensationRate | number:'1.0-0' }}% 
+                <span class="hud-sub">| {{ getCondState(rates.condensationRate) }}</span>
+              </div>
+            </div>
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot bg-cyan"></span> Precipitación</div>
+              <div class="hud-value">{{ rates.precipitationRate | number:'1.0-0' }}% 
+                <span class="hud-sub">| {{ getPrecipState(rates.precipitationRate) }}</span>
+              </div>
+            </div>
           </div>
 
-          <div class="slider-group">
-            <label>Humedad Ambiental (%): {{vars.humidity}}</label>
-            <input type="range" min="0" max="100" [value]="vars.humidity" (input)="onVarChange($event, 'humidity')"
-              class="neon-slider" />
+          <div class="hud-panel hud-evap" *ngIf="rates$ | async as rates">
+            <div class="hud-title"><span class="hud-dot bg-blue"></span> Evaporación</div>
+            <div class="hud-value">{{ rates.evaporationRate | number:'1.0-0' }}% 
+              <span class="hud-sub">| {{ getEvapState(rates.evaporationRate) }}</span>
+            </div>
           </div>
 
-          <div class="slider-group mt-2">
-            <label>Rosa de los Vientos (Brújula):</label>
-            <select [value]="vars.windDirection" (change)="onVarChange($event, 'windDirection')" class="glass-select">
-              <option value="N">Norte (Paralelo a costa)</option>
-              <option value="NE">Noreste (Diagonal Montaña)</option>
-              <option value="E">Este (Hacia la Montaña)</option>
-              <option value="SE">Sureste (Diagonal Montaña)</option>
-              <option value="S">Sur (Paralelo a costa)</option>
-              <option value="SW">Suroeste (Diagonal Océano)</option>
-              <option value="W">Oeste (Hacia el Océano)</option>
-              <option value="NW">Noroeste (Diagonal Océano)</option>
-            </select>
+          <div class="hud-panel hud-runoff" *ngIf="rates$ | async as rates">
+            <div class="hud-title"><span class="hud-dot" style="background: #aaffcc;"></span> Escorrentía</div>
+            <div class="hud-value">{{ rates.runoffRate | number:'1.0-0' }}% 
+              <span class="hud-sub">| {{ getRunoffState(rates.runoffRate) }}</span>
+            </div>
           </div>
 
+          <!-- Particles -->
+          <div class="particle evap-vapor" *ngFor="let p of evaporationParticles" [style.left]="p.left" [style.animationDuration]="p.duration"></div>
+          <div class="particle real-rain" *ngFor="let p of rainDropParticles" [style.left]="p.left" [style.animationDuration]="p.duration"></div>
+          <div class="runoff-stream" *ngFor="let r of runoffParticles" [style.animationDuration]="r.duration"></div>
+
+          <div class="storm-darken" *ngIf="rates$ | async as rates"
+            [class.darken-moderate]="rates.condensationRate >= 80 && rates.condensationRate < 90"
+            [class.darken-heavy]="rates.condensationRate >= 90"></div>
+          <div class="lightning-fullscreen" *ngIf="lightningFlash"></div>
         </div>
 
-        <!-- Monitors & Instruments -->
-        <div class="monitor-panel" *ngIf="rates$ | async as rates">
-          <h4 class="text-muted" style="margin-bottom: 5px;">Estación Meteorológica</h4>
-
-          <div class="weather-instruments"
-            style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
-            <div style="font-size: 0.85rem; color: #fff;">
-              <strong>Barómetro:</strong> {{ rates.barometerState }}
+        <!-- Control Panel -->
+        <div class="control-panel glass-panel">
+          <h3 class="panel-title">Variables del Sistema</h3>
+          <div class="controls-wrapper" *ngIf="variables$ | async as vars">
+            <div class="slider-group">
+              <label>Temperatura: {{vars.temperature}}°C</label>
+              <input type="range" min="0" max="100" [value]="vars.temperature" (input)="onVarChange($event, 'temperature')" class="neon-slider" />
             </div>
-            <div style="font-size: 0.85rem; color: #fff; margin-top: 5px;">
-              <strong>T. Punto de Rocío:</strong> {{ rates.dewPoint }} °C
+            <div class="slider-group">
+              <label>Radiación Solar: {{vars.solarRadiation}}%</label>
+              <input type="range" min="0" max="100" [value]="vars.solarRadiation" (input)="onVarChange($event, 'solarRadiation')" class="neon-slider" />
+            </div>
+            <div class="slider-group">
+              <label>Velocidad Viento: {{vars.windSpeed}} km/h</label>
+              <input type="range" min="1" max="100" [value]="vars.windSpeed" (input)="onVarChange($event, 'windSpeed')" class="neon-slider" />
+            </div>
+            <div class="slider-group">
+              <label>Rosa de los Vientos:</label>
+              <select [value]="vars.windDirection" (change)="onVarChange($event, 'windDirection')" class="glass-select">
+                <option value="N">Norte</option>
+                <option value="NE">Noreste</option>
+                <option value="E">Este (Hacia Montaña)</option>
+                <option value="SE">Sureste</option>
+                <option value="S">Sur</option>
+                <option value="SW">Suroeste</option>
+                <option value="W">Oeste (Hacia Océano)</option>
+                <option value="NW">Noroeste</option>
+              </select>
             </div>
           </div>
 
-          <div class="meter-row">
-            <span>Evaporación Atmosférica</span>
-            <div class="meter-bar">
-              <div class="fill blue" [style.width.%]="rates.evaporationRate"></div>
+          <div class="monitor-panel" *ngIf="rates$ | async as rates">
+            <h4 class="text-muted">Instrumentación</h4>
+            <div class="meter-row">
+              <span>Saturación de Nubes</span>
+              <div class="meter-bar"><div class="fill purple" [style.width.%]="rates.condensationRate"></div></div>
             </div>
-          </div>
-          <div class="meter-row">
-            <span>Saturación de Nubes</span>
-            <div class="meter-bar">
-              <div class="fill purple" [style.width.%]="rates.condensationRate"></div>
-            </div>
-          </div>
-          <div class="meter-row">
-            <span>Precipitación</span>
-            <div class="meter-bar">
-              <div class="fill cyan" [style.width.%]="rates.precipitationRate"></div>
+            <div class="meter-row">
+              <span>Precipitación</span>
+              <div class="meter-bar"><div class="fill cyan" [style.width.%]="rates.precipitationRate"></div></div>
             </div>
           </div>
         </div>
@@ -209,91 +180,18 @@
     </div>
   </div>
 
-  <!-- Pie de página: Guía de Usuario y Taller Meteorológico -->
-  <footer class="educational-guide">
-    <div class="guide-content glass-panel">
-      <h2 class="text-neon-blue">Manual de Operación Meteorológica: Entorno Virtual de Aprendizaje EVA</h2>
-
-      <section>
-        <h3 class="text-neon-purple mt-4">1. La Vista Geográfica: Perspectiva Aérea Isométrica</h3>
-        <p>El simulador utiliza una <strong>cámara de drone en ángulo de 45°</strong> (proyección isométrica) para
-          ofrecer una comprensión espacial completa. En esta vista:</p>
-        <ul>
-          <li><strong>Oeste (Izquierda):</strong> Ubicación del océano. Es la zona donde se origina la evaporación.</li>
-          <li><strong>Este (Derecha):</strong> Cordillera montañosa. Actúa como barrera física (orográfica) para la
-            formación de nubes.</li>
-          <li><strong>Profundidad:</strong> Los elementos situados al <em>Norte</em> se ven más alejados y pequeños,
-            mientras que al <em>Sur</em> se aprecian en primer plano, permitiendo visualizar el viento en 3D.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h3 class="text-neon-purple mt-4">2. Funcionamiento de los Selectores (Variables de Entrada)</h3>
-        <p>Cada control modifica una ley física del ecosistema en tiempo real:</p>
-        <ul>
-          <li><strong>Temperatura (°C):</strong> Aumenta la energía para la evaporación, pero si es extrema, dificulta
-            el enfriamiento necesario para la condensación.</li>
-          <li><strong>Radiación Solar (%):</strong> Determina la potencia con la que el sol calienta el agua oceánica.
-          </li>
-          <li><strong>Velocidad del Viento (km/h):</strong> Acelera el transporte de humedad y la tasa de evaporación
-            superficial.</li>
-          <li><strong>Presión Atmosférica (hPa):</strong> Una presión baja (Borrasca) inestabiliza el aire facilitando
-            nubes y lluvia fuerte; una presión alta (Anticiclón) estabiliza el aire y despeja el cielo.</li>
-          <li><strong>Humedad Ambiental (%):</strong> Es la saturación base del aire. Si es muy alta, "bloquea" la
-            evaporación porque el aire ya no admite más vapor.</li>
-          <li><strong>Brújula (Rosa de los Vientos):</strong> Dirige el flujo de humedad. Vientos hacia el Este
-            (Montaña) generan más lluvia terrestre.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h3 class="text-neon-purple mt-4">3. Interpretación de Estados y Porcentajes (HUDs)</h3>
-        <p>Los monitores en las esquinas indican el estado del ciclo. A diferencia de las animaciones simples, aquí los
-          porcentajes representan <strong>Stocks (almacenamiento)</strong> y <strong>Flows (flujos)</strong>:</p>
-        <ul>
-          <li><strong>Evaporación Atmosférica:</strong> Representa qué tan rápido está ascendiendo el agua del mar en
-            este instante.</li>
-          <li><strong>Condensación (Masa de Nubes):</strong> Es un <em>acumulador</em>. Si sube de 50%, las nubes se
-            tornan densas y grises. Al llegar a niveles altos, el "peso" del agua provoca lluvia.</li>
-          <li><strong>Precipitación:</strong> Intensidad de la caída de agua. Al llover, este proceso "vacia" la masa de
-            la nube, por lo que verás el porcentaje de condensación bajar solo hasta que la nube se agote.</li>
-          <li><strong>Escorrentía:</strong> Representa el agua corriendo por los ríos hacia el mar tras la lluvia en la
-            montaña.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h3 class="text-neon-purple mt-4">4. Guía de Efectos Visuales</h3>
-        <ul>
-          <li><strong>Anillo Elíptico de Flujo:</strong> Rodea el mapa y fluye según el viento, indicando la dirección
-            del ciclo del agua.</li>
-          <li><strong>Burbujas Ascendentes:</strong> Representan físicamente la tasa de evaporación en el océano.</li>
-          <li><strong>Cortina de Lluvia:</strong> Su densidad y velocidad dependen directamente del porcentaje de
-            precipitación.</li>
-          <li><strong>Nubes Dinámicas:</strong> Su opacidad y tamaño son proporcionales a la condensación. Al superar el
-            50%, aparecen cúmulos extra más oscuros.</li>
-          <li><strong>Brújula Interactiva:</strong> La aguja magnética roja siempre te indica hacia dónde has
-            configurado el desplazamiento de las nubes.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h3 class="text-neon-purple mt-4">5. Dinámica de Sistemas: El Ciclo Autónomo</h3>
-        <p>Si dejas de mover los controles, el simulador seguirá funcionando. Verás cómo las nubes se cargan lentamente,
-          se oscurecen al llenarse, descargan lluvia hasta vaciarse y vuelven a empezar el ciclo, comportándose como un
-          verdadero <strong>ecosistema vivo y autorregulado</strong>.</p>
-      </section>
-
-      <section class="mt-8 border-t border-white/10 pt-8">
-        <h2 class="text-neon-blue mb-4">📝 Evaluación: Ciclo Consolidado</h2>
-        <p class="mb-6">Pon a prueba tu visión sistémica del ciclo hidrológico completo.</p>
-        
-        <div class="eval-btn" routerLink="/laboratorio/ciclo-consolidado/evaluacion">
-          <span class="icon">📝</span>
-          <span class="text">Iniciar Evaluación: Ciclo Consolidado</span>
-          <span class="hint">Reglas: 2 intentos, cronometrado, 25 preguntas.</span>
-        </div>
-      </section>
+  <!-- ═══════════ TAB 3: EVALUACIÓN ═══════════ -->
+  <div evaluacion>
+    <div class="eval-content">
+      <h2 class="text-neon-blue">📝 Evaluación: Ciclo Consolidado</h2>
+      <p>Pon a prueba tu visión sistémica del ciclo hidrológico completo.</p>
+      
+      <div class="eval-btn" routerLink="/laboratorio/ciclo-consolidado/evaluacion">
+        <span class="icon">📝</span>
+        <span class="text">Iniciar Evaluación: Ciclo Consolidado</span>
+        <span class="hint">Reglas: 2 intentos, cronometrado, 25 preguntas.</span>
+      </div>
     </div>
-  </footer>
-</div>
+  </div>
+
+</app-simulation-wrapper>
