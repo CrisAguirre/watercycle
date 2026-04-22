@@ -1,0 +1,370 @@
+{
+  "examName": "precipitacion",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué debe ocurrir dentro de una nube para que se inicie la precipitación?",
+      "options": [
+        "Las gotas deben crecer hasta que su peso venza la resistencia del aire",
+        "El sol debe calentar la nube hasta evaporarla",
+        "El viento debe soplar hacia abajo",
+        "La presión debe bajar a cero"
+      ],
+      "correctAnswers": ["Las gotas deben crecer hasta que su peso venza la resistencia del aire"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q2",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué proceso explica el crecimiento de las gotas en nubes 'calientes' (T > 0°C)?",
+      "options": [
+        "Colisión y Coalescencia",
+        "Efecto Bergeron-Findeisen",
+        "Sublimación inversa",
+        "Fisión nuclear"
+      ],
+      "correctAnswers": ["Colisión y Coalescencia"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q3",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS formas sólidas de precipitación:",
+      "options": [
+        "Nieve",
+        "Granizo",
+        "Llovizna",
+        "Rocío"
+      ],
+      "correctAnswers": [
+        "Nieve",
+        "Granizo"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q4",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la virga?",
+      "options": [
+        "Precipitación que se evapora antes de llegar al suelo",
+        "Un tipo de granizo gigante",
+        "Lluvia ácida",
+        "Nieve de colores"
+      ],
+      "correctAnswers": ["Precipitación que se evapora antes de llegar al suelo"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q5",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es la función del pluviómetro?",
+      "options": [
+        "Medir la cantidad de precipitación líquida acumulada",
+        "Medir la velocidad de las nubes",
+        "Medir la temperatura de la lluvia",
+        "Medir la profundidad del mar"
+      ],
+      "correctAnswers": ["Medir la cantidad de precipitación líquida acumulada"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q6",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si un pluviómetro registra 25 mm de lluvia en un área de 1 m², ¿cuántos litros de agua han caído?",
+      "options": [
+        "25 Litros",
+        "2.5 Litros",
+        "250 Litros",
+        "0.25 Litros"
+      ],
+      "correctAnswers": ["25 Litros"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q7",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué tipo de precipitación se forma cuando las gotas de lluvia atraviesan una capa de aire muy frío cerca del suelo y se congelan antes de impactar?",
+      "options": [
+        "Aguanieve (Sleet)",
+        "Lluvia engelante (Freezing rain)",
+        "Nieve",
+        "Granizo"
+      ],
+      "correctAnswers": ["Aguanieve (Sleet)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q8",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo se forma el granizo?",
+      "options": [
+        "Por fuertes corrientes ascendentes que llevan gotas de agua a zonas muy frías repetidamente",
+        "Por la congelación directa de las nubes",
+        "Por el impacto de meteoritos en la atmósfera",
+        "Por la evaporación rápida del hielo"
+      ],
+      "correctAnswers": ["Por fuertes corrientes ascendentes que llevan gotas de agua a zonas muy frías repetidamente"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q9",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS factores que determinan la intensidad de la lluvia:",
+      "options": [
+        "Contenido de agua líquida en la nube",
+        "Velocidad de las corrientes ascendentes",
+        "Color de la tierra",
+        "Distancia a la luna"
+      ],
+      "correctAnswers": [
+        "Contenido de agua líquida en la nube",
+        "Velocidad de las corrientes ascendentes"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q10",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si una tormenta deja 100 mm de lluvia en 2 horas, ¿cuál es la intensidad promedio?",
+      "options": [
+        "50 mm/h",
+        "100 mm/h",
+        "25 mm/h",
+        "200 mm/h"
+      ],
+      "correctAnswers": ["50 mm/h"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q11",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué nombre recibe la precipitación causada por el ascenso de aire sobre una montaña?",
+      "options": [
+        "Orográfica",
+        "Convectiva",
+        "Frontal",
+        "Ciclónica"
+      ],
+      "correctAnswers": ["Orográfica"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q12",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué proceso predomina en la formación de nieve en nubes frías?",
+      "options": [
+        "Efecto Bergeron (crecimiento de cristales de hielo a expensas de gotas superenfriadas)",
+        "Evaporación",
+        "Infiltración aérea",
+        "Calentamiento global local"
+      ],
+      "correctAnswers": ["Efecto Bergeron (crecimiento de cristales de hielo a expensas de gotas superenfriadas)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q13",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS mecanismos de ascenso del aire que generan nubes y lluvia:",
+      "options": [
+        "Convección térmica",
+        "Convergencia de vientos",
+        "Descenso por gravedad",
+        "Compresión mecánica"
+      ],
+      "correctAnswers": [
+        "Convección térmica",
+        "Convergencia de vientos"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q14",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es el agua superenfriada?",
+      "options": [
+        "Agua en estado líquido a temperaturas bajo cero",
+        "Agua muy limpia",
+        "Agua con hielo seco",
+        "Agua que no puede hervir"
+      ],
+      "correctAnswers": ["Agua en estado líquido a temperaturas bajo cero"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q15",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si fijas la temperatura en -10°C y aumentas la humedad, ¿qué tipo de precipitación observarás?",
+      "options": [
+        "Nieve",
+        "Lluvia intensa",
+        "Niebla cálida",
+        "Vapor invisible"
+      ],
+      "correctAnswers": ["Nieve"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q16",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué forma tiene típicamente una gota de lluvia al caer?",
+      "options": [
+        "Aplastada (como un pan de hamburguesa) por la resistencia del aire",
+        "Lágrima perfecta",
+        "Esfera perfecta",
+        "Forma de estrella"
+      ],
+      "correctAnswers": ["Aplastada (como un pan de hamburguesa) por la resistencia del aire"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q17",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es el tamaño mínimo aproximado para considerar a una gota como 'lluvia'?",
+      "options": [
+        "0.5 mm",
+        "5.0 mm",
+        "0.05 mm",
+        "50 mm"
+      ],
+      "correctAnswers": ["0.5 mm"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q18",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS efectos de la vegetación sobre la lluvia:",
+      "options": [
+        "Intercepción foliar",
+        "Aumento de la velocidad de caída",
+        "Reducción del impacto directo sobre el suelo",
+        "Cambio del color de las gotas"
+      ],
+      "correctAnswers": [
+        "Intercepción foliar",
+        "Reducción del impacto directo sobre el suelo"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q19",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué ocurre con la escorrentía si la intensidad de la lluvia supera la tasa de infiltración del suelo?",
+      "options": [
+        "La escorrentía aumenta drásticamente (inundaciones)",
+        "La escorrentía se detiene",
+        "El agua desaparece",
+        "La lluvia vuelve a subir"
+      ],
+      "correctAnswers": ["La escorrentía aumenta drásticamente (inundaciones)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q20",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si caen 500 m³ de lluvia sobre una hectárea (10,000 m²), ¿a cuántos mm equivale?",
+      "options": [
+        "50 mm",
+        "5 mm",
+        "500 mm",
+        "0.5 mm"
+      ],
+      "correctAnswers": ["50 mm"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q21",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la lluvia frontal?",
+      "options": [
+        "Lluvia causada por el encuentro de dos masas de aire con diferente temperatura",
+        "Lluvia que solo cae de frente",
+        "Lluvia en el frente de batalla",
+        "Lluvia sin nubes"
+      ],
+      "correctAnswers": ["Lluvia causada por el encuentro de dos masas de aire con diferente temperatura"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q22",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué gas atmosférico puede disolverse en la lluvia causando 'lluvia ácida' de forma natural?",
+      "options": [
+        "Dióxido de Carbono (CO2)",
+        "Oxígeno (O2)",
+        "Argón",
+        "Helio"
+      ],
+      "correctAnswers": ["Dióxido de Carbono (CO2)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q23",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS instrumentos o tecnologías para medir/detectar precipitación:",
+      "options": [
+        "Radar Doppler",
+        "Satélite (TRMM/GPM)",
+        "Microscopio",
+        "Estetoscopio"
+      ],
+      "correctAnswers": [
+        "Radar Doppler",
+        "Satélite (TRMM/GPM)"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q24",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si aumentas la presión pero bajas la humedad al 5%, ¿habrá precipitación?",
+      "options": [
+        "No, no hay suficiente agua para condensar y formar gotas",
+        "Sí, la presión genera agua",
+        "Sí, caerá lluvia seca",
+        "Se formarán nubes pero no lloverá"
+      ],
+      "correctAnswers": ["No, no hay suficiente agua para condensar y formar gotas"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q25",
+      "type": "theory",
+      "subtype": "single",
+      "text": "La precipitación cierra el ciclo de transporte atmosférico devolviendo el agua a:",
+      "options": [
+        "La litosfera e hidrosfera",
+        "El espacio exterior",
+        "El núcleo del sol",
+        "La ionosfera"
+      ],
+      "correctAnswers": ["La litosfera e hidrosfera"],
+      "timeLimit": 90
+    }
+  ]
+}

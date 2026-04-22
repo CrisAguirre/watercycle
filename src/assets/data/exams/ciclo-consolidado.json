@@ -1,0 +1,370 @@
+{
+  "examName": "ciclo-consolidado",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es la principal fuente de energía que impulsa el ciclo hidrológico completo?",
+      "options": [
+        "El Sol",
+        "La Luna",
+        "El calor interno de la Tierra",
+        "El viento"
+      ],
+      "correctAnswers": ["El Sol"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q2",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué principio físico establece que la cantidad total de agua en el ciclo se mantiene constante?",
+      "options": [
+        "Balance de Masa (o Conservación de la Materia)",
+        "Segunda ley de la termodinámica",
+        "Efecto Doppler",
+        "Ley de gravitación universal"
+      ],
+      "correctAnswers": ["Balance de Masa (o Conservación de la Materia)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q3",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS procesos que mueven el agua desde la superficie hacia la atmósfera:",
+      "options": [
+        "Evaporación",
+        "Transpiración",
+        "Precipitación",
+        "Infiltración"
+      ],
+      "correctAnswers": [
+        "Evaporación",
+        "Transpiración"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q4",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué porcentaje aproximado del agua total de la Tierra es agua dulce?",
+      "options": [
+        "Menos del 3%",
+        "Casi el 50%",
+        "Más del 70%",
+        "Exactamente el 10%"
+      ],
+      "correctAnswers": ["Menos del 3%"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q5",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es el mayor reservorio de agua dulce accesible (líquida) en el planeta?",
+      "options": [
+        "Aguas subterráneas (acuíferos)",
+        "Ríos y lagos",
+        "Las nubes",
+        "Las piscinas"
+      ],
+      "correctAnswers": ["Aguas subterráneas (acuíferos)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q6",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si en una cuenca entran 100 mm de lluvia, se evaporan 40 mm y se infiltran 20 mm, ¿cuánta escorrentía superficial queda?",
+      "options": [
+        "40 mm",
+        "60 mm",
+        "160 mm",
+        "20 mm"
+      ],
+      "correctAnswers": ["40 mm"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q7",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la escorrentía?",
+      "options": [
+        "El agua que fluye sobre la superficie del suelo hacia los cauces",
+        "El agua que queda atrapada en las raíces",
+        "El vapor que sale de los volcanes",
+        "La lluvia que cae sobre el mar"
+      ],
+      "correctAnswers": ["El agua que fluye sobre la superficie del suelo hacia los cauces"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q8",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué papel juegan los bosques en el ciclo del agua?",
+      "options": [
+        "Aumentan la infiltración y regulan el flujo de agua",
+        "Eliminan el agua del planeta",
+        "Solo sirven de adorno",
+        "Hacen que llueva menos"
+      ],
+      "correctAnswers": ["Aumentan la infiltración y regulan el flujo de agua"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q9",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS efectos del cambio climático sobre el ciclo del agua:",
+      "options": [
+        "Intensificación del ciclo (lluvias y sequías más extremas)",
+        "Derretimiento de glaciares",
+        "Aumento del agua dulce total disponible",
+        "Detención de la evaporación oceánica"
+      ],
+      "correctAnswers": [
+        "Intensificación del ciclo (lluvias y sequías más extremas)",
+        "Derretimiento de glaciares"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q10",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si la transpiración de los bosques se reduce a la mitad por deforestación, ¿qué se espera que ocurra en el ciclo local?",
+      "options": [
+        "Menor humedad atmosférica y posibles cambios en la lluvia",
+        "Más lluvia inmediata",
+        "No pasará nada",
+        "El sol brillará más fuerte"
+      ],
+      "correctAnswers": ["Menor humedad atmosférica y posibles cambios en la lluvia"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q11",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es el tiempo de residencia del agua?",
+      "options": [
+        "El tiempo promedio que una molécula de agua permanece en un reservorio",
+        "El tiempo que tarda en hervir una olla",
+        "La duración de una tormenta",
+        "La edad del océano"
+      ],
+      "correctAnswers": ["El tiempo promedio que una molécula de agua permanece en un reservorio"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q12",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿En qué reservorio el agua tiene el mayor tiempo de residencia?",
+      "options": [
+        "Glaciares y Acuíferos profundos",
+        "Atmósfera",
+        "Ríos",
+        "Plantas"
+      ],
+      "correctAnswers": ["Glaciares y Acuíferos profundos"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q13",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS actividades humanas que alteran el ciclo del agua:",
+      "options": [
+        "Construcción de represas",
+        "Urbanización e impermeabilización del suelo",
+        "Pesca artesanal",
+        "Observación de aves"
+      ],
+      "correctAnswers": [
+        "Construcción de represas",
+        "Urbanización e impermeabilización del suelo"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q14",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la evapotranspiración?",
+      "options": [
+        "La suma de la evaporación del suelo y la transpiración de las plantas",
+        "Un tipo de lluvia ácida",
+        "El sudor de los animales",
+        "La formación de granizo"
+      ],
+      "correctAnswers": ["La suma de la evaporación del suelo y la transpiración de las plantas"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q15",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador consolidado, si eliminas toda la vegetación, ¿cuál será el efecto inmediato en el gráfico de escorrentía?",
+      "options": [
+        "Aumentará drásticamente el pico de escorrentía",
+        "Disminuirá",
+        "Se volverá negativo",
+        "La línea será perfectamente recta"
+      ],
+      "correctAnswers": ["Aumentará drásticamente el pico de escorrentía"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q16",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es una cuenca hidrográfica?",
+      "options": [
+        "El área de terreno que drena toda el agua hacia un mismo punto de salida",
+        "Un balde de agua gigante",
+        "La desembocadura de un río únicamente",
+        "Un tipo de nube"
+      ],
+      "correctAnswers": ["El área de terreno que drena toda el agua hacia un mismo punto de salida"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q17",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es el principal motor del movimiento del agua en la fase terrestre (ríos/escorrentía)?",
+      "options": [
+        "La Gravedad",
+        "El magnetismo",
+        "La rotación de la Tierra únicamente",
+        "La luz de la luna"
+      ],
+      "correctAnswers": ["La Gravedad"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q18",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS procesos del ciclo que ocurren bajo la superficie terrestre:",
+      "options": [
+        "Infiltración",
+        "Percolación",
+        "Condensación",
+        "Sublimación"
+      ],
+      "correctAnswers": [
+        "Infiltración",
+        "Percolación"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q19",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué sucede con el ciclo del agua si la temperatura global aumenta 2°C?",
+      "options": [
+        "Se acelera (más evaporación y más energía en el sistema)",
+        "Se detiene",
+        "El agua se congela más rápido",
+        "No tiene ningún impacto"
+      ],
+      "correctAnswers": ["Se acelera (más evaporación y más energía en el sistema)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q20",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si una ciudad pavimenta el 80% de su superficie, ¿qué proceso del ciclo se verá más reducido?",
+      "options": [
+        "La infiltración",
+        "La evaporación",
+        "La precipitación",
+        "La sublimación"
+      ],
+      "correctAnswers": ["La infiltración"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q21",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es el agua 'verde'?",
+      "options": [
+        "El agua almacenada en el suelo que utilizan las plantas",
+        "Agua contaminada con algas",
+        "Agua con colorante",
+        "Agua del pantano"
+      ],
+      "correctAnswers": ["El agua almacenada en el suelo que utilizan las plantas"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q22",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es el agua 'azul'?",
+      "options": [
+        "El agua en ríos, lagos y acuíferos",
+        "Agua del grifo",
+        "Agua del mar profundo",
+        "Hielo azul de glaciar"
+      ],
+      "correctAnswers": ["El agua en ríos, lagos y acuíferos"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q23",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS formas en que el agua regresa al océano:",
+      "options": [
+        "Descarga de ríos (escorrentía superficial)",
+        "Flujo de agua subterránea",
+        "Transpiración de algas",
+        "Viento solar"
+      ],
+      "correctAnswers": [
+        "Descarga de ríos (escorrentía superficial)",
+        "Flujo de agua subterránea"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q24",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador consolidado, ¿qué variable conecta la fase de 'Agua Subterránea' con la 'Atmósfera' indirectamente?",
+      "options": [
+        "La vegetación (mediante la transpiración)",
+        "Las rocas",
+        "El color del cielo",
+        "La velocidad de los peces"
+      ],
+      "correctAnswers": ["La vegetación (mediante la transpiración)"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q25",
+      "type": "theory",
+      "subtype": "single",
+      "text": "El ciclo del agua es un sistema:",
+      "options": [
+        "Cerrado en masa, pero abierto en energía",
+        "Abierto en masa y cerrado en energía",
+        "Cerrado en todo sentido",
+        "Abierto en todo sentido"
+      ],
+      "correctAnswers": ["Cerrado en masa, pero abierto en energía"],
+      "timeLimit": 90
+    }
+  ]
+}

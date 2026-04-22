@@ -81,3 +81,50 @@ input:focus {
   border-color: var(--neon-purple);
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
+
+/* Global Evaluation Button */
+.eval-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.2));
+  border: 2px dashed rgba(59, 130, 246, 0.3);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 20px;
+  text-decoration: none;
+}
+
+.eval-btn:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.3));
+  border-color: #3b82f6;
+  transform: translateY(-5px);
+}
+
+.eval-btn .icon {
+  font-size: 3rem;
+  filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+}
+
+.eval-btn .text {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.eval-btn .hint {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.eval-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+

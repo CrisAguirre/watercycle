@@ -1,0 +1,370 @@
+{
+  "examName": "resiliencia-agricola",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la resiliencia agrícola?",
+      "options": [
+        "La capacidad de un sistema agrícola para absorber choques y recuperarse tras eventos extremos",
+        "La velocidad a la que crecen las plantas",
+        "El uso de fertilizantes químicos potentes",
+        "La profundidad de las raíces de los árboles"
+      ],
+      "correctAnswers": ["La capacidad de un sistema agrícola para absorber choques y recuperarse tras eventos extremos"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q2",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es el principal factor de riesgo climático para la agricultura en la actualidad?",
+      "options": [
+        "Eventos extremos como sequías e inundaciones prolongadas",
+        "La caída de nieve en el desierto",
+        "El viento suave de la tarde",
+        "La luz de las estrellas"
+      ],
+      "correctAnswers": ["Eventos extremos como sequías e inundaciones prolongadas"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q3",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS estrategias para aumentar la resiliencia hídrica:",
+      "options": [
+        "Cosecha de agua de lluvia",
+        "Mejora de la materia orgánica del suelo",
+        "Eliminación de la vegetación nativa",
+        "Uso de variedades de cultivo muy sensibles al agua"
+      ],
+      "correctAnswers": [
+        "Cosecha de agua de lluvia",
+        "Mejora de la materia orgánica del suelo"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q4",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo ayuda la biodiversidad a la resiliencia?",
+      "options": [
+        "Ofrece múltiples respuestas ante una misma amenaza (seguro biológico)",
+        "Hace que el campo se vea más bonito únicamente",
+        "Requiere más fertilizantes sintéticos",
+        "Reduce la necesidad de luz solar"
+      ],
+      "correctAnswers": ["Ofrece múltiples respuestas ante una misma amenaza (seguro biológico)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q5",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la adaptación al cambio climático?",
+      "options": [
+        "Ajustes en los sistemas para reducir los daños o aprovechar las oportunidades del clima",
+        "Ignorar que el clima está cambiando",
+        "Dejar de cultivar para siempre",
+        "Pintar las plantas de blanco para reflejar el calor"
+      ],
+      "correctAnswers": ["Ajustes en los sistemas para reducir los daños o aprovechar las oportunidades del clima"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q6",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si un agricultor diversifica su finca con 5 cultivos diferentes y una plaga afecta al 100% de uno de ellos, ¿cuál es su pérdida total aproximada?",
+      "options": [
+        "20% (asumiendo áreas iguales)",
+        "100%",
+        "50%",
+        "0%"
+      ],
+      "correctAnswers": ["20% (asumiendo áreas iguales)"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q7",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la agricultura climáticamente inteligente?",
+      "options": [
+        "Un enfoque que busca aumentar la productividad, adaptarse al clima y reducir emisiones",
+        "Usar computadoras en el campo",
+        "Pagar por lluvia artificial",
+        "Producir alimentos solo en invierno"
+      ],
+      "correctAnswers": ["Un enfoque que busca aumentar la productividad, adaptarse al clima y reducir emisiones"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q8",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué importancia tiene la materia orgánica en la resiliencia ante sequías?",
+      "options": [
+        "Aumenta la capacidad del suelo para retener agua",
+        "Hace que el suelo sea más oscuro",
+        "No tiene ninguna importancia",
+        "Atrae a las nubes de lluvia"
+      ],
+      "correctAnswers": ["Aumenta la capacidad del suelo para retener agua"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q9",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS prácticas agroecológicas que promueven la resiliencia:",
+      "options": [
+        "Sistemas agroforestales",
+        "Rotación de cultivos",
+        "Uso intensivo de herbicidas",
+        "Monocultivo a gran escala"
+      ],
+      "correctAnswers": [
+        "Sistemas agroforestales",
+        "Rotación de cultivos"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q10",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si un suelo tiene un 'Umbral de Resiliencia' de 30 días sin lluvia antes de que el cultivo muera y ocurre una sequía de 40 días, ¿qué sucederá?",
+      "options": [
+        "El cultivo se perderá si no hay riego suplementario",
+        "El cultivo sobrevivirá por milagro",
+        "El suelo creará agua",
+        "El tiempo se detendrá"
+      ],
+      "correctAnswers": ["El cultivo se perderá si no hay riego suplementario"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q11",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la mitigación en el contexto agrícola?",
+      "options": [
+        "Acciones para reducir las emisiones de gases de efecto invernadero del sector",
+        "Reducir la cantidad de insectos",
+        "Mitigar el dolor de espalda del agricultor",
+        "Usar menos semillas"
+      ],
+      "correctAnswers": ["Acciones para reducir las emisiones de gases de efecto invernadero del sector"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q12",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué papel juegan los sistemas de alerta temprana?",
+      "options": [
+        "Permiten tomar medidas preventivas antes de un evento extremo",
+        "Hacen que no ocurra el evento",
+        "Solo sirven para la navegación marítima",
+        "Son muy caros y no sirven"
+      ],
+      "correctAnswers": ["Permiten tomar medidas preventivas antes de un evento extremo"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q13",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS fuentes de vulnerabilidad agrícola:",
+      "options": [
+        "Dependencia de un solo cultivo",
+        "Falta de acceso a información meteorológica",
+        "Suelos con alta fertilidad natural",
+        "Buena infraestructura de riego"
+      ],
+      "correctAnswers": [
+        "Dependencia de un solo cultivo",
+        "Falta de acceso a información meteorológica"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q14",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la agrobiodiversidad?",
+      "options": [
+        "La variedad de especies animales y vegetales utilizadas en la alimentación y agricultura",
+        "Tener muchos tractores de diferentes marcas",
+        "La cantidad de personas que viven en el campo",
+        "La diversidad de precios en el mercado"
+      ],
+      "correctAnswers": ["La variedad de especies animales y vegetales utilizadas en la alimentación y agricultura"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q15",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si aplicas una 'Estrategia de Diversificación', ¿qué sucederá con el gráfico de 'Estabilidad Productiva'?",
+      "options": [
+        "Se volverá más constante y con menos caídas bruscas",
+        "Bajará a cero",
+        "Subirá hasta el infinito",
+        "No cambiará nada"
+      ],
+      "correctAnswers": ["Se volverá más constante y con menos caídas bruscas"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q16",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es un cultivo de cobertura?",
+      "options": [
+        "Un cultivo sembrado para proteger el suelo de la erosión y mejorar su salud",
+        "Un cultivo que se cubre con plástico",
+        "Un cultivo que se siembra bajo los árboles",
+        "Un cultivo que no necesita luz"
+      ],
+      "correctAnswers": ["Un cultivo sembrado para proteger el suelo de la erosión y mejorar su salud"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q17",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo afecta el sobrepastoreo a la resiliencia del suelo?",
+      "options": [
+        "Lo degrada, compacta y reduce su capacidad de infiltración de agua",
+        "Lo hace más fuerte",
+        "Aumenta la cantidad de pasto",
+        "Lo calienta por el contacto con los animales"
+      ],
+      "correctAnswers": ["Lo degrada, compacta y reduce su capacidad de infiltración de agua"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q18",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS ventajas de los sistemas agroforestales:",
+      "options": [
+        "Mejora del microclima local",
+        "Secuestro de carbono en los árboles",
+        "Mayor facilidad para usar maquinaria gigante",
+        "Cosecha más rápida de un solo producto"
+      ],
+      "correctAnswers": [
+        "Mejora del microclima local",
+        "Secuestro de carbono en los árboles"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q19",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la huella de carbono en agricultura?",
+      "options": [
+        "La cantidad de gases de efecto invernadero emitidos durante la producción",
+        "La marca de los neumáticos en el lodo",
+        "El color oscuro del carbón vegetal",
+        "La ceniza después de una quema"
+      ],
+      "correctAnswers": ["La cantidad de gases de efecto invernadero emitidos durante la producción"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q20",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si un sistema resiliente se recupera de una inundación en 2 meses y un sistema vulnerable tarda 1 año, ¿cuál tiene mayor 'Capacidad de Recuperación'?",
+      "options": [
+        "El sistema resiliente (2 meses)",
+        "El sistema vulnerable (1 año)",
+        "Ambos son iguales",
+        "Ninguno es bueno"
+      ],
+      "correctAnswers": ["El sistema resiliente (2 meses)"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q21",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la seguridad hídrica?",
+      "options": [
+        "Tener acceso confiable a agua en cantidad y calidad suficiente",
+        "Tener guardias de seguridad en los pozos",
+        "Beber solo agua embotellada",
+        "Que nunca llueva demasiado"
+      ],
+      "correctAnswers": ["Tener acceso confiable a agua en cantidad y calidad suficiente"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q22",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo influye el conocimiento tradicional en la resiliencia?",
+      "options": [
+        "Aporta prácticas adaptadas localmente durante siglos",
+        "Es conocimiento obsoleto que no sirve",
+        "Solo sirve para contar historias",
+        "Dificulta el uso de tecnología"
+      ],
+      "correctAnswers": ["Aporta prácticas adaptadas localmente durante siglos"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q23",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS formas de financiamiento para la resiliencia climática:",
+      "options": [
+        "Seguros agrícolas para riesgos catastróficos",
+        "Créditos blandos para tecnificación de riego",
+        "Préstamos de usureros",
+        "Venta de toda la maquinaria"
+      ],
+      "correctAnswers": [
+        "Seguros agrícolas para riesgos catastróficos",
+        "Créditos blandos para tecnificación de riego"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q24",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si el nivel de 'Materia Orgánica' es máximo, ¿cuánto tiempo más puede el cultivo resistir un déficit hídrico comparado con un suelo degradado?",
+      "options": [
+        "Significativamente más tiempo (mayor reserva de agua útil)",
+        "El mismo tiempo",
+        "Menos tiempo",
+        "Las raíces se pudrirán inmediatamente"
+      ],
+      "correctAnswers": ["Significativamente más tiempo (mayor reserva de agua útil)"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q25",
+      "type": "theory",
+      "subtype": "single",
+      "text": "La resiliencia agrícola es un proceso de:",
+      "options": [
+        "Mejora continua y adaptación dinámica",
+        "Llegar a un estado estático perfecto",
+        "Eliminar el clima por completo",
+        "Solo usar tecnología digital"
+      ],
+      "correctAnswers": ["Mejora continua y adaptación dinámica"],
+      "timeLimit": 90
+    }
+  ]
+}

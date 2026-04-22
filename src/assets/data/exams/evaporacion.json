@@ -45,6 +45,326 @@
       ],
       "correctAnswers": ["100 Litros"],
       "timeLimit": 180
+    },
+    {
+      "id": "q4",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué ocurre con las moléculas de agua durante la evaporación?",
+      "options": [
+        "Ganan energía cinética y rompen puentes de hidrógeno",
+        "Pierden energía y se agrupan en gotas",
+        "Se transforman en átomos de hidrógeno y oxígeno",
+        "Aumentan su densidad para ascender al aire"
+      ],
+      "correctAnswers": ["Ganan energía cinética y rompen puentes de hidrógeno"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q5",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo se define el Déficit de Presión de Vapor (VPD)?",
+      "options": [
+        "La diferencia entre la presión de vapor de saturación y la presión de vapor actual",
+        "La presión total ejercida por el aire seco",
+        "La cantidad de agua líquida en las nubes",
+        "La velocidad del viento multiplicada por la humedad"
+      ],
+      "correctAnswers": ["La diferencia entre la presión de vapor de saturación y la presión de vapor actual"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q6",
+      "type": "theory",
+      "subtype": "single",
+      "text": "Si la Humedad Relativa alcanza el 100%, ¿qué sucede con la evaporación neta?",
+      "options": [
+        "Se detiene porque el aire está saturado",
+        "Aumenta exponencialmente",
+        "Se mantiene constante independientemente del viento",
+        "El agua comienza a hervir espontáneamente"
+      ],
+      "correctAnswers": ["Se detiene porque el aire está saturado"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q7",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS efectos del viento sobre la evaporación:",
+      "options": [
+        "Remueve la capa límite de aire saturado",
+        "Disminuye la temperatura del sol",
+        "Mantiene el gradiente de presión de vapor",
+        "Congela la superficie del agua instantáneamente"
+      ],
+      "correctAnswers": [
+        "Remueve la capa límite de aire saturado",
+        "Mantiene el gradiente de presión de vapor"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q8",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es la función de la radiación solar en el simulador?",
+      "options": [
+        "Proveer la energía necesaria para el cambio de fase",
+        "Hacer que el agua sea más pesada",
+        "Generar nubes directamente en la superficie",
+        "Eliminar el nitrógeno del aire"
+      ],
+      "correctAnswers": ["Proveer la energía necesaria para el cambio de fase"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q9",
+      "type": "theory",
+      "subtype": "single",
+      "text": "La relación entre la temperatura y la presión de vapor de saturación es:",
+      "options": [
+        "Exponencial (Ecuación de Clausius-Clapeyron)",
+        "Lineal",
+        "Inversamente proporcional",
+        "No existe relación entre ambas"
+      ],
+      "correctAnswers": ["Exponencial (Ecuación de Clausius-Clapeyron)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q10",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si la presión de saturación (Ps) es 3.2 kPa y la presión actual (Pa) es 1.2 kPa, ¿cuál es el VPD?",
+      "options": [
+        "2.0 kPa",
+        "4.4 kPa",
+        "1.0 kPa",
+        "0.37 kPa"
+      ],
+      "correctAnswers": ["2.0 kPa"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q11",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué nombre recibe el paso directo de sólido (hielo) a gas (vapor)?",
+      "options": [
+        "Sublimación",
+        "Fusión",
+        "Solidificación",
+        "Condensación"
+      ],
+      "correctAnswers": ["Sublimación"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q12",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Por qué el agua salada se evapora más lentamente que el agua dulce?",
+      "options": [
+        "Porque los solutos reducen la presión de vapor de la mezcla",
+        "Porque la sal es más caliente que el agua",
+        "Porque el agua salada no absorbe radiación solar",
+        "Porque los peces bloquean el ascenso del vapor"
+      ],
+      "correctAnswers": ["Porque los solutos reducen la presión de vapor de la mezcla"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q13",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS variables que son 'entradas' (inputs) en el simulador de evaporación:",
+      "options": [
+        "Radiación Solar",
+        "Tasa de Evaporación",
+        "Velocidad del Viento",
+        "Déficit de Presión de Vapor"
+      ],
+      "correctAnswers": [
+        "Radiación Solar",
+        "Velocidad del Viento"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q14",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué sucede con la energía térmica durante el proceso de evaporación?",
+      "options": [
+        "Se absorbe (calor latente)",
+        "Se libera al entorno",
+        "Se destruye",
+        "Se convierte en gravedad"
+      ],
+      "correctAnswers": ["Se absorbe (calor latente)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q15",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si duplicamos la velocidad del viento en condiciones de alta humedad, ¿qué se espera que ocurra con la tasa de evaporación si el aire ya está casi saturado?",
+      "options": [
+        "Aumentará ligeramente al remover el poco vapor presente",
+        "Disminuirá a la mitad",
+        "Se detendrá por completo",
+        "Aumentará diez veces"
+      ],
+      "correctAnswers": ["Aumentará ligeramente al remover el poco vapor presente"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q16",
+      "type": "theory",
+      "subtype": "single",
+      "text": "En el contexto del ciclo del agua, la evaporación ocurre mayoritariamente en:",
+      "options": [
+        "Los océanos",
+        "Los glaciares",
+        "Las ciudades",
+        "El subsuelo profundo"
+      ],
+      "correctAnswers": ["Los océanos"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q17",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué instrumento se usa tradicionalmente para medir la evaporación en campo?",
+      "options": [
+        "Tanque evaporímetro (Clase A)",
+        "Anemómetro",
+        "Barómetro",
+        "Termómetro de mercurio"
+      ],
+      "correctAnswers": ["Tanque evaporímetro (Clase A)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q18",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS factores que inhiben o reducen la evaporación:",
+      "options": [
+        "Alta humedad relativa",
+        "Baja presión atmosférica",
+        "Temperaturas cercanas al punto de congelación",
+        "Fuerte radiación ultravioleta"
+      ],
+      "correctAnswers": [
+        "Alta humedad relativa",
+        "Temperaturas cercanas al punto de congelación"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q19",
+      "type": "theory",
+      "subtype": "single",
+      "text": "La presión de vapor depende principalmente de:",
+      "options": [
+        "La temperatura",
+        "La altitud",
+        "El color del agua",
+        "El magnetismo terrestre"
+      ],
+      "correctAnswers": ["La temperatura"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q20",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Calcula el flujo de calor latente si se evaporan 5 kg de agua. (Dato: Calor latente de vaporización ≈ 2.45 MJ/kg)",
+      "options": [
+        "12.25 MJ",
+        "2.45 MJ",
+        "0.49 MJ",
+        "24.5 MJ"
+      ],
+      "correctAnswers": ["12.25 MJ"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q21",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo afecta la presión atmosférica a la evaporación?",
+      "options": [
+        "A menor presión (altas altitudes), la evaporación es más fácil",
+        "A mayor presión, el agua se evapora más rápido",
+        "La presión no tiene ninguna influencia",
+        "La presión solo afecta a la congelación"
+      ],
+      "correctAnswers": ["A menor presión (altas altitudes), la evaporación es más fácil"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q22",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la 'capa límite' en el proceso de evaporación?",
+      "options": [
+        "Una fina capa de aire saturado justo encima de la superficie del agua",
+        "El fondo del contenedor de agua",
+        "La distancia entre el sol y el agua",
+        "La profundidad máxima de un lago"
+      ],
+      "correctAnswers": ["Una fina capa de aire saturado justo encima de la superficie del agua"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q23",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS consecuencias de la evaporación en el clima local:",
+      "options": [
+        "Enfriamiento de la superficie (pérdida de calor sensible)",
+        "Aumento de la humedad en la atmósfera",
+        "Disminución de la nubosidad",
+        "Aumento del nivel del mar instantáneo"
+      ],
+      "correctAnswers": [
+        "Enfriamiento de la superficie (pérdida de calor sensible)",
+        "Aumento de la humedad en la atmósfera"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q24",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si en el simulador fijas la temperatura en 100°C y la humedad en 0%, ¿qué observarás en el indicador de 'Estado de Fase'?",
+      "options": [
+        "Ebullición / Vaporización rápida",
+        "Hielo / Sublimación",
+        "Condensación / Rocío",
+        "Infiltración profunda"
+      ],
+      "correctAnswers": ["Ebullición / Vaporización rápida"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q25",
+      "type": "theory",
+      "subtype": "single",
+      "text": "La evaporación es un proceso de:",
+      "options": [
+        "Transferencia de masa y energía",
+        "Solo transferencia de masa",
+        "Solo transferencia de energía",
+        "Ninguna de las anteriores"
+      ],
+      "correctAnswers": ["Transferencia de masa y energía"],
+      "timeLimit": 90
     }
   ]
 }

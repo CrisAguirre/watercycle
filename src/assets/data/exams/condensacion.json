@@ -1,0 +1,370 @@
+{
+  "examName": "condensacion",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué cambio de fase ocurre durante la condensación?",
+      "options": [
+        "De gas (vapor) a líquido",
+        "De líquido a gas",
+        "De sólido a líquido",
+        "De gas a sólido"
+      ],
+      "correctAnswers": ["De gas (vapor) a líquido"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q2",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué condición es necesaria para que el vapor de agua comience a condensarse?",
+      "options": [
+        "Que el aire alcance su punto de rocío",
+        "Que la temperatura aumente drásticamente",
+        "Que la presión atmosférica sea cero",
+        "Que no haya núcleos de condensación"
+      ],
+      "correctAnswers": ["Que el aire alcance su punto de rocío"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q3",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS ejemplos de condensación en la naturaleza:",
+      "options": [
+        "Formación de nubes",
+        "Evaporación de un charco",
+        "Formación de rocío sobre la hierba",
+        "Infiltración de agua en el suelo"
+      ],
+      "correctAnswers": [
+        "Formación de nubes",
+        "Formación de rocío sobre la hierba"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q4",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué son los núcleos de condensación?",
+      "options": [
+        "Partículas microscópicas (polvo, sal) donde el vapor se adhiere",
+        "El centro de la Tierra",
+        "Gotas de lluvia gigantes",
+        "Moléculas de nitrógeno puro"
+      ],
+      "correctAnswers": ["Partículas microscópicas (polvo, sal) donde el vapor se adhiere"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q5",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué sucede con el calor latente durante la condensación?",
+      "options": [
+        "Se libera al ambiente",
+        "Se absorbe del ambiente",
+        "Se convierte en luz solar",
+        "No hay transferencia de calor"
+      ],
+      "correctAnswers": ["Se libera al ambiente"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q6",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si el aire a 25°C puede contener 20g/m³ de vapor y actualmente tiene 10g/m³, ¿cuál es su Humedad Relativa?",
+      "options": [
+        "50%",
+        "100%",
+        "25%",
+        "75%"
+      ],
+      "correctAnswers": ["50%"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q7",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué proceso atmosférico causa el enfriamiento del aire al ascender, favoreciendo la condensación?",
+      "options": [
+        "Enfriamiento adiabático",
+        "Calentamiento por fricción",
+        "Radiación solar directa",
+        "Efecto invernadero inverso"
+      ],
+      "correctAnswers": ["Enfriamiento adiabático"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q8",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es la diferencia entre niebla y nubes?",
+      "options": [
+        "La altitud (la niebla es una nube a nivel del suelo)",
+        "La composición química",
+        "La temperatura del agua únicamente",
+        "No hay ninguna diferencia, son términos idénticos"
+      ],
+      "correctAnswers": ["La altitud (la niebla es una nube a nivel del suelo)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q9",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS factores que aumentan la probabilidad de condensación:",
+      "options": [
+        "Disminución de la temperatura",
+        "Aumento del volumen de aire sin añadir agua",
+        "Aumento de la humedad específica",
+        "Disminución de núcleos de condensación"
+      ],
+      "correctAnswers": [
+        "Disminución de la temperatura",
+        "Aumento de la humedad específica"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q10",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si una masa de aire se enfría por debajo de su punto de rocío, ¿qué cantidad de agua se condensará aproximadamente?",
+      "options": [
+        "El exceso de vapor por encima de la capacidad de saturación",
+        "Toda el agua presente en el aire",
+        "Exactamente la mitad",
+        "Ninguna, el aire simplemente se vuelve más denso"
+      ],
+      "correctAnswers": ["El exceso de vapor por encima de la capacidad de saturación"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q11",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué ocurre con la densidad del aire cuando el vapor de agua se condensa en gotas líquidas?",
+      "options": [
+        "El aire se vuelve más denso (si la presión es constante)",
+        "El aire se vuelve menos denso",
+        "La densidad no cambia",
+        "El aire desaparece"
+      ],
+      "correctAnswers": ["El aire se vuelve más denso (si la presión es constante)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q12",
+      "type": "theory",
+      "subtype": "single",
+      "text": "La condensación es el proceso inverso a:",
+      "options": [
+        "La evaporación",
+        "La fusión",
+        "La infiltración",
+        "La escorrentía"
+      ],
+      "correctAnswers": ["La evaporación"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q13",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS tipos de nubes según su altitud que se forman por condensación:",
+      "options": [
+        "Cirros (altas)",
+        "Estratos (bajas)",
+        "Cumulonimbos (solo en el suelo)",
+        "Nubes de polvo estelar"
+      ],
+      "correctAnswers": [
+        "Cirros (altas)",
+        "Estratos (bajas)"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q14",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo influye la presión en el punto de rocío?",
+      "options": [
+        "A mayor presión, mayor es el punto de rocío",
+        "A menor presión, mayor es el punto de rocío",
+        "La presión no afecta el punto de rocío",
+        "El punto de rocío solo depende de la luz solar"
+      ],
+      "correctAnswers": ["A mayor presión, mayor es el punto de rocío"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q15",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si bajas la temperatura del aire a 10°C y la humedad es alta, ¿qué efecto visual observarás?",
+      "options": [
+        "Aparición de niebla o nubes espesas",
+        "El agua desaparece por completo",
+        "Rayos solares más brillantes",
+        "Crecimiento de plantas instantáneo"
+      ],
+      "correctAnswers": ["Aparición de niebla o nubes espesas"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q16",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la humedad absoluta?",
+      "options": [
+        "La masa total de vapor de agua por unidad de volumen de aire",
+        "El porcentaje de agua en el suelo",
+        "La velocidad a la que llueve",
+        "La presión del aire seco"
+      ],
+      "correctAnswers": ["La masa total de vapor de agua por unidad de volumen de aire"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q17",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Por qué se empañan los vidrios de un auto en un día frío?",
+      "options": [
+        "El vapor de agua interior se enfría al contacto con el vidrio y se condensa",
+        "El vidrio absorbe el agua del exterior",
+        "El motor genera humedad líquida",
+        "Es un efecto óptico por la refracción de la luz"
+      ],
+      "correctAnswers": ["El vapor de agua interior se enfría al contacto con el vidrio y se condensa"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q18",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS consecuencias de la liberación de calor latente durante la condensación en la atmósfera:",
+      "options": [
+        "Calentamiento de la masa de aire circundante",
+        "Provee energía para tormentas y huracanes",
+        "Enfriamiento del aire circundante",
+        "Disminución de la presión atmosférica local"
+      ],
+      "correctAnswers": [
+        "Calentamiento de la masa de aire circundante",
+        "Provee energía para tormentas y huracanes"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q19",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es el papel de la condensación en el ciclo hidrológico?",
+      "options": [
+        "Transportar el agua de la fase gaseosa a la fase líquida para permitir la precipitación",
+        "Eliminar el agua de la atmósfera para siempre",
+        "Calentar los océanos",
+        "Generar viento fuerte"
+      ],
+      "correctAnswers": ["Transportar el agua de la fase gaseosa a la fase líquida para permitir la precipitación"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q20",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si una nube se forma a 2000 metros, ¿qué tipo de enfriamiento ha experimentado probablemente la masa de aire?",
+      "options": [
+        "Orográfico o Convectivo",
+        "Por contacto con el suelo caliente",
+        "Por compresión adiabática",
+        "Por radiación gamma"
+      ],
+      "correctAnswers": ["Orográfico o Convectivo"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q21",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué ocurre si el punto de rocío es menor a 0°C?",
+      "options": [
+        "El vapor se condensa directamente en hielo (escarcha)",
+        "No puede haber condensación",
+        "El agua se calienta",
+        "El aire se vuelve transparente"
+      ],
+      "correctAnswers": ["El vapor se condensa directamente en hielo (escarcha)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q22",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué nombre recibe la temperatura a la cual el aire debe enfriarse para saturarse?",
+      "options": [
+        "Temperatura del punto de rocío",
+        "Temperatura crítica",
+        "Temperatura de ebullición",
+        "Temperatura absoluta"
+      ],
+      "correctAnswers": ["Temperatura del punto de rocío"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q23",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS factores que determinan el tipo de nube que se forma:",
+      "options": [
+        "La estabilidad de la atmósfera",
+        "El contenido de humedad del aire",
+        "La profundidad del océano",
+        "El tipo de peces en el río"
+      ],
+      "correctAnswers": [
+        "La estabilidad de la atmósfera",
+        "El contenido de humedad del aire"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q24",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si la presión aumenta pero la temperatura se mantiene constante, ¿cómo cambia la probabilidad de condensación?",
+      "options": [
+        "Aumenta",
+        "Disminuye",
+        "Se mantiene igual",
+        "El agua se evapora más rápido"
+      ],
+      "correctAnswers": ["Aumenta"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q25",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es la principal diferencia entre rocío y escarcha?",
+      "options": [
+        "La temperatura (líquido vs sólido)",
+        "La cantidad de agua",
+        "La hora del día",
+        "El lugar donde se forman"
+      ],
+      "correctAnswers": ["La temperatura (líquido vs sólido)"],
+      "timeLimit": 90
+    }
+  ]
+}

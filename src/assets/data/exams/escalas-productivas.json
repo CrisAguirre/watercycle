@@ -1,0 +1,370 @@
+{
+  "examName": "escalas-productivas",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es la principal característica de la agricultura de subsistencia?",
+      "options": [
+        "Producción destinada principalmente al autoconsumo familiar",
+        "Uso intensivo de maquinaria pesada y drones",
+        "Exportación masiva a mercados internacionales",
+        "Grandes extensiones de monocultivo"
+      ],
+      "correctAnswers": ["Producción destinada principalmente al autoconsumo familiar"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q2",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué escala productiva se caracteriza por el uso de alta tecnología y objetivos netamente comerciales?",
+      "options": [
+        "Agricultura industrial o a gran escala",
+        "Agricultura de pequeña escala",
+        "Huertos caseros",
+        "Pastoreo nómada"
+      ],
+      "correctAnswers": ["Agricultura industrial o a gran escala"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q3",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS desafíos comunes para la pequeña escala productiva:",
+      "options": [
+        "Acceso limitado a financiamiento",
+        "Vulnerabilidad ante el cambio climático",
+        "Exceso de mano de obra calificada",
+        "Control total de los precios del mercado"
+      ],
+      "correctAnswers": [
+        "Acceso limitado a financiamiento",
+        "Vulnerabilidad ante el cambio climático"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q4",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la seguridad alimentaria?",
+      "options": [
+        "Cuando todas las personas tienen acceso físico y económico a alimentos suficientes y nutritivos",
+        "Tener vallas eléctricas en las granjas",
+        "Solo exportar alimentos caros",
+        "Producir solo un tipo de alimento"
+      ],
+      "correctAnswers": ["Cuando todas las personas tienen acceso físico y económico a alimentos suficientes y nutritivos"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q5",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo influye el tamaño de la parcela en la eficiencia del uso del agua?",
+      "options": [
+        "Las escalas grandes suelen usar sistemas más tecnificados (riego por goteo) que aumentan la eficiencia",
+        "Las parcelas pequeñas siempre desperdician agua",
+        "No tiene ninguna relación",
+        "Solo las parcelas circulares son eficientes"
+      ],
+      "correctAnswers": ["Las escalas grandes suelen usar sistemas más tecnificados (riego por goteo) que aumentan la eficiencia"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q6",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si una granja industrial consume 50,000 litros de agua para producir 100 kg de carne y una pequeña granja usa 5,000 litros para 200 kg de vegetales, ¿cuál es más eficiente en litros/kg?",
+      "options": [
+        "La pequeña granja de vegetales (25 L/kg vs 500 L/kg)",
+        "La granja industrial de carne",
+        "Ambas son iguales",
+        "La carne siempre es más eficiente"
+      ],
+      "correctAnswers": ["La pequeña granja de vegetales (25 L/kg vs 500 L/kg)"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q7",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es el monocultivo?",
+      "options": [
+        "La siembra de una sola especie en grandes extensiones de terreno",
+        "La siembra de plantas que solo necesitan un nutriente",
+        "Un cultivo manejado por una sola persona",
+        "Un cultivo que dura solo un mes"
+      ],
+      "correctAnswers": ["La siembra de una sola especie en grandes extensiones de terreno"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q8",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué ventaja tiene la diversificación de cultivos en la pequeña escala?",
+      "options": [
+        "Mejora la resiliencia ante plagas y variaciones del clima",
+        "Hace que la cosecha sea más rápida",
+        "Requiere menos trabajo",
+        "Elimina la necesidad de agua"
+      ],
+      "correctAnswers": ["Mejora la resiliencia ante plagas y variaciones del clima"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q9",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS impactos ambientales comunes de la agricultura industrial intensiva:",
+      "options": [
+        "Contaminación por agroquímicos",
+        "Degradación de la biodiversidad local",
+        "Aumento de la fertilidad natural del suelo sin insumos",
+        "Recuperación espontánea de bosques"
+      ],
+      "correctAnswers": [
+        "Contaminación por agroquímicos",
+        "Degradación de la biodiversidad local"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q10",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si un agricultor familiar dedica el 70% de su tierra a comida para su casa y el 30% para vender, ¿cuál es su enfoque productivo?",
+      "options": [
+        "Mixto con énfasis en subsistencia",
+        "Netamente comercial",
+        "Industrial",
+        "Agroforestal"
+      ],
+      "correctAnswers": ["Mixto con énfasis en subsistencia"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q11",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la huella hídrica de un producto agrícola?",
+      "options": [
+        "El volumen total de agua dulce utilizada para producir el producto",
+        "La marca que deja el agua en el suelo",
+        "El color del agua de riego",
+        "La profundidad de la raíz"
+      ],
+      "correctAnswers": ["El volumen total de agua dulce utilizada para producir el producto"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q12",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué papel juega el mercado en la definición de la escala productiva?",
+      "options": [
+        "Los mercados globales demandan grandes volúmenes y estándares uniformes, favoreciendo la gran escala",
+        "El mercado no influye en absoluto",
+        "Solo existen mercados para la pequeña escala",
+        "El mercado prohíbe el uso de tecnología"
+      ],
+      "correctAnswers": ["Los mercados globales demandan grandes volúmenes y estándares uniformes, favoreciendo la gran escala"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q13",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS beneficios de la agricultura de pequeña escala para la sociedad:",
+      "options": [
+        "Preservación de variedades locales de semillas",
+        "Sostenimiento de la economía rural local",
+        "Producción masiva de biocombustibles únicamente",
+        "Eliminación total del uso de mano de obra"
+      ],
+      "correctAnswers": [
+        "Preservación de variedades locales de semillas",
+        "Sostenimiento de la economía rural local"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q14",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la agricultura de precisión?",
+      "options": [
+        "El uso de tecnología (GPS, sensores) para aplicar insumos de forma exacta",
+        "Cortar las plantas con tijeras de precisión",
+        "Saber exactamente cuántas hormigas hay en el campo",
+        "Plantar las semillas en línea recta perfecta usando reglas"
+      ],
+      "correctAnswers": ["El uso de tecnología (GPS, sensores) para aplicar insumos de forma exacta"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q15",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador de escalas, si aumentas la 'Tecnificación' en la Pequeña Escala, ¿qué indicador se espera que mejore?",
+      "options": [
+        "La Eficiencia del Uso del Agua y la Productividad",
+        "El tamaño de la familia",
+        "La cantidad de lluvia",
+        "El precio del petróleo"
+      ],
+      "correctAnswers": ["La Eficiencia del Uso del Agua y la Productividad"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q16",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la soberanía alimentaria?",
+      "options": [
+        "El derecho de los pueblos a definir sus propias políticas agrícolas y alimentarias",
+        "Que el gobierno sea dueño de toda la comida",
+        "Solo comer comida producida por reyes",
+        "No depender de la lluvia para cultivar"
+      ],
+      "correctAnswers": ["El derecho de los pueblos a definir sus propias políticas agrícolas y alimentarias"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q17",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo afecta la mecanización al empleo rural?",
+      "options": [
+        "Suele reducir la necesidad de mano de obra no calificada pero aumenta la productividad",
+        "Aumenta la cantidad de personas necesarias para arar",
+        "No tiene ningún impacto",
+        "Hace que las personas trabajen más horas"
+      ],
+      "correctAnswers": ["Suele reducir la necesidad de mano de obra no calificada pero aumenta la productividad"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q18",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS factores que definen una 'Gran Escala' productiva:",
+      "options": [
+        "Grandes extensiones de tierra",
+        "Alta inversión de capital e infraestructura",
+        "Uso exclusivo de herramientas manuales",
+        "Producción para una sola familia"
+      ],
+      "correctAnswers": [
+        "Grandes extensiones de tierra",
+        "Alta inversión de capital e infraestructura"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q19",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la agricultura orgánica?",
+      "options": [
+        "Un sistema que evita el uso de fertilizantes y pesticidas sintéticos",
+        "Cultivar solo plantas que tengan órganos",
+        "Usar solo agua con azúcar",
+        "Cultivar dentro de laboratorios estériles"
+      ],
+      "correctAnswers": ["Un sistema que evita el uso de fertilizantes y pesticidas sintéticos"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q20",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si una hectárea industrial produce 10 toneladas de grano y una hectárea tradicional produce 4 toneladas, pero la industrial gasta el triple en costos, ¿cuál es más rentable por dólar invertido?",
+      "options": [
+        "Depende de los precios del mercado y el costo exacto de los insumos",
+        "La industrial siempre es mejor",
+        "La tradicional siempre es mejor",
+        "Ninguna es rentable"
+      ],
+      "correctAnswers": ["Depende de los precios del mercado y el costo exacto de los insumos"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q21",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es una cadena de valor agrícola?",
+      "options": [
+        "El conjunto de etapas desde la producción hasta el consumo final",
+        "Una cadena de metal para asegurar tractores",
+        "El precio de los alimentos en el supermercado",
+        "Una fórmula matemática para el riego"
+      ],
+      "correctAnswers": ["El conjunto de etapas desde la producción hasta el consumo final"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q22",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo influye el transporte en las escalas productivas?",
+      "options": [
+        "Es un costo crítico para la gran escala que busca mercados lejanos",
+        "El transporte solo existe en las ciudades",
+        "Las escalas pequeñas no necesitan transporte",
+        "El transporte gratuito es ley para los agricultores"
+      ],
+      "correctAnswers": ["Es un costo crítico para la gran escala que busca mercados lejanos"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q23",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS tendencias actuales en la producción agrícola mundial:",
+      "options": [
+        "Mayor enfoque en la sostenibilidad y reducción de químicos",
+        "Uso de datos y sensores (Smart Farming)",
+        "Regreso masivo a la tracción animal únicamente",
+        "Abandono total de las tierras de cultivo"
+      ],
+      "correctAnswers": [
+        "Mayor enfoque en la sostenibilidad y reducción de químicos",
+        "Uso de datos y sensores (Smart Farming)"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q24",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si el 'Mercado' entra en crisis, ¿cuál escala productiva suele tener mayor resiliencia gracias a su capacidad de autoconsumo?",
+      "options": [
+        "La pequeña escala (subsistencia)",
+        "La gran escala industrial",
+        "Ambas sufren por igual",
+        "El mercado no afecta a la agricultura"
+      ],
+      "correctAnswers": ["La pequeña escala (subsistencia)"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q25",
+      "type": "theory",
+      "subtype": "single",
+      "text": "La escala productiva ideal depende de:",
+      "options": [
+        "El contexto socioeconómico, geográfico y los objetivos del productor",
+        "Solo del tamaño del terreno",
+        "Solo de la cantidad de dinero disponible",
+        "Solo de la voluntad del gobierno"
+      ],
+      "correctAnswers": ["El contexto socioeconómico, geográfico y los objetivos del productor"],
+      "timeLimit": 90
+    }
+  ]
+}

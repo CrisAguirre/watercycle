@@ -1,0 +1,370 @@
+{
+  "examName": "factores-cultivo",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué representa el coeficiente de cultivo (Kc)?",
+      "options": [
+        "La relación entre la evapotranspiración del cultivo (ETc) y la de referencia (ETo)",
+        "La cantidad de fertilizante necesaria",
+        "La altura de la planta en metros",
+        "La velocidad del viento en el campo"
+      ],
+      "correctAnswers": ["La relación entre la evapotranspiración del cultivo (ETc) y la de referencia (ETo)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q2",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál de estas etapas suele tener el Kc más alto?",
+      "options": [
+        "Etapa media (floración/formación de fruto)",
+        "Etapa inicial (siembra)",
+        "Etapa de maduración final",
+        "Durante el barbecho"
+      ],
+      "correctAnswers": ["Etapa media (floración/formación de fruto)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q3",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS factores ambientales que aumentan la Evapotranspiración de Referencia (ETo):",
+      "options": [
+        "Alta radiación solar",
+        "Alta humedad relativa",
+        "Viento fuerte y seco",
+        "Cielo nublado"
+      ],
+      "correctAnswers": [
+        "Alta radiación solar",
+        "Viento fuerte y seco"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q4",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la Evapotranspiración Real (ETr)?",
+      "options": [
+        "La cantidad de agua que realmente se consume bajo las condiciones de humedad actuales del suelo",
+        "La máxima cantidad de agua que puede llover",
+        "El agua que beben los animales del campo",
+        "La transpiración de las malezas únicamente"
+      ],
+      "correctAnswers": ["La cantidad de agua que realmente se consume bajo las condiciones de humedad actuales del suelo"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q5",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué sucede con el Kc durante la fase de maduración final del cultivo?",
+      "options": [
+        "Disminuye debido a la senescencia (envejecimiento) de las hojas",
+        "Aumenta indefinidamente",
+        "Se mantiene en su punto máximo",
+        "Llega a cero instantáneamente"
+      ],
+      "correctAnswers": ["Disminuye debido a la senescencia (envejecimiento) de las hojas"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q6",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si la ETo es de 5 mm/día y el Kc del maíz en floración es 1.2, ¿cuál es su ETc?",
+      "options": [
+        "6.0 mm/día",
+        "4.2 mm/día",
+        "5.0 mm/día",
+        "1.2 mm/día"
+      ],
+      "correctAnswers": ["6.0 mm/día"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q7",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es el 'Estrés Hídrico' en un cultivo?",
+      "options": [
+        "La respuesta de la planta cuando la disponibilidad de agua en el suelo es insuficiente para cubrir la ETc",
+        "Cuando la planta tiene demasiada agua y se ahoga",
+        "Cuando el agricultor está preocupado por la lluvia",
+        "Cuando el agua está muy fría"
+      ],
+      "correctAnswers": ["La respuesta de la planta cuando la disponibilidad de agua en el suelo es insuficiente para cubrir la ETc"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q8",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo influye el Índice de Área Foliar (IAF) en la transpiración?",
+      "options": [
+        "A mayor IAF (más hojas), mayor es la transpiración potencial",
+        "A mayor IAF, menor es la transpiración",
+        "No existe relación entre hojas y transpiración",
+        "El IAF solo afecta el color de la planta"
+      ],
+      "correctAnswers": ["A mayor IAF (más hojas), mayor es la transpiración potencial"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q9",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS métodos para reducir la evaporación directa desde el suelo en el cultivo:",
+      "options": [
+        "Uso de acolchados (mulching)",
+        "Aumento de la densidad de siembra (cobertura rápida)",
+        "Riego por aspersión al mediodía",
+        "Eliminación total de la materia orgánica"
+      ],
+      "correctAnswers": [
+        "Uso de acolchados (mulching)",
+        "Aumento de la densidad de siembra (cobertura rápida)"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q10",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si un cultivo consume 40 mm de agua por semana y han caído 15 mm de lluvia efectiva, ¿cuál es el requerimiento de riego neto semanal?",
+      "options": [
+        "25 mm",
+        "55 mm",
+        "40 mm",
+        "15 mm"
+      ],
+      "correctAnswers": ["25 mm"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q11",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es el Punto de Marchitez Permanente (PMP)?",
+      "options": [
+        "El contenido de humedad del suelo por debajo del cual la planta no puede extraer más agua y muere",
+        "Cuando la planta se duerme por la noche",
+        "La temperatura a la que el cultivo se quema",
+        "El momento de la cosecha"
+      ],
+      "correctAnswers": ["El contenido de humedad del suelo por debajo del cual la planta no puede extraer más agua y muere"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q12",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la Capacidad de Campo (CC)?",
+      "options": [
+        "La máxima cantidad de agua que un suelo puede retener después de que el exceso ha drenado por gravedad",
+        "El tamaño total de la finca",
+        "La cantidad de semillas por hectárea",
+        "El peso del tractor sobre el suelo"
+      ],
+      "correctAnswers": ["La máxima cantidad de agua que un suelo puede retener después de que el exceso ha drenado por gravedad"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q13",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS factores que modifican el Kc de un cultivo:",
+      "options": [
+        "La variedad o especie vegetal",
+        "El manejo del suelo (labranza/cobertura)",
+        "El precio del mercado",
+        "El color de las flores únicamente"
+      ],
+      "correctAnswers": [
+        "La variedad o especie vegetal",
+        "El manejo del suelo (labranza/cobertura)"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q14",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo afecta la salinidad del agua de riego al cultivo?",
+      "options": [
+        "Dificulta la absorción de agua por ósmosis, reduciendo el crecimiento",
+        "Hace que las plantas sepan mejor",
+        "Aumenta la velocidad de transpiración",
+        "No tiene ningún efecto negativo"
+      ],
+      "correctAnswers": ["Dificulta la absorción de agua por ósmosis, reduciendo el crecimiento"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q15",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si seleccionas un cultivo con 'Kc Bajo' y condiciones de 'Viento Fuerte', ¿qué observarás en el consumo de agua?",
+      "options": [
+        "Un consumo moderado, ya que el Kc bajo compensa en parte la demanda ambiental",
+        "Consumo máximo",
+        "Consumo cero",
+        "El cultivo se congela"
+      ],
+      "correctAnswers": ["Un consumo moderado, ya que el Kc bajo compensa en parte la demanda ambiental"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q16",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la fenología de un cultivo?",
+      "options": [
+        "El estudio de las etapas biológicas del desarrollo de la planta",
+        "La cantidad de abono por planta",
+        "El estudio de los insectos del campo",
+        "La forma de las herramientas agrícolas"
+      ],
+      "correctAnswers": ["El estudio de las etapas biológicas del desarrollo de la planta"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q17",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es la función de los estomas en la transpiración?",
+      "options": [
+        "Regular el intercambio de gases (CO2) y la pérdida de vapor de agua",
+        "Absorber agua del aire",
+        "Darle color verde a la planta",
+        "Proteger contra el frío"
+      ],
+      "correctAnswers": ["Regular el intercambio de gases (CO2) y la pérdida de vapor de agua"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q18",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS factores que influyen en la profundidad radicular (de las raíces):",
+      "options": [
+        "Tipo de cultivo (especie)",
+        "Presencia de capas compactas en el suelo",
+        "Color de la luz solar",
+        "Fase de la luna"
+      ],
+      "correctAnswers": [
+        "Tipo de cultivo (especie)",
+        "Presencia de capas compactas en el suelo"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q19",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué ocurre con el consumo de agua cuando hay alta nubosidad?",
+      "options": [
+        "Disminuye por la menor radiación solar recibida",
+        "Aumenta para buscar luz",
+        "Se mantiene igual",
+        "La planta deja de transpirar totalmente"
+      ],
+      "correctAnswers": ["Disminuye por la menor radiación solar recibida"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q20",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si el requerimiento diario es de 4 mm y tenemos un área de 1 hectárea (10,000 m²), ¿cuántos m³ de agua consume el cultivo al día?",
+      "options": [
+        "40 m³",
+        "4 m³",
+        "400 m³",
+        "4000 m³"
+      ],
+      "correctAnswers": ["40 m³"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q21",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es el Coeficiente de Respuesta del Rendimiento (Ky)?",
+      "options": [
+        "Un factor que relaciona la disminución relativa del rendimiento con el déficit de agua",
+        "La cantidad de semillas que produce una planta",
+        "La velocidad de crecimiento de las hojas",
+        "El precio de venta del cultivo"
+      ],
+      "correctAnswers": ["Un factor que relaciona la disminución relativa del rendimiento con el déficit de agua"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q22",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué método se usa frecuentemente para estimar la ETo?",
+      "options": [
+        "Ecuación de Penman-Monteith (FAO 56)",
+        "Ecuación de Pitágoras",
+        "Ley de Ohm",
+        "Ecuación de Einstein"
+      ],
+      "correctAnswers": ["Ecuación de Penman-Monteith (FAO 56)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q23",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS indicadores de que un cultivo está sufriendo estrés hídrico:",
+      "options": [
+        "Cierre de estomas y marchitamiento foliar",
+        "Aumento de la temperatura foliar",
+        "Cambio de color de las raíces a blanco",
+        "Aumento rápido del tamaño del fruto"
+      ],
+      "correctAnswers": [
+        "Cierre de estomas y marchitamiento foliar",
+        "Aumento de la temperatura foliar"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q24",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si la humedad relativa es del 90%, ¿cómo será la ETc comparada con una humedad del 30% (manteniendo el resto igual)?",
+      "options": [
+        "Mucho menor (el aire está casi saturado)",
+        "Mucho mayor",
+        "Igual",
+        "El cultivo morirá por exceso de agua"
+      ],
+      "correctAnswers": ["Mucho menor (el aire está casi saturado)"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q25",
+      "type": "theory",
+      "subtype": "single",
+      "text": "La eficiencia del uso del agua (EUA) es la relación entre:",
+      "options": [
+        "La biomasa o rendimiento producido y el agua consumida",
+        "El agua de lluvia y el agua de riego",
+        "El número de plantas y el tamaño del terreno",
+        "El costo del agua y el costo del fertilizante"
+      ],
+      "correctAnswers": ["La biomasa o rendimiento producido y el agua consumida"],
+      "timeLimit": 90
+    }
+  ]
+}

@@ -1,0 +1,370 @@
+{
+  "examName": "infiltracion",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la infiltración?",
+      "options": [
+        "El proceso por el cual el agua en la superficie penetra en el suelo",
+        "El movimiento horizontal del agua en los ríos",
+        "La evaporación del agua desde las hojas",
+        "La purificación química del agua"
+      ],
+      "correctAnswers": ["El proceso por el cual el agua en la superficie penetra en el suelo"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q2",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué factor físico del suelo determina principalmente la velocidad de infiltración?",
+      "options": [
+        "La porosidad y textura del suelo",
+        "El color del suelo",
+        "La profundidad del lecho rocoso únicamente",
+        "La presencia de lombrices"
+      ],
+      "correctAnswers": ["La porosidad y textura del suelo"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q3",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS tipos de suelo con alta capacidad de infiltración:",
+      "options": [
+        "Arenoso",
+        "Arcilloso compacto",
+        "Suelo con abundante materia orgánica",
+        "Pavimento asfáltico"
+      ],
+      "correctAnswers": [
+        "Arenoso",
+        "Suelo con abundante materia orgánica"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q4",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué sucede con la tasa de infiltración a medida que el suelo se satura de agua?",
+      "options": [
+        "Disminuye hasta alcanzar una tasa constante (capacidad de infiltración final)",
+        "Aumenta indefinidamente",
+        "Se mantiene igual",
+        "El agua sale disparada hacia arriba"
+      ],
+      "correctAnswers": ["Disminuye hasta alcanzar una tasa constante (capacidad de infiltración final)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q5",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo afecta la cobertura vegetal a la infiltración?",
+      "options": [
+        "La favorece al reducir el impacto de la lluvia y mantener la estructura del suelo",
+        "La impide porque las hojas actúan como paraguas",
+        "No tiene ningún efecto",
+        "Hace que el agua se evapore antes de tocar el suelo"
+      ],
+      "correctAnswers": ["La favorece al reducir el impacto de la lluvia y mantener la estructura del suelo"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q6",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si la intensidad de la lluvia es de 20 mm/h y la capacidad de infiltración del suelo es de 15 mm/h, ¿cuánta escorrentía superficial se generará?",
+      "options": [
+        "5 mm/h",
+        "35 mm/h",
+        "0 mm/h",
+        "20 mm/h"
+      ],
+      "correctAnswers": ["5 mm/h"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q7",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la percolación?",
+      "options": [
+        "El movimiento vertical del agua a través de las capas profundas del suelo hacia el acuífero",
+        "El agua que corre por la superficie",
+        "El agua que beben las plantas",
+        "La formación de cuevas por erosión"
+      ],
+      "correctAnswers": ["El movimiento vertical del agua a través de las capas profundas del suelo hacia el acuífero"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q8",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo influye la pendiente del terreno en la infiltración?",
+      "options": [
+        "A mayor pendiente, menor infiltración (el agua corre más rápido)",
+        "A mayor pendiente, mayor infiltración",
+        "La pendiente no influye",
+        "La pendiente solo afecta a la nieve"
+      ],
+      "correctAnswers": ["A mayor pendiente, menor infiltración (el agua corre más rápido)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q9",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS factores que reducen la infiltración en zonas urbanas:",
+      "options": [
+        "Compactación del suelo",
+        "Superficies impermeables (concreto/asfalto)",
+        "Plantación de árboles",
+        "Instalación de jardines de lluvia"
+      ],
+      "correctAnswers": [
+        "Compactación del suelo",
+        "Superficies impermeables (concreto/asfalto)"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q10",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si un suelo arenoso tiene una porosidad del 40%, ¿qué significa?",
+      "options": [
+        "Que el 40% del volumen total son espacios vacíos que pueden contener aire o agua",
+        "Que el 40% del suelo es agua",
+        "Que el suelo filtrará el 40% de la suciedad",
+        "Que el suelo es 40% más pesado que el agua"
+      ],
+      "correctAnswers": ["Que el 40% del volumen total son espacios vacíos que pueden contener aire o agua"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q11",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la zona no saturada (o zona vadosa)?",
+      "options": [
+        "La capa de suelo donde los poros contienen tanto aire como agua",
+        "El fondo del océano",
+        "La zona donde todo el espacio está lleno de agua",
+        "Las nubes"
+      ],
+      "correctAnswers": ["La capa de suelo donde los poros contienen tanto aire como agua"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q12",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cuál es la fuerza principal que mueve el agua durante la infiltración inicial en un suelo seco?",
+      "options": [
+        "Succión matricial (capilaridad) y Gravedad",
+        "Solo Gravedad",
+        "Magnetismo",
+        "Presión del viento"
+      ],
+      "correctAnswers": ["Succión matricial (capilaridad) y Gravedad"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q13",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS consecuencias de una baja tasa de infiltración:",
+      "options": [
+        "Aumento del riesgo de inundaciones",
+        "Erosión del suelo",
+        "Recarga rápida de acuíferos",
+        "Mejora de la calidad del agua subterránea"
+      ],
+      "correctAnswers": [
+        "Aumento del riesgo de inundaciones",
+        "Erosión del suelo"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q14",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es el contenido de humedad de saturación?",
+      "options": [
+        "Cuando todos los poros del suelo están llenos de agua",
+        "Cuando el suelo está muy seco",
+        "Cuando el agua se vuelve vapor",
+        "La cantidad de sal en el agua"
+      ],
+      "correctAnswers": ["Cuando todos los poros del suelo están llenos de agua"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q15",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si seleccionas un suelo arcilloso y aplicas lluvia intensa, ¿qué observarás?",
+      "options": [
+        "Mucha escorrentía superficial y poca infiltración",
+        "Infiltración instantánea",
+        "El suelo se convierte en arena",
+        "El agua desaparece hacia el centro de la Tierra"
+      ],
+      "correctAnswers": ["Mucha escorrentía superficial y poca infiltración"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q16",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es un acuífero?",
+      "options": [
+        "Una formación geológica que almacena y transmite agua subterránea",
+        "Un tanque de agua de plástico",
+        "Un tipo de planta acuática",
+        "La parte más profunda del mar"
+      ],
+      "correctAnswers": ["Una formación geológica que almacena y transmite agua subterránea"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q17",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Cómo afecta la temperatura del agua a la infiltración?",
+      "options": [
+        "El agua caliente se infiltra más rápido porque es menos viscosa",
+        "El agua fría se infiltra más rápido",
+        "La temperatura no tiene ningún efecto",
+        "El agua caliente flota sobre el suelo"
+      ],
+      "correctAnswers": ["El agua caliente se infiltra más rápido porque es menos viscosa"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q18",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS prácticas agrícolas que mejoran la infiltración:",
+      "options": [
+        "Siembra directa (no labranza)",
+        "Uso de cultivos de cobertura",
+        "Labranza intensiva a favor de la pendiente",
+        "Quema de rastrojos"
+      ],
+      "correctAnswers": [
+        "Siembra directa (no labranza)",
+        "Uso de cultivos de cobertura"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q19",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es la conductividad hidráulica?",
+      "options": [
+        "La facilidad con la que el agua se mueve a través de los poros del suelo",
+        "La capacidad del agua de conducir electricidad",
+        "La velocidad de las olas del mar",
+        "El magnetismo del suelo"
+      ],
+      "correctAnswers": ["La facilidad con la que el agua se mueve a través de los poros del suelo"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q20",
+      "type": "practice",
+      "subtype": "single",
+      "text": "Si aplicamos 50 mm de agua y el suelo solo puede retener 20 mm antes de saturarse, ¿qué pasa con los 30 mm restantes?",
+      "options": [
+        "Se convierten en escorrentía o percolan hacia capas profundas",
+        "Desaparecen por arte de magia",
+        "Se evaporan instantáneamente",
+        "Se convierten en rocas"
+      ],
+      "correctAnswers": ["Se convierten en escorrentía o percolan hacia capas profundas"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q21",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué es un suelo hidrofóbico?",
+      "options": [
+        "Un suelo que repele el agua (común después de incendios)",
+        "Un suelo que ama el agua",
+        "Un suelo que vive bajo el mar",
+        "Un suelo hecho de esponja"
+      ],
+      "correctAnswers": ["Un suelo que repele el agua (común después de incendios)"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q22",
+      "type": "theory",
+      "subtype": "single",
+      "text": "¿Qué instrumento se usa para medir la tasa de infiltración en campo?",
+      "options": [
+        "Infiltrómetro de doble anillo",
+        "Pluviómetro",
+        "Anemómetro",
+        "Sismógrafo"
+      ],
+      "correctAnswers": ["Infiltrómetro de doble anillo"],
+      "timeLimit": 90
+    },
+    {
+      "id": "q23",
+      "type": "theory",
+      "subtype": "multiple",
+      "text": "Selecciona DOS beneficios de una buena infiltración para el ecosistema:",
+      "options": [
+        "Mantenimiento de los niveles de agua subterránea",
+        "Filtración natural de contaminantes",
+        "Aumento de la erosión hídrica",
+        "Secado rápido de las raíces de las plantas"
+      ],
+      "correctAnswers": [
+        "Mantenimiento de los niveles de agua subterránea",
+        "Filtración natural de contaminantes"
+      ],
+      "timeLimit": 90
+    },
+    {
+      "id": "q24",
+      "type": "practice",
+      "subtype": "single",
+      "text": "En el simulador, si compactas el suelo al máximo, ¿qué parámetro se verá más afectado negativamente?",
+      "options": [
+        "La porosidad y por ende la infiltración",
+        "El color del suelo",
+        "La gravedad",
+        "La temperatura del sol"
+      ],
+      "correctAnswers": ["La porosidad y por ende la infiltración"],
+      "timeLimit": 180
+    },
+    {
+      "id": "q25",
+      "type": "theory",
+      "subtype": "single",
+      "text": "La infiltración conecta el agua superficial con:",
+      "options": [
+        "El sistema de aguas subterráneas",
+        "La estratosfera",
+        "El centro del sol",
+        "Las galaxias vecinas"
+      ],
+      "correctAnswers": ["El sistema de aguas subterráneas"],
+      "timeLimit": 90
+    }
+  ]
+}
