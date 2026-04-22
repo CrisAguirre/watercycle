@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EvidenciaService } from '../../services/evidencia.service';
 import { AuthService } from '../../services/auth.service';
 
