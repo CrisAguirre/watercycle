@@ -2,12 +2,15 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Auth
 import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 // Layout
 import { LayoutComponent } from './components/layout/layout.component';
@@ -41,6 +44,7 @@ import { Sim8ResilienciaAgricolaComponent } from './components/laboratorio/sim8-
 
     // Auth
     LoginComponent,
+    RegisterComponent,
 
     // Layout
     LayoutComponent,
@@ -73,8 +77,11 @@ import { Sim8ResilienciaAgricolaComponent } from './components/laboratorio/sim8-
     AppRoutingModule,
     ReactiveFormsModule,
     CommonModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

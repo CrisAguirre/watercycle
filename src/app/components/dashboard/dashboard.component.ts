@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProgressService } from '../../services/progress.service';
 
 interface Session {
   number: number;
@@ -16,7 +17,7 @@ interface Session {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   sessions: Session[] = [
     {
       number: 1,
@@ -89,6 +90,35 @@ export class DashboardComponent {
       route: '/laboratorio/resiliencia-agricola'
     }
   ];
+
+  constructor(private progressService: ProgressService) {}
+
+  ngOnInit(): void {
+    this.loadProgress();
+  }
+
+  loadProgress(): void {
+    this.progressService.getProgress().subscribe({
+      next: (progress) => {
+        const completed = progress.completedSimulations || [];
+        const currentId = progress.currentSimulationId || 1;
+
+        this.sessions = this.sessions.map(session => {
+          if (completed.includes(session.number)) {
+            return { ...session, status: 'completed' };
+          } else if (session.number === currentId) {
+            return { ...session, status: 'available' };
+          } else if (session.number < currentId) {
+             // Por si acaso algún id anterior no está marcado como completado expresamente
+            return { ...session, status: 'completed' };
+          } else {
+            return { ...session, status: 'locked' };
+          }
+        });
+      },
+      error: (err) => console.error('Error loading progress:', err)
+    });
+  }
 
   getStatusLabel(status: string): string {
     switch (status) {

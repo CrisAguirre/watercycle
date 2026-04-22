@@ -319,3 +319,30 @@
   .guide-content h2 { font-size: 1.3rem; }
   .soil-buttons { flex-wrap: wrap; }
 }
+
+.save-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #aa7040, #5a4020);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(170, 112, 64, 0.4);
+  filter: brightness(1.1);
+}
+
+.save-btn:active {
+  transform: translateY(0);
+}

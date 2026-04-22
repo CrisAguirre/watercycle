@@ -22,6 +22,10 @@
         <input type="password" id="password" formControlName="password" placeholder="Ingrese su contraseña" />
       </div>
 
+      <div class="login-footer">
+        <p>¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a></p>
+      </div>
+
       <div *ngIf="errorMessage" class="error-message">
         {{ errorMessage }}
       </div>

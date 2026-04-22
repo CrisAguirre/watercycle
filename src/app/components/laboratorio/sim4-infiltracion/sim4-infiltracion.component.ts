@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AnalisisService } from '../../../services/analisis.service';
+import { ProgressService } from '../../../services/progress.service';
 
 interface InfilVariables {
   soilType: string;             // 'arena' | 'limo' | 'arcilla' | 'franco'
@@ -71,6 +73,11 @@ export class Sim4InfiltracionComponent implements OnInit, OnDestroy {
     franco:  { Ks: 25, porosity: 45, f0: 60,  fc: 20,  k: 0.06, desc: 'Equilibrado — Mezcla de arena, limo y arcilla, ideal para agricultura' }
   };
 
+  constructor(
+    private analisisService: AnalisisService,
+    private progressService: ProgressService
+  ) {}
+
   ngOnInit() {
     this.physicsTick();
     this.engineLoop = setInterval(() => this.physicsTick(), 500);
@@ -78,6 +85,26 @@ export class Sim4InfiltracionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.engineLoop) clearInterval(this.engineLoop);
+  }
+
+  saveAnalisis() {
+    const data = {
+      tipoAnalisis: 'Infiltración y Escorrentía',
+      descripcion: `Análisis de suelo tipo ${this.vars.soilType} con lluvia de ${this.vars.rainIntensity}mm/h y pendiente de ${this.vars.slopeAngle}°.`,
+      metricas: {
+        ...this.vars,
+        ...this.outputs
+      }
+    };
+
+    this.analisisService.submitAnalisis(data).subscribe({
+      next: () => {
+        alert('Análisis guardado con éxito');
+        // Actualizar progreso (asumiendo que esta es la simulación 4)
+        this.progressService.updateProgress({ completedSimulation: 4 }).subscribe();
+      },
+      error: (err: any) => alert('Error al guardar el análisis: ' + err.error?.message)
+    });
   }
 
   onVarChange(event: Event, key: keyof InfilVariables) {
