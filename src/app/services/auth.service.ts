@@ -48,6 +48,10 @@ export class AuthService {
     return !!this.currentUserValue;
   }
 
+  getRole(): string | null {
+    return this.currentUserValue ? this.currentUserValue.role : null;
+  }
+
   getToken(): string | null {
     return this.currentUserValue ? this.currentUserValue.token : null;
   }

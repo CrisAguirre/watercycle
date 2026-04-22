@@ -6,6 +6,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { UsersListComponent } from './components/dashboard/users-list/users-list.component';
 import { LaboratorioHubComponent } from './components/laboratorio/laboratorio-hub/laboratorio-hub.component';
 import { RecursosComponent } from './components/recursos/recursos.component';
 
@@ -34,6 +35,7 @@ const routes: Routes = [
     children: [
       { path: 'landing', component: LandingComponent },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'usuarios', component: UsersListComponent },
       {
         path: 'laboratorio',
         children: [

@@ -29,7 +29,8 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]],
-      role: ['student']
+      role: ['estudiante', [Validators.required]],
+      accessCode: ['', [Validators.required]]
     }, {
       validators: this.passwordMatchValidator
     });
@@ -44,9 +45,9 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.valid) {
       this.loading = true;
       this.errorMessage = '';
-      const { name, email, password, role } = this.registerForm.value;
+      const { name, email, password, role, accessCode } = this.registerForm.value;
 
-      this.authService.register({ name, email, password, role }).subscribe({
+      this.authService.register({ name, email, password, role, accessCode }).subscribe({
         next: () => {
           alert('Registro exitoso. Ahora puedes iniciar sesión.');
           this.router.navigate(['/login']);

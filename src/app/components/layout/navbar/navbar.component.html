@@ -24,6 +24,10 @@
       <span class="tab-icon">📁</span>
       <span class="tab-label">Recursos</span>
     </a>
+    <a class="nav-tab" routerLink="/usuarios" routerLinkActive="active" *ngIf="isAdminOrProfesor()">
+      <span class="tab-icon">👥</span>
+      <span class="tab-label">Usuarios</span>
+    </a>
   </div>
 
   <button class="btn-logout" (click)="logout()">

@@ -42,6 +42,23 @@
               Las contraseñas no coinciden.
             </span>
           </div>
+
+        <div class="form-group">
+          <label for="role">Rol</label>
+          <select id="role" formControlName="role" class="form-select">
+            <option value="estudiante">Estudiante</option>
+            <option value="profesor">Docente</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="accessCode">Código de Acceso</label>
+          <input type="text" id="accessCode" formControlName="accessCode" placeholder="Ingresa el código"
+                 [class.error]="registerForm.get('accessCode')?.invalid && registerForm.get('accessCode')?.touched">
+          <span class="error-msg" *ngIf="registerForm.get('accessCode')?.invalid && registerForm.get('accessCode')?.touched">
+            El código de acceso es requerido.
+          </span>
+        </div>
   
         <div *ngIf="errorMessage" class="error-banner">
           {{ errorMessage }}

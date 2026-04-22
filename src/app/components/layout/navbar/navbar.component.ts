@@ -9,6 +9,11 @@ import { AuthService } from '../../../services/auth.service';
 export class NavbarComponent {
   constructor(private authService: AuthService) { }
 
+  isAdminOrProfesor(): boolean {
+    const role = this.authService.getRole();
+    return role === 'administrador' || role === 'profesor';
+  }
+
   logout() {
     this.authService.logout();
   }
