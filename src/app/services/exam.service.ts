@@ -38,4 +38,8 @@ export class ExamService {
   getUserExams(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  getAllResults(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/all`);
+  }
 }

@@ -8,6 +8,7 @@ import { LandingComponent } from './components/landing/landing.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsersListComponent } from './components/dashboard/users-list/users-list.component';
 import { LaboratorioHubComponent } from './components/laboratorio/laboratorio-hub/laboratorio-hub.component';
+import { ResultsComponent } from './components/dashboard/results/results.component';
 import { RecursosComponent } from './components/recursos/recursos.component';
 
 // Simulaciones - Bloque Agua
@@ -37,6 +38,7 @@ const routes: Routes = [
       { path: 'landing', component: LandingComponent },
       { path: 'dashboard', component: DashboardComponent },
       { path: 'usuarios', component: UsersListComponent },
+      { path: 'resultados', component: ResultsComponent },
       {
         path: 'laboratorio',
         children: [

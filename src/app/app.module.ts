@@ -20,6 +20,7 @@ import { NavbarComponent } from './components/layout/navbar/navbar.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsersListComponent } from './components/dashboard/users-list/users-list.component';
+import { ResultsComponent } from './components/dashboard/results/results.component';
 import { LaboratorioHubComponent } from './components/laboratorio/laboratorio-hub/laboratorio-hub.component';
 import { RecursosComponent } from './components/recursos/recursos.component';
 import { ExamComponent } from './components/laboratorio/exam/exam.component';
@@ -56,6 +57,7 @@ import { Sim8ResilienciaAgricolaComponent } from './components/laboratorio/sim8-
     LandingComponent,
     DashboardComponent,
     UsersListComponent,
+    ResultsComponent,
     LaboratorioHubComponent,
     RecursosComponent,
 

@@ -28,6 +28,10 @@
       <span class="tab-icon">👥</span>
       <span class="tab-label">Usuarios</span>
     </a>
+    <a class="nav-tab" routerLink="/resultados" routerLinkActive="active" *ngIf="isAdminOrProfesor()">
+      <span class="tab-icon">🏆</span>
+      <span class="tab-label">Resultados</span>
+    </a>
   </div>
 
   <button class="btn-logout" (click)="logout()">
