@@ -22,6 +22,7 @@ import { Sim6FactoresCultivoComponent } from './components/laboratorio/sim6-fact
 import { Sim7EscalasProductivasComponent } from './components/laboratorio/sim7-escalas-productivas/sim7-escalas-productivas.component';
 import { Sim8ResilienciaAgricolaComponent } from './components/laboratorio/sim8-resiliencia-agricola/sim8-resiliencia-agricola.component';
 
+import { ExamComponent } from './components/laboratorio/exam/exam.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -48,6 +49,7 @@ const routes: Routes = [
           { path: 'factores-cultivo', component: Sim6FactoresCultivoComponent },
           { path: 'escalas-productivas', component: Sim7EscalasProductivasComponent },
           { path: 'resiliencia-agricola', component: Sim8ResilienciaAgricolaComponent },
+          { path: ':id/evaluacion', component: ExamComponent },
         ]
       },
       { path: 'recursos', component: RecursosComponent },

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExamService, Question, ExamData } from '../../../../services/exam.service';
+import { ExamService, Question, ExamData } from '../../../services/exam.service';
 
 @Component({
   selector: 'app-exam',
@@ -57,8 +57,8 @@ export class ExamComponent implements OnInit, OnDestroy {
 
   checkAttemptsAndLoad(): void {
     this.examService.getUserExams().subscribe({
-      next: (exams) => {
-        const attempts = exams.filter(e => e.examName === this.examName).length;
+      next: (exams: any[]) => {
+        const attempts = exams.filter((e: any) => e.examName === this.examName).length;
         if (attempts >= 2) {
           this.state = 'error';
           this.errorMessage = 'Has alcanzado el límite máximo de 2 intentos para esta evaluación.';
@@ -75,7 +75,7 @@ export class ExamComponent implements OnInit, OnDestroy {
 
   loadExamData(): void {
     this.examService.getExamQuestions(this.examName).subscribe({
-      next: (data) => {
+      next: (data: ExamData) => {
         this.examData = data;
         this.state = 'instructions';
       },
@@ -192,7 +192,7 @@ export class ExamComponent implements OnInit, OnDestroy {
         this.state = 'result';
         this.errorMessage = `Tu puntaje final es: ${finalScore}/100`;
       },
-      error: (err) => {
+      error: (err: any) => {
         this.state = 'error';
         this.errorMessage = err.error?.message || 'Error al enviar la evaluación.';
       }
