@@ -4,6 +4,25 @@
     <p class="lab-subtitle">Experimenta libremente con los 8 módulos interactivos de agua y agroecosistemas</p>
   </div>
 
+  <!-- Bloque Introducción -->
+  <section class="sim-block">
+    <div class="block-header">
+      <span class="block-icon">📖</span>
+      <div>
+        <h2 class="block-title">Bloque Introducción</h2>
+        <p class="block-desc">Contextualización y Pensamiento Sistémico</p>
+      </div>
+    </div>
+
+    <div class="sim-grid">
+      <app-sim-card
+        [simNumber]="0" title="Laboratorio de Introducción"
+        description="Justificación pedagógica, video introductorio y síntesis de pensamiento sistémico."
+        icon="📽️" bloque="intro" [available]="true" routePath="/laboratorio/introduccion">
+      </app-sim-card>
+    </div>
+  </section>
+
   <!-- Bloque 1: Ciclo del Agua -->
   <section class="sim-block">
     <div class="block-header">

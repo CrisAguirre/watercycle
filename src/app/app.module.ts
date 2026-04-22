@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -21,6 +21,7 @@ import { LandingComponent } from './components/landing/landing.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { UsersListComponent } from './components/dashboard/users-list/users-list.component';
 import { ResultsComponent } from './components/dashboard/results/results.component';
+import { Sim0IntroduccionComponent } from './components/laboratorio/sim0-introduccion/sim0-introduccion.component';
 import { LaboratorioHubComponent } from './components/laboratorio/laboratorio-hub/laboratorio-hub.component';
 import { RecursosComponent } from './components/recursos/recursos.component';
 import { ExamComponent } from './components/laboratorio/exam/exam.component';
@@ -58,6 +59,7 @@ import { Sim8ResilienciaAgricolaComponent } from './components/laboratorio/sim8-
     DashboardComponent,
     UsersListComponent,
     ResultsComponent,
+    Sim0IntroduccionComponent,
     LaboratorioHubComponent,
     RecursosComponent,
 
@@ -84,6 +86,7 @@ import { Sim8ResilienciaAgricolaComponent } from './components/laboratorio/sim8-
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     CommonModule,
     HttpClientModule,
   ],

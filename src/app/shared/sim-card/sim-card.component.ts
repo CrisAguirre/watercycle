@@ -10,7 +10,7 @@ export class SimCardComponent {
   @Input() title: string = '';
   @Input() description: string = '';
   @Input() icon: string = '';
-  @Input() bloque: 'agua' | 'agro' = 'agua';
+  @Input() bloque: 'agua' | 'agro' | 'intro' = 'agua';
   @Input() available: boolean = true;
   @Input() routePath: string = '';
 }

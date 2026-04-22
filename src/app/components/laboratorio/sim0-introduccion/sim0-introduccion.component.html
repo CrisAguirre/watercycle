@@ -1,0 +1,90 @@
+<div class="intro-lab-container">
+  <div class="intro-header">
+    <h1 class="text-neon-blue">Laboratorio de Introducción</h1>
+    <p class="subtitle">Presentación de la secuencia didáctica y pensamiento sistémico</p>
+  </div>
+
+  <div class="tab-navigation">
+    <button [class.active]="activeTab === 'video'" (click)="setTab('video')">
+      <span class="tab-icon">📽️</span> Momento 1: Video
+    </button>
+    <button [class.active]="activeTab === 'foro'" (click)="setTab('foro')">
+      <span class="tab-icon">💬</span> Momento 2: Apreciación
+    </button>
+    <button [class.active]="activeTab === 'sintesis'" (click)="setTab('sintesis')">
+      <span class="tab-icon">📝</span> Momento 3: Síntesis Final
+    </button>
+  </div>
+
+  <div class="tab-content glass-panel">
+    <!-- MOMENTO 1: VIDEO -->
+    <div *ngIf="activeTab === 'video'" class="video-section animate-fade">
+      <h3>📽️ Proyección de Introducción</h3>
+      <p class="section-desc">
+        Este video presenta la justificación y la intención pedagógica del laboratorio. 
+        Es fundamental observarlo con atención para comprender cómo el pensamiento sistémico 
+        se aplica al estudio del ciclo del agua y los agroecosistemas.
+      </p>
+      <div class="video-wrapper">
+        <iframe [src]="videoUrl" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+
+    <!-- MOMENTO 2: FORO / APRECIACIÓN -->
+    <div *ngIf="activeTab === 'foro'" class="foro-section animate-fade">
+      <h3>💬 Foro Digital: Tu Apreciación</h3>
+      <p class="section-desc">
+        Redacta una breve apreciación sobre lo observado en el video y cómo esperas que estas 
+        simulaciones ayuden a tu aprendizaje. 
+        <strong>Nota:</strong> Solo tienes una oportunidad para guardar tu texto.
+      </p>
+      
+      <div class="input-group">
+        <textarea 
+          [(ngModel)]="apreciacion" 
+          [disabled]="isApreciacionSaved"
+          placeholder="Escribe aquí tu apreciación..."
+          class="glass-textarea"
+          rows="8"></textarea>
+      </div>
+
+      <div class="action-footer">
+        <button 
+          class="btn-save" 
+          (click)="saveApreciacion()" 
+          [disabled]="isApreciacionSaved || !apreciacion.trim() || loading">
+          {{ isApreciacionSaved ? '✓ Apreciación Enviada' : (loading ? 'Enviando...' : 'Subir a Evidencias') }}
+        </button>
+      </div>
+      <p class="status-msg" *ngIf="message">{{ message }}</p>
+    </div>
+
+    <!-- MOMENTO 3: SÍNTESIS FINAL -->
+    <div *ngIf="activeTab === 'sintesis'" class="sintesis-section animate-fade">
+      <h3>📝 Conclusión Personal y Síntesis Final</h3>
+      <p class="section-desc">
+        A modo de cierre de esta sesión introductoria, redacta una conclusión personal o síntesis final 
+        sobre la importancia de abordar los problemas ambientales desde una visión sistémica.
+      </p>
+
+      <div class="input-group">
+        <textarea 
+          [(ngModel)]="conclusion" 
+          [disabled]="isConclusionSaved"
+          placeholder="Redacta tu síntesis final aquí..."
+          class="glass-textarea"
+          rows="8"></textarea>
+      </div>
+
+      <div class="action-footer">
+        <button 
+          class="btn-save" 
+          (click)="saveConclusion()" 
+          [disabled]="isConclusionSaved || !conclusion.trim() || loading">
+          {{ isConclusionSaved ? '✓ Conclusión Enviada' : (loading ? 'Enviando...' : 'Subir a Evidencias') }}
+        </button>
+      </div>
+      <p class="status-msg" *ngIf="message">{{ message }}</p>
+    </div>
+  </div>
+</div>
