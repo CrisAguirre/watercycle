@@ -37,13 +37,57 @@
 
   <!-- Evidencias Section -->
   <div class="rec-content" *ngIf="activeSection === 'evidencias'">
-    <div class="empty-state">
-      <div class="empty-icon">📸</div>
-      <h3>Mis Evidencias</h3>
-      <p>Próximamente podrás cargar capturas de pantalla de tus resultados de simulación, diagramas y reportes.</p>
-      <button class="btn-upload" disabled>
-        📤 Subir Evidencia (Próximamente)
-      </button>
+    <div class="evidencias-container glass-panel">
+      <div class="section-header">
+        <h3>{{ isTeacherOrAdmin() ? 'Consolidado de Evidencias' : 'Mis Evidencias' }}</h3>
+        <p *ngIf="!isTeacherOrAdmin()">Aquí puedes ver los textos y archivos que has subido como prueba de tu aprendizaje.</p>
+        <p *ngIf="isTeacherOrAdmin()">Revisión global de apreciaciones, síntesis y archivos subidos por todos los estudiantes.</p>
+      </div>
+
+      <div *ngIf="loading" class="loading-state">
+        <div class="spinner"></div>
+        <p>Cargando evidencias...</p>
+      </div>
+
+      <div *ngIf="!loading" class="evidencias-list">
+        <table class="ev-table">
+          <thead>
+            <tr>
+              <th *ngIf="isTeacherOrAdmin()">Estudiante</th>
+              <th>Título / Actividad</th>
+              <th>Contenido / Recurso</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ev of evidencias" class="ev-row">
+              <td *ngIf="isTeacherOrAdmin()">
+                <div class="student-cell">
+                  <strong>{{ ev.user?.name }}</strong>
+                  <span>{{ ev.user?.email }}</span>
+                </div>
+              </td>
+              <td>
+                <span class="ev-title">{{ ev.titulo }}</span>
+              </td>
+              <td>
+                <div *ngIf="ev.contenido" class="ev-text-preview">
+                  "{{ ev.contenido | slice:0:100 }}..."
+                </div>
+                <a *ngIf="ev.archivoUrl" [href]="ev.archivoUrl" target="_blank" class="ev-link">
+                  📄 Ver Archivo ({{ ev.tipoArchivo }})
+                </a>
+              </td>
+              <td>{{ formatDate(ev.fechaSubida) }}</td>
+            </tr>
+            <tr *ngIf="evidencias.length === 0">
+              <td [attr.colspan]="isTeacherOrAdmin() ? 4 : 3" class="empty-msg">
+                No hay evidencias registradas todavía.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
