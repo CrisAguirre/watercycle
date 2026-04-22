@@ -29,16 +29,6 @@
           <p><strong>Retorno:</strong> Observa la escorrentía fluyendo por los ríos de regreso al mar, cerrando el ciclo perpetuo.</p>
         </div>
       </div>
-
-      <hr class="my-8 border-white/10" />
-
-      <section class="educational-guide-alt">
-        <h3 class="text-neon-purple">1. La Vista Geográfica</h3>
-        <p>El simulador utiliza una cámara aérea en ángulo de 45° (isométrica). El <strong>Oeste (Izquierda)</strong> es el océano y el <strong>Este (Derecha)</strong> es la cordillera montañosa.</p>
-        
-        <h3 class="text-neon-purple mt-4">2. Dinámica de Sistemas</h3>
-        <p>A diferencia de las animaciones simples, aquí los porcentajes representan <strong>Stocks (almacenamiento)</strong> y <strong>Flows (flujos)</strong>. Si dejas de mover los controles, el sistema se autorregula.</p>
-      </section>
     </div>
   </div>
 
@@ -135,37 +125,67 @@
 
         <!-- Control Panel -->
         <div class="control-panel glass-panel">
-          <h3 class="panel-title">Variables del Sistema</h3>
+          <h3 class="panel-title">Taller: Realidad y Sistemas</h3>
           <div class="controls-wrapper" *ngIf="variables$ | async as vars">
             <div class="slider-group">
-              <label>Temperatura: {{vars.temperature}}°C</label>
+              <label>Temperatura (°C): {{vars.temperature}}</label>
               <input type="range" min="0" max="100" [value]="vars.temperature" (input)="onVarChange($event, 'temperature')" class="neon-slider" />
             </div>
             <div class="slider-group">
-              <label>Radiación Solar: {{vars.solarRadiation}}%</label>
+              <label>Radiación Solar (%): {{vars.solarRadiation}}</label>
               <input type="range" min="0" max="100" [value]="vars.solarRadiation" (input)="onVarChange($event, 'solarRadiation')" class="neon-slider" />
             </div>
             <div class="slider-group">
-              <label>Velocidad Viento: {{vars.windSpeed}} km/h</label>
+              <label>Velocidad Viento (km/h): {{vars.windSpeed}}</label>
               <input type="range" min="1" max="100" [value]="vars.windSpeed" (input)="onVarChange($event, 'windSpeed')" class="neon-slider" />
             </div>
+            
+            <div class="slider-group mt-2">
+              <label>Presión Atmosférica (hPa): {{vars.atmosphericPressure}}</label>
+              <input type="range" min="900" max="1100" [value]="vars.atmosphericPressure"
+                (input)="onVarChange($event, 'atmosphericPressure')" class="neon-slider" />
+            </div>
+  
             <div class="slider-group">
+              <label>Humedad Ambiental (%): {{vars.humidity}}</label>
+              <input type="range" min="0" max="100" [value]="vars.humidity" (input)="onVarChange($event, 'humidity')"
+                class="neon-slider" />
+            </div>
+
+            <div class="slider-group mt-2">
               <label>Rosa de los Vientos:</label>
               <select [value]="vars.windDirection" (change)="onVarChange($event, 'windDirection')" class="glass-select">
-                <option value="N">Norte</option>
-                <option value="NE">Noreste</option>
+                <option value="N">Norte (Paralelo a costa)</option>
+                <option value="NE">Noreste (Diagonal Montaña)</option>
                 <option value="E">Este (Hacia Montaña)</option>
-                <option value="SE">Sureste</option>
-                <option value="S">Sur</option>
-                <option value="SW">Suroeste</option>
+                <option value="SE">Sureste (Diagonal Montaña)</option>
+                <option value="S">Sur (Paralelo a costa)</option>
+                <option value="SW">Suroeste (Diagonal Océano)</option>
                 <option value="W">Oeste (Hacia Océano)</option>
-                <option value="NW">Noroeste</option>
+                <option value="NW">Noroeste (Diagonal Océano)</option>
               </select>
             </div>
           </div>
 
           <div class="monitor-panel" *ngIf="rates$ | async as rates">
-            <h4 class="text-muted">Instrumentación</h4>
+            <h4 class="text-muted" style="margin-bottom: 5px;">Estación Meteorológica</h4>
+
+            <div class="weather-instruments"
+              style="margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+              <div style="font-size: 0.85rem; color: #fff;">
+                <strong>Barómetro:</strong> {{ rates.barometerState }}
+              </div>
+              <div style="font-size: 0.85rem; color: #fff; margin-top: 5px;">
+                <strong>T. Punto de Rocío:</strong> {{ rates.dewPoint }} °C
+              </div>
+            </div>
+
+            <div class="meter-row">
+              <span>Evaporación Atmosférica</span>
+              <div class="meter-bar">
+                <div class="fill blue" [style.width.%]="rates.evaporationRate"></div>
+              </div>
+            </div>
             <div class="meter-row">
               <span>Saturación de Nubes</span>
               <div class="meter-bar"><div class="fill purple" [style.width.%]="rates.condensationRate"></div></div>
@@ -177,6 +197,83 @@
           </div>
         </div>
       </div>
+
+      <!-- Pie de página: Guía de Usuario y Taller Meteorológico -->
+      <footer class="educational-guide">
+        <div class="guide-content glass-panel">
+          <h2 class="text-neon-blue">Manual de Operación Meteorológica: Entorno Virtual de Aprendizaje EVA</h2>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">1. La Vista Geográfica: Perspectiva Aérea Isométrica</h3>
+            <p>El simulador utiliza una <strong>cámara de drone en ángulo de 45°</strong> (proyección isométrica) para
+              ofrecer una comprensión espacial completa. En esta vista:</p>
+            <ul>
+              <li><strong>Oeste (Izquierda):</strong> Ubicación del océano. Es la zona donde se origina la evaporación.</li>
+              <li><strong>Este (Derecha):</strong> Cordillera montañosa. Actúa como barrera física (orográfica) para la
+                formación de nubes.</li>
+              <li><strong>Profundidad:</strong> Los elementos situados al <em>Norte</em> se ven más alejados y pequeños,
+                mientras que al <em>Sur</em> se aprecian en primer plano, permitiendo visualizar el viento en 3D.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">2. Funcionamiento de los Selectores (Variables de Entrada)</h3>
+            <p>Cada control modifica una ley física del ecosistema en tiempo real:</p>
+            <ul>
+              <li><strong>Temperatura (°C):</strong> Aumenta la energía para la evaporación, pero si es extrema, dificulta
+                el enfriamiento necesario para la condensación.</li>
+              <li><strong>Radiación Solar (%):</strong> Determina la potencia con la que el sol calienta el agua oceánica.
+              </li>
+              <li><strong>Velocidad del Viento (km/h):</strong> Acelera el transporte de humedad y la tasa de evaporación
+                superficial.</li>
+              <li><strong>Presión Atmosférica (hPa):</strong> Una presión baja (Borrasca) inestabiliza el aire facilitando
+                nubes y lluvia fuerte; una presión alta (Anticiclón) estabiliza el aire y despeja el cielo.</li>
+              <li><strong>Humedad Ambiental (%):</strong> Es la saturación base del aire. Si es muy alta, "bloquea" la
+                evaporación porque el aire ya no admite más vapor.</li>
+              <li><strong>Brújula (Rosa de los Vientos):</strong> Dirige el flujo de humedad. Vientos hacia el Este
+                (Montaña) generan más lluvia terrestre.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">3. Interpretación de Estados y Porcentajes (HUDs)</h3>
+            <p>Los monitores en las esquinas indican el estado del ciclo. A diferencia de las animaciones simples, aquí los
+              porcentajes representan <strong>Stocks (almacenamiento)</strong> y <strong>Flows (flujos)</strong>:</p>
+            <ul>
+              <li><strong>Evaporación Atmosférica:</strong> Representa qué tan rápido está ascendiendo el agua del mar en
+                este instante.</li>
+              <li><strong>Condensación (Masa de Nubes):</strong> Es un <em>acumulador</em>. Si sube de 50%, las nubes se
+                tornan densas y grises. Al llegar a niveles altos, el "peso" del agua provoca lluvia.</li>
+              <li><strong>Precipitación:</strong> Intensidad de la caída de agua. Al llover, este proceso "vacia" la masa de
+                la nube, por lo que verás el porcentaje de condensación bajar solo hasta que la nube se agote.</li>
+              <li><strong>Escorrentía:</strong> Representa el agua corriendo por los ríos hacia el mar tras la lluvia en la
+                montaña.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">4. Guía de Efectos Visuales</h3>
+            <ul>
+              <li><strong>Anillo Elíptico de Flujo:</strong> Rodea el mapa y fluye según el viento, indicando la dirección
+                del ciclo del agua.</li>
+              <li><strong>Burbujas Ascendentes:</strong> Representan físicamente la tasa de evaporación en el océano.</li>
+              <li><strong>Cortina de Lluvia:</strong> Su densidad y velocidad dependen directamente del porcentaje de
+                precipitación.</li>
+              <li><strong>Nubes Dinámicas:</strong> Su opacidad y tamaño son proporcionales a la condensación. Al superar el
+                50%, aparecen cúmulos extra más oscuros.</li>
+              <li><strong>Brújula Interactiva:</strong> La aguja magnética roja siempre te indica hacia dónde has
+                configurado el desplazamiento de las nubes.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 class="text-neon-purple mt-4">5. Dinámica de Sistemas: El Ciclo Autónomo</h3>
+            <p>Si dejas de mover los controles, el simulador seguirá funcionando. Verás cómo las nubes se cargan lentamente,
+              se oscurecen al llenarse, descargan lluvia hasta vaciarse y vuelven a empezar el ciclo, comportándose como un
+              verdadero <strong>ecosistema vivo y autorregulado</strong>.</p>
+          </section>
+        </div>
+      </footer>
     </div>
   </div>
 
