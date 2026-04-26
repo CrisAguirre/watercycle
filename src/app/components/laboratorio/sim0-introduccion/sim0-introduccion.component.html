@@ -132,7 +132,13 @@
                   <div class="light green-light"></div>
                 </div>
               </div>
-              <div class="intersection int-2"></div>
+              <div class="intersection int-2">
+                <div class="traffic-light tl-right">
+                  <div class="light green-light"></div>
+                  <div class="light yellow-light"></div>
+                  <div class="light red-light"></div>
+                </div>
+              </div>
               <div class="intersection int-3"></div>
               <div class="intersection int-4"></div>
 
@@ -148,10 +154,12 @@
           <p class="sim-caption">Una ciudad es una red de flujos continuos. Sus vías interconectadas, señales, vehículos y pasajeros forman el sistema de transporte. Desde una óptica sistémica, un embotellamiento en una pequeña intersección (cuello de botella) puede generar retrasos en cascada, paralizando zonas distantes de la urbe.</p>
         </div>
       </div>
+    </div>
 
-      <hr class="separator" />
-
-      <h3>📽️ Proyección de Introducción</h3>
+    <!-- 2: LLUVIA DE IDEAS -->
+    <div *ngIf="activeTab === 'lluvia'" class="foro-section animate-fade">
+      
+      <h3 class="mb-3">📽️ Proyección de Introducción</h3>
       <p class="section-desc">
         Ahora, observa este video para comprender cómo el pensamiento sistémico
         se aplica al estudio del ciclo del agua y los agrosistemas.
@@ -162,7 +170,7 @@
           allowfullscreen></iframe>
       </div>
       
-      <div class="inspiring-text glass-panel mt-4">
+      <div class="inspiring-text glass-panel mt-4 mb-5">
         <p class="text-neon-blue"><strong>Tú eres parte del sistema.</strong></p>
         <p>
           Las nubes que precipitan agua, la semilla que germina en la tierra y la energía que fluye por tu hogar
@@ -172,10 +180,9 @@
           el mundo que te rodea</strong>.
         </p>
       </div>
-    </div>
 
-    <!-- 2: LLUVIA DE IDEAS -->
-    <div *ngIf="activeTab === 'lluvia'" class="foro-section animate-fade">
+      <hr class="separator" />
+
       <h3>💡 Lluvia de Ideas</h3>
       <p class="section-desc">
         Con base en los ejemplos observados y el video, realiza una lluvia de ideas. Anota al menos 3 interconexiones

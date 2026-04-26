@@ -266,8 +266,20 @@
 .orbit-earth { width: 160px; height: 160px; animation: spin 8s linear infinite; }
 .planet-earth { width: 12px; height: 12px; background: #3b82f6; }
 
-.orbit-moon { width: 24px; height: 24px; border: none; animation: spin 2s linear infinite; }
-.moon { width: 4px; height: 4px; background: #e5e7eb; border-radius: 50%; position: absolute; top:50%; left:100%; transform: translate(-50%, -50%); }
+.orbit-moon { 
+  width: 24px; height: 24px; border: none; 
+  animation: spin-moon 2s linear infinite; 
+  left: 100%; top: 50%; margin-top: -12px; margin-left: -12px; 
+}
+.moon { 
+  width: 4px; height: 4px; background: #e5e7eb; border-radius: 50%; 
+  position: absolute; top:50%; left:100%; transform: translate(-50%, -50%); 
+}
+
+@keyframes spin-moon {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 .orbit-mars { width: 220px; height: 220px; animation: spin 12s linear infinite; }
 .planet-mars { width: 9px; height: 9px; background: #ef4444; }
@@ -340,10 +352,18 @@
 }
 .source-text { font-size: 0.8rem; color: #9ca3af; display: block; margin-top: 5px; }
 
-.wire { position: absolute; background: #3b82f6; box-shadow: 0 0 5px #3b82f6; z-index: 10; }
+.wire { position: absolute; background: #3b82f6; box-shadow: 0 0 5px #3b82f6; z-index: 10; overflow: hidden; }
+.wire::before { content: ''; position: absolute; background: #fff; box-shadow: 0 0 10px #fff, 0 0 20px #60a5fa; }
+
 .wire-main-v { width: 4px; height: 160px; left: 180px; top: 20px; }
+.wire-main-v::before { width: 100%; height: 30px; left: 0; top: -30px; animation: beam-v 2s linear infinite; }
+
 .wire-h1 { width: 240px; height: 4px; left: 60px; top: 50px; }
 .wire-h2 { width: 240px; height: 4px; left: 60px; top: 140px; }
+.wire-h1::before, .wire-h2::before { width: 40px; height: 100%; top: 0; left: -40px; animation: beam-h 3s linear infinite; }
+
+@keyframes beam-v { 100% { top: 100%; } }
+@keyframes beam-h { 100% { left: 100%; } }
 
 .room {
   position: absolute;
@@ -467,8 +487,8 @@
   content: ''; position: absolute; right: 0; top: 1px; width: 2px; height: 8px; background: #fef08a; box-shadow: 2px 0 5px #fef08a;
 }
 .car-red { background: #ef4444; top: 154px; animation: drive-h-right-stop 8s linear infinite; }
-.car-blue { background: #3b82f6; top: 176px; transform: rotate(180deg); animation: drive-h-left 10s linear infinite; }
-.car-green { background: #10b981; left: calc(30% + 24px); width: 10px; height: 16px; transform: rotate(90deg); animation: drive-v-down 12s linear infinite; }
+.car-blue { background: #3b82f6; top: 176px; transform: rotate(180deg); animation: drive-h-left-stop 10s linear infinite; }
+.car-green { background: #10b981; left: calc(30% + 24px); width: 10px; height: 16px; transform: rotate(90deg); animation: drive-v-down-stop 12s linear infinite; }
 .car-yellow { background: #eab308; right: calc(20% + 44px); width: 10px; height: 16px; transform: rotate(-90deg); animation: drive-v-up 9s linear infinite; }
 .car-purple { background: #a855f7; top: 154px; animation: drive-h-right 6s linear infinite 2s; }
 .car-white { background: #f3f4f6; left: calc(30% + 44px); width: 10px; height: 16px; transform: rotate(-90deg); animation: drive-v-up 11s linear infinite 3s; }
@@ -479,6 +499,8 @@
   border-radius: 4px; left: -18px; top: -10px;
   display: flex; flex-direction: column; gap: 2px; padding: 3px; align-items: center; z-index: 20;
 }
+.tl-right { right: -18px; left: auto; }
+
 .light { width: 8px; height: 8px; border-radius: 50%; background: #4b5563; }
 .red-light { animation: light-red 8s infinite; }
 .yellow-light { animation: light-yellow 8s infinite; }
@@ -494,6 +516,18 @@
   15% { left: calc(30% - 20px); } /* Stop at red light */
   40% { left: calc(30% - 20px); } /* Wait for green */
   100% { left: 105%; } 
+}
+@keyframes drive-h-left-stop { 
+  0% { right: -50px; } 
+  15% { right: calc(20% - 20px); } 
+  40% { right: calc(20% - 20px); } 
+  100% { right: 105%; } 
+}
+@keyframes drive-v-down-stop { 
+  0% { top: -50px; } 
+  35% { top: 130px; } /* Wait while horizontal is green */
+  75% { top: 130px; } 
+  100% { top: 105%; } 
 }
 @keyframes drive-h-right { 0% { left: -50px; } 100% { left: 105%; } }
 @keyframes drive-h-left { 0% { right: -50px; } 100% { right: 105%; } }
