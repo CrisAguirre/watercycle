@@ -159,6 +159,17 @@
     flex-direction: column;
     align-items: stretch;
   }
+  p, h3, h4, .sim-caption, .section-desc {
+    text-align: center;
+  }
+  .solar-system-full {
+    transform: translate(-50%, -50%) scale(0.45);
+  }
+}
+@media (min-width: 769px) {
+  .solar-system-full {
+    transform: translate(-50%, -50%) scale(0.85);
+  }
 }
 
 /* Intro Simulations Stack */
@@ -297,7 +308,16 @@
   height: 0;
   border-left: 200px solid transparent;
   border-right: 200px solid transparent;
-  border-bottom: 80px solid #1f2937;
+  border-bottom: 80px solid #dc2626; /* Techo rojo */
+}
+
+.chimney {
+  position: absolute;
+  width: 25px;
+  height: 50px;
+  background: #991b1b;
+  top: 20px;
+  right: 80px;
 }
 
 .house-body {
@@ -306,8 +326,9 @@
   left: 20px;
   width: 360px;
   height: 200px;
-  background: #1f2937;
-  border-top: 2px solid #374151;
+  background: #fef3c7; /* Pared cálida */
+  border: 2px solid #b45309; /* Borde oscuro */
+  border-top: none;
 }
 
 .power-source {
@@ -319,39 +340,37 @@
 }
 .source-text { font-size: 0.8rem; color: #9ca3af; display: block; margin-top: 5px; }
 
-.wire { position: absolute; background: rgba(250, 204, 21, 0.6); box-shadow: 0 0 5px rgba(250, 204, 21, 0.5); }
+.wire { position: absolute; background: #3b82f6; box-shadow: 0 0 5px #3b82f6; z-index: 10; }
 .wire-main-v { width: 4px; height: 160px; left: 180px; top: 20px; }
 .wire-h1 { width: 240px; height: 4px; left: 60px; top: 50px; }
 .wire-h2 { width: 240px; height: 4px; left: 60px; top: 140px; }
 
 .room {
   position: absolute;
-  width: 120px;
+  width: 140px;
   height: 80px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(0,0,0,0.2);
+  border: 2px solid rgba(180, 83, 9, 0.2);
+  border-radius: 8px;
 }
-.room-left-top { top: 20px; left: 20px; }
-.room-right-top { top: 20px; right: 20px; }
-.room-left-bottom { bottom: 20px; left: 20px; }
-.room-right-bottom { bottom: 20px; right: 20px; }
+.room-bedroom { top: 15px; left: 15px; background: #bfdbfe; }
+.room-bathroom { top: 15px; right: 15px; background: #bae6fd; }
+.room-kitchen { bottom: 15px; left: 15px; background: #fed7aa; }
+.room-living { bottom: 15px; right: 15px; background: #fbcfe8; }
 
-.room-label {
+.room-icon {
   position: absolute;
   bottom: 5px;
-  left: 0;
-  width: 100%;
-  text-align: center;
-  font-size: 0.7rem;
-  color: #6b7280;
+  right: 10px;
+  font-size: 2rem;
 }
 
 .bulb-fixture {
   position: absolute;
-  top: -15px;
+  top: -10px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 2rem;
+  font-size: 1.5rem;
+  z-index: 20;
 }
 
 .glow-pulse-1 { animation: pulse-light 2.5s infinite alternate; }
@@ -447,13 +466,35 @@
 .car::before { /* headlights */
   content: ''; position: absolute; right: 0; top: 1px; width: 2px; height: 8px; background: #fef08a; box-shadow: 2px 0 5px #fef08a;
 }
-.car-red { background: #ef4444; top: 154px; animation: drive-h-right 8s linear infinite; }
+.car-red { background: #ef4444; top: 154px; animation: drive-h-right-stop 8s linear infinite; }
 .car-blue { background: #3b82f6; top: 176px; transform: rotate(180deg); animation: drive-h-left 10s linear infinite; }
 .car-green { background: #10b981; left: calc(30% + 24px); width: 10px; height: 16px; transform: rotate(90deg); animation: drive-v-down 12s linear infinite; }
 .car-yellow { background: #eab308; right: calc(20% + 44px); width: 10px; height: 16px; transform: rotate(-90deg); animation: drive-v-up 9s linear infinite; }
 .car-purple { background: #a855f7; top: 154px; animation: drive-h-right 6s linear infinite 2s; }
 .car-white { background: #f3f4f6; left: calc(30% + 44px); width: 10px; height: 16px; transform: rotate(-90deg); animation: drive-v-up 11s linear infinite 3s; }
 
+/* Traffic Light Animations */
+.traffic-light {
+  position: absolute; width: 14px; height: 36px; background: #1f2937;
+  border-radius: 4px; left: -18px; top: -10px;
+  display: flex; flex-direction: column; gap: 2px; padding: 3px; align-items: center; z-index: 20;
+}
+.light { width: 8px; height: 8px; border-radius: 50%; background: #4b5563; }
+.red-light { animation: light-red 8s infinite; }
+.yellow-light { animation: light-yellow 8s infinite; }
+.green-light { animation: light-green 8s infinite; }
+
+@keyframes light-red { 0%, 40% { background: #ef4444; box-shadow: 0 0 5px #ef4444; } 41%, 100% { background: #4b5563; box-shadow: none; } }
+@keyframes light-yellow { 0%, 80% { background: #4b5563; } 85%, 95% { background: #facc15; box-shadow: 0 0 5px #facc15; } 96%, 100% { background: #4b5563; } }
+@keyframes light-green { 0%, 40% { background: #4b5563; } 41%, 80% { background: #22c55e; box-shadow: 0 0 5px #22c55e; } 81%, 100% { background: #4b5563; } }
+
+/* Car stopping logic */
+@keyframes drive-h-right-stop { 
+  0% { left: -50px; } 
+  15% { left: calc(30% - 20px); } /* Stop at red light */
+  40% { left: calc(30% - 20px); } /* Wait for green */
+  100% { left: 105%; } 
+}
 @keyframes drive-h-right { 0% { left: -50px; } 100% { left: 105%; } }
 @keyframes drive-h-left { 0% { right: -50px; } 100% { right: 105%; } }
 @keyframes drive-v-down { 0% { top: -50px; } 100% { top: 105%; } }

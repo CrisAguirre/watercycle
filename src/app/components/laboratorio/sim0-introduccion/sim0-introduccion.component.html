@@ -6,21 +6,21 @@
 
   <div class="tab-navigation">
     <button [class.active]="activeTab === 'ejemplos'" (click)="setTab('ejemplos')">
-      <span class="tab-icon">🪐</span> Momento 1: Ejemplos de Sistemas
+      <span class="tab-icon">🪐</span> Ejemplos de Sistemas
     </button>
     <button [class.active]="activeTab === 'lluvia'" (click)="setTab('lluvia')">
-      <span class="tab-icon">💡</span> Momento 2: Lluvia de Ideas
+      <span class="tab-icon">💡</span> Lluvia de Ideas
     </button>
     <button [class.active]="activeTab === 'apropiacion'" (click)="setTab('apropiacion')">
-      <span class="tab-icon">🛠️</span> Momento 3: Apropiación
+      <span class="tab-icon">🛠️</span> Apropiación
     </button>
     <button [class.active]="activeTab === 'sintesis'" (click)="setTab('sintesis')">
-      <span class="tab-icon">📝</span> Momento 4: Síntesis Final
+      <span class="tab-icon">📝</span> Síntesis Final
     </button>
   </div>
 
   <div class="tab-content glass-panel">
-    <!-- MOMENTO 1: EJEMPLOS DE SISTEMAS -->
+    <!-- 1: EJEMPLOS DE SISTEMAS -->
     <div *ngIf="activeTab === 'ejemplos'" class="video-section animate-fade">
       <h3>🪐 Ejemplos de Sistemas</h3>
       <p class="section-desc">
@@ -62,6 +62,7 @@
           <div class="sim-visual electric-visual">
             <div class="house-silhouette">
               <div class="roof"></div>
+              <div class="chimney"></div>
               <div class="house-body">
                 <div class="power-source">⚡ <span class="source-text">Red Eléctrica</span></div>
                 
@@ -71,32 +72,32 @@
                 <div class="wire wire-h2"></div>
                 
                 <!-- Habitaciones con focos -->
-                <div class="room room-left-top">
+                <div class="room room-bedroom">
                   <div class="bulb-fixture">
                     <div class="bulb glow-pulse-1">💡</div>
                   </div>
-                  <div class="room-label">Habitación</div>
+                  <div class="room-icon">🛏️</div>
                 </div>
                 
-                <div class="room room-right-top">
+                <div class="room room-bathroom">
                   <div class="bulb-fixture">
                     <div class="bulb glow-pulse-2">💡</div>
                   </div>
-                  <div class="room-label">Baño</div>
+                  <div class="room-icon">🚿</div>
                 </div>
 
-                <div class="room room-left-bottom">
+                <div class="room room-kitchen">
                   <div class="bulb-fixture">
                     <div class="bulb glow-pulse-3">💡</div>
                   </div>
-                  <div class="room-label">Cocina</div>
+                  <div class="room-icon">🍳</div>
                 </div>
 
-                <div class="room room-right-bottom">
+                <div class="room room-living">
                   <div class="bulb-fixture">
                     <div class="bulb glow-pulse-1">💡</div>
                   </div>
-                  <div class="room-label">Sala</div>
+                  <div class="room-icon">📺</div>
                 </div>
               </div>
             </div>
@@ -123,8 +124,14 @@
               <div class="street street-v1"></div>
               <div class="street street-v2"></div>
 
-              <!-- Intersecciones -->
-              <div class="intersection int-1"></div>
+              <!-- Intersecciones con Semáforo -->
+              <div class="intersection int-1">
+                <div class="traffic-light">
+                  <div class="light red-light"></div>
+                  <div class="light yellow-light"></div>
+                  <div class="light green-light"></div>
+                </div>
+              </div>
               <div class="intersection int-2"></div>
               <div class="intersection int-3"></div>
               <div class="intersection int-4"></div>
@@ -138,7 +145,7 @@
               <div class="car car-white"></div>
             </div>
           </div>
-          <p class="sim-caption">Una ciudad es una red de flujos continuos. Sus vías interconectadas, señales, vehículos y pasajeros forman el sistema de transporte. Desde una óptica sistémica, un embotellamiento (cuello de botella) en una pequeña intersección puede generar retrasos en cascada, paralizando zonas distantes de la urbe.</p>
+          <p class="sim-caption">Una ciudad es una red de flujos continuos. Sus vías interconectadas, señales, vehículos y pasajeros forman el sistema de transporte. Desde una óptica sistémica, un embotellamiento en una pequeña intersección (cuello de botella) puede generar retrasos en cascada, paralizando zonas distantes de la urbe.</p>
         </div>
       </div>
 
@@ -167,9 +174,9 @@
       </div>
     </div>
 
-    <!-- MOMENTO 2: LLUVIA DE IDEAS -->
+    <!-- 2: LLUVIA DE IDEAS -->
     <div *ngIf="activeTab === 'lluvia'" class="foro-section animate-fade">
-      <h3>💡 Momento 2: Lluvia de Ideas</h3>
+      <h3>💡 Lluvia de Ideas</h3>
       <p class="section-desc">
         Con base en los ejemplos observados y el video, realiza una lluvia de ideas. Anota al menos 3 interconexiones
         o elementos que consideres clave para entender el ciclo del agua como un sistema completo.
@@ -189,9 +196,9 @@
       <p class="status-msg" *ngIf="message">{{ message }}</p>
     </div>
 
-    <!-- MOMENTO 3: APROPIACIÓN -->
+    <!-- 3: APROPIACIÓN -->
     <div *ngIf="activeTab === 'apropiacion'" class="animate-fade">
-      <h3>🛠️ Momento 3: Apropiación</h3>
+      <h3>🛠️ Apropiación</h3>
       <p class="section-desc">
         En este espacio el docente guiará una reflexión grupal para que apropies los conceptos de pensamiento sistémico.
         Presta atención a las instrucciones de tu profesor sobre cómo estos conceptos se conectan con las simulaciones que realizarás más adelante.
@@ -202,9 +209,9 @@
       </div>
     </div>
 
-    <!-- MOMENTO 4: SÍNTESIS FINAL -->
+    <!-- 4: SÍNTESIS FINAL -->
     <div *ngIf="activeTab === 'sintesis'" class="sintesis-section animate-fade">
-      <h3>📝 Momento 4: Síntesis Final</h3>
+      <h3>📝 Síntesis Final</h3>
       <p class="section-desc">
         A modo de cierre de esta sesión introductoria, redacta una conclusión personal o síntesis final
         sobre la importancia de abordar los problemas ambientales desde una visión sistémica.
