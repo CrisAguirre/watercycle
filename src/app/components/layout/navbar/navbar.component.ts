@@ -14,6 +14,16 @@ export class NavbarComponent {
     return role === 'administrador' || role === 'profesor';
   }
 
+  isStudentOrAdmin(): boolean {
+    const role = this.authService.getRole();
+    return role === 'estudiante' || role === 'administrador';
+  }
+
+  getResultadosLabel(): string {
+    const role = this.authService.getRole();
+    return role === 'estudiante' ? 'Mis Resultados' : 'Resultados';
+  }
+
   logout() {
     this.authService.logout();
   }

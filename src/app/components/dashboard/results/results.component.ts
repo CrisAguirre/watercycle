@@ -20,17 +20,15 @@ export class ResultsComponent implements OnInit {
 
   ngOnInit(): void {
     this.role = this.authService.getRole() || '';
-    if (this.role === 'estudiante') {
-      this.errorMessage = 'No tienes permiso para ver esta sección.';
-      this.loading = false;
-      return;
-    }
-    
     this.loadResults();
   }
 
   loadResults(): void {
-    this.examService.getAllResults().subscribe({
+    const request = this.role === 'estudiante' 
+      ? this.examService.getUserExams() 
+      : this.examService.getAllResults();
+
+    request.subscribe({
       next: (data) => {
         this.results = data;
         this.loading = false;

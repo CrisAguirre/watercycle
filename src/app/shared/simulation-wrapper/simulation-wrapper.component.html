@@ -19,8 +19,8 @@
     <button class="sim-tab" [class.active]="activeTab === 'simulador'" (click)="setTab('simulador')">
       <span class="tab-icon">🔬</span> Simulador
     </button>
-    <button class="sim-tab" [class.active]="activeTab === 'evaluacion'" (click)="setTab('evaluacion')">
-      <span class="tab-icon">📝</span> Evaluación
+    <button class="sim-tab" [class.active]="activeTab === 'evaluacion'" [class.locked-tab]="evalLocked" (click)="setTab('evaluacion')" [title]="evalLocked ? 'Evaluación bloqueada por secuencia' : ''">
+      <span class="tab-icon">{{ evalLocked ? '🔒' : '📝' }}</span> Evaluación
     </button>
   </div>
 

@@ -8,7 +8,7 @@
       <div class="progress-bar">
         <div class="progress-fill" [style.width]="'14%'"></div>
       </div>
-      <span class="progress-text">1 de 7 sesiones disponibles</span>
+      <span class="progress-text">1 de 8 sesiones disponibles</span>
     </div>
   </div>
 
@@ -32,7 +32,7 @@
       </div>
 
       <!-- Card Content -->
-      <div class="session-content" [routerLink]="session.status !== 'locked' ? session.route : null">
+      <div class="session-content" [routerLink]="session.status !== 'locked' ? [session.route] : null" [queryParams]="session.status !== 'locked' ? { highlight: session.simId } : null">
         <div class="session-top">
           <span class="session-number">Sesión {{ session.number }}</span>
           <span class="session-status">{{ getStatusLabel(session.status) }}</span>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="session-action" *ngIf="session.status === 'available'">
-          <button class="btn-start" [routerLink]="session.route">Comenzar Sesión →</button>
+          <button class="btn-start" [routerLink]="[session.route]" [queryParams]="{ highlight: session.simId }">Comenzar Sesión →</button>
         </div>
       </div>
     </div>

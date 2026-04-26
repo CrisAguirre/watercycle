@@ -10,6 +10,7 @@ interface Session {
   lineamientos: string;
   status: 'completed' | 'available' | 'locked';
   route: string;
+  simId: number;
 }
 
 @Component({
@@ -20,14 +21,26 @@ interface Session {
 export class DashboardComponent implements OnInit {
   sessions: Session[] = [
     {
+      number: 0,
+      title: 'Sesión de Introducción',
+      subtitle: 'Justificación pedagógica y contextualización',
+      duration: '45 min',
+      simulations: 'Video + Foro',
+      lineamientos: 'Pensamiento Sistémico',
+      status: 'available',
+      route: '/laboratorio',
+      simId: 0
+    },
+    {
       number: 1,
       title: 'El Concepto de Sistema',
       subtitle: 'Introducción al pensamiento sistémico',
       duration: '90 min',
       simulations: 'Video + Foro',
       lineamientos: 'Visión de Totalidad',
-      status: 'available',
-      route: '/laboratorio'
+      status: 'locked',
+      route: '/laboratorio',
+      simId: 0
     },
     {
       number: 2,
@@ -37,7 +50,8 @@ export class DashboardComponent implements OnInit {
       simulations: 'Sim 1 (Evaporación) + Sim 2 (Condensación)',
       lineamientos: 'Lineamientos 1 y 2',
       status: 'locked',
-      route: '/laboratorio/evaporacion'
+      route: '/laboratorio',
+      simId: 1
     },
     {
       number: 3,
@@ -47,7 +61,8 @@ export class DashboardComponent implements OnInit {
       simulations: 'Sim 3 (Precipitación) + Sim 4 (Infiltración)',
       lineamientos: 'Lineamientos 3 y 4',
       status: 'locked',
-      route: '/laboratorio/precipitacion'
+      route: '/laboratorio',
+      simId: 3
     },
     {
       number: 4,
@@ -57,7 +72,8 @@ export class DashboardComponent implements OnInit {
       simulations: 'Sim 5 (Ciclo Consolidado 3D)',
       lineamientos: 'Lineamientos 5, 6 y 7',
       status: 'locked',
-      route: '/laboratorio/ciclo-consolidado'
+      route: '/laboratorio',
+      simId: 5
     },
     {
       number: 5,
@@ -67,7 +83,8 @@ export class DashboardComponent implements OnInit {
       simulations: 'Sim 6 (Factores del Cultivo)',
       lineamientos: 'Lineamientos 1 y 2',
       status: 'locked',
-      route: '/laboratorio/factores-cultivo'
+      route: '/laboratorio',
+      simId: 6
     },
     {
       number: 6,
@@ -77,7 +94,8 @@ export class DashboardComponent implements OnInit {
       simulations: 'Sim 7 (Escalas Productivas)',
       lineamientos: 'Lineamientos 3 y 4',
       status: 'locked',
-      route: '/laboratorio/escalas-productivas'
+      route: '/laboratorio',
+      simId: 7
     },
     {
       number: 7,
@@ -87,7 +105,8 @@ export class DashboardComponent implements OnInit {
       simulations: 'Sim 8 (Resiliencia Agrícola) + Postest',
       lineamientos: 'Lineamientos 5, 6 y 7',
       status: 'locked',
-      route: '/laboratorio/resiliencia-agricola'
+      route: '/laboratorio',
+      simId: 8
     }
   ];
 
@@ -101,7 +120,8 @@ export class DashboardComponent implements OnInit {
     this.progressService.getProgress().subscribe({
       next: (progress) => {
         const completed = progress.completedSimulations || [];
-        const currentId = progress.currentSimulationId || 1;
+        // Por defecto arranca en la 0
+        const currentId = progress.currentSimulationId ?? 0;
 
         this.sessions = this.sessions.map(session => {
           if (completed.includes(session.number)) {

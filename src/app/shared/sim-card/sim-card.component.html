@@ -2,6 +2,7 @@
    [class.agua]="bloque === 'agua'" 
    [class.agro]="bloque === 'agro'"
    [class.disabled]="!available"
+   [class.highlight-anim]="isHighlighted"
    [routerLink]="available ? routePath : null">
   <div class="card-glow"></div>
   <div class="card-number">{{ simNumber }}</div>

@@ -120,3 +120,20 @@
   background: rgba(0, 200, 100, 0.12);
   color: #34d399;
 }
+
+@keyframes bounce-hover {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  50% {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 150, 255, 0.15);
+    border-color: rgba(0, 200, 255, 0.3);
+  }
+}
+
+.sim-card.highlight-anim {
+  animation: bounce-hover 0.5s ease-in-out 5;
+}

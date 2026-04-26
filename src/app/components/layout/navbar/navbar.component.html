@@ -12,7 +12,7 @@
       <span class="tab-icon">🏠</span>
       <span class="tab-label">Inicio</span>
     </a>
-    <a class="nav-tab" routerLink="/dashboard" routerLinkActive="active">
+    <a class="nav-tab" routerLink="/dashboard" routerLinkActive="active" *ngIf="isStudentOrAdmin()">
       <span class="tab-icon">📊</span>
       <span class="tab-label">Mis Sesiones</span>
     </a>
@@ -28,9 +28,9 @@
       <span class="tab-icon">👥</span>
       <span class="tab-label">Usuarios</span>
     </a>
-    <a class="nav-tab" routerLink="/resultados" routerLinkActive="active" *ngIf="isAdminOrProfesor()">
+    <a class="nav-tab" routerLink="/resultados" routerLinkActive="active">
       <span class="tab-icon">🏆</span>
-      <span class="tab-label">Resultados</span>
+      <span class="tab-label">{{ getResultadosLabel() }}</span>
     </a>
   </div>
 
