@@ -28,46 +28,117 @@
         las relaciones sistémicas:
       </p>
 
-      <div class="sim-grid-intro">
-        <div class="sim-item">
-          <h4>Sistema Solar</h4>
-          <div class="sim-visual">
-            <div class="solar-system">
-              <div class="sun"></div>
-              <div class="orbit orbit-1"><div class="planet planet-1"></div></div>
-              <div class="orbit orbit-2"><div class="planet planet-2"></div></div>
+      <div class="sim-stack-intro">
+        <!-- 1. Sistema Solar Completo -->
+        <div class="sim-item full-width">
+          <h4>El Sistema Solar</h4>
+          <div class="sim-visual solar-visual">
+            <div class="solar-system-full">
+              <div class="sun-glow"></div>
+              <div class="orbit orbit-mercury"><div class="planet planet-mercury"></div></div>
+              <div class="orbit orbit-venus"><div class="planet planet-venus"></div></div>
+              <div class="orbit orbit-earth">
+                <div class="planet planet-earth">
+                  <div class="orbit-moon"><div class="moon"></div></div>
+                </div>
+              </div>
+              <div class="orbit orbit-mars"><div class="planet planet-mars"></div></div>
+              <div class="orbit orbit-jupiter"><div class="planet planet-jupiter"></div></div>
+              <div class="orbit orbit-saturn">
+                <div class="planet planet-saturn">
+                  <div class="saturn-rings"></div>
+                </div>
+              </div>
+              <div class="orbit orbit-uranus"><div class="planet planet-uranus"></div></div>
+              <div class="orbit orbit-neptune"><div class="planet planet-neptune"></div></div>
             </div>
           </div>
-          <p class="sim-caption">El sistema solar se compone de una estrella central y cuerpos celestes que orbitan a su alrededor debido a la gravedad. En un enfoque sistémico, los cambios en la masa o distancia de un componente afectarían el equilibrio de toda la estructura.</p>
+          <p class="sim-caption">El sistema solar se compone de una estrella central (el Sol) y 8 planetas principales que orbitan a diferentes distancias y velocidades debido a la fuerza gravitacional. En el enfoque sistémico, la alteración de la masa o de la órbita de uno solo de estos cuerpos masivos desequilibraría toda la estructura gravitatoria.</p>
         </div>
 
-        <div class="sim-item">
-          <h4>Sistema Eléctrico</h4>
-          <div class="sim-visual">
-            <div class="electrical-system">
-              <div class="battery">⚡</div>
-              <div class="wire wire-top"></div>
-              <div class="wire wire-bottom"></div>
-              <div class="bulb glow-pulse">💡</div>
+        <!-- 2. Sistema Eléctrico (Casa) -->
+        <div class="sim-item full-width">
+          <h4>Sistema Eléctrico Doméstico</h4>
+          <div class="sim-visual electric-visual">
+            <div class="house-silhouette">
+              <div class="roof"></div>
+              <div class="house-body">
+                <div class="power-source">⚡ <span class="source-text">Red Eléctrica</span></div>
+                
+                <!-- Cables -->
+                <div class="wire wire-main-v"></div>
+                <div class="wire wire-h1"></div>
+                <div class="wire wire-h2"></div>
+                
+                <!-- Habitaciones con focos -->
+                <div class="room room-left-top">
+                  <div class="bulb-fixture">
+                    <div class="bulb glow-pulse-1">💡</div>
+                  </div>
+                  <div class="room-label">Habitación</div>
+                </div>
+                
+                <div class="room room-right-top">
+                  <div class="bulb-fixture">
+                    <div class="bulb glow-pulse-2">💡</div>
+                  </div>
+                  <div class="room-label">Baño</div>
+                </div>
+
+                <div class="room room-left-bottom">
+                  <div class="bulb-fixture">
+                    <div class="bulb glow-pulse-3">💡</div>
+                  </div>
+                  <div class="room-label">Cocina</div>
+                </div>
+
+                <div class="room room-right-bottom">
+                  <div class="bulb-fixture">
+                    <div class="bulb glow-pulse-1">💡</div>
+                  </div>
+                  <div class="room-label">Sala</div>
+                </div>
+              </div>
             </div>
           </div>
-          <p class="sim-caption">Un sistema eléctrico incluye una fuente de energía, conductores y receptores. Desde la perspectiva sistémica, si se interrumpe el flujo en cualquier punto (ej. un interruptor), el sistema deja de cumplir su propósito.</p>
+          <p class="sim-caption">Un hogar cuenta con un sistema eléctrico compuesto por una fuente de energía, una red de conductores (cables) y nodos de consumo (focos, enchufes). Si un nodo falla, el sistema busca rutas alternas, pero si la fuente o la red principal se interrumpe, el sistema completo deja de funcionar y pierde su propósito.</p>
         </div>
 
-        <div class="sim-item">
-          <h4>Sistema de Transporte</h4>
-          <div class="sim-visual">
-            <div class="transport-system">
-              <div class="road road-h">
-                 <div class="car car-1"></div>
-                 <div class="car car-2"></div>
-              </div>
-              <div class="road road-v">
-                 <div class="car car-3"></div>
-              </div>
+        <!-- 3. Sistema de Transporte (Ciudad) -->
+        <div class="sim-item full-width">
+          <h4>Sistema de Transporte Urbano</h4>
+          <div class="sim-visual city-visual">
+            <div class="city-map">
+              <!-- Manzanas (Bloques) -->
+              <div class="city-block block-1"><div class="building b1"></div><div class="building b2"></div></div>
+              <div class="city-block block-2 park">🌲 🌳 🌲</div>
+              <div class="city-block block-3"><div class="building b3"></div></div>
+              <div class="city-block block-4"><div class="building b4"></div><div class="building b5"></div></div>
+              <div class="city-block block-5 park">🌳 🌲</div>
+              <div class="city-block block-6"><div class="building b6"></div></div>
+              
+              <!-- Calles -->
+              <div class="street street-h1"></div>
+              <div class="street street-h2"></div>
+              <div class="street street-v1"></div>
+              <div class="street street-v2"></div>
+
+              <!-- Intersecciones -->
+              <div class="intersection int-1"></div>
+              <div class="intersection int-2"></div>
+              <div class="intersection int-3"></div>
+              <div class="intersection int-4"></div>
+
+              <!-- Vehículos -->
+              <div class="car car-red"></div>
+              <div class="car car-blue"></div>
+              <div class="car car-green"></div>
+              <div class="car car-yellow"></div>
+              <div class="car car-purple"></div>
+              <div class="car car-white"></div>
             </div>
           </div>
-          <p class="sim-caption">El transporte consta de vías y vehículos. Un enfoque sistémico permite entender cómo un embotellamiento en una intersección (cuello de botella) genera retrasos en cascada en toda la red de la ciudad.</p>
+          <p class="sim-caption">Una ciudad es una red de flujos continuos. Sus vías interconectadas, señales, vehículos y pasajeros forman el sistema de transporte. Desde una óptica sistémica, un embotellamiento (cuello de botella) en una pequeña intersección puede generar retrasos en cascada, paralizando zonas distantes de la urbe.</p>
         </div>
       </div>
 
@@ -76,12 +147,23 @@
       <h3>📽️ Proyección de Introducción</h3>
       <p class="section-desc">
         Ahora, observa este video para comprender cómo el pensamiento sistémico
-        se aplica al estudio del ciclo del agua y los agroecosistemas.
+        se aplica al estudio del ciclo del agua y los agrosistemas.
       </p>
       <div class="video-wrapper">
         <iframe [src]="videoUrl" frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen></iframe>
+      </div>
+      
+      <div class="inspiring-text glass-panel mt-4">
+        <p class="text-neon-blue"><strong>Tú eres parte del sistema.</strong></p>
+        <p>
+          Las nubes que precipitan agua, la semilla que germina en la tierra y la energía que fluye por tu hogar
+          no son hechos aislados. Todo está conectado en un inmenso tejido de relaciones interdependientes.
+          Al comprender las reglas invisibles que rigen estos sistemas, no solo adquieres el poder de 
+          analizar la realidad, sino la capacidad de <strong>tomar decisiones que transformen positivamente 
+          el mundo que te rodea</strong>.
+        </p>
       </div>
     </div>
 

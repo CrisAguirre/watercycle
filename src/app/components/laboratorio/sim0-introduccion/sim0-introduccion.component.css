@@ -161,214 +161,316 @@
   }
 }
 
-/* Intro Simulations Grid */
-.sim-grid-intro {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  margin-bottom: 30px;
+/* Intro Simulations Stack */
+.sim-stack-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 40px;
 }
 
-.sim-item {
-  background: rgba(255, 255, 255, 0.05);
+.sim-item.full-width {
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
+  border-radius: 15px;
+  padding: 30px;
 }
 
 .sim-item h4 {
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   color: #7dd3fc;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
+  text-align: center;
 }
 
 .sim-caption {
-  font-size: 0.85rem;
-  color: #9ca3af;
-  margin-top: 15px;
-  line-height: 1.4;
-  text-align: left;
+  font-size: 0.95rem;
+  color: #d1d5db;
+  margin-top: 25px;
+  line-height: 1.6;
 }
 
 .sim-visual {
-  height: 150px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  height: 350px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  position: relative;
   overflow: hidden;
-  position: relative;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
 }
 
-/* Solar System */
-.solar-system {
-  position: relative;
-  width: 100px;
-  height: 100px;
+/* 1. Solar System Full */
+.solar-visual {
+  background: radial-gradient(circle at center, #0b1021 0%, #02040a 100%);
 }
 
-.sun {
+.solar-system-full {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 24px;
-  height: 24px;
-  background: #fbbf24;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+}
+
+.sun-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, #fffbeb 10%, #fde047 40%, #ea580c 80%);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 15px #fbbf24;
+  box-shadow: 0 0 40px 10px rgba(250, 204, 21, 0.4);
+  z-index: 10;
 }
 
 .orbit {
   position: absolute;
   top: 50%;
   left: 50%;
-  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
 
-.orbit-1 {
-  width: 60px;
-  height: 60px;
-  animation: spin 4s linear infinite;
-}
-
-.orbit-2 {
-  width: 90px;
-  height: 90px;
-  animation: spin 7s linear infinite;
-}
-
 .planet {
-  width: 10px;
-  height: 10px;
   border-radius: 50%;
   position: absolute;
-  top: -5px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
+  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.6);
 }
 
-.planet-1 { background: #3b82f6; }
-.planet-2 { background: #ef4444; }
+.orbit-mercury { width: 70px; height: 70px; animation: spin 3s linear infinite; }
+.planet-mercury { width: 6px; height: 6px; background: #a3a3a3; }
 
-@keyframes spin {
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+.orbit-venus { width: 110px; height: 110px; animation: spin 5s linear infinite; }
+.planet-venus { width: 10px; height: 10px; background: #fcd34d; }
+
+.orbit-earth { width: 160px; height: 160px; animation: spin 8s linear infinite; }
+.planet-earth { width: 12px; height: 12px; background: #3b82f6; }
+
+.orbit-moon { width: 24px; height: 24px; border: none; animation: spin 2s linear infinite; }
+.moon { width: 4px; height: 4px; background: #e5e7eb; border-radius: 50%; position: absolute; top:50%; left:100%; transform: translate(-50%, -50%); }
+
+.orbit-mars { width: 220px; height: 220px; animation: spin 12s linear infinite; }
+.planet-mars { width: 9px; height: 9px; background: #ef4444; }
+
+.orbit-jupiter { width: 320px; height: 320px; animation: spin 25s linear infinite; }
+.planet-jupiter { width: 24px; height: 24px; background: #fdba74; }
+
+.orbit-saturn { width: 420px; height: 420px; animation: spin 45s linear infinite; }
+.planet-saturn { width: 20px; height: 20px; background: #fde047; }
+.saturn-rings { width: 34px; height: 8px; border-radius: 50%; border: 3px solid rgba(253, 224, 71, 0.5); position: absolute; top:50%; left:50%; transform: translate(-50%, -50%) rotate(20deg); }
+
+.orbit-uranus { width: 500px; height: 500px; animation: spin 70s linear infinite; }
+.planet-uranus { width: 16px; height: 16px; background: #67e8f9; }
+
+.orbit-neptune { width: 580px; height: 580px; animation: spin 100s linear infinite; }
+.planet-neptune { width: 15px; height: 15px; background: #2563eb; }
+
+/* 2. Electric System Full */
+.electric-visual {
+  background: #111827;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }
 
-/* Electrical System */
-.electrical-system {
+.house-silhouette {
   position: relative;
+  width: 400px;
+  height: 280px;
+  margin-bottom: 20px;
+}
+
+.roof {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 200px solid transparent;
+  border-right: 200px solid transparent;
+  border-bottom: 80px solid #1f2937;
+}
+
+.house-body {
+  position: absolute;
+  top: 80px;
+  left: 20px;
+  width: 360px;
+  height: 200px;
+  background: #1f2937;
+  border-top: 2px solid #374151;
+}
+
+.power-source {
+  position: absolute;
+  left: -80px;
+  top: 50px;
+  font-size: 2rem;
+  color: #facc15;
+}
+.source-text { font-size: 0.8rem; color: #9ca3af; display: block; margin-top: 5px; }
+
+.wire { position: absolute; background: rgba(250, 204, 21, 0.6); box-shadow: 0 0 5px rgba(250, 204, 21, 0.5); }
+.wire-main-v { width: 4px; height: 160px; left: 180px; top: 20px; }
+.wire-h1 { width: 240px; height: 4px; left: 60px; top: 50px; }
+.wire-h2 { width: 240px; height: 4px; left: 60px; top: 140px; }
+
+.room {
+  position: absolute;
   width: 120px;
   height: 80px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0,0,0,0.2);
 }
+.room-left-top { top: 20px; left: 20px; }
+.room-right-top { top: 20px; right: 20px; }
+.room-left-bottom { bottom: 20px; left: 20px; }
+.room-right-bottom { bottom: 20px; right: 20px; }
 
-.battery {
+.room-label {
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.5rem;
-}
-
-.bulb {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.8rem;
-}
-
-.wire {
-  position: absolute;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.4);
-  left: 25px;
-  right: 25px;
-}
-
-.wire-top { top: 30%; }
-.wire-bottom { bottom: 30%; }
-
-.glow-pulse {
-  animation: pulse-light 2s infinite alternate;
-}
-
-@keyframes pulse-light {
-  0% { text-shadow: 0 0 5px rgba(250, 204, 21, 0.2); opacity: 0.7; }
-  100% { text-shadow: 0 0 20px rgba(250, 204, 21, 1); opacity: 1; }
-}
-
-/* Transport System */
-.transport-system {
-  position: relative;
-  width: 120px;
-  height: 120px;
-}
-
-.road {
-  background: #374151;
-  position: absolute;
-}
-
-.road-h {
-  top: 50%;
+  bottom: 5px;
   left: 0;
   width: 100%;
-  height: 20px;
-  transform: translateY(-50%);
+  text-align: center;
+  font-size: 0.7rem;
+  color: #6b7280;
 }
 
-.road-v {
+.bulb-fixture {
+  position: absolute;
+  top: -15px;
   left: 50%;
-  top: 0;
-  height: 100%;
-  width: 20px;
   transform: translateX(-50%);
+  font-size: 2rem;
 }
+
+.glow-pulse-1 { animation: pulse-light 2.5s infinite alternate; }
+.glow-pulse-2 { animation: pulse-light 3s infinite alternate-reverse; }
+.glow-pulse-3 { animation: pulse-light 2s infinite alternate; }
+
+/* 3. Transport System Full */
+.city-visual {
+  background: #374151; /* Dark gray ground */
+}
+
+.city-map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.city-block {
+  position: absolute;
+  background: #4b5563;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+.city-block.park {
+  background: #064e3b;
+  font-size: 1.5rem;
+  letter-spacing: 5px;
+}
+
+.block-1 { top: 20px; left: 20px; width: 30%; height: 120px; }
+.block-2 { top: 20px; left: 35%; width: 40%; height: 120px; }
+.block-3 { top: 20px; right: 20px; width: 20%; height: 120px; }
+.block-4 { bottom: 20px; left: 20px; width: 40%; height: 140px; }
+.block-5 { bottom: 20px; left: 45%; width: 25%; height: 140px; }
+.block-6 { bottom: 20px; right: 20px; width: 25%; height: 140px; }
+
+.building {
+  background: #1f2937;
+  border: 1px solid #111827;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+  position: absolute;
+}
+.b1 { width: 60px; height: 60px; left: 10px; top: 10px; }
+.b2 { width: 80px; height: 40px; right: 10px; bottom: 10px; }
+.b3 { width: 100%; height: 100%; }
+.b4 { width: 120px; height: 60px; top: 20px; left: 20px; }
+.b5 { width: 50px; height: 50px; bottom: 10px; right: 20px; }
+.b6 { width: 80%; height: 80%; border-radius: 50%; }
+
+.street {
+  position: absolute;
+  background: #111827;
+}
+.street::after {
+  content: '';
+  position: absolute;
+  background: transparent;
+}
+.street-h1 { top: 150px; left: 0; width: 100%; height: 40px; }
+.street-h1::after { border-top: 2px dashed #6b7280; width: 100%; height: 0; top: 20px; left: 0; }
+.street-h2 { bottom: 170px; left: 0; width: 100%; height: 40px; display: none; /* Just using h1 for now */ }
+
+.street-v1 { left: calc(30% + 20px); top: 0; width: 40px; height: 100%; }
+.street-v1::after { border-left: 2px dashed #6b7280; height: 100%; width: 0; left: 20px; top: 0; }
+.street-v2 { right: calc(20% + 20px); top: 0; width: 40px; height: 100%; }
+.street-v2::after { border-left: 2px dashed #6b7280; height: 100%; width: 0; left: 20px; top: 0; }
+
+.intersection {
+  position: absolute;
+  background: #111827;
+  width: 40px;
+  height: 40px;
+  top: 150px;
+}
+.int-1 { left: calc(30% + 20px); }
+.int-2 { right: calc(20% + 20px); }
 
 .car {
   position: absolute;
-  width: 12px;
-  height: 8px;
-  border-radius: 2px;
+  width: 16px;
+  height: 10px;
+  border-radius: 3px;
+  z-index: 10;
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
+.car::before { /* headlights */
+  content: ''; position: absolute; right: 0; top: 1px; width: 2px; height: 8px; background: #fef08a; box-shadow: 2px 0 5px #fef08a;
+}
+.car-red { background: #ef4444; top: 154px; animation: drive-h-right 8s linear infinite; }
+.car-blue { background: #3b82f6; top: 176px; transform: rotate(180deg); animation: drive-h-left 10s linear infinite; }
+.car-green { background: #10b981; left: calc(30% + 24px); width: 10px; height: 16px; transform: rotate(90deg); animation: drive-v-down 12s linear infinite; }
+.car-yellow { background: #eab308; right: calc(20% + 44px); width: 10px; height: 16px; transform: rotate(-90deg); animation: drive-v-up 9s linear infinite; }
+.car-purple { background: #a855f7; top: 154px; animation: drive-h-right 6s linear infinite 2s; }
+.car-white { background: #f3f4f6; left: calc(30% + 44px); width: 10px; height: 16px; transform: rotate(-90deg); animation: drive-v-up 11s linear infinite 3s; }
 
-.car-1 {
-  background: #ef4444;
-  top: 2px;
-  animation: drive-right 3s linear infinite;
-}
+@keyframes drive-h-right { 0% { left: -50px; } 100% { left: 105%; } }
+@keyframes drive-h-left { 0% { right: -50px; } 100% { right: 105%; } }
+@keyframes drive-v-down { 0% { top: -50px; } 100% { top: 105%; } }
+@keyframes drive-v-up { 0% { bottom: -50px; } 100% { bottom: 105%; } }
 
-.car-2 {
-  background: #3b82f6;
-  bottom: 2px;
-  animation: drive-left 4s linear infinite;
+.inspiring-text {
+  text-align: center;
+  padding: 25px;
+  margin-top: 25px;
+  border-left: 4px solid #00ccff;
 }
-
-.car-3 {
-  background: #10b981;
-  width: 8px;
-  height: 12px;
-  left: 2px;
-  animation: drive-down 5s linear infinite;
+.inspiring-text p {
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
-
-@keyframes drive-right {
-  0% { left: -20px; }
-  100% { left: 140px; }
-}
-@keyframes drive-left {
-  0% { right: -20px; }
-  100% { right: 140px; }
-}
-@keyframes drive-down {
-  0% { top: -20px; }
-  100% { top: 140px; }
+@keyframes spin {
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .separator {
