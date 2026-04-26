@@ -8,13 +8,13 @@ import { EvidenciaService } from '../../../services/evidencia.service';
   styleUrls: ['./sim0-introduccion.component.css']
 })
 export class Sim0IntroduccionComponent implements OnInit {
-  activeTab = 'video';
+  activeTab = 'ejemplos';
   videoUrl: SafeResourceUrl;
   
-  apreciacion = '';
+  lluviaIdeas = '';
   conclusion = '';
   
-  isApreciacionSaved = false;
+  isLluviaIdeasSaved = false;
   isConclusionSaved = false;
   
   loading = false;
@@ -34,11 +34,11 @@ export class Sim0IntroduccionComponent implements OnInit {
 
   checkPreviousSubmissions(): void {
     this.evidenciaService.getEvidencias().subscribe(evidencias => {
-      this.isApreciacionSaved = evidencias.some(e => e.titulo === 'Apreciación: Laboratorio de Introducción');
+      this.isLluviaIdeasSaved = evidencias.some(e => e.titulo === 'Lluvia de Ideas: Laboratorio de Introducción' || e.titulo === 'Apreciación: Laboratorio de Introducción');
       this.isConclusionSaved = evidencias.some(e => e.titulo === 'Síntesis Final: Laboratorio de Introducción');
       
-      const prevApreciacion = evidencias.find(e => e.titulo === 'Apreciación: Laboratorio de Introducción');
-      if (prevApreciacion) this.apreciacion = prevApreciacion.contenido;
+      const prevLluvia = evidencias.find(e => e.titulo === 'Lluvia de Ideas: Laboratorio de Introducción' || e.titulo === 'Apreciación: Laboratorio de Introducción');
+      if (prevLluvia) this.lluviaIdeas = prevLluvia.contenido;
       
       const prevConclusion = evidencias.find(e => e.titulo === 'Síntesis Final: Laboratorio de Introducción');
       if (prevConclusion) this.conclusion = prevConclusion.contenido;
@@ -49,23 +49,23 @@ export class Sim0IntroduccionComponent implements OnInit {
     this.activeTab = tab;
   }
 
-  saveApreciacion(): void {
-    if (this.isApreciacionSaved || !this.apreciacion.trim()) return;
+  saveLluviaIdeas(): void {
+    if (this.isLluviaIdeasSaved || !this.lluviaIdeas.trim()) return;
     
     this.loading = true;
     this.evidenciaService.saveTextEvidencia({
-      titulo: 'Apreciación: Laboratorio de Introducción',
-      contenido: this.apreciacion,
+      titulo: 'Lluvia de Ideas: Laboratorio de Introducción',
+      contenido: this.lluviaIdeas,
       tipoArchivo: 'texto'
     }).subscribe({
       next: () => {
-        this.isApreciacionSaved = true;
+        this.isLluviaIdeasSaved = true;
         this.loading = false;
-        this.message = 'Apreciación guardada con éxito en la sección de evidencias.';
+        this.message = 'Lluvia de Ideas guardada con éxito en la sección de evidencias.';
       },
       error: () => {
         this.loading = false;
-        this.message = 'Error al guardar la apreciación.';
+        this.message = 'Error al guardar la Lluvia de Ideas.';
       }
     });
   }

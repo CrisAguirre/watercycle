@@ -160,3 +160,232 @@
     align-items: stretch;
   }
 }
+
+/* Intro Simulations Grid */
+.sim-grid-intro {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.sim-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.sim-item h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #7dd3fc;
+  font-size: 1.1rem;
+}
+
+.sim-caption {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin-top: 15px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.sim-visual {
+  height: 150px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Solar System */
+.solar-system {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  background: #fbbf24;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 15px #fbbf24;
+}
+
+.orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.orbit-1 {
+  width: 60px;
+  height: 60px;
+  animation: spin 4s linear infinite;
+}
+
+.orbit-2 {
+  width: 90px;
+  height: 90px;
+  animation: spin 7s linear infinite;
+}
+
+.planet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.planet-1 { background: #3b82f6; }
+.planet-2 { background: #ef4444; }
+
+@keyframes spin {
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Electrical System */
+.electrical-system {
+  position: relative;
+  width: 120px;
+  height: 80px;
+}
+
+.battery {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+}
+
+.bulb {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.8rem;
+}
+
+.wire {
+  position: absolute;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.4);
+  left: 25px;
+  right: 25px;
+}
+
+.wire-top { top: 30%; }
+.wire-bottom { bottom: 30%; }
+
+.glow-pulse {
+  animation: pulse-light 2s infinite alternate;
+}
+
+@keyframes pulse-light {
+  0% { text-shadow: 0 0 5px rgba(250, 204, 21, 0.2); opacity: 0.7; }
+  100% { text-shadow: 0 0 20px rgba(250, 204, 21, 1); opacity: 1; }
+}
+
+/* Transport System */
+.transport-system {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.road {
+  background: #374151;
+  position: absolute;
+}
+
+.road-h {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  transform: translateY(-50%);
+}
+
+.road-v {
+  left: 50%;
+  top: 0;
+  height: 100%;
+  width: 20px;
+  transform: translateX(-50%);
+}
+
+.car {
+  position: absolute;
+  width: 12px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.car-1 {
+  background: #ef4444;
+  top: 2px;
+  animation: drive-right 3s linear infinite;
+}
+
+.car-2 {
+  background: #3b82f6;
+  bottom: 2px;
+  animation: drive-left 4s linear infinite;
+}
+
+.car-3 {
+  background: #10b981;
+  width: 8px;
+  height: 12px;
+  left: 2px;
+  animation: drive-down 5s linear infinite;
+}
+
+@keyframes drive-right {
+  0% { left: -20px; }
+  100% { left: 140px; }
+}
+@keyframes drive-left {
+  0% { right: -20px; }
+  100% { right: 140px; }
+}
+@keyframes drive-down {
+  0% { top: -20px; }
+  100% { top: 140px; }
+}
+
+.separator {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 30px 0;
+}
+
+.placeholder-box {
+  text-align: center;
+  padding: 40px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  margin-top: 20px;
+}
+
+.placeholder-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 15px;
+}

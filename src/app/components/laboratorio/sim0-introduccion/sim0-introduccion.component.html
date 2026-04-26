@@ -5,24 +5,77 @@
   </div>
 
   <div class="tab-navigation">
-    <button [class.active]="activeTab === 'video'" (click)="setTab('video')">
-      <span class="tab-icon">📽️</span> Momento 1: Video
+    <button [class.active]="activeTab === 'ejemplos'" (click)="setTab('ejemplos')">
+      <span class="tab-icon">🪐</span> Momento 1: Ejemplos de Sistemas
     </button>
-    <button [class.active]="activeTab === 'foro'" (click)="setTab('foro')">
-      <span class="tab-icon">💬</span> Momento 2: Apreciación
+    <button [class.active]="activeTab === 'lluvia'" (click)="setTab('lluvia')">
+      <span class="tab-icon">💡</span> Momento 2: Lluvia de Ideas
+    </button>
+    <button [class.active]="activeTab === 'apropiacion'" (click)="setTab('apropiacion')">
+      <span class="tab-icon">🛠️</span> Momento 3: Apropiación
     </button>
     <button [class.active]="activeTab === 'sintesis'" (click)="setTab('sintesis')">
-      <span class="tab-icon">📝</span> Momento 3: Síntesis Final
+      <span class="tab-icon">📝</span> Momento 4: Síntesis Final
     </button>
   </div>
 
   <div class="tab-content glass-panel">
-    <!-- MOMENTO 1: VIDEO -->
-    <div *ngIf="activeTab === 'video'" class="video-section animate-fade">
+    <!-- MOMENTO 1: EJEMPLOS DE SISTEMAS -->
+    <div *ngIf="activeTab === 'ejemplos'" class="video-section animate-fade">
+      <h3>🪐 Ejemplos de Sistemas</h3>
+      <p class="section-desc">
+        Antes de ver el video introductorio, analicemos estos tres sistemas cotidianos para entender
+        las relaciones sistémicas:
+      </p>
+
+      <div class="sim-grid-intro">
+        <div class="sim-item">
+          <h4>Sistema Solar</h4>
+          <div class="sim-visual">
+            <div class="solar-system">
+              <div class="sun"></div>
+              <div class="orbit orbit-1"><div class="planet planet-1"></div></div>
+              <div class="orbit orbit-2"><div class="planet planet-2"></div></div>
+            </div>
+          </div>
+          <p class="sim-caption">El sistema solar se compone de una estrella central y cuerpos celestes que orbitan a su alrededor debido a la gravedad. En un enfoque sistémico, los cambios en la masa o distancia de un componente afectarían el equilibrio de toda la estructura.</p>
+        </div>
+
+        <div class="sim-item">
+          <h4>Sistema Eléctrico</h4>
+          <div class="sim-visual">
+            <div class="electrical-system">
+              <div class="battery">⚡</div>
+              <div class="wire wire-top"></div>
+              <div class="wire wire-bottom"></div>
+              <div class="bulb glow-pulse">💡</div>
+            </div>
+          </div>
+          <p class="sim-caption">Un sistema eléctrico incluye una fuente de energía, conductores y receptores. Desde la perspectiva sistémica, si se interrumpe el flujo en cualquier punto (ej. un interruptor), el sistema deja de cumplir su propósito.</p>
+        </div>
+
+        <div class="sim-item">
+          <h4>Sistema de Transporte</h4>
+          <div class="sim-visual">
+            <div class="transport-system">
+              <div class="road road-h">
+                 <div class="car car-1"></div>
+                 <div class="car car-2"></div>
+              </div>
+              <div class="road road-v">
+                 <div class="car car-3"></div>
+              </div>
+            </div>
+          </div>
+          <p class="sim-caption">El transporte consta de vías y vehículos. Un enfoque sistémico permite entender cómo un embotellamiento en una intersección (cuello de botella) genera retrasos en cascada en toda la red de la ciudad.</p>
+        </div>
+      </div>
+
+      <hr class="separator" />
+
       <h3>📽️ Proyección de Introducción</h3>
       <p class="section-desc">
-        Este video presenta la justificación y la intención pedagógica del laboratorio.
-        Es fundamental observarlo con atención para comprender cómo el pensamiento sistémico
+        Ahora, observa este video para comprender cómo el pensamiento sistémico
         se aplica al estudio del ciclo del agua y los agroecosistemas.
       </p>
       <div class="video-wrapper">
@@ -32,33 +85,44 @@
       </div>
     </div>
 
-    <!-- MOMENTO 2: FORO / APRECIACIÓN -->
-    <div *ngIf="activeTab === 'foro'" class="foro-section animate-fade">
-      <h3>💬 Foro Digital: Tu Apreciación</h3>
+    <!-- MOMENTO 2: LLUVIA DE IDEAS -->
+    <div *ngIf="activeTab === 'lluvia'" class="foro-section animate-fade">
+      <h3>💡 Momento 2: Lluvia de Ideas</h3>
       <p class="section-desc">
-        Redacta una breve apreciación sobre lo observado en el video y cómo esperas que estas
-        simulaciones ayuden a tu aprendizaje, también anota al menos 3 interconexiones detectadas entre componentes
-        bióticos y abióticos.
-        <strong>Nota:</strong> Solo tienes una oportunidad para guardar tu texto.
+        Con base en los ejemplos observados y el video, realiza una lluvia de ideas. Anota al menos 3 interconexiones
+        o elementos que consideres clave para entender el ciclo del agua como un sistema completo.
       </p>
 
       <div class="input-group">
-        <textarea [(ngModel)]="apreciacion" [disabled]="isApreciacionSaved" placeholder="Escribe aquí tu apreciación..."
+        <textarea [(ngModel)]="lluviaIdeas" [disabled]="isLluviaIdeasSaved" placeholder="Escribe aquí tu lluvia de ideas..."
           class="glass-textarea" rows="8"></textarea>
       </div>
 
       <div class="action-footer">
-        <button class="btn-save" (click)="saveApreciacion()"
-          [disabled]="isApreciacionSaved || !apreciacion.trim() || loading">
-          {{ isApreciacionSaved ? '✓ Apreciación Enviada' : (loading ? 'Enviando...' : 'Subir a Evidencias') }}
+        <button class="btn-save" (click)="saveLluviaIdeas()"
+          [disabled]="isLluviaIdeasSaved || !lluviaIdeas.trim() || loading">
+          {{ isLluviaIdeasSaved ? '✓ Lluvia de Ideas Guardada' : (loading ? 'Guardando...' : 'Guardar Evidencia') }}
         </button>
       </div>
       <p class="status-msg" *ngIf="message">{{ message }}</p>
     </div>
 
-    <!-- MOMENTO 3: SÍNTESIS FINAL -->
+    <!-- MOMENTO 3: APROPIACIÓN -->
+    <div *ngIf="activeTab === 'apropiacion'" class="animate-fade">
+      <h3>🛠️ Momento 3: Apropiación</h3>
+      <p class="section-desc">
+        En este espacio el docente guiará una reflexión grupal para que apropies los conceptos de pensamiento sistémico.
+        Presta atención a las instrucciones de tu profesor sobre cómo estos conceptos se conectan con las simulaciones que realizarás más adelante.
+      </p>
+      <div class="placeholder-box glass-panel">
+        <span class="placeholder-icon">👨‍🏫</span>
+        <p>Espacio reservado para la actividad presencial o guiada por el docente.</p>
+      </div>
+    </div>
+
+    <!-- MOMENTO 4: SÍNTESIS FINAL -->
     <div *ngIf="activeTab === 'sintesis'" class="sintesis-section animate-fade">
-      <h3>📝 Conclusión Personal y Síntesis Final</h3>
+      <h3>📝 Momento 4: Síntesis Final</h3>
       <p class="section-desc">
         A modo de cierre de esta sesión introductoria, redacta una conclusión personal o síntesis final
         sobre la importancia de abordar los problemas ambientales desde una visión sistémica.
@@ -72,7 +136,7 @@
       <div class="action-footer">
         <button class="btn-save" (click)="saveConclusion()"
           [disabled]="isConclusionSaved || !conclusion.trim() || loading">
-          {{ isConclusionSaved ? '✓ Conclusión Enviada' : (loading ? 'Enviando...' : 'Subir a Evidencias') }}
+          {{ isConclusionSaved ? '✓ Conclusión Guardada' : (loading ? 'Guardando...' : 'Guardar Evidencia') }}
         </button>
       </div>
       <p class="status-msg" *ngIf="message">{{ message }}</p>
