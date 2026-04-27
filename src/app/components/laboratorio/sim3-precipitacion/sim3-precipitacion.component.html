@@ -42,43 +42,36 @@
       <div class="sim-main">
 
         <!-- ====== ÁREA VISUAL ====== -->
-        <div class="sim-visual-area" [style.background]="getSkyGradient()">
+        <div class="sim-visual-area">
 
           <!-- Lightning Flash -->
-          <div class="lightning-flash" *ngIf="lightningActive"></div>
+          <div class="lightning-flash" [class.lightning-active]="lightningActive"></div>
 
           <!-- Storm Darkening Overlay -->
-          <div class="storm-overlay" [style.opacity]="stormOverlayOpacity"></div>
+          <div class="storm-overlay" [style.opacity]="vars.rainIntensity / 100 * 0.6"></div>
 
           <!-- Rain Curtain (heavy rain fog) -->
-          <div class="rain-curtain" *ngIf="vars.rainIntensity > 50"
-            [style.opacity]="(vars.rainIntensity - 50) / 50 * 0.4"></div>
+          <div class="rain-curtain" [style.opacity]="vars.rainIntensity > 40 ? (vars.rainIntensity - 40) / 60 * 0.5 : 0"></div>
 
-          <!-- Rain Drops -->
-          <div class="rain-drop" *ngFor="let d of rainDrops"
-            [style.left]="d.left"
-            [style.animationDuration]="d.duration"
-            [style.animationDelay]="d.delay"
-            [style.height]="d.height"
-            [style.opacity]="d.opacity"
-            [style.transform]="'rotate(' + outputs.windDriftAngle + 'deg)'">
+          <!-- Rain Container -->
+          <div class="rain-container">
+            <div class="rain-drop" *ngFor="let d of rainDrops"
+              [style.left]="d.left"
+              [style.animationDuration]="d.duration"
+              [style.animationDelay]="d.delay"
+              [style.height]="d.height"
+              [style.opacity]="d.opacity"
+              [style.transform]="'rotate(' + outputs.windDriftAngle + 'deg)'">
+            </div>
           </div>
 
-          <!-- Splash Particles -->
-          <div class="splash-particle" *ngFor="let s of splashParticles"
-            [style.left]="s.left"
-            [style.animationDelay]="s.delay">
+          <!-- Splash Container (Bottom) -->
+          <div class="splash-container">
+            <div class="splash" *ngFor="let s of splashParticles"
+              [style.left]="s.left"
+              [style.animationDelay]="s.delay">
+            </div>
           </div>
-
-          <!-- Ground with puddles -->
-          <div class="ground-surface">
-            <div class="puddle puddle-1" [style.opacity]="puddleLevel / 100 * 0.7"></div>
-            <div class="puddle puddle-2" [style.opacity]="puddleLevel / 100 * 0.5"></div>
-            <div class="puddle puddle-3" [style.opacity]="puddleLevel / 100 * 0.6"></div>
-          </div>
-
-          <!-- Background landscape -->
-          <div class="landscape-bg"></div>
 
           <!-- ====== HUD PANELS ====== -->
           <div class="hud-group-top">
@@ -99,13 +92,6 @@
             <div class="hud-panel">
               <div class="hud-title"><span class="hud-dot" style="background: #ffaa00;"></span> Energía Cinética</div>
               <div class="hud-value">{{ outputs.kineticEnergy }} J/m²/h</div>
-            </div>
-          </div>
-
-          <div class="hud-group-bot-right">
-            <div class="hud-panel">
-              <div class="hud-title"><span class="hud-dot" style="background: #ff5555;"></span> Escorrentía</div>
-              <div class="hud-value">{{ outputs.runoffEstimate }} L/min</div>
             </div>
           </div>
 

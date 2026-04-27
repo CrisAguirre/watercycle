@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 
 interface EvapVariables {
   waterTemperature: number;     // 0–100 °C
@@ -45,7 +45,22 @@ export class Sim1EvaporacionComponent implements OnInit, OnDestroy {
   heatShimmerActive = false;
   boilingActive = false;
 
+  // Audio Context & Nodes
+  private audioCtx: AudioContext | null = null;
+  private windGain: GainNode | null = null;
+  private boilGain: GainNode | null = null;
+  private audioInitialized = false;
+
   private engineLoop: any;
+
+  constructor() {}
+
+  @HostListener('window:mousedown')
+  @HostListener('window:keydown')
+  unlockAudio() {
+    if (this.audioInitialized) return;
+    this.initAudio();
+  }
 
   ngOnInit() {
     this.physicsTick();
@@ -54,6 +69,97 @@ export class Sim1EvaporacionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.engineLoop) clearInterval(this.engineLoop);
+    this.destroyAudio();
+  }
+
+  // ─────────────────────────────────────────────────
+  //  PROCEDURAL AUDIO SYSTEM
+  // ─────────────────────────────────────────────────
+  private initAudio() {
+    try {
+      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      
+      // Wind Noise Setup
+      const bufferSize = 2 * this.audioCtx.sampleRate;
+      const noiseBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const windSource = this.audioCtx.createBufferSource();
+      windSource.buffer = noiseBuffer;
+      windSource.loop = true;
+
+      const windFilter = this.audioCtx.createBiquadFilter();
+      windFilter.type = 'lowpass';
+      windFilter.frequency.value = 400;
+
+      this.windGain = this.audioCtx.createGain();
+      this.windGain.gain.value = 0;
+
+      windSource.connect(windFilter);
+      windFilter.connect(this.windGain);
+      this.windGain.connect(this.audioCtx.destination);
+      windSource.start();
+
+      // Boil Sound Setup (Simple recurring "pop" style noise)
+      this.boilGain = this.audioCtx.createGain();
+      this.boilGain.gain.value = 0;
+      this.boilGain.connect(this.audioCtx.destination);
+
+      this.audioInitialized = true;
+      console.log('Sim1 Audio Initialized');
+    } catch (e) {
+      console.error('Audio initialization failed', e);
+    }
+  }
+
+  private updateAudio(windSpeed: number, boiling: boolean) {
+    if (!this.audioInitialized || !this.audioCtx || !this.windGain || !this.boilGain) return;
+
+    const now = this.audioCtx.currentTime;
+
+    // Wind volume
+    const targetWindGain = (windSpeed / 100) * 0.15;
+    this.windGain.gain.linearRampToValueAtTime(targetWindGain, now + 0.5);
+
+    // Boil sound (procedural bubbles)
+    if (boiling && this.boilGain.gain.value < 0.1) {
+      this.boilGain.gain.linearRampToValueAtTime(0.1, now + 1);
+      this.playBoilLoop();
+    } else if (!boiling && this.boilGain.gain.value > 0) {
+      this.boilGain.gain.linearRampToValueAtTime(0, now + 1);
+    }
+  }
+
+  private playBoilLoop() {
+    if (!this.boilingActive || !this.audioCtx || !this.boilGain) return;
+
+    const osc = this.audioCtx.createOscillator();
+    const g = this.audioCtx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(100 + Math.random() * 200, this.audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(50, this.audioCtx.currentTime + 0.1);
+
+    g.gain.setValueAtTime(0, this.audioCtx.currentTime);
+    g.gain.linearRampToValueAtTime(0.05, this.audioCtx.currentTime + 0.02);
+    g.gain.linearRampToValueAtTime(0, this.audioCtx.currentTime + 0.1);
+
+    osc.connect(g);
+    g.connect(this.boilGain);
+    
+    osc.start();
+    osc.stop(this.audioCtx.currentTime + 0.1);
+
+    setTimeout(() => this.playBoilLoop(), 100 + Math.random() * 200);
+  }
+
+  private destroyAudio() {
+    if (this.audioCtx) {
+      this.audioCtx.close();
+    }
   }
 
   onVarChange(event: Event, key: keyof EvapVariables) {
@@ -61,102 +167,55 @@ export class Sim1EvaporacionComponent implements OnInit, OnDestroy {
     this.vars[key] = Number(el.value);
   }
 
-  // ═══════════════════════════════════════════════════════
-  //  MOTOR FÍSICO: EVAPORACIÓN
-  //  Basado en:
-  //  - Ecuación de Antoine (presión de vapor de saturación)
-  //  - Clausius-Clapeyron (dependencia exponencial T)
-  //  - Modelo Penman simplificado (función del viento)
-  //  - Déficit de presión de vapor (VPD)
-  // ═══════════════════════════════════════════════════════
   private physicsTick() {
     const { waterTemperature, solarRadiation, windSpeed, humidity } = this.vars;
 
-    // ─────────────────────────────────────────────────
-    // 1. TEMPERATURA SUPERFICIAL DEL AGUA
-    //    La capa superficial se calienta más que el volumen
-    //    por radiación solar directa. El viento mezcla y reduce.
-    // ─────────────────────────────────────────────────
     const solarHeating = solarRadiation * 0.12;
     const windMixing = 1 - (windSpeed / 200);
     const waterSurfaceTemp = Math.round(
       (waterTemperature + solarHeating * Math.max(0.3, windMixing)) * 10
     ) / 10;
 
-    // ─────────────────────────────────────────────────
-    // 2. PRESIÓN DE VAPOR DE SATURACIÓN (Antoine / Magnus)
-    //    Ps = 0.6108 × exp((17.27 × T) / (T + 237.3))  [kPa]
-    // ─────────────────────────────────────────────────
     const satVP = 0.6108 * Math.exp((17.27 * waterSurfaceTemp) / (waterSurfaceTemp + 237.3));
-
-    // ─────────────────────────────────────────────────
-    // 3. PRESIÓN DE VAPOR ACTUAL Y DÉFICIT (VPD)
-    //    Pa = (HR / 100) × Ps
-    //    VPD = Ps - Pa  →  Fuerza motriz de la evaporación
-    // ─────────────────────────────────────────────────
     const actualVP = (humidity / 100) * satVP;
     const vpd = Math.max(0, satVP - actualVP);
 
-    // ─────────────────────────────────────────────────
-    // 4. TASA DE EVAPORACIÓN (Penman Simplificado)
-    //    E = f(v) × VPD × Rad × Clausius
-    // ─────────────────────────────────────────────────
-
-    // Función del viento (Dalton): transporte advectivo
     const windFunction = 0.5 + 0.54 * Math.sqrt(windSpeed / 100);
-
-    // Factor de radiación: energía disponible
     const radiationFactor = 0.3 + 0.7 * (solarRadiation / 100);
-
-    // Factor Clausius-Clapeyron: exponencial con T
     const tempBoost = Math.max(0, Math.exp(0.05 * (waterTemperature - 20)) - 0.3);
-
-    // Bloqueo por humedad: parabólico cerca de saturación
     const humidityBlock = Math.pow(Math.max(0, 1 - humidity / 100), 1.3);
 
     let evapRate = (vpd * windFunction * radiationFactor * tempBoost * 120) * humidityBlock;
 
-    // Congelación: sublimación residual
     if (waterTemperature <= 0) {
       evapRate *= 0.05;
     } else if (waterTemperature < 5) {
       evapRate *= (waterTemperature / 5) * 0.3;
     }
 
-    // Ebullición: saturación > 100°C
     if (waterTemperature >= 100) {
       evapRate = 92 + (solarRadiation / 100) * 8;
     }
 
     evapRate = Math.max(0, Math.min(100, evapRate));
 
-    // ─────────────────────────────────────────────────
-    // 5. ESTADO DE FASE Y ACTIVIDAD MOLECULAR
-    // ─────────────────────────────────────────────────
     let phaseState: string;
     let molecularActivity: string;
 
     if (waterTemperature <= 0) {
       phaseState = 'Sólido (Hielo)';
-      molecularActivity = 'Mínima — Moléculas en red cristalina';
-    } else if (waterTemperature < 15) {
-      phaseState = 'Líquido Frío';
-      molecularActivity = 'Baja — Vibración térmica lenta';
+      molecularActivity = 'Mínima';
     } else if (waterTemperature < 40) {
       phaseState = 'Líquido';
-      molecularActivity = 'Moderada — Movimiento cinético activo';
-    } else if (waterTemperature < 70) {
-      phaseState = 'Líquido Caliente';
-      molecularActivity = 'Alta — Escape molecular acelerado';
+      molecularActivity = 'Moderada';
     } else if (waterTemperature < 100) {
-      phaseState = 'Transición Líquido → Gas';
-      molecularActivity = 'Muy Alta — Pre-ebullición';
+      phaseState = 'Líquido Caliente';
+      molecularActivity = 'Alta';
     } else {
-      phaseState = 'Gas (Vapor de Agua)';
-      molecularActivity = 'Máxima — Ebullición completa';
+      phaseState = 'Vapor de Agua';
+      molecularActivity = 'Máxima';
     }
 
-    // Emit outputs
     this.outputs = {
       evaporationRate: Math.round(evapRate),
       waterSurfaceTemp,
@@ -167,32 +226,28 @@ export class Sim1EvaporacionComponent implements OnInit, OnDestroy {
       molecularActivity
     };
 
-    // Visual effects
     this.heatShimmerActive = waterTemperature > 45 && solarRadiation > 30;
     this.boilingActive = waterTemperature >= 95;
 
-    // Particles
     this.updateParticles(evapRate);
+    this.updateAudio(windSpeed, this.boilingActive);
   }
 
   private updateParticles(rate: number) {
-    const count = Math.floor(rate / 2);
+    const count = Math.floor(rate / 1.5);
     this.vaporParticles = Array(Math.max(0, count)).fill(0).map(() => ({
       left: 5 + Math.random() * 90 + '%',
-      duration: 2 + Math.random() * 4 + 's',
-      delay: Math.random() * 2 + 's',
-      size: 8 + Math.random() * 18 + 'px'
+      duration: 3 + Math.random() * 5 + 's',
+      delay: Math.random() * 5 + 's',
+      size: 15 + Math.random() * 30 + 'px'
     }));
   }
 
   getEvapState(rate: number): string {
-    if (rate <= 2) return 'Nula / Congelada';
-    if (rate < 15) return 'Muy Leve';
-    if (rate < 35) return 'Leve (Brisa seca)';
-    if (rate < 55) return 'Moderada';
-    if (rate < 75) return 'Intensa';
-    if (rate < 92) return 'Muy Intensa';
-    return 'Ebullición Total';
+    if (rate <= 2) return 'Nula';
+    if (rate < 35) return 'Leve';
+    if (rate < 75) return 'Moderada';
+    return 'Intensa';
   }
 
   getPhaseColor(): string {
@@ -200,7 +255,6 @@ export class Sim1EvaporacionComponent implements OnInit, OnDestroy {
     if (t <= 0) return '#a0e8ff';
     if (t < 40) return '#00c8ff';
     if (t < 70) return '#ff9500';
-    if (t < 100) return '#ff4444';
-    return '#ff0066';
+    return '#ff4444';
   }
 }

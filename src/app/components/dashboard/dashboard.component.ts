@@ -33,17 +33,6 @@ export class DashboardComponent implements OnInit {
     },
     {
       number: 2,
-      title: 'El Concepto de Sistema',
-      subtitle: 'Introducción al pensamiento sistémico',
-      duration: '90 min',
-      simulations: 'Video + Foro',
-      lineamientos: 'Visión de Totalidad',
-      status: 'locked',
-      route: '/laboratorio',
-      simId: 0
-    },
-    {
-      number: 3,
       title: 'Componentes y Causalidad I',
       subtitle: 'Causa-efecto térmico en el ciclo del agua',
       duration: '90 min',
@@ -54,7 +43,7 @@ export class DashboardComponent implements OnInit {
       simId: 1
     },
     {
-      number: 4,
+      number: 3,
       title: 'Escalas y Representación I',
       subtitle: 'Cuantificar volúmenes y modelar flujos',
       duration: '90 min',
@@ -65,7 +54,7 @@ export class DashboardComponent implements OnInit {
       simId: 3
     },
     {
-      number: 5,
+      number: 4,
       title: 'Visión de Totalidad',
       subtitle: 'Conservación, propósito y estabilidad global',
       duration: '120 min',
@@ -76,7 +65,7 @@ export class DashboardComponent implements OnInit {
       simId: 5
     },
     {
-      number: 6,
+      number: 5,
       title: 'Transferencia al Agro I',
       subtitle: 'Componentes bióticos y abióticos del cultivo',
       duration: '90 min',
@@ -87,7 +76,7 @@ export class DashboardComponent implements OnInit {
       simId: 6
     },
     {
-      number: 7,
+      number: 6,
       title: 'Transferencia al Agro II',
       subtitle: 'Escalas productivas y diagramas de influencia',
       duration: '90 min',
@@ -98,7 +87,7 @@ export class DashboardComponent implements OnInit {
       simId: 7
     },
     {
-      number: 8,
+      number: 7,
       title: 'Sostenibilidad y Cierre',
       subtitle: 'Toma de decisiones ante crisis + Postest',
       duration: '120 min',
@@ -110,6 +99,9 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
+  completedCount = 0;
+  totalSessions = 7;
+
   constructor(private progressService: ProgressService) {}
 
   ngOnInit(): void {
@@ -120,9 +112,7 @@ export class DashboardComponent implements OnInit {
     this.progressService.getProgress().subscribe({
       next: (progress) => {
         const completed = progress.completedSimulations || [];
-        // Por defecto arranca en la 1
         let currentId = progress.currentSimulationId || 1;
-        // Ajuste en caso de que en la base de datos tengan currentSimulationId = 0 guardado
         if (currentId === 0) currentId = 1;
 
         this.sessions = this.sessions.map(session => {
@@ -131,12 +121,13 @@ export class DashboardComponent implements OnInit {
           } else if (session.number === currentId) {
             return { ...session, status: 'available' };
           } else if (session.number < currentId) {
-             // Por si acaso algún id anterior no está marcado como completado expresamente
             return { ...session, status: 'completed' };
           } else {
             return { ...session, status: 'locked' };
           }
         });
+
+        this.completedCount = this.sessions.filter(s => s.status === 'completed').length;
       },
       error: (err) => console.error('Error loading progress:', err)
     });
@@ -149,5 +140,9 @@ export class DashboardComponent implements OnInit {
       case 'locked': return '🔒 Bloqueada';
       default: return '';
     }
+  }
+
+  get progressPercent(): number {
+    return Math.round((this.completedCount / this.totalSessions) * 100);
   }
 }

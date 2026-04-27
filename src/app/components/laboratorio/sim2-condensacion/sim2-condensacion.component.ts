@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 
 interface CondVariables {
   airTemperature: number;         // -10 to 50 °C
@@ -47,10 +47,22 @@ export class Sim2CondensacionComponent implements OnInit, OnDestroy {
 
   cloudParticles: any[] = [];
   fogActive = false;
-  mistParticles: any[] = [];
-  private stockCloudMass = 0;
 
+  // Audio Context & Nodes
+  private audioCtx: AudioContext | null = null;
+  private windGain: GainNode | null = null;
+  private audioInitialized = false;
+  private thunderTimeout: any;
+
+  private stockCloudMass = 0;
   private engineLoop: any;
+
+  @HostListener('window:mousedown')
+  @HostListener('window:keydown')
+  unlockAudio() {
+    if (this.audioInitialized) return;
+    this.initAudio();
+  }
 
   ngOnInit() {
     this.physicsTick();
@@ -59,6 +71,95 @@ export class Sim2CondensacionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.engineLoop) clearInterval(this.engineLoop);
+    if (this.thunderTimeout) clearTimeout(this.thunderTimeout);
+    this.destroyAudio();
+  }
+
+  // ─────────────────────────────────────────────────
+  //  PROCEDURAL AUDIO SYSTEM
+  // ─────────────────────────────────────────────────
+  private initAudio() {
+    try {
+      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      
+      // Atmospheric Wind Setup
+      const bufferSize = 2 * this.audioCtx.sampleRate;
+      const noiseBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const windSource = this.audioCtx.createBufferSource();
+      windSource.buffer = noiseBuffer;
+      windSource.loop = true;
+
+      const windFilter = this.audioCtx.createBiquadFilter();
+      windFilter.type = 'lowpass';
+      windFilter.frequency.value = 300;
+
+      this.windGain = this.audioCtx.createGain();
+      this.windGain.gain.value = 0;
+
+      windSource.connect(windFilter);
+      windFilter.connect(this.windGain);
+      this.windGain.connect(this.audioCtx.destination);
+      windSource.start();
+
+      this.audioInitialized = true;
+      this.scheduleThunder();
+    } catch (e) {
+      console.error('Audio initialization failed', e);
+    }
+  }
+
+  private scheduleThunder() {
+    if (!this.audioInitialized) return;
+    
+    const delay = 10000 + Math.random() * 20000;
+    this.thunderTimeout = setTimeout(() => {
+      if (this.stockCloudMass > 85) {
+        this.playThunder();
+      }
+      this.scheduleThunder();
+    }, delay);
+  }
+
+  private playThunder() {
+    if (!this.audioCtx) return;
+    const osc = this.audioCtx.createOscillator();
+    const g = this.audioCtx.createGain();
+    
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(40, this.audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(10, this.audioCtx.currentTime + 2);
+
+    const filter = this.audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.value = 100;
+
+    g.gain.setValueAtTime(0, this.audioCtx.currentTime);
+    g.gain.linearRampToValueAtTime(0.3, this.audioCtx.currentTime + 0.1);
+    g.gain.linearRampToValueAtTime(0, this.audioCtx.currentTime + 2.5);
+
+    osc.connect(filter);
+    filter.connect(g);
+    g.connect(this.audioCtx.destination);
+
+    osc.start();
+    osc.stop(this.audioCtx.currentTime + 2.5);
+  }
+
+  private updateAudio(altitude: number) {
+    if (!this.audioInitialized || !this.audioCtx || !this.windGain) return;
+    const now = this.audioCtx.currentTime;
+    // Wind is louder and "thinner" at high altitude
+    const targetGain = 0.05 + (altitude / 5000) * 0.15;
+    this.windGain.gain.linearRampToValueAtTime(targetGain, now + 1);
+  }
+
+  private destroyAudio() {
+    if (this.audioCtx) this.audioCtx.close();
   }
 
   onVarChange(event: Event, key: keyof CondVariables) {
@@ -66,191 +167,92 @@ export class Sim2CondensacionComponent implements OnInit, OnDestroy {
     this.vars[key] = Number(el.value);
   }
 
-  // ═══════════════════════════════════════════════════════
-  //  MOTOR FÍSICO: CONDENSACIÓN
-  //  Basado en:
-  //  - Fórmula de Magnus (punto de rocío)
-  //  - Gradiente adiabático (tasa de descenso térmico)
-  //  - Modelo de formación de nubes por ascenso orográfico
-  //  - Ecuación de Clausius-Clapeyron para HR a altitud
-  // ═══════════════════════════════════════════════════════
   private physicsTick() {
     const { airTemperature, humidity, atmosphericPressure, altitude } = this.vars;
 
-    // ─────────────────────────────────────────────────
-    // 1. PUNTO DE ROCÍO (Fórmula de Magnus)
-    //    Td = (b × α) / (a - α)
-    //    donde α = (a × T)/(b + T) + ln(HR/100)
-    //    a = 17.27, b = 237.3
-    // ─────────────────────────────────────────────────
     const a = 17.27, b = 237.3;
     const humClamp = Math.max(1, humidity);
     const alpha = (a * airTemperature) / (b + airTemperature) + Math.log(humClamp / 100);
     const dewPoint = Math.round(((b * alpha) / (a - alpha)) * 10) / 10;
 
-    // ─────────────────────────────────────────────────
-    // 2. GRADIENTE ADIABÁTICO (Descenso térmico con altitud)
-    //    Tasa de descenso: ~6.5°C por cada 1000m (troposfera)
-    //    T_alt = T_superficie - (altitud/1000) × 6.5
-    // ─────────────────────────────────────────────────
-    const lapseRate = 6.5; // °C por 1000m
+    const lapseRate = 6.5; 
     const tempAtAltitude = Math.round((airTemperature - (altitude / 1000) * lapseRate) * 10) / 10;
 
-    // ─────────────────────────────────────────────────
-    // 3. HUMEDAD RELATIVA A ALTITUD
-    //    A medida que el aire asciende y se enfría,
-    //    la HR aumenta (el aire frío sostiene menos vapor).
-    //    Ps_alt / Ps_surface ratio
-    // ─────────────────────────────────────────────────
     const satVPsurface = 0.6108 * Math.exp((a * airTemperature) / (b + airTemperature));
     const satVPaltitude = 0.6108 * Math.exp((a * tempAtAltitude) / (b + tempAtAltitude));
     const actualVP = (humidity / 100) * satVPsurface;
     let relHumAtAlt = Math.min(100, Math.round((actualVP / satVPaltitude) * 100));
     if (satVPaltitude <= 0) relHumAtAlt = 100;
 
-    // ─────────────────────────────────────────────────
-    // 4. ALTITUD BASE DE NUBES (Lifted Condensation Level)
-    //    LCL ≈ 125 × (T - Td)  [metros]
-    //    Es la altitud a la que el aire alcanza saturación
-    // ─────────────────────────────────────────────────
     const deltaTdew = Math.round((airTemperature - dewPoint) * 10) / 10;
     const cloudBaseAltitude = Math.max(0, Math.round(125 * Math.max(0, deltaTdew)));
 
-    // ─────────────────────────────────────────────────
-    // 5. TASA DE CONDENSACIÓN
-    //    Depende de:
-    //    - Cercanía de T a Td (delta pequeño → más condensación)
-    //    - Altitud respecto al LCL
-    //    - Presión atmosférica (baja → facilita ascenso)
-    // ─────────────────────────────────────────────────
     let condensationEfficiency = 0;
+    if (deltaTdew <= 1) condensationEfficiency = 1.0;
+    else if (deltaTdew <= 5) condensationEfficiency = 0.7;
+    else if (deltaTdew <= 15) condensationEfficiency = 0.2;
+    else condensationEfficiency = 0.02;
 
-    // A) Cercanía al punto de rocío
-    if (deltaTdew <= 1) {
-      condensationEfficiency = 1.0;
-    } else if (deltaTdew <= 3) {
-      condensationEfficiency = 1.0 - (deltaTdew - 1) / 2 * 0.3;
-    } else if (deltaTdew <= 8) {
-      condensationEfficiency = 0.7 - (deltaTdew - 3) / 5 * 0.4;
-    } else if (deltaTdew <= 15) {
-      condensationEfficiency = 0.3 - (deltaTdew - 8) / 7 * 0.25;
-    } else {
-      condensationEfficiency = Math.max(0, 0.05 - (deltaTdew - 15) * 0.003);
-    }
-
-    // B) Altitud alcanza o supera el LCL
     const altitudeAboveLCL = altitude - cloudBaseAltitude;
-    let altitudeFactor = 0;
-    if (altitudeAboveLCL > 0) {
-      altitudeFactor = Math.min(1, altitudeAboveLCL / 2000) * 1.5;
-    } else {
-      altitudeFactor = Math.max(0, 1 - Math.abs(altitudeAboveLCL) / 1000) * 0.3;
-    }
-
-    // C) Presión baja favorece ascenso convectivo
+    let altitudeFactor = altitudeAboveLCL > 0 ? Math.min(1.5, altitudeAboveLCL / 1500) : 0;
     const pressureFactor = 1 + (1013 - atmosphericPressure) * 0.003;
-
-    // D) Humedad base necesaria
     const humidityFactor = Math.pow(humidity / 100, 0.8);
 
-    // Tasa de condensación instantánea
-    const condensationFlow = condensationEfficiency * altitudeFactor * pressureFactor * humidityFactor * 4;
-
-    // ─────────────────────────────────────────────────
-    // 6. STOCK DE MASA DE NUBES (Acumulativo)
-    //    Se acumula con condensación, se disipa con:
-    //    - Alta presión (subsidencia)
-    //    - Baja humedad
-    //    - Calentamiento adiabático
-    // ─────────────────────────────────────────────────
+    const condensationFlow = condensationEfficiency * altitudeFactor * pressureFactor * humidityFactor * 5;
     this.stockCloudMass += condensationFlow;
 
-    // Disipación
-    let dissipation = 0.3; // Disipación base natural
-    if (atmosphericPressure > 1020) {
-      dissipation += (atmosphericPressure - 1020) * 0.008;
-    }
-    if (humidity < 30) {
-      dissipation += (30 - humidity) * 0.015;
-    }
-    if (airTemperature > 35 && humidity < 40) {
-      dissipation += (airTemperature - 35) * 0.01;
-    }
+    let dissipation = 0.2 + (atmosphericPressure > 1020 ? (atmosphericPressure - 1020) * 0.01 : 0);
+    if (humidity < 40) dissipation += (40 - humidity) * 0.01;
+    
     this.stockCloudMass -= dissipation;
     this.stockCloudMass = Math.max(0, Math.min(100, this.stockCloudMass));
 
-    // ─────────────────────────────────────────────────
-    // 7. ESTADOS DESCRIPTIVOS
-    // ─────────────────────────────────────────────────
     let cloudState: string;
-    if (this.stockCloudMass < 5) cloudState = 'Despejado';
-    else if (this.stockCloudMass < 20) cloudState = 'Cirros (Nubes altas tenues)';
-    else if (this.stockCloudMass < 45) cloudState = 'Cúmulos (Parcialmente nublado)';
-    else if (this.stockCloudMass < 70) cloudState = 'Estratocúmulos (Nublado)';
-    else if (this.stockCloudMass < 90) cloudState = 'Nimboestratos (Muy nublado)';
-    else cloudState = 'Cumulonimbos (Tormenta inminente)';
+    if (this.stockCloudMass < 10) cloudState = 'Despejado';
+    else if (this.stockCloudMass < 40) cloudState = 'Cúmulos';
+    else if (this.stockCloudMass < 80) cloudState = 'Nublado';
+    else cloudState = 'Tormentoso';
 
-    let atmosphericStability: string;
-    if (atmosphericPressure > 1025) atmosphericStability = 'Muy Estable (Anticiclón)';
-    else if (atmosphericPressure > 1010) atmosphericStability = 'Estable';
-    else if (atmosphericPressure > 995) atmosphericStability = 'Ligeramente Inestable';
-    else atmosphericStability = 'Inestable (Borrasca)';
+    this.fogActive = deltaTdew < 2 && altitude < 400;
 
-    // Fog condition: near surface, T ≈ Td
-    this.fogActive = deltaTdew < 2.5 && altitude < 500;
-
-    // Emit
     this.outputs = {
       dewPoint,
-      condensationRate: Math.round(Math.min(100, condensationFlow * 15)),
+      condensationRate: Math.round(Math.min(100, condensationFlow * 20)),
       cloudMass: Math.round(this.stockCloudMass),
       deltaTdew,
       tempAtAltitude,
       relativeHumidityAtAlt: relHumAtAlt,
       cloudBaseAltitude,
       cloudState,
-      atmosphericStability
+      atmosphericStability: atmosphericPressure > 1010 ? 'Estable' : 'Inestable'
     };
 
     this.updateVisuals();
+    this.updateAudio(altitude);
   }
 
   private updateVisuals() {
-    // Cloud particles (proportional to cloud mass)
-    const cloudCount = Math.floor(this.stockCloudMass / 8);
+    const cloudCount = Math.floor(this.stockCloudMass / 6);
     this.cloudParticles = Array(Math.max(0, cloudCount)).fill(0).map(() => ({
-      left: 15 + Math.random() * 70 + '%',
-      top: 5 + Math.random() * 30 + '%',
-      width: 80 + Math.random() * 200 + 'px',
-      height: 40 + Math.random() * 80 + 'px',
-      opacity: 0.3 + (this.stockCloudMass / 100) * 0.6,
-      delay: Math.random() * 3 + 's'
+      left: 5 + Math.random() * 85 + '%',
+      top: 5 + Math.random() * 45 + '%',
+      width: 150 + Math.random() * 300 + 'px',
+      height: 100 + Math.random() * 150 + 'px',
+      opacity: 0.2 + (this.stockCloudMass / 100) * 0.7,
+      delay: Math.random() * 4 + 's'
     }));
-
-    // Mist particles
-    if (this.fogActive) {
-      this.mistParticles = Array(8).fill(0).map(() => ({
-        left: Math.random() * 100 + '%',
-        duration: 5 + Math.random() * 5 + 's',
-        delay: Math.random() * 3 + 's'
-      }));
-    } else {
-      this.mistParticles = [];
-    }
   }
 
   getCondColor(): string {
     const cm = this.stockCloudMass;
-    if (cm < 20) return 'rgba(255,255,255,0.5)';
-    if (cm < 50) return 'rgba(200,210,220,0.6)';
-    if (cm < 75) return 'rgba(140,150,170,0.7)';
-    return 'rgba(80,85,100,0.85)';
+    if (cm < 30) return 'rgba(255,255,255,0.4)';
+    if (cm < 70) return 'rgba(200,210,230,0.6)';
+    return 'rgba(100,110,130,0.8)';
   }
 
   getDeltaColor(): string {
     const d = this.outputs.deltaTdew;
     if (d <= 2) return '#00ff88';
-    if (d <= 5) return '#88ff00';
     if (d <= 10) return '#ffcc00';
     return '#ff4444';
   }

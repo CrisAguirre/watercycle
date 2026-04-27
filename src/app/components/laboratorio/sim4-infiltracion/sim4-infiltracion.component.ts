@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { AnalisisService } from '../../../services/analisis.service';
 import { ProgressService } from '../../../services/progress.service';
 
@@ -29,7 +29,7 @@ interface InfilOutputs {
 })
 export class Sim4InfiltracionComponent implements OnInit, OnDestroy {
 
-  Math = Math; // Expose to template
+  Math = Math; 
 
   vars: InfilVariables = {
     soilType: 'franco',
@@ -52,31 +52,37 @@ export class Sim4InfiltracionComponent implements OnInit, OnDestroy {
   };
 
   soilTypes = ['arena', 'limo', 'arcilla', 'franco'];
+  seepageParticles: any[] = [];
+  waterTableLevel = 75; 
 
-  // Visual state
-  wettingDepthPercent = 0;
-  runoffFlowWidth = 0;
-  rainDrops: any[] = [];
-  infiltrationArrows: any[] = [];
-  waterTableLevel = 75; // % from top
+  private audioCtx: AudioContext | null = null;
+  private seepGain: GainNode | null = null;
+  private rainGain: GainNode | null = null;
+  private audioInitialized = false;
 
   private engineLoop: any;
   private stockSaturation = 20;
   private stockCumulInfil = 0;
   private elapsedTime = 0;
 
-  // Soil properties lookup
   private soilProps: Record<string, { Ks: number; porosity: number; f0: number; fc: number; k: number; desc: string }> = {
-    arena:   { Ks: 60, porosity: 43, f0: 120, fc: 60,  k: 0.05, desc: 'Alta permeabilidad — Partículas gruesas (0.05–2mm), grandes poros interconectados' },
-    limo:    { Ks: 15, porosity: 46, f0: 40,  fc: 12,  k: 0.08, desc: 'Permeabilidad media — Partículas finas (0.002–0.05mm), retiene humedad' },
-    arcilla: { Ks: 2,  porosity: 50, f0: 10,  fc: 1.5, k: 0.12, desc: 'Baja permeabilidad — Partículas ultrafinas (<0.002mm), se compacta con agua' },
-    franco:  { Ks: 25, porosity: 45, f0: 60,  fc: 20,  k: 0.06, desc: 'Equilibrado — Mezcla de arena, limo y arcilla, ideal para agricultura' }
+    arena:   { Ks: 60, porosity: 43, f0: 120, fc: 60,  k: 0.05, desc: 'Alta permeabilidad — Partículas gruesas, grandes poros' },
+    limo:    { Ks: 15, porosity: 46, f0: 40,  fc: 12,  k: 0.08, desc: 'Permeabilidad media — Partículas finas, retiene humedad' },
+    arcilla: { Ks: 2,  porosity: 50, f0: 10,  fc: 1.5, k: 0.12, desc: 'Baja permeabilidad — Partículas ultrafinas, se compacta' },
+    franco:  { Ks: 25, porosity: 45, f0: 60,  fc: 20,  k: 0.06, desc: 'Equilibrado — Mezcla ideal para agricultura' }
   };
 
   constructor(
     private analisisService: AnalisisService,
     private progressService: ProgressService
   ) {}
+
+  @HostListener('window:mousedown')
+  @HostListener('window:keydown')
+  unlockAudio() {
+    if (this.audioInitialized) return;
+    this.initAudio();
+  }
 
   ngOnInit() {
     this.physicsTick();
@@ -85,38 +91,82 @@ export class Sim4InfiltracionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.engineLoop) clearInterval(this.engineLoop);
+    this.destroyAudio();
+  }
+
+  // ─────────────────────────────────────────────────
+  //  PROCEDURAL AUDIO SYSTEM
+  // ─────────────────────────────────────────────────
+  private initAudio() {
+    try {
+      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      
+      const bufferSize = 2 * this.audioCtx.sampleRate;
+      const noiseBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      // Seeping noise (filtered low)
+      const seepSource = this.audioCtx.createBufferSource();
+      seepSource.buffer = noiseBuffer;
+      seepSource.loop = true;
+      const seepFilter = this.audioCtx.createBiquadFilter();
+      seepFilter.type = 'lowpass';
+      seepFilter.frequency.value = 200;
+      this.seepGain = this.audioCtx.createGain();
+      this.seepGain.gain.value = 0;
+      seepSource.connect(seepFilter);
+      seepFilter.connect(this.seepGain);
+      this.seepGain.connect(this.audioCtx.destination);
+      seepSource.start();
+
+      // Rain noise (filtered high)
+      const rainSource = this.audioCtx.createBufferSource();
+      rainSource.buffer = noiseBuffer;
+      rainSource.loop = true;
+      const rainFilter = this.audioCtx.createBiquadFilter();
+      rainFilter.type = 'lowpass';
+      rainFilter.frequency.value = 1200;
+      this.rainGain = this.audioCtx.createGain();
+      this.rainGain.gain.value = 0;
+      rainSource.connect(rainFilter);
+      rainFilter.connect(this.rainGain);
+      this.rainGain.connect(this.audioCtx.destination);
+      rainSource.start();
+
+      this.audioInitialized = true;
+    } catch (e) {
+      console.error('Audio initialization failed', e);
+    }
+  }
+
+  private updateAudio(seeping: number, rain: number) {
+    if (!this.audioInitialized || !this.audioCtx || !this.seepGain || !this.rainGain) return;
+    const now = this.audioCtx.currentTime;
+    this.seepGain.gain.linearRampToValueAtTime((seeping / 60) * 0.15, now + 1);
+    this.rainGain.gain.linearRampToValueAtTime((rain / 80) * 0.1, now + 1);
+  }
+
+  private destroyAudio() {
+    if (this.audioCtx) this.audioCtx.close();
   }
 
   saveAnalisis() {
     const data = {
       tipoAnalisis: 'Infiltración y Escorrentía',
-      descripcion: `Análisis de suelo tipo ${this.vars.soilType} con lluvia de ${this.vars.rainIntensity}mm/h y pendiente de ${this.vars.slopeAngle}°.`,
-      metricas: {
-        ...this.vars,
-        ...this.outputs
-      }
+      descripcion: `Análisis de suelo tipo ${this.vars.soilType} con lluvia de ${this.vars.rainIntensity}mm/h.`,
+      metricas: { ...this.vars, ...this.outputs }
     };
 
     this.analisisService.submitAnalisis(data).subscribe({
       next: () => {
         alert('Análisis guardado con éxito');
-        // Actualizar progreso (asumiendo que esta es la simulación 4)
         this.progressService.updateProgress({ completedSimulation: 4 }).subscribe();
       },
       error: (err: any) => alert('Error al guardar el análisis: ' + err.error?.message)
     });
-  }
-
-  onVarChange(event: Event, key: keyof InfilVariables) {
-    const el = event.target as HTMLInputElement;
-    if (key === 'soilType') {
-      this.vars[key] = el.value;
-      this.stockSaturation = 20;
-      this.stockCumulInfil = 0;
-      this.elapsedTime = 0;
-    } else {
-      (this.vars as any)[key] = Number(el.value);
-    }
   }
 
   onSoilChange(type: string) {
@@ -126,149 +176,61 @@ export class Sim4InfiltracionComponent implements OnInit, OnDestroy {
     this.elapsedTime = 0;
   }
 
-  // ═══════════════════════════════════════════════════════
-  //  MOTOR FÍSICO: INFILTRACIÓN Y ESCORRENTÍA
-  //  Basado en:
-  //  - Modelo de Horton (tasa de infiltración decreciente)
-  //  - Green-Ampt simplificado (frente de humedecimiento)
-  //  - Partición hidráulica (I + R = P)
-  //  - Conductividad hidráulica por tipo de suelo
-  // ═══════════════════════════════════════════════════════
+  onVarChange(event: Event, key: keyof InfilVariables) {
+    const el = event.target as HTMLInputElement;
+    (this.vars as any)[key] = Number(el.value);
+  }
+
   private physicsTick() {
     const { soilType, rainIntensity, slopeAngle, vegetationCover } = this.vars;
     const props = this.soilProps[soilType];
 
-    this.elapsedTime += 0.5; // minutes
+    this.elapsedTime += 0.5;
 
-    // ─────────────────────────────────────────────────
-    // 1. MODELO DE HORTON
-    //    f(t) = fc + (f0 - fc) × e^(-kt)
-    //    f0 = capacidad de infiltración inicial
-    //    fc = capacidad final (≈ conductividad hidráulica)
-    //    k  = constante de decaimiento
-    // ─────────────────────────────────────────────────
     const hortonRate = props.fc + (props.f0 - props.fc) * Math.exp(-props.k * this.elapsedTime);
-
-    // ─────────────────────────────────────────────────
-    // 2. EFECTO DE COBERTURA VEGETAL
-    //    Raíces mejoran la estructura del suelo (macroporos)
-    //    Hojarasca intercepta lluvia
-    //    Intercepción: ~10-30% de la precipitación
-    // ─────────────────────────────────────────────────
-    const vegInterception = vegetationCover / 100 * 0.15; // Max 15% intercepted
-    const effectiveRain = rainIntensity * (1 - vegInterception);
+    const effectiveRain = rainIntensity * (1 - (vegetationCover / 100 * 0.15));
     const vegInfilBoost = 1 + (vegetationCover / 100) * 0.3;
-
-    // ─────────────────────────────────────────────────
-    // 3. EFECTO DE PENDIENTE
-    //    A mayor pendiente, menor tiempo de contacto
-    //    del agua con el suelo → menor infiltración
-    // ─────────────────────────────────────────────────
     const slopeFactor = 1 - (slopeAngle / 90) * 0.6;
 
-    // ─────────────────────────────────────────────────
-    // 4. TASA DE INFILTRACIÓN EFECTIVA
-    //    Limitada por: mínimo entre (oferta de agua, capacidad del suelo)
-    // ─────────────────────────────────────────────────
-    const soilCapacity = hortonRate * vegInfilBoost * slopeFactor;
-    const infiltrationRate = Math.round(Math.min(effectiveRain, soilCapacity) * 10) / 10;
-
-    // ─────────────────────────────────────────────────
-    // 5. ESCORRENTÍA = Precipitación - Infiltración - Intercepción
-    // ─────────────────────────────────────────────────
+    const infiltrationRate = Math.round(Math.min(effectiveRain, hortonRate * vegInfilBoost * slopeFactor) * 10) / 10;
     const runoffRate = Math.round(Math.max(0, effectiveRain - infiltrationRate) * 10) / 10;
-    const runoffCoefficient = effectiveRain > 0 ? Math.round((runoffRate / effectiveRain) * 100) / 100 : 0;
-
-    // Slope increases runoff velocity
-    const slopeRunoffBoost = 1 + (slopeAngle / 45) * 0.5;
-    const adjustedRunoff = Math.round(runoffRate * slopeRunoffBoost * 10) / 10;
-
-    // ─────────────────────────────────────────────────
-    // 6. SATURACIÓN DEL SUELO (Stock acumulativo)
-    // ─────────────────────────────────────────────────
+    
     this.stockSaturation += infiltrationRate * 0.02;
-    // Natural drainage
     this.stockSaturation -= props.Ks * 0.005;
     this.stockSaturation = Math.max(5, Math.min(100, this.stockSaturation));
 
-    // ─────────────────────────────────────────────────
-    // 7. FRENTE DE HUMEDECIMIENTO (Green-Ampt simplificado)
-    //    Profundidad ∝ infiltración acumulada / porosidad
-    // ─────────────────────────────────────────────────
-    this.stockCumulInfil += infiltrationRate * (0.5 / 60); // mm per tick
-    const wettingFrontDepth = Math.round(
-      (this.stockCumulInfil / (props.porosity / 100)) * 0.1 * 10
-    ) / 10;
+    this.stockCumulInfil += infiltrationRate * (0.5 / 60);
 
-    // ─────────────────────────────────────────────────
-    // 8. BALANCE HÍDRICO DESCRIPTIVO
-    // ─────────────────────────────────────────────────
-    let waterBalance: string;
-    if (rainIntensity === 0) waterBalance = 'Sin aporte hídrico';
-    else if (runoffRate < 1) waterBalance = 'Infiltración total — sin escorrentía';
-    else if (runoffCoefficient < 0.3) waterBalance = 'Dominancia de infiltración';
-    else if (runoffCoefficient < 0.6) waterBalance = 'Equilibrado (I ≈ R)';
-    else if (runoffCoefficient < 0.85) waterBalance = 'Dominancia de escorrentía';
-    else waterBalance = 'Escorrentía total — suelo saturado';
-
-    // Emit outputs
     this.outputs = {
       infiltrationRate,
-      runoffRate: adjustedRunoff,
-      wettingFrontDepth: Math.min(200, wettingFrontDepth),
+      runoffRate: Math.round(runoffRate * (1 + slopeAngle / 45) * 10) / 10,
+      wettingFrontDepth: Math.min(200, Math.round((this.stockCumulInfil / (props.porosity / 100)) * 10)),
       soilSaturation: Math.round(this.stockSaturation),
       hydraulicConductivity: props.Ks,
       soilPorosity: props.porosity,
       cumulativeInfiltration: Math.round(this.stockCumulInfil * 10) / 10,
-      runoffCoefficient,
+      runoffCoefficient: effectiveRain > 0 ? Math.round((runoffRate / effectiveRain) * 100) / 100 : 0,
       soilDescription: props.desc,
-      waterBalance
+      waterBalance: rainIntensity === 0 ? 'Sin aporte' : (runoffRate < 1 ? 'Infiltración total' : 'Flujo mixto')
     };
 
-    // Update visuals
-    this.updateVisuals(infiltrationRate, adjustedRunoff, rainIntensity);
+    this.updateVisuals(infiltrationRate, rainIntensity);
+    this.updateAudio(infiltrationRate, rainIntensity);
   }
 
-  private updateVisuals(infiltration: number, runoff: number, rain: number) {
-    // Wetting front depth (visual %)
-    this.wettingDepthPercent = Math.min(90, this.outputs.wettingFrontDepth / 200 * 90);
+  private updateVisuals(infiltration: number, rain: number) {
+    this.waterTableLevel = 85 - (this.stockSaturation / 100) * 40;
 
-    // Runoff flow width
-    this.runoffFlowWidth = Math.min(100, runoff * 2);
-
-    // Water table rises with saturation
-    this.waterTableLevel = 85 - (this.stockSaturation / 100) * 25;
-
-    // Rain drops
-    const dropCount = Math.floor(rain / 3);
-    this.rainDrops = Array(Math.max(0, Math.min(30, dropCount))).fill(0).map(() => ({
-      left: 10 + Math.random() * 80 + '%',
-      duration: 0.4 + Math.random() * 0.3 + 's',
-      delay: Math.random() * 1 + 's'
-    }));
-
-    // Infiltration arrows
-    const arrowCount = Math.floor(infiltration / 5);
-    this.infiltrationArrows = Array(Math.max(0, Math.min(10, arrowCount))).fill(0).map(() => ({
-      left: 15 + Math.random() * 70 + '%',
+    const particleCount = Math.floor(infiltration / 4);
+    this.seepageParticles = Array(Math.max(0, particleCount)).fill(0).map(() => ({
+      left: Math.random() * 100 + '%',
+      duration: 2 + Math.random() * 3 + 's',
       delay: Math.random() * 2 + 's'
     }));
   }
 
-  getSoilColor(layer: string): string {
-    const sat = this.stockSaturation;
-    switch (layer) {
-      case 'A': return sat > 60 ? '#3a2810' : sat > 30 ? '#5a3820' : '#7a5030';
-      case 'B': return sat > 70 ? '#4a3520' : sat > 40 ? '#6a4530' : '#8a6540';
-      case 'C': return '#9a8060';
-      default: return '#bba070';
-    }
-  }
-
   getSoilLabel(): string {
-    const map: Record<string, string> = {
-      arena: '🏖️ Arena', limo: '🌾 Limo', arcilla: '🧱 Arcilla', franco: '🌱 Franco'
-    };
+    const map: Record<string, string> = { arena: '🏖️ Arena', limo: '🌾 Limo', arcilla: '🧱 Arcilla', franco: '🌱 Franco' };
     return map[this.vars.soilType] || this.vars.soilType;
   }
 }

@@ -6,9 +6,9 @@
     <!-- Progress Bar -->
     <div class="progress-container">
       <div class="progress-bar">
-        <div class="progress-fill" [style.width]="'14%'"></div>
+        <div class="progress-fill" [style.width.%]="progressPercent"></div>
       </div>
-      <span class="progress-text">1 de 8 sesiones disponibles</span>
+      <span class="progress-text">{{ completedCount }} de {{ totalSessions }} sesiones completadas</span>
     </div>
   </div>
 

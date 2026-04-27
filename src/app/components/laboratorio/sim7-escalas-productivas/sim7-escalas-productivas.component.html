@@ -44,63 +44,17 @@
         <!-- ====== ÁREA VISUAL ====== -->
         <div class="sim-visual-area">
 
-          <!-- Background -->
-          <div class="landscape-bg"></div>
+          <!-- Grid Overlay -->
+          <div class="grid-overlay" [style.backgroundSize]="(40 * (1 + vars.productionScale / 5000)) + 'px'"></div>
 
-          <!-- Scale Visualization -->
-          <div class="scale-display">
-            <div class="scale-header">
-              <span class="scale-emoji">{{ outputs.cropEmoji }}</span>
-              <span class="scale-name">{{ outputs.scaleLabel }}</span>
-              <span class="scale-area">{{ vars.productionScale | number }} m²</span>
-            </div>
+          <!-- Footprint Heatmap -->
+          <div class="footprint-overlay" [style.opacity]="(vars.productionScale / 10000) * 0.4"></div>
 
-            <!-- Scale Grid Icons -->
-            <div class="scale-grid">
-              <span class="scale-icon" *ngFor="let icon of scaleIcons">{{ icon }}</span>
-            </div>
-          </div>
-
-          <!-- Bar Chart Display -->
-          <div class="chart-area">
-            <div class="chart-container">
-              <!-- Yield Bar -->
-              <div class="chart-bar-group">
-                <div class="chart-label">Rendimiento</div>
-                <div class="chart-bar-wrap">
-                  <div class="chart-bar yield" [style.width.%]="yieldBar"></div>
-                </div>
-                <div class="chart-value">{{ outputs.yieldEstimate }} ton/ha</div>
-              </div>
-
-              <!-- Water Bar -->
-              <div class="chart-bar-group">
-                <div class="chart-label">Agua Requerida</div>
-                <div class="chart-bar-wrap">
-                  <div class="chart-bar water" [style.width.%]="waterBar"></div>
-                </div>
-                <div class="chart-value">{{ outputs.waterRequired | number }} m³</div>
-              </div>
-
-              <!-- Cost Bar -->
-              <div class="chart-bar-group">
-                <div class="chart-label">Costo Total</div>
-                <div class="chart-bar-wrap">
-                  <div class="chart-bar cost" [style.width.%]="costBar"></div>
-                </div>
-                <div class="chart-value">{{ formatCOP(outputs.productionCost) }}</div>
-              </div>
-
-              <!-- Profit Bar -->
-              <div class="chart-bar-group">
-                <div class="chart-label">Margen</div>
-                <div class="chart-bar-wrap">
-                  <div class="chart-bar profit" [style.width.%]="profitBar"
-                    [style.background]="getProfitColor()"></div>
-                </div>
-                <div class="chart-value" [style.color]="getProfitColor()">{{ outputs.profitMargin }}%</div>
-              </div>
-            </div>
+          <!-- Scale Highlight Panel -->
+          <div class="scale-highlight">
+            <div class="scale-icon-container">{{ outputs.cropEmoji }}</div>
+            <div class="scale-title">{{ outputs.scaleLabel }}</div>
+            <div class="scale-area">{{ vars.productionScale | number }} m²</div>
           </div>
 
           <!-- ====== HUD PANELS ====== -->
@@ -109,19 +63,16 @@
               <div class="hud-title"><span class="hud-dot" style="background: #ffaa00;"></span> Eficiencia del Agua</div>
               <div class="hud-value">{{ outputs.waterEfficiency }} kg/m³</div>
             </div>
+            <div class="hud-panel">
+              <div class="hud-title"><span class="hud-dot" [style.background]="getProfitColor()"></span> Ingreso Estimado</div>
+              <div class="hud-value" [style.color]="getProfitColor()">{{ formatCOP(outputs.revenueEstimate) }}</div>
+            </div>
           </div>
 
           <div class="hud-group-bot-left">
             <div class="hud-panel">
-              <div class="hud-title"><span class="hud-dot" style="background: #44aaff;"></span> Agua/Planta</div>
-              <div class="hud-value">{{ outputs.waterPerPlant }} L</div>
-            </div>
-          </div>
-
-          <div class="hud-group-bot-right">
-            <div class="hud-panel">
-              <div class="hud-title"><span class="hud-dot" [style.background]="getProfitColor()"></span> Ingreso</div>
-              <div class="hud-value" [style.color]="getProfitColor()">{{ formatCOP(outputs.revenueEstimate) }}</div>
+              <div class="hud-title"><span class="hud-dot" style="background: #44aaff;"></span> Requerimiento Hídrico</div>
+              <div class="hud-value">{{ outputs.waterRequired | number }} m³</div>
             </div>
           </div>
 

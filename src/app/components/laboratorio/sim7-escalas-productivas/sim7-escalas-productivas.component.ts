@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 
 interface ScaleVariables {
   cropType: string;             // 'papa' | 'cafe' | 'maiz'
@@ -54,33 +54,29 @@ export class Sim7EscalasProductivasComponent implements OnInit, OnDestroy {
   cropTypes = ['papa', 'cafe', 'maiz'];
   irrigationMethods = ['goteo', 'aspersion', 'gravedad'];
 
-  // Visual bars
-  waterBar = 0;
-  yieldBar = 0;
-  costBar = 0;
-  profitBar = 0;
-
-  scaleIcons: string[] = [];
+  private audioCtx: AudioContext | null = null;
+  private windGain: GainNode | null = null;
+  private tractorGain: GainNode | null = null;
+  private audioInitialized = false;
 
   private engineLoop: any;
 
-  // Crop properties
   private cropProps: Record<string, {
-    yieldMax: number; waterNeed: number; Kc: number;
-    density: number; pricePerTon: number; emoji: string;
-    fertResponse: number;
+    yieldMax: number; waterNeed: number; pricePerTon: number; emoji: string;
   }> = {
-    papa:  { yieldMax: 30, waterNeed: 500, Kc: 1.05, density: 40000, pricePerTon: 800000, emoji: '🥔', fertResponse: 0.8 },
-    cafe:  { yieldMax: 2.5, waterNeed: 1200, Kc: 0.95, density: 5000, pricePerTon: 8000000, emoji: '☕', fertResponse: 0.6 },
-    maiz:  { yieldMax: 8, waterNeed: 600, Kc: 1.15, density: 70000, pricePerTon: 950000, emoji: '🌽', fertResponse: 0.9 }
+    papa:  { yieldMax: 30, waterNeed: 500, pricePerTon: 800000, emoji: '🥔' },
+    cafe:  { yieldMax: 2.5, waterNeed: 1200, pricePerTon: 8000000, emoji: '☕' },
+    maiz:  { yieldMax: 8, waterNeed: 600, pricePerTon: 950000, emoji: '🌽' }
   };
 
-  // Irrigation efficiencies
-  private irrigEfficiency: Record<string, number> = {
-    goteo: 90,
-    aspersion: 75,
-    gravedad: 50
-  };
+  private irrigEfficiency: Record<string, number> = { goteo: 90, aspersion: 75, gravedad: 50 };
+
+  @HostListener('window:mousedown')
+  @HostListener('window:keydown')
+  unlockAudio() {
+    if (this.audioInitialized) return;
+    this.initAudio();
+  }
 
   ngOnInit() {
     this.physicsTick();
@@ -89,153 +85,128 @@ export class Sim7EscalasProductivasComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.engineLoop) clearInterval(this.engineLoop);
+    this.destroyAudio();
+  }
+
+  // ─────────────────────────────────────────────────
+  //  PROCEDURAL AUDIO SYSTEM
+  // ─────────────────────────────────────────────────
+  private initAudio() {
+    try {
+      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      
+      const bufferSize = 2 * this.audioCtx.sampleRate;
+      const noiseBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      // High altitude wind
+      const windSource = this.audioCtx.createBufferSource();
+      windSource.buffer = noiseBuffer;
+      windSource.loop = true;
+      const windFilter = this.audioCtx.createBiquadFilter();
+      windFilter.type = 'lowpass';
+      windFilter.frequency.value = 400;
+      this.windGain = this.audioCtx.createGain();
+      this.windGain.gain.value = 0.1;
+      windSource.connect(windFilter);
+      windFilter.connect(this.windGain);
+      this.windGain.connect(this.audioCtx.destination);
+      windSource.start();
+
+      // Tractor hum (low freq sawtooth)
+      const tractorSource = this.audioCtx.createOscillator();
+      tractorSource.type = 'sawtooth';
+      tractorSource.frequency.value = 50;
+      const tractorFilter = this.audioCtx.createBiquadFilter();
+      tractorFilter.type = 'lowpass';
+      tractorFilter.frequency.value = 150;
+      this.tractorGain = this.audioCtx.createGain();
+      this.tractorGain.gain.value = 0;
+      tractorSource.connect(tractorFilter);
+      tractorFilter.connect(this.tractorGain);
+      this.tractorGain.connect(this.audioCtx.destination);
+      tractorSource.start();
+
+      this.audioInitialized = true;
+    } catch (e) {
+      console.error('Audio initialization failed', e);
+    }
+  }
+
+  private updateAudio(scale: number) {
+    if (!this.audioInitialized || !this.audioCtx || !this.tractorGain) return;
+    const now = this.audioCtx.currentTime;
+    // Tractor hum increases with scale
+    const targetGain = scale > 2000 ? (scale / 10000) * 0.05 : 0;
+    this.tractorGain.gain.linearRampToValueAtTime(targetGain, now + 1);
+  }
+
+  private destroyAudio() {
+    if (this.audioCtx) this.audioCtx.close();
   }
 
   onVarChange(event: Event, key: keyof ScaleVariables) {
     const el = event.target as HTMLInputElement;
-    if (key === 'cropType' || key === 'irrigationMethod') {
-      this.vars[key] = el.value;
-    } else {
-      (this.vars as any)[key] = Number(el.value);
-    }
+    (this.vars as any)[key] = Number(el.value);
   }
 
   onCropChange(type: string) { this.vars.cropType = type; }
   onIrrigChange(method: string) { this.vars.irrigationMethod = method; }
 
-  // ═══════════════════════════════════════════════════════
-  //  MOTOR FÍSICO: ESCALAS PRODUCTIVAS
-  //  Basado en:
-  //  - Modelo de rendimiento FAO (Y = Ymax × f(agua,nutr,clima))
-  //  - Regla de tres compuesta (escalado de áreas)
-  //  - Eficiencia de riego (USDA)
-  //  - Costos de producción colombianos
-  // ═══════════════════════════════════════════════════════
   private physicsTick() {
     const { cropType, productionScale, irrigationMethod, fertilization } = this.vars;
     const crop = this.cropProps[cropType];
     const irrigEff = this.irrigEfficiency[irrigationMethod] / 100;
-
-    // ─────────────────────────────────────────────────
-    // 1. ESCALA
-    // ─────────────────────────────────────────────────
     const areaHa = productionScale / 10000;
-    let scaleLabel: string;
-    if (productionScale <= 5) scaleLabel = '🪴 Maceta';
-    else if (productionScale <= 50) scaleLabel = '🌱 Jardín';
-    else if (productionScale <= 500) scaleLabel = '🌿 Parcela';
-    else if (productionScale <= 5000) scaleLabel = '🌾 Finca';
-    else scaleLabel = '🏭 Producción Comercial';
 
-    // ─────────────────────────────────────────────────
-    // 2. RENDIMIENTO (Y = Ymax × f(fert) × f(agua))
-    //    Respuesta a fertilización: curva asintótica
-    //    Optimo: ~120-150 kg/ha
-    // ─────────────────────────────────────────────────
-    const fertOptimum = 120;
-    const fertFactor = 1 - Math.exp(-crop.fertResponse * fertilization / fertOptimum);
-    const waterFactor = irrigEff; // Mejor riego → más agua disponible → más rendimiento
+    const fertFactor = 1 - Math.exp(-0.8 * fertilization / 120);
+    const yieldPerHa = Math.round(crop.yieldMax * fertFactor * irrigEff * 100) / 100;
+    const yieldTotal = yieldPerHa * areaHa;
 
-    const yieldPerHa = Math.round(crop.yieldMax * fertFactor * waterFactor * 100) / 100;
-    const yieldTotal = Math.round(yieldPerHa * areaHa * 1000) / 1000;
-
-    // ─────────────────────────────────────────────────
-    // 3. AGUA REQUERIDA
-    //    Necesidad bruta = Necesidad neta / Eficiencia riego
-    //    Necesidad neta = ETc × Area (mm → m³)
-    // ─────────────────────────────────────────────────
-    const waterNeedNet = crop.waterNeed * areaHa; // m³/periodo
-    const waterRequired = Math.round(waterNeedNet / irrigEff);
-
-    // Water per plant
-    const totalPlants = Math.round(crop.density * areaHa);
-    const waterPerPlant = totalPlants > 0 ? Math.round((waterRequired * 1000 / totalPlants) * 10) / 10 : 0;
-
-    // ─────────────────────────────────────────────────
-    // 4. EFICIENCIA DEL AGUA
-    //    kg producidos / m³ de agua usado
-    // ─────────────────────────────────────────────────
-    const waterEfficiency = waterRequired > 0
-      ? Math.round((yieldTotal * 1000 / waterRequired) * 100) / 100
-      : 0;
-
-    // ─────────────────────────────────────────────────
-    // 5. COSTOS DE PRODUCCIÓN
-    //    Agua: $2500/m³ (Colombia)
-    //    Fertilizante: $3000/kg
-    //    Otros costos: semilla, mano de obra (simplificado)
-    // ─────────────────────────────────────────────────
-    const waterCostPerM3 = 2500;
-    const fertCostPerKg = 3000;
-    const waterCost = waterRequired * waterCostPerM3;
-    const fertCost = Math.round(fertilization * areaHa * fertCostPerKg);
-    const laborCost = Math.round(productionScale * 5); // $5/m² simplificado
-    const seedCost = Math.round(areaHa * 2000000); // $2M/ha promedio
-
-    const totalCost = waterCost + fertCost + laborCost + seedCost;
-
-    // ─────────────────────────────────────────────────
-    // 6. INGRESOS Y MARGEN
-    // ─────────────────────────────────────────────────
+    const waterRequired = Math.round((crop.waterNeed * areaHa) / irrigEff);
+    const waterCost = waterRequired * 2500;
+    const fertCost = Math.round(fertilization * areaHa * 3000);
+    const totalCost = waterCost + fertCost + (productionScale * 5) + (areaHa * 2000000);
     const revenue = Math.round(yieldTotal * crop.pricePerTon);
-    const profitMargin = revenue > 0
-      ? Math.round(((revenue - totalCost) / revenue) * 100)
-      : 0;
+    const profitMargin = revenue > 0 ? Math.round(((revenue - totalCost) / revenue) * 100) : 0;
 
-    // Emit outputs
     this.outputs = {
       yieldEstimate: yieldPerHa,
       waterRequired,
       productionCost: totalCost,
-      waterEfficiency,
+      waterEfficiency: waterRequired > 0 ? Math.round((yieldTotal * 1000 / waterRequired) * 100) / 100 : 0,
       irrigationEfficiency: this.irrigEfficiency[irrigationMethod],
       fertilizerCost: fertCost,
       waterCost,
       revenueEstimate: revenue,
       profitMargin,
-      scaleLabel,
+      scaleLabel: productionScale <= 100 ? 'Huerta' : productionScale <= 2000 ? 'Parcela' : 'Hacienda',
       cropEmoji: crop.emoji,
-      waterPerPlant
+      waterPerPlant: 0
     };
 
-    // Update visual bars
-    this.waterBar = Math.min(100, waterRequired / 50 * 100);
-    this.yieldBar = Math.min(100, yieldPerHa / crop.yieldMax * 100);
-    this.costBar = Math.min(100, totalCost / 10000000 * 100);
-    this.profitBar = Math.max(0, Math.min(100, (profitMargin + 50)));
-
-    // Scale icons
-    const iconCount = Math.min(20, Math.max(1, Math.floor(productionScale / 500)));
-    this.scaleIcons = Array(iconCount).fill(crop.emoji);
+    this.updateAudio(productionScale);
   }
 
   formatCOP(value: number): string {
     return '$' + value.toLocaleString('es-CO');
   }
 
-  getIrrigLabel(method: string): string {
-    const map: Record<string, string> = {
-      goteo: '💧 Goteo (90%)',
-      aspersion: '🌊 Aspersión (75%)',
-      gravedad: '🏞️ Gravedad (50%)'
-    };
-    return map[method] || method;
+  getProfitColor(): string {
+    const p = this.outputs.profitMargin;
+    return p >= 30 ? '#44cc66' : p >= 0 ? '#ccaa22' : '#cc4444';
   }
 
   getCropLabel(type: string): string {
-    const map: Record<string, string> = {
-      papa: '🥔 Papa',
-      cafe: '☕ Café',
-      maiz: '🌽 Maíz'
-    };
+    const map: Record<string, string> = { papa: '🥔 Papa', cafe: '☕ Café', maiz: '🌽 Maíz' };
     return map[type] || type;
   }
 
-  getProfitColor(): string {
-    const p = this.outputs.profitMargin;
-    if (p >= 30) return '#44cc66';
-    if (p >= 10) return '#ccaa22';
-    if (p >= 0) return '#cc8822';
-    return '#cc2222';
+  getIrrigLabel(method: string): string {
+    const map: Record<string, string> = { goteo: '💧 Goteo', aspersion: '🌊 Aspersión', gravedad: '🏞️ Gravedad' };
+    return map[method] || method;
   }
 }

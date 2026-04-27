@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 
 interface ResilienceVariables {
   crisisType: string;           // 'sequia' | 'plaga' | 'inundacion' | 'helada'
@@ -27,7 +27,7 @@ interface ResilienceOutputs {
 })
 export class Sim8ResilienciaAgricolaComponent implements OnInit, OnDestroy {
 
-  Math = Math; // Expose to template
+  Math = Math; 
 
   vars: ResilienceVariables = {
     crisisType: 'sequia',
@@ -52,35 +52,22 @@ export class Sim8ResilienciaAgricolaComponent implements OnInit, OnDestroy {
   crisisTypes = ['sequia', 'plaga', 'inundacion', 'helada'];
   interventionTypes = ['ninguna', 'riego', 'biocontrol', 'drenaje', 'proteccion'];
 
-  // Visual state
-  crackLevel = 0;
-  floodLevel = 0;
-  frostLevel = 0;
-  pestLevel = 0;
-  shieldActive = false;
-  plantSway = 0;
-  fieldGreen = 70;
+  private audioCtx: AudioContext | null = null;
+  private ambientGain: GainNode | null = null;
+  private crisisGain: GainNode | null = null;
+  private audioInitialized = false;
 
   private engineLoop: any;
   private stockHealth = 80;
   private stockDamage = 0;
   private dayCount = 0;
 
-  // Crisis damage profiles
-  private crisisDamage: Record<string, { base: number; accel: number; desc: string }> = {
-    sequia:     { base: 1.2, accel: 0.15, desc: 'Déficit hídrico severo — El suelo se agrieta y las raíces no pueden absorber agua' },
-    plaga:      { base: 1.0, accel: 0.20, desc: 'Ataque masivo de insectos — Larvas devoran hojas y tallos, reduciendo fotosíntesis' },
-    inundacion: { base: 1.5, accel: 0.10, desc: 'Exceso de agua — Las raíces se ahogan por falta de oxígeno (anoxia)' },
-    helada:     { base: 2.0, accel: 0.08, desc: 'Temperaturas bajo cero — Los cristales de hielo rompen las células vegetales' }
-  };
-
-  // Intervention effectiveness per crisis
-  private interventionEffectiveness: Record<string, Record<string, number>> = {
-    sequia:     { ninguna: 0, riego: 0.85, biocontrol: 0.05, drenaje: 0, proteccion: 0.15 },
-    plaga:      { ninguna: 0, riego: 0.05, biocontrol: 0.90, drenaje: 0, proteccion: 0.20 },
-    inundacion: { ninguna: 0, riego: 0,    biocontrol: 0.05, drenaje: 0.85, proteccion: 0.10 },
-    helada:     { ninguna: 0, riego: 0.20, biocontrol: 0,    drenaje: 0, proteccion: 0.80 }
-  };
+  @HostListener('window:mousedown')
+  @HostListener('window:keydown')
+  unlockAudio() {
+    if (this.audioInitialized) return;
+    this.initAudio();
+  }
 
   ngOnInit() {
     this.physicsTick();
@@ -89,15 +76,73 @@ export class Sim8ResilienciaAgricolaComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.engineLoop) clearInterval(this.engineLoop);
+    this.destroyAudio();
+  }
+
+  // ─────────────────────────────────────────────────
+  //  PROCEDURAL AUDIO SYSTEM
+  // ─────────────────────────────────────────────────
+  private initAudio() {
+    try {
+      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      
+      const bufferSize = 2 * this.audioCtx.sampleRate;
+      const noiseBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      // Ambient birds/wind
+      const ambientSource = this.audioCtx.createBufferSource();
+      ambientSource.buffer = noiseBuffer;
+      ambientSource.loop = true;
+      const ambientFilter = this.audioCtx.createBiquadFilter();
+      ambientFilter.type = 'lowpass';
+      ambientFilter.frequency.value = 800;
+      this.ambientGain = this.audioCtx.createGain();
+      this.ambientGain.gain.value = 0.1;
+      ambientSource.connect(ambientFilter);
+      ambientFilter.connect(this.ambientGain);
+      this.ambientGain.connect(this.audioCtx.destination);
+      ambientSource.start();
+
+      // Crisis noise (distorted/harsh)
+      const crisisSource = this.audioCtx.createBufferSource();
+      crisisSource.buffer = noiseBuffer;
+      crisisSource.loop = true;
+      const crisisFilter = this.audioCtx.createBiquadFilter();
+      crisisFilter.type = 'bandpass';
+      crisisFilter.frequency.value = 2000;
+      this.crisisGain = this.audioCtx.createGain();
+      this.crisisGain.gain.value = 0;
+      crisisSource.connect(crisisFilter);
+      crisisFilter.connect(this.crisisGain);
+      this.crisisGain.connect(this.audioCtx.destination);
+      crisisSource.start();
+
+      this.audioInitialized = true;
+    } catch (e) {
+      console.error('Audio initialization failed', e);
+    }
+  }
+
+  private updateAudio(health: number, severity: number) {
+    if (!this.audioInitialized || !this.audioCtx || !this.ambientGain || !this.crisisGain) return;
+    const now = this.audioCtx.currentTime;
+    // Ambient birds fade as health drops
+    this.ambientGain.gain.linearRampToValueAtTime((health / 100) * 0.15, now + 1);
+    // Crisis noise rises with severity and damage
+    this.crisisGain.gain.linearRampToValueAtTime((severity / 10) * (1 - health / 100) * 0.2, now + 1);
+  }
+
+  private destroyAudio() {
+    if (this.audioCtx) this.audioCtx.close();
   }
 
   onVarChange(event: Event, key: keyof ResilienceVariables) {
     const el = event.target as HTMLInputElement;
-    if (key === 'crisisType' || key === 'intervention') {
-      this.vars[key] = el.value;
-    } else {
-      (this.vars as any)[key] = Number(el.value);
-    }
+    (this.vars as any)[key] = Number(el.value);
   }
 
   onCrisisChange(type: string) {
@@ -113,167 +158,52 @@ export class Sim8ResilienciaAgricolaComponent implements OnInit, OnDestroy {
     this.dayCount = 0;
   }
 
-  // ═══════════════════════════════════════════════════════
-  //  MOTOR FÍSICO: RESILIENCIA AGRÍCOLA
-  //  Basado en:
-  //  - Modelo de estrés acumulativo
-  //  - Puntos de inflexión (umbrales de resiliencia)
-  //  - Intervención vs recuperación
-  //  - Dinámicas de colapso y recuperación ecológica
-  // ═══════════════════════════════════════════════════════
   private physicsTick() {
     const { crisisType, crisisSeverity, intervention, interventionIntensity } = this.vars;
-    const crisis = this.crisisDamage[crisisType];
-
     this.dayCount++;
 
-    // ─────────────────────────────────────────────────
-    // 1. DAÑO POR CRISIS (acumulativo, acelerado)
-    //    D(t) = base × severidad × (1 + accel × t)
-    //    El daño se acelera con el tiempo (retroalimentación)
-    // ─────────────────────────────────────────────────
-    const timeAcceleration = 1 + crisis.accel * Math.sqrt(this.dayCount);
-    const rawDamage = crisis.base * (crisisSeverity / 10) * timeAcceleration;
+    const baseDamageMap: Record<string, number> = { sequia: 1.2, plaga: 1.5, inundacion: 2.0, helada: 2.5 };
+    const matchMap: Record<string, string> = { sequia: 'riego', plaga: 'biocontrol', inundacion: 'drenaje', helada: 'proteccion' };
 
-    // ─────────────────────────────────────────────────
-    // 2. EFICACIA DE LA INTERVENCIÓN
-    //    Depende de: tipo de intervención × tipo de crisis
-    //    + intensidad aplicada
-    // ─────────────────────────────────────────────────
-    const matchFactor = this.interventionEffectiveness[crisisType]?.[intervention] || 0;
-    const interventionEfficacy = Math.round(matchFactor * (interventionIntensity / 100) * 100);
+    const rawDamage = baseDamageMap[crisisType] * (crisisSeverity / 10) * (1 + this.dayCount * 0.05);
+    const efficacy = matchMap[crisisType] === intervention ? (interventionIntensity / 100) : 0;
+    
+    const netDamage = Math.max(0, rawDamage * (1 - efficacy));
+    const recovery = this.stockHealth > 20 ? 0.5 : 0;
 
-    // ─────────────────────────────────────────────────
-    // 3. DAÑO NETO = Daño bruto - Mitigación
-    // ─────────────────────────────────────────────────
-    const mitigation = rawDamage * (interventionEfficacy / 100);
-    const netDamage = Math.max(0, rawDamage - mitigation);
+    this.stockHealth = Math.max(0, Math.min(100, this.stockHealth - netDamage + recovery));
+    this.stockDamage = Math.min(100, this.stockDamage + netDamage * 0.5);
 
-    // ─────────────────────────────────────────────────
-    // 4. RECUPERACIÓN NATURAL
-    //    Tasa base de recuperación (resiliencia del sistema)
-    //    Disminuye si la salud es muy baja
-    // ─────────────────────────────────────────────────
-    let recoveryRate = 0;
-    if (this.stockHealth > 50) {
-      recoveryRate = 0.5; // Buena capacidad de recuperación
-    } else if (this.stockHealth > 20) {
-      recoveryRate = 0.2; // Capacidad reducida
-    } else {
-      recoveryRate = 0;   // Sin capacidad natural
-    }
+    const tippingPoint = this.stockHealth < 15;
 
-    // Intervention boosts recovery
-    if (interventionEfficacy > 50) {
-      recoveryRate += 0.3 * (interventionEfficacy / 100);
-    }
-
-    // ─────────────────────────────────────────────────
-    // 5. ACTUALIZAR SALUD DEL SISTEMA
-    // ─────────────────────────────────────────────────
-    this.stockHealth -= netDamage;
-    this.stockHealth += recoveryRate;
-    this.stockHealth = Math.max(0, Math.min(100, this.stockHealth));
-
-    this.stockDamage += netDamage * 0.3;
-    this.stockDamage = Math.min(100, this.stockDamage);
-
-    // ─────────────────────────────────────────────────
-    // 6. PUNTO DE INFLEXIÓN (COLAPSO)
-    //    Si salud < 15% → colapso irreversible sin intervención fuerte
-    // ─────────────────────────────────────────────────
-    const tippingPointReached = this.stockHealth < 15;
-    if (tippingPointReached && interventionEfficacy < 60) {
-      this.stockHealth = Math.max(0, this.stockHealth - 0.5);
-    }
-
-    // ─────────────────────────────────────────────────
-    // 7. ESTADOS DEL SISTEMA
-    // ─────────────────────────────────────────────────
-    let systemStatus: string;
-    let resilience: string;
-    if (this.stockHealth >= 70) {
-      systemStatus = '🟢 Estable';
-      resilience = 'Alta';
-    } else if (this.stockHealth >= 50) {
-      systemStatus = '🟡 En Riesgo';
-      resilience = 'Media';
-    } else if (this.stockHealth >= 25) {
-      systemStatus = '🟠 Crítico';
-      resilience = 'Baja';
-    } else if (this.stockHealth > 5) {
-      systemStatus = '🔴 Colapso Inminente';
-      resilience = 'Mínima';
-    } else {
-      systemStatus = '⚫ Colapsado';
-      resilience = 'Nula';
-    }
-
-    // Intervention description
-    const interventionDescs: Record<string, string> = {
-      ninguna: 'Sin intervención — El sistema depende solo de su resiliencia natural',
-      riego: '💧 Riego de emergencia — Inyección de agua para compensar déficit hídrico',
-      biocontrol: '🐞 Biocontrol — Liberación de depredadores naturales de plagas',
-      drenaje: '🏗️ Drenaje — Canales para evacuar exceso de agua del campo',
-      proteccion: '🛡️ Protección térmica — Cubiertas y mantas para proteger contra heladas'
-    };
-
-    // Emit outputs
     this.outputs = {
       systemHealth: Math.round(this.stockHealth),
       accumulatedDamage: Math.round(this.stockDamage),
-      interventionEfficacy,
-      systemStatus,
-      recoveryRate: Math.round(recoveryRate * 100) / 100,
+      interventionEfficacy: Math.round(efficacy * 100),
+      systemStatus: this.stockHealth > 70 ? '🟢 Estable' : this.stockHealth > 30 ? '🟡 Riesgo' : '🔴 Crítico',
+      recoveryRate: recovery,
       daysInCrisis: this.dayCount,
-      crisisDescription: crisis.desc,
-      interventionDescription: interventionDescs[intervention] || '',
-      tippingPointReached,
-      resilience
+      crisisDescription: `Impacto de ${crisisType} nivel ${crisisSeverity}`,
+      interventionDescription: `Intervención via ${intervention}`,
+      tippingPointReached: tippingPoint,
+      resilience: this.stockHealth > 50 ? 'Alta' : 'Baja'
     };
 
-    this.updateVisuals(crisisType, this.stockHealth, interventionEfficacy);
-  }
-
-  private updateVisuals(crisis: string, health: number, efficacy: number) {
-    // Field green (100 = lush, 0 = dead)
-    this.fieldGreen = Math.max(0, health);
-
-    // Crisis-specific visuals
-    this.crackLevel = crisis === 'sequia' ? (100 - health) : 0;
-    this.floodLevel = crisis === 'inundacion' ? (100 - health) * 0.5 : 0;
-    this.frostLevel = crisis === 'helada' ? (100 - health) * 0.6 : 0;
-    this.pestLevel = crisis === 'plaga' ? (100 - health) * 0.4 : 0;
-
-    // Shield active when intervention efficacy is high
-    this.shieldActive = efficacy > 40;
-
-    // Plant sway (wind/stress)
-    this.plantSway = (100 - health) * 0.3;
-  }
-
-  getCrisisLabel(type: string): string {
-    const map: Record<string, string> = {
-      sequia: '☀️ Sequía', plaga: '🐛 Plaga',
-      inundacion: '🌊 Inundación', helada: '❄️ Helada'
-    };
-    return map[type] || type;
-  }
-
-  getInterventionLabel(type: string): string {
-    const map: Record<string, string> = {
-      ninguna: '❌ Ninguna', riego: '💧 Riego',
-      biocontrol: '🐞 Biocontrol', drenaje: '🏗️ Drenaje',
-      proteccion: '🛡️ Protección'
-    };
-    return map[type] || type;
+    this.updateAudio(this.stockHealth, crisisSeverity);
   }
 
   getHealthColor(): string {
     const h = this.outputs.systemHealth;
-    if (h >= 70) return '#44cc66';
-    if (h >= 45) return '#ccaa22';
-    if (h >= 20) return '#cc6622';
-    return '#cc2222';
+    return h > 70 ? '#44cc66' : h > 30 ? '#ccaa22' : '#cc4444';
+  }
+
+  getCrisisLabel(type: string): string {
+    const map: Record<string, string> = { sequia: '☀️ Sequía', plaga: '🐛 Plaga', inundacion: '🌊 Inundación', helada: '❄️ Helada' };
+    return map[type] || type;
+  }
+
+  getInterventionLabel(type: string): string {
+    const map: Record<string, string> = { ninguna: '❌ Ninguna', riego: '💧 Riego', biocontrol: '🐞 Biocontrol', drenaje: '🏗️ Drenaje', proteccion: '🛡️ Protección' };
+    return map[type] || type;
   }
 }

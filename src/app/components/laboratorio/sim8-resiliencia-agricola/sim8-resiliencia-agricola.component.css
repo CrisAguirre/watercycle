@@ -1,372 +1,191 @@
 /* ═══════════════════════════════════════════════════════
-   SIMULACIÓN 8: RESILIENCIA AGRÍCOLA — Estilos Premium
-   Fondo: Campo bajo estrés climático
-   Tonos: Rojo/Naranja (crisis) + Verde (recuperación)
+   SIMULACIÓN 8: RESILIENCIA AGRÍCOLA — Estilos Ultra-Premium
    ═══════════════════════════════════════════════════════ */
 
-/* ───── Shared tab content styles ───── */
-.activity-content, .eval-content { max-width: 700px; }
-.activity-content h2, .eval-content h2 { font-size: 1.3rem; color: #fff; margin: 0 0 12px; }
-.activity-content p, .eval-content p { color: #9ca3af; line-height: 1.7; font-size: 0.9rem; }
-.activity-steps { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
-.step {
-  display: flex; align-items: flex-start; gap: 14px; padding: 16px;
-  border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
-}
-.step-num {
-  min-width: 32px; height: 32px; border-radius: 50%;
-  background: linear-gradient(135deg, #cc4422, #ff6644);
-  color: #fff; display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 0.85rem;
-}
-.step p { margin: 0; color: #d1d5db; font-size: 0.88rem; }
-.eval-placeholder {
-  margin-top: 16px; padding: 20px; border-radius: 12px;
-  background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
-}
-.eval-placeholder p { margin: 0 0 12px; }
-.placeholder-badge {
-  display: inline-block; padding: 6px 16px; border-radius: 20px;
-  font-size: 0.78rem; font-weight: 600; color: #fbbf24;
-  background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2);
+.sim-container {
+  display: flex;
+  flex-direction: column;
+  margin: -24px;
+  background: #050a17;
 }
 
-/* ───── Simulation Layout ───── */
-.sim-container { display: flex; flex-direction: column; margin: -24px; }
-.sim-main { display: flex; min-height: 70vh; background: #0a0e1a; }
+.sim-main {
+  display: flex;
+  min-height: 75vh;
+  background: #000;
+}
 
-/* ───── Visual Area ───── */
+/* ───── Visual Area (Split View) ───── */
 .sim-visual-area {
-  flex: 2; position: relative; overflow: hidden;
-  min-height: 500px;
-}
-
-/* ───── Crisis Sky ───── */
-.crisis-sky {
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  transition: background 1.5s ease;
-  z-index: 1;
-}
-.sky-drought {
-  background: linear-gradient(180deg, #3a2a10 0%, #5a4020 30%, #8a6a30 60%, #6a5020 100%);
-}
-.sky-flood {
-  background: linear-gradient(180deg, #1a2a3a 0%, #2a3a4a 30%, #3a4a5a 60%, #2a3a3a 100%);
-}
-.sky-frost {
-  background: linear-gradient(180deg, #2a3a4a 0%, #4a5a6a 30%, #6a7a8a 60%, #8a9aaa 100%);
-}
-.sky-pest {
-  background: linear-gradient(180deg, #1a2a18 0%, #2a3a20 30%, #3a5a30 60%, #2a4020 100%);
-}
-
-/* ───── Shield Effect ───── */
-.shield-effect {
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse at center 60%,
-    rgba(100,200,255,0.15) 0%,
-    rgba(100,200,255,0.05) 50%,
-    transparent 70%
-  );
-  border: 2px solid rgba(100,200,255,0.15);
-  border-radius: 50%;
-  z-index: 20; pointer-events: none;
-  animation: shieldPulse 3s ease-in-out infinite;
-  transition: opacity 0.5s ease;
-}
-@keyframes shieldPulse {
-  0%, 100% { transform: scale(0.95); }
-  50% { transform: scale(1.02); }
-}
-
-/* ───── Drought Cracks ───── */
-.crack-overlay {
-  position: absolute; bottom: 0; left: 0; right: 0; height: 40%;
-  z-index: 10; pointer-events: none;
-  transition: opacity 1s ease;
-}
-.crack {
-  position: absolute; bottom: 0;
-  width: 3px; background: rgba(80,60,30,0.8);
-  transform-origin: bottom center;
-}
-.crack-1 { left: 25%; height: 60%; transform: rotate(-5deg); }
-.crack-2 { left: 50%; height: 80%; transform: rotate(3deg); }
-.crack-3 { right: 30%; height: 50%; transform: rotate(-8deg); }
-.crack::after {
-  content: ''; position: absolute; top: 0;
-  width: 2px; height: 40%;
-  background: rgba(80,60,30,0.6);
-}
-.crack-1::after { left: 8px; transform: rotate(30deg); transform-origin: top left; }
-.crack-2::after { right: 6px; transform: rotate(-25deg); transform-origin: top right; }
-.crack-3::after { left: 5px; transform: rotate(20deg); transform-origin: top left; }
-
-/* ───── Flood Overlay ───── */
-.flood-overlay {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  background: linear-gradient(180deg,
-    rgba(60,120,180,0.1) 0%,
-    rgba(60,120,180,0.3) 40%,
-    rgba(40,80,140,0.5) 100%
-  );
-  z-index: 10; pointer-events: none;
-  transition: height 1s ease;
-  animation: floodWave 3s ease-in-out infinite;
-}
-@keyframes floodWave {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-/* ───── Frost Overlay ───── */
-.frost-overlay {
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(180deg,
-    rgba(200,220,255,0.15) 0%,
-    rgba(180,200,240,0.1) 50%,
-    rgba(200,220,255,0.2) 100%
-  );
-  z-index: 10; pointer-events: none;
-  transition: opacity 1s ease;
-}
-
-/* ───── Pest Swarm ───── */
-.pest-swarm {
-  position: absolute; top: 20%; left: 0; right: 0; bottom: 40%;
-  z-index: 12; pointer-events: none;
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;
-  padding: 20px;
-}
-.pest-bug {
-  font-size: 1.5rem;
-  animation: pestFly 4s ease-in-out infinite;
-}
-@keyframes pestFly {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(20px, -15px) rotate(10deg); }
-  50% { transform: translate(-10px, -25px) rotate(-5deg); }
-  75% { transform: translate(15px, -10px) rotate(8deg); }
-  100% { transform: translate(0, 0) rotate(0deg); }
-}
-
-/* ───── Field/Crops ───── */
-.resilience-field {
-  position: absolute; bottom: 8%; left: 0; right: 0;
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  z-index: 5;
-  transition: filter 1s ease;
-}
-.crop-row {
-  display: flex; gap: 15px; justify-content: center;
-}
-.field-plant {
-  font-size: 2rem;
-  transition: transform 0.5s ease;
-  display: inline-block;
-}
-
-/* ───── Health Bar (Centered) ───── */
-.health-bar-container {
-  position: absolute; top: 15px; left: 50%;
-  transform: translateX(-50%);
-  z-index: 25; text-align: center;
-  width: 300px;
-}
-.health-bar-label {
-  font-size: 0.65rem; color: #aaa;
-  text-transform: uppercase; letter-spacing: 2px;
-  margin-bottom: 6px; font-weight: 700;
-}
-.health-bar-track {
-  width: 100%; height: 24px;
-  background: rgba(0,0,0,0.6);
-  border-radius: 12px; overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.15);
+  flex: 2;
   position: relative;
-  backdrop-filter: blur(4px);
+  overflow: hidden;
+  background: url('/assets/images/sim-bgs/sim8-resiliencia.png') no-repeat center center;
+  background-size: cover;
+  box-shadow: inset 0 0 120px rgba(0,0,0,0.8);
 }
-.health-bar-fill {
-  height: 100%; border-radius: 12px;
-  transition: width 0.5s ease, background 0.5s ease;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+
+/* ───── Climate Effects ───── */
+.climate-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  transition: background 2s ease;
 }
-.health-bar-text {
-  position: absolute; top: 50%; left: 50%;
+
+.drought-glow {
+  background: radial-gradient(circle at center, rgba(255, 100, 0, 0.1), transparent 80%);
+}
+
+.flood-wash {
+  background: rgba(0, 50, 100, 0.1);
+}
+
+/* ───── Resilience Shield ───── */
+.resilience-shield {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 0.8rem; font-weight: 800; color: #fff;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-}
-.health-bar-status {
-  font-size: 0.85rem; font-weight: 700;
-  margin-top: 6px;
-  transition: color 0.5s ease;
-  text-shadow: 0 0 10px currentColor;
-}
-
-/* ───── Tipping Warning ───── */
-.tipping-warning {
-  position: absolute; bottom: 45%; left: 50%;
-  transform: translateX(-50%);
-  background: rgba(200,30,30,0.9);
-  color: #fff; padding: 8px 20px;
-  border-radius: 8px; font-size: 0.75rem; font-weight: 700;
-  z-index: 30; white-space: nowrap;
-  animation: warningBlink 1s ease-in-out infinite alternate;
-  box-shadow: 0 0 20px rgba(200,30,30,0.5);
-}
-@keyframes warningBlink {
-  0% { opacity: 0.7; }
-  100% { opacity: 1; }
+  width: 300px;
+  height: 300px;
+  border: 2px solid rgba(100, 255, 150, 0.3);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(100, 255, 150, 0.05) 0%, transparent 70%);
+  z-index: 20;
+  pointer-events: none;
+  animation: pulseShield 4s ease-in-out infinite;
+  transition: opacity 1s ease, transform 1s ease;
 }
 
-/* ───── HUD Panels ───── */
+@keyframes pulseShield {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.6; }
+}
+
+/* ───── HUD Panels (Glassmorphism) ───── */
 .hud-panel {
-  background: rgba(0,0,0,0.55);
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 8px; padding: 10px 14px;
-  color: #fff; font-family: 'Inter', sans-serif;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-  pointer-events: none; z-index: 15; min-width: 150px;
-}
-.hud-title { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; color: #bbb; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-.hud-value { font-size: 1.15rem; font-weight: bold; text-shadow: 0 0 8px rgba(255,255,255,0.2); transition: color 0.5s; }
-.hud-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
-
-.hud-group-top { position: absolute; top: 55px; right: 12px; display: flex; flex-direction: column; gap: 8px; z-index: 15; }
-.hud-group-bot-left { position: absolute; bottom: 12px; left: 12px; z-index: 15; }
-.hud-group-bot-right { position: absolute; bottom: 12px; right: 12px; z-index: 15; }
-
-/* ───── Control Panel ───── */
-.sim-controls {
-  flex: 1; min-width: 300px; max-width: 380px;
-  padding: 20px; display: flex; flex-direction: column; gap: 10px;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border-left: 1px solid rgba(255,255,255,0.08);
-  overflow-y: auto; z-index: 10;
-}
-.panel-title {
-  text-align: center; font-size: 1.1rem; font-weight: 700;
-  color: #ff6644; margin: 0 0 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 10px;
+  background: rgba(10, 15, 25, 0.75);
+  backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #fff;
+  min-width: 180px;
 }
 
-/* ───── Selector Buttons ───── */
-.selector-group { margin-bottom: 6px; }
-.selector-group label {
-  font-weight: 600; font-size: 0.82rem; color: #e0e0e0;
-  display: block; margin-bottom: 6px;
-}
-.selector-buttons { display: flex; gap: 5px; flex-wrap: wrap; }
-.sel-btn {
-  flex: 1; min-width: 65px; padding: 7px 4px;
-  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px; color: #ccc; font-size: 0.7rem; font-weight: 600;
-  cursor: pointer; transition: all 0.3s ease; text-align: center;
-}
-.sel-btn:hover { background: rgba(255,255,255,0.1); }
-.crisis-btn.active {
-  background: rgba(204,68,34,0.3); border-color: #cc4422;
-  color: #fff; box-shadow: 0 0 10px rgba(204,68,34,0.3);
-}
-.int-btn.active {
-  background: rgba(68,170,255,0.2); border-color: #44aaff;
-  color: #fff; box-shadow: 0 0 10px rgba(68,170,255,0.3);
+.hud-group-top {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 30;
 }
 
-.slider-group { margin-bottom: 2px; }
-.slider-group label { font-weight: 600; font-size: 0.82rem; color: #e0e0e0; display: block; margin-bottom: 4px; }
-.slider-group label strong { color: #ff8866; }
-.slider-hint { font-size: 0.7rem; color: #666; margin-top: 2px; font-style: italic; }
+.hud-group-bot-left {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 30;
+}
 
-.neon-slider {
-  -webkit-appearance: none; width: 100%; height: 6px;
-  background: rgba(255,255,255,0.1); border-radius: 5px;
-  border: 1px solid rgba(255,255,255,0.08); margin-top: 4px;
+/* ───── Health Bar (Top Center) ───── */
+.health-monitor {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  z-index: 40;
+  text-align: center;
 }
-.neon-slider.danger::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
-  background: #cc4422; cursor: pointer;
-  box-shadow: 0 0 10px rgba(204,68,34,0.6); transition: transform 0.2s;
-}
-.neon-slider.rescue::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
-  background: #44aaff; cursor: pointer;
-  box-shadow: 0 0 10px rgba(68,170,255,0.6); transition: transform 0.2s;
-}
-.neon-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
-/* ───── Reset Button ───── */
-.reset-btn {
-  width: 100%; padding: 10px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 8px; color: #aaa;
-  font-size: 0.85rem; font-weight: 600;
-  cursor: pointer; transition: all 0.3s ease;
-}
-.reset-btn:hover {
+.health-track {
+  width: 100%;
+  height: 12px;
   background: rgba(255,255,255,0.1);
-  color: #fff; border-color: rgba(255,255,255,0.3);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 8px;
 }
 
-/* ───── Monitor Panel ───── */
-.monitor-panel {
-  margin-top: auto; background: rgba(0,0,0,0.4);
-  padding: 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);
+.health-fill {
+  height: 100%;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0.5s ease;
 }
-.monitor-title { color: #888; font-size: 0.85rem; margin: 0 0 10px; font-weight: 600; }
-.monitor-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
-.monitor-label { font-size: 0.75rem; color: #999; }
-.monitor-value { font-size: 0.78rem; color: #ddd; font-weight: 600; text-align: right; }
 
-.meter-row { margin: 8px 0; }
-.meter-row span { font-size: 0.78rem; color: #bbb; display: block; margin-bottom: 4px; }
-.meter-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
-.fill { height: 100%; transition: width 0.4s ease; border-radius: 4px; }
-.fill.health { box-shadow: 0 0 8px rgba(100,200,80,0.4); }
+/* ───── Controls Panel ───── */
+.sim-controls {
+  flex: 1;
+  min-width: 340px;
+  background: rgba(13, 17, 23, 0.9);
+  backdrop-filter: blur(25px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
 
-/* ───── Educational Footer ───── */
+.panel-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ff6644;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 12px;
+  margin-bottom: 8px;
+}
+
+.sel-btn {
+  flex: 1;
+  padding: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #ccc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.crisis-btn.active {
+  background: rgba(255, 102, 68, 0.2);
+  border-color: #ff6644;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 102, 68, 0.4);
+}
+
+.int-btn.active {
+  background: rgba(100, 255, 150, 0.2);
+  border-color: #64ff96;
+  color: #fff;
+}
+
+/* ───── Educational Guide ───── */
 .educational-guide {
-  background: linear-gradient(180deg, #1a0a08 0%, #0a0504 100%);
-  padding: 50px 5%;
-  border-top: 3px solid #cc4422;
-  box-shadow: inset 0 10px 30px rgba(0,0,0,0.8);
-  display: flex; justify-content: center;
+  background: #050a17;
+  padding: 60px 20px;
 }
-.guide-content {
-  width: 100%; max-width: 1000px; padding: 40px; border-radius: 12px;
-  background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
-}
-.guide-content p { color: #ccc; line-height: 1.6; font-size: 1rem; margin-top: 10px; }
-.guide-content ul { color: #ccc; line-height: 1.8; margin-top: 10px; }
-.guide-content strong { color: #fff; }
-.guide-content h2 { margin-top: 0; font-size: 1.8rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
-.text-accent { color: #ff6644; }
-.text-accent-2 { color: #cc4422; }
-.mt-4 { margin-top: 35px; font-weight: 600; font-size: 1.2rem; }
 
-.math-box {
-  background: rgba(0,0,0,0.6); padding: 25px; border-radius: 8px;
-  border-left: 3px solid #cc4422; margin-top: 20px;
+.guide-content {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 40px;
+  border-radius: 24px;
 }
-.formula { font-family: 'Courier New', Courier, monospace; font-size: 1.05rem !important; margin-bottom: 5px !important; color: #fff !important; }
-.expl { color: #999 !important; font-style: italic; margin-top: 0 !important; font-size: 0.9rem !important; }
-.separator { border-color: rgba(255,255,255,0.05); margin: 12px 0; }
 
 /* ───── RESPONSIVE ───── */
-@media screen and (max-width: 800px) {
+@media (max-width: 900px) {
   .sim-main { flex-direction: column; }
-  .sim-visual-area { min-height: 45vh; }
-  .sim-controls { max-width: 100%; min-width: 0; border-left: none; border-top: 2px solid #cc4422; }
-  .health-bar-container { width: 220px; }
-  .tipping-warning { font-size: 0.6rem; white-space: normal; text-align: center; width: 80%; }
-  .hud-group-top { transform: scale(0.65); transform-origin: top right; }
-  .hud-group-bot-left { transform: scale(0.65); transform-origin: bottom left; }
-  .hud-group-bot-right { transform: scale(0.65); transform-origin: bottom right; }
-  .guide-content { padding: 20px; }
-  .guide-content h2 { font-size: 1.3rem; }
-  .selector-buttons { flex-wrap: wrap; }
+  .sim-controls { min-width: 100%; border-left: none; }
+  .sim-visual-area { height: 45vh; }
+  .hud-panel { transform: scale(0.8); transform-origin: top right; }
 }

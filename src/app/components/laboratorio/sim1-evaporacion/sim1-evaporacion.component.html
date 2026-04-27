@@ -43,45 +43,57 @@
 
         <!-- ====== ÁREA VISUAL ====== -->
         <div class="sim-visual-area">
-          <!-- Sol dinámico -->
-          <div class="evap-sun" [style.opacity]="vars.solarRadiation / 100 * 0.7 + 0.3"
-            [style.transform]="'scale(' + (0.7 + vars.solarRadiation / 100 * 0.5) + ')'">
+          <!-- SVG Filters for Realistic Effects -->
+          <svg style="position: absolute; width: 0; height: 0;">
+            <filter id="heatDistortion">
+              <feTurbulence type="fractalNoise" baseFrequency="0.01 0.05" numOctaves="2" seed="1">
+                <animate attributeName="seed" from="1" to="100" dur="10s" repeatCount="indefinite" />
+              </feTurbulence>
+              <feDisplacementMap in="SourceGraphic" scale="15" />
+            </filter>
+          </svg>
+
+          <!-- Sol dinámico con Halo -->
+          <div class="solar-halo" *ngIf="vars.solarRadiation > 20"
+               [style.opacity]="vars.solarRadiation / 100 * 0.5"
+               [style.transform]="'scale(' + (2 + vars.solarRadiation / 100 * 2) + ')'">
+          </div>
+          <div class="evap-sun" [style.opacity]="vars.solarRadiation / 100 * 0.8 + 0.2"
+            [style.transform]="'scale(' + (0.8 + vars.solarRadiation / 100 * 0.6) + ')'">
           </div>
 
-          <!-- Rayos solares dinámicos -->
-          <div class="solar-rays" [style.opacity]="vars.solarRadiation / 100 * 0.6">
-            <div class="ray ray-1"></div>
-            <div class="ray ray-2"></div>
-            <div class="ray ray-3"></div>
-            <div class="ray ray-4"></div>
-            <div class="ray ray-5"></div>
+          <!-- Heat shimmer container (Applying distortion) -->
+          <div class="heat-shimmer-container" *ngIf="heatShimmerActive">
+            <!-- Partículas de Vapor -->
+            <div class="vapor-particle" *ngFor="let p of vaporParticles"
+              [style.left]="p.left"
+              [style.width]="p.size"
+              [style.height]="p.size"
+              [style.animationDuration]="p.duration"
+              [style.animationDelay]="p.delay">
+            </div>
           </div>
 
-          <!-- Heat shimmer overlay -->
-          <div class="heat-shimmer" *ngIf="heatShimmerActive"></div>
-
-          <!-- Boiling bubbles overlay -->
-          <div class="boiling-overlay" *ngIf="boilingActive"></div>
-
-          <!-- Vapor Particles (Rising from water) -->
-          <div class="vapor-particle" *ngFor="let p of vaporParticles"
+          <!-- Partículas fuera del contenedor de distorsión para variedad -->
+          <div class="vapor-particle" *ngFor="let p of vaporParticles.slice(0, 5)"
             [style.left]="p.left"
             [style.width]="p.size"
             [style.height]="p.size"
             [style.animationDuration]="p.duration"
-            [style.animationDelay]="p.delay">
+            [style.animationDelay]="p.delay"
+            style="filter: blur(8px); opacity: 0.3;">
           </div>
 
-          <!-- Water Surface (animated) -->
+          <!-- Water Surface Overlay -->
           <div class="water-body"
-            [style.background]="'linear-gradient(180deg, ' + getPhaseColor() + '33 0%, ' + getPhaseColor() + '88 50%, #001a33 100%)'">
-            <div class="wave wave-1"></div>
-            <div class="wave wave-2"></div>
-            <div class="wave wave-3"></div>
+            [style.background]="'linear-gradient(180deg, ' + getPhaseColor() + '22 0%, ' + getPhaseColor() + '44 100%)'">
+            <div class="wave"></div>
           </div>
 
-          <!-- Ice overlay (when frozen) -->
-          <div class="ice-overlay" *ngIf="vars.waterTemperature <= 0"></div>
+          <!-- Boiling bubbles overlay -->
+          <div class="boiling-bubbles" *ngIf="boilingActive">
+            <!-- Podemos añadir partículas de burbujas aquí más adelante -->
+          </div>
 
           <!-- ====== HUD PANELS ====== -->
           <div class="hud-group-top">
@@ -96,20 +108,9 @@
               </div>
               <div class="hud-value">{{ outputs.waterSurfaceTemp }} °C</div>
             </div>
-          </div>
-
-          <div class="hud-group-bot-left">
             <div class="hud-panel">
               <div class="hud-title"><span class="hud-dot" style="background: #aa88ff;"></span> Estado de Fase</div>
               <div class="hud-value hud-value-sm">{{ outputs.phaseState }}</div>
-            </div>
-          </div>
-
-          <div class="hud-group-bot-right">
-            <div class="hud-panel">
-              <div class="hud-title"><span class="hud-dot" style="background: #00ffa5;"></span> Déficit de P. Vapor
-              </div>
-              <div class="hud-value">{{ outputs.vaporPressureDeficit }} kPa</div>
             </div>
           </div>
 

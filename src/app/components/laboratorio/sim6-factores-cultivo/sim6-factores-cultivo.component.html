@@ -44,70 +44,43 @@
         <!-- ====== ÁREA VISUAL ====== -->
         <div class="sim-visual-area">
 
-          <!-- Sky -->
-          <div class="crop-sky">
-            <div class="crop-sun"
-              [style.opacity]="vars.temperature > 20 ? 0.8 : 0.3"
-              [style.transform]="'scale(' + (0.6 + vars.temperature / 40 * 0.6) + ')'">
-            </div>
-          </div>
+          <!-- Heat Shimmer Effect (High T) -->
+          <div class="heat-shimmer" [style.opacity]="vars.temperature > 32 ? (vars.temperature - 32) / 8 : 0"></div>
 
-          <!-- Plant Area -->
-          <div class="crop-field">
-            <!-- Main Plant -->
-            <div class="plant-container">
-              <div class="plant"
-                [style.height.%]="plantHeight"
-                [style.filter]="'hue-rotate(' + (outputs.cropHealth < 50 ? (50 - outputs.cropHealth) * 1.5 : 0) + 'deg)'">
-                <!-- Leaves -->
-                <div class="leaf leaf-left" [style.background]="leafColor"></div>
-                <div class="leaf leaf-right" [style.background]="leafColor"></div>
-                <div class="leaf leaf-left-2" [style.background]="leafColor" *ngIf="plantHeight > 45"></div>
-                <div class="leaf leaf-right-2" [style.background]="leafColor" *ngIf="plantHeight > 45"></div>
-                <div class="leaf leaf-top" [style.background]="leafColor" *ngIf="plantHeight > 60"></div>
-                <!-- Stem -->
-                <div class="stem"></div>
-              </div>
+          <!-- Sun Glow -->
+          <div class="sun-glow" [style.opacity]="vars.temperature / 40"></div>
 
-              <!-- Roots (underground) -->
-              <div class="roots" [style.height.%]="rootDepth">
-                <div class="root root-1"></div>
-                <div class="root root-2"></div>
-                <div class="root root-3"></div>
-              </div>
-            </div>
+          <!-- Plant Wrapper (Dynamic Coffee Shrub) -->
+          <div class="plant-wrapper">
+            <div class="plant-body" [style.height.px]="150 + plantHeight" 
+                 [style.filter]="'saturate(' + (outputs.cropHealth / 100) + ')'">
+              
+              <!-- Procedural Stem -->
+              <div class="stem" style="position: absolute; bottom: 0; left: 50%; width: 10px; height: 100%; 
+                   background: linear-gradient(#5a8a30, #3a2010); border-radius: 5px; transform: translateX(-50%);"></div>
 
-            <!-- Secondary Plants -->
-            <div class="plant-bg plant-bg-1" [style.opacity]="plantHeight / 100 * 0.6"></div>
-            <div class="plant-bg plant-bg-2" [style.opacity]="plantHeight / 100 * 0.5"></div>
-            <div class="plant-bg plant-bg-3" [style.opacity]="plantHeight / 100 * 0.4"></div>
-
-            <!-- Pest Icons -->
-            <div class="pest-icon" *ngFor="let p of pestIcons"
-              [style.left]="p.left"
-              [style.top]="p.top"
-              [style.animationDelay]="p.delay">
-              🐛
-            </div>
-
-            <!-- Water droplets on soil -->
-            <div class="soil-moisture-indicator"
-              [style.opacity]="vars.waterAvailability / 100 * 0.6">
-              💧
-            </div>
-          </div>
-
-          <!-- Soil -->
-          <div class="crop-soil" [style.background]="soilMoistureColor">
-            <div class="soil-nutrient-bar">
-              <div class="nutrient-fill" [style.width.%]="vars.nutrients"
-                [style.background]="vars.nutrients > 60 ? '#44aa44' : vars.nutrients > 30 ? '#aaaa44' : '#aa4444'">
+              <!-- Procedural Leaves -->
+              <div class="leaf" *ngFor="let l of leafParticles"
+                [style.left.px]="l.x"
+                [style.bottom.px]="l.y"
+                [style.width.px]="l.size"
+                [style.height.px]="l.size * 0.4"
+                [style.transform]="'rotate(' + l.rot + 'deg)'"
+                [style.opacity]="l.opacity">
               </div>
             </div>
           </div>
 
-          <!-- Background -->
-          <div class="landscape-bg"></div>
+          <!-- Soil/Nutrient Overlay -->
+          <div class="soil-overlay"></div>
+
+          <!-- Pest Icons -->
+          <div class="pest-icon" *ngFor="let p of pestIcons"
+            [style.left]="p.left"
+            [style.top]="p.top"
+            [style.animationDelay]="p.delay">
+            🐛
+          </div>
 
           <!-- ====== HUD PANELS ====== -->
           <div class="hud-group-top">
@@ -127,13 +100,6 @@
             <div class="hud-panel">
               <div class="hud-title"><span class="hud-dot" style="background: #ffaa00;"></span> Factor Limitante</div>
               <div class="hud-value hud-value-sm">{{ outputs.limitingFactor }}</div>
-            </div>
-          </div>
-
-          <div class="hud-group-bot-right">
-            <div class="hud-panel">
-              <div class="hud-title"><span class="hud-dot" style="background: #44aaff;"></span> Evapotranspiración</div>
-              <div class="hud-value">{{ outputs.evapotranspiration }} mm/día</div>
             </div>
           </div>
 

@@ -44,77 +44,36 @@
         <!-- ====== ÁREA VISUAL ====== -->
         <div class="sim-visual-area">
 
-          <!-- Sky changes with crisis -->
-          <div class="crisis-sky"
-            [class.sky-drought]="vars.crisisType === 'sequia'"
-            [class.sky-flood]="vars.crisisType === 'inundacion'"
-            [class.sky-frost]="vars.crisisType === 'helada'"
-            [class.sky-pest]="vars.crisisType === 'plaga'">
+          <!-- Climate Overlay (Rain, Dust, Frost) -->
+          <div class="climate-overlay" 
+               [class.drought-glow]="vars.crisisType === 'sequia'"
+               [class.flood-wash]="vars.crisisType === 'inundacion'">
           </div>
 
-          <!-- Shield Effect -->
-          <div class="shield-effect" *ngIf="shieldActive"
-            [style.opacity]="outputs.interventionEfficacy / 100 * 0.4">
+          <!-- Resilience Shield -->
+          <div class="resilience-shield" 
+               [style.opacity]="outputs.systemHealth / 100 * 0.5"
+               [style.transform]="'translate(-50%, -50%) scale(' + (0.5 + vars.interventionIntensity / 100) + ')'">
           </div>
 
-          <!-- Crisis-specific overlays -->
-          <!-- Drought cracks -->
-          <div class="crack-overlay" *ngIf="crackLevel > 20"
-            [style.opacity]="crackLevel / 100 * 0.8">
-            <div class="crack crack-1"></div>
-            <div class="crack crack-2"></div>
-            <div class="crack crack-3"></div>
-          </div>
-
-          <!-- Flood water -->
-          <div class="flood-overlay" *ngIf="floodLevel > 10"
-            [style.height.%]="floodLevel">
-          </div>
-
-          <!-- Frost -->
-          <div class="frost-overlay" *ngIf="frostLevel > 10"
-            [style.opacity]="frostLevel / 100 * 0.7">
-          </div>
-
-          <!-- Pest swarm -->
-          <div class="pest-swarm" *ngIf="pestLevel > 10">
-            <div class="pest-bug" *ngFor="let i of [1,2,3,4,5,6]"
-              [style.animationDelay]="i * 0.5 + 's'"
-              [style.opacity]="pestLevel / 100">🐛</div>
-          </div>
-
-          <!-- Field/Crops -->
-          <div class="resilience-field"
-            [style.filter]="'saturate(' + (fieldGreen / 100) + ') brightness(' + (0.5 + fieldGreen / 200) + ')'">
-            <div class="crop-row" *ngFor="let r of [1,2,3]">
-              <span class="field-plant"
-                [style.transform]="'rotate(' + (Math.random() * plantSway - plantSway/2) + 'deg)'">🌿</span>
-              <span class="field-plant"
-                [style.transform]="'rotate(' + (Math.random() * plantSway - plantSway/2) + 'deg)'">🌾</span>
-              <span class="field-plant"
-                [style.transform]="'rotate(' + (Math.random() * plantSway - plantSway/2) + 'deg)'">🌿</span>
-              <span class="field-plant"
-                [style.transform]="'rotate(' + (Math.random() * plantSway - plantSway/2) + 'deg)'">🌾</span>
-              <span class="field-plant"
-                [style.transform]="'rotate(' + (Math.random() * plantSway - plantSway/2) + 'deg)'">🌿</span>
-            </div>
-          </div>
-
-          <!-- Health Bar (large, centered) -->
-          <div class="health-bar-container">
-            <div class="health-bar-label">SALUD DEL SISTEMA</div>
-            <div class="health-bar-track">
-              <div class="health-bar-fill" [style.width.%]="outputs.systemHealth"
-                [style.background]="getHealthColor()">
-              </div>
-              <span class="health-bar-text">{{ outputs.systemHealth }}%</span>
+          <!-- Health Monitor (Top Center) -->
+          <div class="health-monitor">
+            <div class="hud-title">Estabilidad del Sistema</div>
+            <div class="health-track">
+              <div class="health-fill" [style.width.%]="outputs.systemHealth" [style.background]="getHealthColor()"></div>
             </div>
             <div class="health-bar-status" [style.color]="getHealthColor()">{{ outputs.systemStatus }}</div>
           </div>
 
+          <!-- Crisis Icons/Swarm -->
+          <div class="pest-swarm" *ngIf="vars.crisisType === 'plaga'">
+             <div class="pest-bug" *ngFor="let i of [1,2,3,4,5,6,7,8]" 
+                  [style.left]="(Math.random()*100) + '%'" [style.top]="(Math.random()*60) + '%'">🐛</div>
+          </div>
+
           <!-- Tipping Point Warning -->
           <div class="tipping-warning" *ngIf="outputs.tippingPointReached">
-            ⚠️ PUNTO DE INFLEXIÓN ALCANZADO — Daño irreversible sin intervención
+            ⚠️ PUNTO DE INFLEXIÓN: Colapso Inminente
           </div>
 
           <!-- ====== HUD PANELS ====== -->
@@ -129,13 +88,6 @@
             <div class="hud-panel">
               <div class="hud-title"><span class="hud-dot" style="background: #ff6644;"></span> Daño Acumulado</div>
               <div class="hud-value">{{ outputs.accumulatedDamage }}%</div>
-            </div>
-          </div>
-
-          <div class="hud-group-bot-right">
-            <div class="hud-panel">
-              <div class="hud-title"><span class="hud-dot" style="background: #44aaff;"></span> Día de Crisis</div>
-              <div class="hud-value">{{ outputs.daysInCrisis }}</div>
             </div>
           </div>
 

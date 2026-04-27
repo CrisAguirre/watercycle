@@ -44,72 +44,22 @@
         <!-- ====== ÁREA VISUAL — CORTE TRANSVERSAL ====== -->
         <div class="sim-visual-area">
 
-          <!-- Sky area -->
-          <div class="sky-area">
-            <!-- Rain drops -->
-            <div class="rain-drop" *ngFor="let d of rainDrops"
-              [style.left]="d.left"
-              [style.animationDuration]="d.duration"
-              [style.animationDelay]="d.delay">
+          <!-- Saturation Overlay (Reacts to soil moisture) -->
+          <div class="saturation-overlay" [style.opacity]="outputs.soilSaturation / 100 * 0.4"></div>
+
+          <!-- Seeping Particles -->
+          <div class="seepage-container">
+            <div class="seepage-drop" *ngFor="let p of seepageParticles"
+              [style.left]="p.left"
+              [style.animationDuration]="p.duration"
+              [style.animationDelay]="p.delay">
             </div>
           </div>
 
-          <!-- Surface with vegetation -->
-          <div class="surface-layer">
-            <div class="vegetation-cover" [style.opacity]="vars.vegetationCover / 100">
-              <div class="tree tree-1">🌳</div>
-              <div class="tree tree-2">🌿</div>
-              <div class="tree tree-3">🌱</div>
-              <div class="tree tree-4">🌳</div>
-              <div class="tree tree-5">🌿</div>
-            </div>
-
-            <!-- Runoff flow -->
-            <div class="runoff-flow" *ngIf="outputs.runoffRate > 0"
-              [style.height.px]="runoffFlowWidth * 0.3 + 2"
-              [style.opacity]="Math.min(1, outputs.runoffRate / 30)">
-              <div class="runoff-arrow">→→→</div>
-            </div>
+          <!-- Water Table -->
+          <div class="water-table-line" [style.top.%]="waterTableLevel">
+            <div class="water-table-tag">〰️ Nivel Freático: {{ outputs.cumulativeInfiltration }} mm</div>
           </div>
-
-          <!-- Soil Cross Section -->
-          <div class="soil-section">
-            <!-- Horizon A (Topsoil) -->
-            <div class="soil-horizon horizon-a" [style.background]="getSoilColor('A')">
-              <span class="horizon-label">A — Capa Orgánica</span>
-            </div>
-
-            <!-- Horizon B (Subsoil) -->
-            <div class="soil-horizon horizon-b" [style.background]="getSoilColor('B')">
-              <span class="horizon-label">B — Subsuelo</span>
-              <!-- Wetting front -->
-              <div class="wetting-front" [style.top.%]="wettingDepthPercent">
-                <div class="wetting-line"></div>
-                <span class="wetting-tag">▼ Frente húmedo: {{ outputs.wettingFrontDepth }} cm</span>
-              </div>
-            </div>
-
-            <!-- Horizon C (Parent material) -->
-            <div class="soil-horizon horizon-c" [style.background]="getSoilColor('C')">
-              <span class="horizon-label">C — Roca Madre</span>
-            </div>
-
-            <!-- Water Table -->
-            <div class="water-table" [style.top.%]="waterTableLevel">
-              <div class="water-table-line"></div>
-              <span class="water-table-tag">〰️ Nivel Freático</span>
-            </div>
-
-            <!-- Infiltration Arrows -->
-            <div class="infil-arrow" *ngFor="let a of infiltrationArrows"
-              [style.left]="a.left"
-              [style.animationDelay]="a.delay">
-              ↓
-            </div>
-          </div>
-
-          <!-- Background image overlay -->
-          <div class="landscape-bg-overlay"></div>
 
           <!-- ====== HUD PANELS ====== -->
           <div class="hud-group-top">
@@ -127,13 +77,6 @@
             <div class="hud-panel">
               <div class="hud-title"><span class="hud-dot" style="background: #aa8844;"></span> Saturación del Suelo</div>
               <div class="hud-value">{{ outputs.soilSaturation }}%</div>
-            </div>
-          </div>
-
-          <div class="hud-group-bot-right">
-            <div class="hud-panel">
-              <div class="hud-title"><span class="hud-dot" style="background: #4488ff;"></span> Frente Húmedo</div>
-              <div class="hud-value">{{ outputs.wettingFrontDepth }} cm</div>
             </div>
           </div>
 

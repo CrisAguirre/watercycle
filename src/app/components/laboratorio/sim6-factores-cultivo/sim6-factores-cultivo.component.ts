@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 
 interface CropVariables {
   temperature: number;          // 5–40 °C
@@ -47,15 +47,25 @@ export class Sim6FactoresCultivoComponent implements OnInit, OnDestroy {
     cropStatus: 'Saludable'
   };
 
-  plantHeight = 50;
-  leafColor = '#4a8c3f';
+  plantHeight = 100;
+  leafParticles: any[] = [];
   pestIcons: any[] = [];
-  rootDepth = 30;
-  soilMoistureColor = '#6a5030';
+
+  private audioCtx: AudioContext | null = null;
+  private farmGain: GainNode | null = null;
+  private cicadaGain: GainNode | null = null;
+  private audioInitialized = false;
 
   private engineLoop: any;
   private stockBiomass = 0.5;
   private growthDay = 30;
+
+  @HostListener('window:mousedown')
+  @HostListener('window:keydown')
+  unlockAudio() {
+    if (this.audioInitialized) return;
+    this.initAudio();
+  }
 
   ngOnInit() {
     this.physicsTick();
@@ -64,6 +74,70 @@ export class Sim6FactoresCultivoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.engineLoop) clearInterval(this.engineLoop);
+    this.destroyAudio();
+  }
+
+  // ─────────────────────────────────────────────────
+  //  PROCEDURAL AUDIO SYSTEM
+  // ─────────────────────────────────────────────────
+  private initAudio() {
+    try {
+      this.audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      
+      const bufferSize = 2 * this.audioCtx.sampleRate;
+      const noiseBuffer = this.audioCtx.createBuffer(1, bufferSize, this.audioCtx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      // Farm background (wind/birds noise)
+      const farmSource = this.audioCtx.createBufferSource();
+      farmSource.buffer = noiseBuffer;
+      farmSource.loop = true;
+      const farmFilter = this.audioCtx.createBiquadFilter();
+      farmFilter.type = 'lowpass';
+      farmFilter.frequency.value = 500;
+      this.farmGain = this.audioCtx.createGain();
+      this.farmGain.gain.value = 0.05;
+      farmSource.connect(farmFilter);
+      farmFilter.connect(this.farmGain);
+      this.farmGain.connect(this.audioCtx.destination);
+      farmSource.start();
+
+      // Cicadas (High freq noise pulsing)
+      const cicadaSource = this.audioCtx.createOscillator();
+      cicadaSource.type = 'sine';
+      cicadaSource.frequency.value = 4000;
+      const cicadaMod = this.audioCtx.createOscillator();
+      cicadaMod.frequency.value = 8;
+      const cicadaModGain = this.audioCtx.createGain();
+      cicadaModGain.gain.value = 2000;
+      cicadaMod.connect(cicadaModGain);
+      cicadaModGain.connect(cicadaSource.frequency);
+      this.cicadaGain = this.audioCtx.createGain();
+      this.cicadaGain.gain.value = 0;
+      cicadaSource.connect(this.cicadaGain);
+      this.cicadaGain.connect(this.audioCtx.destination);
+      cicadaSource.start();
+      cicadaMod.start();
+
+      this.audioInitialized = true;
+    } catch (e) {
+      console.error('Audio initialization failed', e);
+    }
+  }
+
+  private updateAudio(temp: number) {
+    if (!this.audioInitialized || !this.audioCtx || !this.cicadaGain) return;
+    const now = this.audioCtx.currentTime;
+    // Cicadas get louder with heat
+    const targetGain = temp > 28 ? (temp - 28) / 12 * 0.1 : 0;
+    this.cicadaGain.gain.linearRampToValueAtTime(targetGain, now + 1);
+  }
+
+  private destroyAudio() {
+    if (this.audioCtx) this.audioCtx.close();
   }
 
   onVarChange(event: Event, key: keyof CropVariables) {
@@ -71,178 +145,72 @@ export class Sim6FactoresCultivoComponent implements OnInit, OnDestroy {
     this.vars[key] = Number(el.value);
   }
 
-  // ═══════════════════════════════════════════════════════
-  //  MOTOR FÍSICO: FACTORES DEL CULTIVO
-  //  Basado en:
-  //  - FAO-56 simplificado (evapotranspiración)
-  //  - Curva de crecimiento logístico (biomasa)
-  //  - Factores de estrés (hídrico, térmico, nutricional)
-  //  - Ley de Liebig (factor limitante mínimo)
-  // ═══════════════════════════════════════════════════════
   private physicsTick() {
     const { temperature, waterAvailability, nutrients, pestPressure } = this.vars;
 
-    // ─────────────────────────────────────────────────
-    // 1. ESTRÉS TÉRMICO
-    //    Rango óptimo: 15-30°C
-    //    Fuera del rango → estrés proporcional
-    // ─────────────────────────────────────────────────
-    let thermalStress: number;
-    if (temperature >= 15 && temperature <= 30) {
-      thermalStress = 0;
-    } else if (temperature < 15) {
-      thermalStress = Math.min(1, (15 - temperature) / 10);
-    } else {
-      thermalStress = Math.min(1, (temperature - 30) / 10);
-    }
-
-    // ─────────────────────────────────────────────────
-    // 2. ESTRÉS HÍDRICO (FAO-56 simplificado)
-    //    Ks = (AWC - Dr) / (AWC - RAW)
-    //    Si agua < 40% → estrés significativo
-    // ─────────────────────────────────────────────────
-    let waterStress: number;
-    if (waterAvailability >= 60) {
-      waterStress = 0;
-    } else if (waterAvailability >= 30) {
-      waterStress = (60 - waterAvailability) / 30 * 0.5;
-    } else {
-      waterStress = 0.5 + (30 - waterAvailability) / 30 * 0.5;
-    }
-
-    // ─────────────────────────────────────────────────
-    // 3. EFECTO DE NUTRIENTES (Ley de Liebig)
-    //    El crecimiento se limita por el nutriente más escaso
-    // ─────────────────────────────────────────────────
+    const thermalStress = temperature < 15 ? Math.min(1, (15 - temperature) / 10) : 
+                        temperature > 30 ? Math.min(1, (temperature - 30) / 10) : 0;
+    const waterStress = waterAvailability < 60 ? (60 - waterAvailability) / 60 : 0;
     const nutrientFactor = Math.pow(nutrients / 100, 0.7);
-    const nutrientEfficiency = Math.round(nutrientFactor * 100);
-
-    // ─────────────────────────────────────────────────
-    // 4. EFECTO DE PLAGAS
-    //    Reducción directa del rendimiento
-    //    Exponencial a alta presión
-    // ─────────────────────────────────────────────────
     const pestDamage = Math.pow(pestPressure / 100, 1.5);
 
-    // ─────────────────────────────────────────────────
-    // 5. EVAPOTRANSPIRACIÓN (ETc = Kc × ET0)
-    //    ET0 (referencia) basado en temperatura
-    //    Kc depende del estado de crecimiento
-    // ─────────────────────────────────────────────────
     const et0 = Math.max(0, 0.0023 * (temperature + 17.8) * Math.sqrt(Math.max(0, temperature)) * 12);
     const kc = this.growthDay < 30 ? 0.4 : this.growthDay < 90 ? 0.8 : 1.1;
     const evapotranspiration = Math.round(et0 * kc * (1 - waterStress * 0.5) * 10) / 10;
 
-    // ─────────────────────────────────────────────────
-    // 6. CRECIMIENTO DE BIOMASA (Logístico)
-    //    dB/dt = r × B × (1 - B/K) × Π(factores)
-    // ─────────────────────────────────────────────────
-    const K = 8;           // Capacidad de carga (kg/m²)
-    const r = 0.05;        // Tasa intrínseca
+    const K = 10; 
+    const r = 0.05;
     const combinedFactor = (1 - thermalStress) * (1 - waterStress) * nutrientFactor * (1 - pestDamage);
     const growth = r * this.stockBiomass * (1 - this.stockBiomass / K) * combinedFactor;
     this.stockBiomass = Math.max(0.1, Math.min(K, this.stockBiomass + growth));
-    this.growthDay += 0.5;
-    if (this.growthDay > 180) this.growthDay = 180;
+    this.growthDay = Math.min(180, this.growthDay + 0.5);
 
-    // ─────────────────────────────────────────────────
-    // 7. SALUD DEL CULTIVO (Índice compuesto)
-    // ─────────────────────────────────────────────────
-    const cropHealth = Math.round(
-      Math.max(0, Math.min(100,
-        (1 - thermalStress * 0.3) *
-        (1 - waterStress * 0.35) *
-        nutrientFactor *
-        (1 - pestDamage * 0.35) * 100
-      ))
-    );
+    const cropHealth = Math.round(combinedFactor * 100);
 
-    // ─────────────────────────────────────────────────
-    // 8. FACTOR LIMITANTE (Liebig)
-    // ─────────────────────────────────────────────────
-    const factors: Record<string, number> = {
-      'Temperatura': 1 - thermalStress,
-      'Agua': 1 - waterStress,
-      'Nutrientes': nutrientFactor,
-      'Plagas': 1 - pestDamage
-    };
-    const limitingFactor = Object.entries(factors)
-      .reduce((min, curr) => curr[1] < min[1] ? curr : min)[0];
+    const factors: Record<string, number> = { 'Temperatura': 1 - thermalStress, 'Agua': 1 - waterStress, 'Nutrientes': nutrientFactor, 'Plagas': 1 - pestDamage };
+    const limitingFactor = Object.entries(factors).reduce((min, curr) => curr[1] < min[1] ? curr : min)[0];
 
-    // Growth stage
-    let growthStage: string;
-    if (this.growthDay < 20) growthStage = 'Germinación';
-    else if (this.growthDay < 50) growthStage = 'Vegetativo';
-    else if (this.growthDay < 100) growthStage = 'Floración';
-    else if (this.growthDay < 150) growthStage = 'Fructificación';
-    else growthStage = 'Maduración';
-
-    // Crop status
-    let cropStatus: string;
-    if (cropHealth >= 80) cropStatus = '🟢 Saludable';
-    else if (cropHealth >= 60) cropStatus = '🟡 Moderado';
-    else if (cropHealth >= 35) cropStatus = '🟠 Estrés';
-    else if (cropHealth >= 15) cropStatus = '🔴 Crítico';
-    else cropStatus = '⚫ Marchito';
-
-    // Yield estimate (ton/ha)
-    const yieldEstimate = Math.round(this.stockBiomass * 1.2 * 10) / 10;
-
-    // Emit outputs
     this.outputs = {
       cropHealth,
       biomass: Math.round(this.stockBiomass * 100) / 100,
       evapotranspiration,
       limitingFactor,
-      growthStage,
-      yieldEstimate,
+      growthStage: this.growthDay < 50 ? 'Vegetativo' : this.growthDay < 120 ? 'Floración' : 'Maduración',
+      yieldEstimate: Math.round(this.stockBiomass * 1.5 * 10) / 10,
       waterStress: Math.round(waterStress * 100) / 100,
       thermalStress: Math.round(thermalStress * 100) / 100,
-      nutrientEfficiency,
-      cropStatus
+      nutrientEfficiency: Math.round(nutrientFactor * 100),
+      cropStatus: cropHealth > 80 ? '🟢 Saludable' : cropHealth > 50 ? '🟡 Estable' : '🔴 Estrés'
     };
 
-    // Update visuals
-    this.updateVisuals(cropHealth, waterAvailability, pestPressure);
+    this.updateVisuals();
+    this.updateAudio(temperature);
   }
 
-  private updateVisuals(health: number, water: number, pest: number) {
-    // Plant height (30-100%)
-    this.plantHeight = 30 + (this.stockBiomass / 8) * 70;
-
-    // Leaf color: green → yellow → brown
-    if (health >= 70) {
-      this.leafColor = '#4a8c3f';
-    } else if (health >= 50) {
-      this.leafColor = '#8a9c3f';
-    } else if (health >= 30) {
-      this.leafColor = '#aa8c30';
-    } else {
-      this.leafColor = '#8a5a20';
+  private updateVisuals() {
+    this.plantHeight = 50 + (this.stockBiomass / 10) * 200;
+    
+    // Regenerate procedural leaves if biomass changes significantly
+    if (this.leafParticles.length < this.stockBiomass * 10) {
+      this.leafParticles.push({
+        x: (Math.random() - 0.5) * 120,
+        y: Math.random() * this.plantHeight,
+        size: 20 + Math.random() * 30,
+        rot: Math.random() * 360,
+        opacity: 0.8 + Math.random() * 0.2
+      });
     }
 
-    // Root depth proportional to biomass
-    this.rootDepth = 20 + (this.stockBiomass / 8) * 60;
-
-    // Soil moisture color
-    if (water > 70) this.soilMoistureColor = '#3a2810';
-    else if (water > 40) this.soilMoistureColor = '#5a3820';
-    else this.soilMoistureColor = '#7a5830';
-
-    // Pest icons
-    const pestCount = Math.floor(pest / 15);
-    this.pestIcons = Array(Math.max(0, Math.min(8, pestCount))).fill(0).map(() => ({
-      left: 15 + Math.random() * 70 + '%',
-      top: 20 + Math.random() * 40 + '%',
+    const pestCount = Math.floor(this.vars.pestPressure / 20);
+    this.pestIcons = Array(Math.max(0, pestCount)).fill(0).map(() => ({
+      left: 20 + Math.random() * 60 + '%',
+      top: 30 + Math.random() * 50 + '%',
       delay: Math.random() * 3 + 's'
     }));
   }
 
   getHealthBarColor(): string {
     const h = this.outputs.cropHealth;
-    if (h >= 70) return '#44cc66';
-    if (h >= 45) return '#ccaa22';
-    if (h >= 20) return '#cc6622';
-    return '#cc2222';
+    return h > 75 ? '#44cc66' : h > 40 ? '#ccaa22' : '#cc4444';
   }
 }

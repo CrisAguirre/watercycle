@@ -63,12 +63,13 @@
 
 .video-wrapper {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
+  padding-bottom: 56.25%;
+  /* 16:9 */
   height: 0;
   border-radius: 15px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
 .video-wrapper iframe {
@@ -125,7 +126,7 @@
   transition: all 0.3s ease;
   background: linear-gradient(135deg, #005588, #00aadd);
   color: white;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .btn-save:hover:not(:disabled) {
@@ -152,8 +153,15 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
@@ -161,13 +169,20 @@
     flex-direction: column;
     align-items: stretch;
   }
-  p, h3, h4, .sim-caption, .section-desc {
+
+  p,
+  h3,
+  h4,
+  .sim-caption,
+  .section-desc {
     text-align: center;
   }
+
   .solar-system-full {
     transform: translate(-50%, -50%) scale(0.45);
   }
 }
+
 @media (min-width: 769px) {
   .solar-system-full {
     transform: translate(-50%, -50%) scale(0.85);
@@ -211,7 +226,7 @@
   border-radius: 12px;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
 /* 1. Solar System Full */
@@ -222,38 +237,50 @@
 
 .stars {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: transparent;
-  box-shadow: 
+  box-shadow:
     /* Estrellas brillantes grandes */
-    100px 60px 2px 1px rgba(255,255,255,1),
-    420px 100px 2px 1px rgba(255,255,255,0.95),
-    650px 200px 2px 1px rgba(255,255,255,1),
-    250px 280px 2px 1px rgba(255,255,255,0.9),
-    750px 320px 2px 1px rgba(255,255,255,1),
-    30px 180px 2px 1px rgba(255,255,255,0.95),
-    500px 40px 2px 1px rgba(255,255,255,1),
-    380px 350px 2px 1px rgba(255,255,255,0.9),
+    100px 60px 2px 1px rgba(255, 255, 255, 1),
+    420px 100px 2px 1px rgba(255, 255, 255, 0.95),
+    650px 200px 2px 1px rgba(255, 255, 255, 1),
+    250px 280px 2px 1px rgba(255, 255, 255, 0.9),
+    750px 320px 2px 1px rgba(255, 255, 255, 1),
+    30px 180px 2px 1px rgba(255, 255, 255, 0.95),
+    500px 40px 2px 1px rgba(255, 255, 255, 1),
+    380px 350px 2px 1px rgba(255, 255, 255, 0.9),
     /* Estrellas medianas */
-    10px 10px 1px rgba(255,255,255,0.8), 50px 200px 1px rgba(255,255,255,0.7), 
-    300px 50px 1px rgba(255,255,255,0.9), 400px 150px 1px rgba(255,255,255,0.6), 
-    550px 300px 1px rgba(255,255,255,0.7), 80px 300px 1px rgba(255,255,255,0.6), 
-    200px 180px 1px rgba(255,255,255,0.8), 700px 120px 1px rgba(255,255,255,0.9), 
-    150px 50px 1px rgba(255,255,255,0.5), 600px 10px 1px rgba(255,255,255,0.6),
-    450px 250px 1px rgba(255,255,255,0.7), 250px 80px 1px rgba(255,255,255,0.4),
-    800px 220px 1px rgba(255,255,255,0.8), 50px 350px 1px rgba(255,255,255,0.7),
-    350px 320px 1px rgba(255,255,255,0.6), 180px 10px 1px rgba(255,255,255,0.7),
-    650px 280px 1px rgba(255,255,255,0.5), 720px 40px 1px rgba(255,255,255,0.9),
-    120px 130px 1px rgba(255,255,255,0.8), 280px 200px 1px rgba(255,255,255,0.5),
+    10px 10px 1px rgba(255, 255, 255, 0.8), 50px 200px 1px rgba(255, 255, 255, 0.7),
+    300px 50px 1px rgba(255, 255, 255, 0.9), 400px 150px 1px rgba(255, 255, 255, 0.6),
+    550px 300px 1px rgba(255, 255, 255, 0.7), 80px 300px 1px rgba(255, 255, 255, 0.6),
+    200px 180px 1px rgba(255, 255, 255, 0.8), 700px 120px 1px rgba(255, 255, 255, 0.9),
+    150px 50px 1px rgba(255, 255, 255, 0.5), 600px 10px 1px rgba(255, 255, 255, 0.6),
+    450px 250px 1px rgba(255, 255, 255, 0.7), 250px 80px 1px rgba(255, 255, 255, 0.4),
+    800px 220px 1px rgba(255, 255, 255, 0.8), 50px 350px 1px rgba(255, 255, 255, 0.7),
+    350px 320px 1px rgba(255, 255, 255, 0.6), 180px 10px 1px rgba(255, 255, 255, 0.7),
+    650px 280px 1px rgba(255, 255, 255, 0.5), 720px 40px 1px rgba(255, 255, 255, 0.9),
+    120px 130px 1px rgba(255, 255, 255, 0.8), 280px 200px 1px rgba(255, 255, 255, 0.5),
     /* Estrellas tenues de fondo */
-    45px 90px 0px rgba(255,255,255,0.3), 160px 260px 0px rgba(255,255,255,0.25),
-    530px 160px 0px rgba(255,255,255,0.3), 680px 60px 0px rgba(255,255,255,0.2),
-    370px 190px 0px rgba(255,255,255,0.25), 770px 270px 0px rgba(255,255,255,0.3),
-    90px 340px 0px rgba(255,255,255,0.2), 440px 310px 0px rgba(255,255,255,0.25);
+    45px 90px 0px rgba(255, 255, 255, 0.3), 160px 260px 0px rgba(255, 255, 255, 0.25),
+    530px 160px 0px rgba(255, 255, 255, 0.3), 680px 60px 0px rgba(255, 255, 255, 0.2),
+    370px 190px 0px rgba(255, 255, 255, 0.25), 770px 270px 0px rgba(255, 255, 255, 0.3),
+    90px 340px 0px rgba(255, 255, 255, 0.2), 440px 310px 0px rgba(255, 255, 255, 0.25);
   animation: twinkle 4s infinite alternate;
   opacity: 0.9;
 }
-@keyframes twinkle { 0% { opacity: 0.4; } 100% { opacity: 1; } }
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
 
 .shooting-star {
   position: absolute;
@@ -261,16 +288,27 @@
   left: 0;
   width: 150px;
   height: 2px;
-  background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
+  background: linear-gradient(90deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
   transform: rotate(-45deg);
   animation: shooting 6s linear infinite;
   opacity: 0;
   z-index: 5;
 }
+
 @keyframes shooting {
-  0% { transform: translateX(600px) translateY(-50px) rotate(-45deg); opacity: 1; }
-  10% { transform: translateX(0px) translateY(550px) rotate(-45deg); opacity: 0; }
-  100% { opacity: 0; }
+  0% {
+    transform: translateX(600px) translateY(-50px) rotate(-45deg);
+    opacity: 1;
+  }
+
+  10% {
+    transform: translateX(0px) translateY(550px) rotate(-45deg);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 .solar-system-full {
@@ -310,48 +348,147 @@
   top: 50%;
   left: 100%;
   transform: translate(-50%, -50%);
-  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.6);
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.6);
 }
 
-.orbit-mercury { width: 70px; height: 70px; animation: spin 3s linear infinite; }
-.planet-mercury { width: 6px; height: 6px; background: #a3a3a3; }
-
-.orbit-venus { width: 110px; height: 110px; animation: spin 5s linear infinite; }
-.planet-venus { width: 10px; height: 10px; background: #fcd34d; }
-
-.orbit-earth { width: 160px; height: 160px; animation: spin 8s linear infinite; }
-.planet-earth { width: 12px; height: 12px; background: #3b82f6; }
-
-.orbit-moon { 
-  width: 24px; height: 24px; border: none; 
-  animation: spin-moon 2s linear infinite; 
-  left: 100%; top: 50%; margin-top: -12px; margin-left: -12px; 
+.orbit-mercury {
+  width: 70px;
+  height: 70px;
+  animation: spin 3s linear infinite;
 }
-.moon { 
-  width: 4px; height: 4px; background: #e5e7eb; border-radius: 50%; 
-  position: absolute; top:50%; left:100%; transform: translate(-50%, -50%); 
+
+.planet-mercury {
+  width: 6px;
+  height: 6px;
+  background: #a3a3a3;
+}
+
+.orbit-venus {
+  width: 110px;
+  height: 110px;
+  animation: spin 5s linear infinite;
+}
+
+.planet-venus {
+  width: 10px;
+  height: 10px;
+  background: #fcd34d;
+}
+
+.orbit-earth {
+  width: 160px;
+  height: 160px;
+  animation: spin 8s linear infinite;
+}
+
+.planet-earth {
+  width: 12px;
+  height: 12px;
+  background: #3b82f6;
+}
+
+.orbit-moon {
+  width: 24px;
+  height: 24px;
+  border: none;
+  animation: spin-moon 2s linear infinite;
+  left: 100%;
+  top: 50%;
+  margin-top: -12px;
+  margin-left: -12px;
+}
+
+.moon {
+  width: 4px;
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-50%, -50%);
 }
 
 @keyframes spin-moon {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.orbit-mars { width: 220px; height: 220px; animation: spin 12s linear infinite; }
-.planet-mars { width: 9px; height: 9px; background: #ef4444; }
+.orbit-mars {
+  width: 220px;
+  height: 220px;
+  animation: spin 12s linear infinite;
+}
 
-.orbit-jupiter { width: 320px; height: 320px; animation: spin 25s linear infinite; }
-.planet-jupiter { width: 24px; height: 24px; background: #fdba74; }
+.planet-mars {
+  width: 9px;
+  height: 9px;
+  background: #ef4444;
+}
 
-.orbit-saturn { width: 420px; height: 420px; animation: spin 45s linear infinite; }
-.planet-saturn { width: 20px; height: 20px; background: #fde047; }
-.saturn-rings { width: 34px; height: 8px; border-radius: 50%; border: 3px solid rgba(253, 224, 71, 0.5); position: absolute; top:50%; left:50%; transform: translate(-50%, -50%) rotate(20deg); }
+.orbit-jupiter {
+  width: 320px;
+  height: 320px;
+  animation: spin 25s linear infinite;
+}
 
-.orbit-uranus { width: 500px; height: 500px; animation: spin 70s linear infinite; }
-.planet-uranus { width: 16px; height: 16px; background: #67e8f9; }
+.planet-jupiter {
+  width: 24px;
+  height: 24px;
+  background: #fdba74;
+}
 
-.orbit-neptune { width: 580px; height: 580px; animation: spin 100s linear infinite; }
-.planet-neptune { width: 15px; height: 15px; background: #2563eb; }
+.orbit-saturn {
+  width: 420px;
+  height: 420px;
+  animation: spin 45s linear infinite;
+}
+
+.planet-saturn {
+  width: 20px;
+  height: 20px;
+  background: #fde047;
+}
+
+.saturn-rings {
+  width: 34px;
+  height: 8px;
+  border-radius: 50%;
+  border: 3px solid rgba(253, 224, 71, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(20deg);
+}
+
+.orbit-uranus {
+  width: 500px;
+  height: 500px;
+  animation: spin 70s linear infinite;
+}
+
+.planet-uranus {
+  width: 16px;
+  height: 16px;
+  background: #67e8f9;
+}
+
+.orbit-neptune {
+  width: 580px;
+  height: 580px;
+  animation: spin 100s linear infinite;
+}
+
+.planet-neptune {
+  width: 15px;
+  height: 15px;
+  background: #2563eb;
+}
 
 /* 2. Electric System Full (Isometric) */
 .electric-visual {
@@ -387,7 +524,7 @@
   stroke-width: 0.8;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 3px #22d3ee) drop-shadow(0 0 6px rgba(34,211,238,0.5));
+  filter: drop-shadow(0 0 3px #22d3ee) drop-shadow(0 0 6px rgba(34, 211, 238, 0.5));
   animation: svg-glow 3s ease-in-out infinite alternate;
 }
 
@@ -403,8 +540,13 @@
 }
 
 @keyframes svg-glow {
-  0% { filter: drop-shadow(0 0 2px #22d3ee); }
-  100% { filter: drop-shadow(0 0 4px #22d3ee) drop-shadow(0 0 8px rgba(34,211,238,0.6)); }
+  0% {
+    filter: drop-shadow(0 0 2px #22d3ee);
+  }
+
+  100% {
+    filter: drop-shadow(0 0 4px #22d3ee) drop-shadow(0 0 8px rgba(34, 211, 238, 0.6));
+  }
 }
 
 /* Puntos de energía viajando por los cables */
@@ -425,8 +567,15 @@
 }
 
 @keyframes pulse-light {
-  0% { opacity: 0.5; transform: scale(0.9); }
-  100% { opacity: 1; transform: scale(1.15); }
+  0% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
 }
 
 /* 3. Transport System Full (Isometric) */
@@ -434,12 +583,14 @@
   position: relative;
   background: #0f172a;
   overflow: hidden;
+  aspect-ratio: 1 / 1; /* Garantiza que sea cuadrada en todo momento */
 }
 
 .isometric-bg {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
 
 .isometric-overlay {
@@ -458,8 +609,9 @@
   height: 10px;
   border-radius: 3px 6px 6px 3px;
   z-index: 10;
-  box-shadow: 1px 2px 6px rgba(0,0,0,0.7);
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.7);
 }
+
 /* Parabrisas (ventana delantera, cerca del frente=izquierda del elemento) */
 .car-iso::before {
   content: '';
@@ -471,6 +623,7 @@
   background: rgba(147, 197, 253, 0.5);
   border-radius: 1px 3px 3px 1px;
 }
+
 /* Luces delanteras (al frente=izquierda del elemento) */
 .car-iso::after {
   content: '';
@@ -481,46 +634,128 @@
   height: 3px;
   background: #fef08a;
   border-radius: 50%;
-  box-shadow: 0 0 6px #fef08a, 0 0 12px rgba(254,240,138,0.6), 0 5px 0 #fef08a, 0 5px 6px #fef08a;
+  box-shadow: 0 0 6px #fef08a, 0 0 12px rgba(254, 240, 138, 0.6), 0 5px 0 #fef08a, 0 5px 6px #fef08a;
 }
 
 /* Cada coche rota de modo que su lado IZQUIERDO apunta hacia donde viaja */
 /* Ángulo de las calles: ~33° (isométrico) — con pausa en semáforo */
 
 /* Vía 1: se detienen primero, luego cruzan */
-.car-iso-1 { background: linear-gradient(90deg, #dc2626, #ef4444, #b91c1c); transform: rotate(-33deg);  animation: iso-d1 7s ease-in-out infinite 0.3s; }
-.car-iso-2 { background: linear-gradient(90deg, #2563eb, #3b82f6, #1d4ed8); transform: rotate(147deg); animation: iso-d2 9.5s ease-in-out infinite 3.8s; }
+.car-iso-1 {
+  background: linear-gradient(90deg, #dc2626, #ef4444, #b91c1c);
+  transform: rotate(-33deg);
+  animation: iso-d1 7s ease-in-out infinite 0.3s;
+}
+
+.car-iso-2 {
+  background: linear-gradient(90deg, #2563eb, #3b82f6, #1d4ed8);
+  transform: rotate(147deg);
+  animation: iso-d2 9.5s ease-in-out infinite 3.8s;
+}
+
 /* Vía 2: esperan mientras Vía 1 cruza, luego pasan */
-.car-iso-3 { background: linear-gradient(90deg, #059669, #10b981, #047857); transform: rotate(-147deg); animation: iso-d3 8s ease-in-out infinite 1.5s; }
-.car-iso-4 { background: linear-gradient(90deg, #ca8a04, #facc15, #a16207); transform: rotate(33deg); animation: iso-d4 10s ease-in-out infinite 5.2s; }
+.car-iso-3 {
+  background: linear-gradient(90deg, #059669, #10b981, #047857);
+  transform: rotate(-147deg);
+  animation: iso-d3 8s ease-in-out infinite 1.5s;
+}
+
+.car-iso-4 {
+  background: linear-gradient(90deg, #ca8a04, #facc15, #a16207);
+  transform: rotate(33deg);
+  animation: iso-d4 10s ease-in-out infinite 5.2s;
+}
 
 /* Vía 1 ida: frena ANTES de la cebra peatonal inferior-izq → espera → cruza → sale */
 @keyframes iso-d1 {
-  0%   { top: 78%; left: 8%; }
-  35%  { top: 62%; left: 35%; }
-  48%  { top: 62%; left: 35%; }
-  100% { top: 22%; left: 92%; }
+  0% {
+    top: 78%;
+    left: 8%;
+  }
+
+  35% {
+    top: 62%;
+    left: 35%;
+  }
+
+  48% {
+    top: 62%;
+    left: 35%;
+  }
+
+  100% {
+    top: 22%;
+    left: 92%;
+  }
 }
+
 /* Vía 1 vuelta: frena antes de la cebra superior-der */
 @keyframes iso-d2 {
-  0%   { top: 22%; left: 92%; }
-  35%  { top: 38%; left: 65%; }
-  48%  { top: 38%; left: 65%; }
-  100% { top: 78%; left: 8%; }
+  0% {
+    top: 22%;
+    left: 92%;
+  }
+
+  35% {
+    top: 38%;
+    left: 65%;
+  }
+
+  48% {
+    top: 38%;
+    left: 65%;
+  }
+
+  100% {
+    top: 78%;
+    left: 8%;
+  }
 }
+
 /* Vía 2 ida: frena antes de la cebra inferior-der */
 @keyframes iso-d3 {
-  0%   { top: 78%; left: 92%; }
-  35%  { top: 62%; left: 65%; }
-  48%  { top: 62%; left: 65%; }
-  100% { top: 22%; left: 8%; }
+  0% {
+    top: 78%;
+    left: 92%;
+  }
+
+  35% {
+    top: 62%;
+    left: 65%;
+  }
+
+  48% {
+    top: 62%;
+    left: 65%;
+  }
+
+  100% {
+    top: 22%;
+    left: 8%;
+  }
 }
+
 /* Vía 2 vuelta: frena antes de la cebra superior-izq */
 @keyframes iso-d4 {
-  0%   { top: 22%; left: 8%; }
-  35%  { top: 38%; left: 35%; }
-  48%  { top: 38%; left: 35%; }
-  100% { top: 78%; left: 92%; }
+  0% {
+    top: 22%;
+    left: 8%;
+  }
+
+  35% {
+    top: 38%;
+    left: 35%;
+  }
+
+  48% {
+    top: 38%;
+    left: 35%;
+  }
+
+  100% {
+    top: 78%;
+    left: 92%;
+  }
 }
 
 /* (Removed 2D City blocks and traffic light legacy) */
@@ -531,12 +766,16 @@
   margin-top: 25px;
   border-left: 4px solid #00ccff;
 }
+
 .inspiring-text p {
   font-size: 1.1rem;
   line-height: 1.6;
 }
+
 @keyframes spin {
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 .separator {
@@ -560,9 +799,11 @@
 
 /* Responsive — Móvil */
 @media (max-width: 768px) {
+
   .sim-caption,
   .section-desc,
-  h3, h4 {
+  h3,
+  h4 {
     text-align: center;
   }
 
@@ -571,41 +812,130 @@
   }
 
   /* Coches — Mobile: 50% del tamaño + ~33° con pausa en semáforo */
-  .car-iso { transform-origin: center center; }
-  .car-iso-1 { background: linear-gradient(90deg, #dc2626, #ef4444, #b91c1c); transform: rotate(-33deg) scale(0.5);  animation: iso-m1 7.5s ease-in-out infinite 0.5s; }
-  .car-iso-2 { background: linear-gradient(90deg, #2563eb, #3b82f6, #1d4ed8); transform: rotate(147deg) scale(0.5);  animation: iso-m2 10s ease-in-out infinite 4s; }
-  .car-iso-3 { background: linear-gradient(90deg, #059669, #10b981, #047857); transform: rotate(-147deg) scale(0.5); animation: iso-m3 8.5s ease-in-out infinite 2s; }
-  .car-iso-4 { background: linear-gradient(90deg, #ca8a04, #facc15, #a16207); transform: rotate(33deg) scale(0.5);   animation: iso-m4 9s ease-in-out infinite 6s; }
+  .car-iso {
+    transform-origin: center center;
+  }
+
+  .car-iso-1 {
+    background: linear-gradient(90deg, #dc2626, #ef4444, #b91c1c);
+    transform: rotate(-33deg) scale(0.5);
+    animation: iso-m1 7.5s ease-in-out infinite 0.5s;
+  }
+
+  .car-iso-2 {
+    background: linear-gradient(90deg, #2563eb, #3b82f6, #1d4ed8);
+    transform: rotate(147deg) scale(0.5);
+    animation: iso-m2 10s ease-in-out infinite 4s;
+  }
+
+  .car-iso-3 {
+    background: linear-gradient(90deg, #059669, #10b981, #047857);
+    transform: rotate(-147deg) scale(0.5);
+    animation: iso-m3 8.5s ease-in-out infinite 2s;
+  }
+
+  .car-iso-4 {
+    background: linear-gradient(90deg, #ca8a04, #facc15, #a16207);
+    transform: rotate(33deg) scale(0.5);
+    animation: iso-m4 9s ease-in-out infinite 6s;
+  }
 
   /* Vía 1 ida: frena antes de cebra inferior-izq (subido 5%) */
   @keyframes iso-m1 {
-    0%   { top: 67%; left: 8%; }
-    35%  { top: 53%; left: 32%; }
-    48%  { top: 53%; left: 32%; }
-    100% { top: 23%; left: 92%; }
+    0% {
+      top: 78%;
+      left: 0%;
+    }
+
+    35% {
+      top: 66%;
+      left: 35%;
+    }
+
+    48% {
+      top: 66%;
+      left: 35%;
+    }
+
+    100% {
+      top: 44%;
+      left: 95%;
+    }
   }
+
   /* Vía 1 vuelta: frena antes de cebra superior-der */
   @keyframes iso-m2 {
-    0%   { top: 23%; left: 92%; }
-    35%  { top: 33%; left: 68%; }
-    48%  { top: 33%; left: 68%; }
-    100% { top: 67%; left: 8%; }
+    0% {
+      top: 44%;
+      left: 95%;
+    }
+
+    35% {
+      top: 49%;
+      left: 65%;
+    }
+
+    48% {
+      top: 49%;
+      left: 65%;
+    }
+
+    100% {
+      top: 78%;
+      left: 0%;
+    }
   }
+
   /* Vía 2 ida: frena antes de cebra inferior-der */
   @keyframes iso-m3 {
-    0%   { top: 67%; left: 92%; }
-    35%  { top: 53%; left: 68%; }
-    48%  { top: 53%; left: 68%; }
-    100% { top: 23%; left: 8%; }
+    0% {
+      top: 78%;
+      left: 100%;
+    }
+
+    35% {
+      top: 66%;
+      left: 65%;
+    }
+
+    48% {
+      top: 66%;
+      left: 65%;
+    }
+
+    100% {
+      top: 44%;
+      left: 5%;
+    }
   }
+
   /* Vía 2 vuelta: frena antes de cebra superior-izq */
   @keyframes iso-m4 {
-    0%   { top: 23%; left: 8%; }
-    35%  { top: 33%; left: 32%; }
-    48%  { top: 33%; left: 32%; }
-    100% { top: 67%; left: 92%; }
+    0% {
+      top: 44%;
+      left: 5%;
+    }
+
+    35% {
+      top: 49%;
+      left: 35%;
+    }
+
+    48% {
+      top: 49%;
+      left: 35%;
+    }
+
+    100% {
+      top: 78%;
+      left: 100%;
+    }
   }
 
   /* Circuito SVG — Mobile: solo reposicionar fuente */
-  .circuit-source { bottom: 6%; right: 6%; font-size: 1.4rem; }
+  .circuit-source {
+    bottom: 6%;
+    right: 6%;
+    font-size: 1.4rem;
+  }
 }
