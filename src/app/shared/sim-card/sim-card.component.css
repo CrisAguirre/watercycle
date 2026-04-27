@@ -21,6 +21,10 @@
   background: linear-gradient(145deg, rgba(0, 60, 30, 0.6), rgba(0, 40, 20, 0.8));
 }
 
+.sim-card.intro {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(200, 200, 200, 0.15));
+}
+
 .sim-card .card-glow {
   position: absolute;
   top: -50%;
@@ -37,6 +41,10 @@
   background: radial-gradient(circle at 30% 30%, rgba(100, 255, 50, 0.08), transparent 60%);
 }
 
+.sim-card.intro .card-glow {
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 60%);
+}
+
 .sim-card:hover .card-glow {
   opacity: 1;
 }
@@ -50,6 +58,11 @@
 .sim-card.agro:hover {
   border-color: rgba(100, 255, 50, 0.3);
   box-shadow: 0 12px 40px rgba(50, 200, 50, 0.15);
+}
+
+.sim-card.intro:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 40px rgba(255, 255, 255, 0.1);
 }
 
 .sim-card.disabled {
@@ -92,6 +105,10 @@
 
 .sim-card.agro .card-title {
   color: #86efac;
+}
+
+.sim-card.intro .card-title {
+  color: #ffffff;
 }
 
 .card-desc {

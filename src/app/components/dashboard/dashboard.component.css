@@ -62,7 +62,7 @@
 .timeline-line {
   position: absolute;
   left: 22px;
-  top: 0;
+  top: 36px;
   bottom: 0;
   width: 2px;
   background: linear-gradient(180deg, #00c8ff, rgba(0, 200, 255, 0.1));
@@ -235,6 +235,7 @@
 
   .timeline-line {
     left: 14px;
+    top: 32px;
   }
 
   .session-content {
