@@ -225,22 +225,35 @@
   top: 0; left: 0; right: 0; bottom: 0;
   background: transparent;
   box-shadow: 
-    10px 10px 1px rgba(255,255,255,0.8), 50px 200px 1px rgba(255,255,255,0.6), 
-    300px 50px 1px rgba(255,255,255,0.9), 400px 150px 1px rgba(255,255,255,0.4), 
-    550px 300px 1px rgba(255,255,255,0.7), 80px 300px 1px rgba(255,255,255,0.5), 
+    /* Estrellas brillantes grandes */
+    100px 60px 2px 1px rgba(255,255,255,1),
+    420px 100px 2px 1px rgba(255,255,255,0.95),
+    650px 200px 2px 1px rgba(255,255,255,1),
+    250px 280px 2px 1px rgba(255,255,255,0.9),
+    750px 320px 2px 1px rgba(255,255,255,1),
+    30px 180px 2px 1px rgba(255,255,255,0.95),
+    500px 40px 2px 1px rgba(255,255,255,1),
+    380px 350px 2px 1px rgba(255,255,255,0.9),
+    /* Estrellas medianas */
+    10px 10px 1px rgba(255,255,255,0.8), 50px 200px 1px rgba(255,255,255,0.7), 
+    300px 50px 1px rgba(255,255,255,0.9), 400px 150px 1px rgba(255,255,255,0.6), 
+    550px 300px 1px rgba(255,255,255,0.7), 80px 300px 1px rgba(255,255,255,0.6), 
     200px 180px 1px rgba(255,255,255,0.8), 700px 120px 1px rgba(255,255,255,0.9), 
-    150px 50px 1px rgba(255,255,255,0.4), 600px 10px 1px rgba(255,255,255,0.5),
-    450px 250px 1px rgba(255,255,255,0.6), 250px 80px 1px rgba(255,255,255,0.3),
+    150px 50px 1px rgba(255,255,255,0.5), 600px 10px 1px rgba(255,255,255,0.6),
+    450px 250px 1px rgba(255,255,255,0.7), 250px 80px 1px rgba(255,255,255,0.4),
     800px 220px 1px rgba(255,255,255,0.8), 50px 350px 1px rgba(255,255,255,0.7),
-    350px 320px 1px rgba(255,255,255,0.5), 180px 10px 1px rgba(255,255,255,0.6),
-    650px 280px 1px rgba(255,255,255,0.4), 720px 40px 1px rgba(255,255,255,0.9),
-    120px 130px 1px rgba(255,255,255,0.8), 280px 200px 1px rgba(255,255,255,0.4),
-    320px 110px 1px rgba(255,255,255,0.5), 520px 80px 1px rgba(255,255,255,0.7),
-    10px 250px 1px rgba(255,255,255,0.6), 480px 330px 1px rgba(255,255,255,0.3);
+    350px 320px 1px rgba(255,255,255,0.6), 180px 10px 1px rgba(255,255,255,0.7),
+    650px 280px 1px rgba(255,255,255,0.5), 720px 40px 1px rgba(255,255,255,0.9),
+    120px 130px 1px rgba(255,255,255,0.8), 280px 200px 1px rgba(255,255,255,0.5),
+    /* Estrellas tenues de fondo */
+    45px 90px 0px rgba(255,255,255,0.3), 160px 260px 0px rgba(255,255,255,0.25),
+    530px 160px 0px rgba(255,255,255,0.3), 680px 60px 0px rgba(255,255,255,0.2),
+    370px 190px 0px rgba(255,255,255,0.25), 770px 270px 0px rgba(255,255,255,0.3),
+    90px 340px 0px rgba(255,255,255,0.2), 440px 310px 0px rgba(255,255,255,0.25);
   animation: twinkle 4s infinite alternate;
-  opacity: 0.8;
+  opacity: 0.9;
 }
-@keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+@keyframes twinkle { 0% { opacity: 0.4; } 100% { opacity: 1; } }
 
 .shooting-star {
   position: absolute;
@@ -520,6 +533,8 @@
   object-fit: cover;
   opacity: 0.9;
   filter: brightness(0.8) contrast(1.2);
+  transform: scale(0.85);
+  transform-origin: center center;
 }
 
 .isometric-overlay {
@@ -565,14 +580,11 @@
 }
 
 /* Cada coche rota de modo que su lado IZQUIERDO apunta hacia donde viaja */
-/* Road 1: va de bottom-left → top-right (ángulo -36° para que el frente apunte arriba-derecha) */
-.car-iso-1 { background: linear-gradient(90deg, #dc2626, #ef4444, #b91c1c); transform: rotate(-36deg);  animation: iso-d1 6s linear infinite; }
-/* Road 1 inverso: top-right → bottom-left (ángulo 144°) */
-.car-iso-2 { background: linear-gradient(90deg, #2563eb, #3b82f6, #1d4ed8); transform: rotate(144deg); animation: iso-d2 7s linear infinite 1s; }
-/* Road 2: bottom-right → top-left (ángulo 36° inverted = 216° = -144°) */
-.car-iso-3 { background: linear-gradient(90deg, #059669, #10b981, #047857); transform: rotate(-144deg); animation: iso-d3 5s linear infinite; }
-/* Road 2 inverso: top-left → bottom-right (ángulo 36°) */
-.car-iso-4 { background: linear-gradient(90deg, #ca8a04, #facc15, #a16207); transform: rotate(36deg); animation: iso-d4 8s linear infinite 2s; }
+/* Velocidades y delays aleatorios para flujo orgánico */
+.car-iso-1 { background: linear-gradient(90deg, #dc2626, #ef4444, #b91c1c); transform: rotate(-36deg);  animation: iso-d1 5.2s linear infinite 0.3s; }
+.car-iso-2 { background: linear-gradient(90deg, #2563eb, #3b82f6, #1d4ed8); transform: rotate(144deg); animation: iso-d2 8.5s linear infinite 2.1s; }
+.car-iso-3 { background: linear-gradient(90deg, #059669, #10b981, #047857); transform: rotate(-144deg); animation: iso-d3 6.8s linear infinite 4.5s; }
+.car-iso-4 { background: linear-gradient(90deg, #ca8a04, #facc15, #a16207); transform: rotate(36deg); animation: iso-d4 7.3s linear infinite 1.7s; }
 
 /* Desktop keyframes — Road 1: bottom-left → top-right */
 @keyframes iso-d1 { 0% { top: 105%; left: 10%; } 100% { top: -5%; left: 90%; } }
@@ -628,11 +640,11 @@
     transform: translate(-50%, -50%) scale(0.45);
   }
 
-  /* Coches — Mobile: premium con gradiente + frente=izquierda del coche */
-  .car-iso-1 { background: linear-gradient(90deg, #dc2626, #ef4444, #b91c1c); transform: rotate(-52deg);  animation: iso-m1 6s linear infinite; }
-  .car-iso-2 { background: linear-gradient(90deg, #2563eb, #3b82f6, #1d4ed8); transform: rotate(128deg);  animation: iso-m2 7s linear infinite 1s; }
-  .car-iso-3 { background: linear-gradient(90deg, #059669, #10b981, #047857); transform: rotate(-128deg); animation: iso-m3 5s linear infinite; }
-  .car-iso-4 { background: linear-gradient(90deg, #ca8a04, #facc15, #a16207); transform: rotate(52deg);   animation: iso-m4 8s linear infinite 2s; }
+  /* Coches — Mobile: premium aleatorizado + frente=izquierda del coche */
+  .car-iso-1 { background: linear-gradient(90deg, #dc2626, #ef4444, #b91c1c); transform: rotate(-52deg);  animation: iso-m1 5.5s linear infinite 0.8s; }
+  .car-iso-2 { background: linear-gradient(90deg, #2563eb, #3b82f6, #1d4ed8); transform: rotate(128deg);  animation: iso-m2 9s linear infinite 3.2s; }
+  .car-iso-3 { background: linear-gradient(90deg, #059669, #10b981, #047857); transform: rotate(-128deg); animation: iso-m3 7s linear infinite 5s; }
+  .car-iso-4 { background: linear-gradient(90deg, #ca8a04, #facc15, #a16207); transform: rotate(52deg);   animation: iso-m4 6.2s linear infinite 1.5s; }
 
   @keyframes iso-m1 { 0% { top: 90%; left: -10%; } 100% { top: 10%; left: 110%; } }
   @keyframes iso-m2 { 0% { top: 10%; left: 110%; } 100% { top: 90%; left: -10%; } }
