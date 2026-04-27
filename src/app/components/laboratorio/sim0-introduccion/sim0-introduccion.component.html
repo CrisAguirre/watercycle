@@ -68,32 +68,33 @@
             </picture>
             
             <div class="isometric-overlay house-circuit-overlay">
-              <!-- Fuente eléctrica (medidor exterior) -->
+              <!-- Circuito Eléctrico SVG -->
+              <svg class="circuit-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <!-- Cable principal (azul cyan brillante) -->
+                <path class="wire-main" d="M 85 88 L 85 70 L 50 70 L 50 48 L 22 48 L 22 30" />
+                <!-- Ramal Piso 1: Sala + Cocina -->
+                <path class="wire-branch" d="M 50 70 L 25 70" />
+                <path class="wire-branch" d="M 50 70 L 72 70" />
+                <!-- Ramal Piso 2: Dormitorio + Baño -->
+                <path class="wire-branch" d="M 22 30 L 40 30" />
+                <path class="wire-branch" d="M 22 48 L 68 48 L 68 30" />
+                <!-- Energía viajando (círculos animados por las rutas) -->
+                <circle class="energy-dot ed-1" r="1.2">
+                  <animateMotion dur="3s" repeatCount="indefinite" path="M 85 88 L 85 70 L 50 70 L 50 48 L 22 48 L 22 30" />
+                </circle>
+                <circle class="energy-dot ed-2" r="1">
+                  <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.5s" path="M 50 70 L 25 70" />
+                </circle>
+                <circle class="energy-dot ed-3" r="1">
+                  <animateMotion dur="2.5s" repeatCount="indefinite" begin="1s" path="M 50 70 L 72 70" />
+                </circle>
+                <circle class="energy-dot ed-4" r="1">
+                  <animateMotion dur="2s" repeatCount="indefinite" begin="1.5s" path="M 22 30 L 40 30" />
+                </circle>
+              </svg>
+
+              <!-- Fuente eléctrica -->
               <div class="circuit-source">⚡</div>
-              
-              <!-- Troncal vertical principal (sube por la pared izquierda) -->
-              <div class="cw cw-trunk-v"><div class="photon ph-v"></div></div>
-              
-              <!-- Ramal Piso 1: horizontal hacia la derecha -->
-              <div class="cw cw-floor1-h"><div class="photon ph-h"></div></div>
-              
-              <!-- Ramal Piso 2: horizontal hacia la derecha -->
-              <div class="cw cw-floor2-h"><div class="photon ph-h ph-delay"></div></div>
-
-              <!-- Retorno vertical (baja por pared derecha) -->
-              <div class="cw-ret cw-ret-trunk"><div class="photon-ret ph-v-ret"></div></div>
-
-              <!-- Nodos de luz en cada habitación -->
-              <div class="light-node ln-sala">💡</div>
-              <div class="light-node ln-cocina">💡</div>
-              <div class="light-node ln-dormitorio">💡</div>
-              <div class="light-node ln-bano">💡</div>
-              
-              <!-- Junctions (puntos de conexión) -->
-              <div class="junction jn-1"></div>
-              <div class="junction jn-2"></div>
-              <div class="junction jn-3"></div>
-              <div class="junction jn-4"></div>
             </div>
           </div>
           <p class="sim-caption">Un hogar cuenta con un sistema eléctrico compuesto por una fuente de energía, una red de conductores (cables) y nodos de consumo (focos, enchufes). Si un nodo falla, el sistema busca rutas alternas, pero si la fuente o la red principal se interrumpe, el sistema completo deja de funcionar y pierde su propósito.</p>
