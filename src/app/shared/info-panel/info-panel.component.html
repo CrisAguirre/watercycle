@@ -1,0 +1,143 @@
+<!-- Floating button -->
+<div class="info-button" (click)="togglePanel()" title="Ver Resumen de Laboratorios">
+  <span>i</span>
+</div>
+
+<!-- Slide-out panel -->
+<div class="info-panel-container" [class.open]="isOpen">
+  <div class="info-panel-header">
+    <h3>Propuesta Pedagógica</h3>
+    <button class="close-btn" (click)="togglePanel()">×</button>
+  </div>
+  
+  <div class="info-panel-content">
+    <div class="propuesta-header">
+      <h2>Propuesta Pedagógica 1: Ciclo del Agua - Secuencia Didáctica</h2>
+      <p>Este documento presenta la planificación detallada y definitiva de las primeras cuatro secuencias didácticas del proyecto. Se ha estructurado bajo los lineamientos del Dr. Eliécer A Pineda (UDES), integrando el rol del docente, el rol del estudiante y la interacción técnica con el entorno virtual Plataforma de pensamiento sistémico con simuladores de ciclo de agua y agrosistemas.</p>
+      
+      <h3>Identificación General de la Propuesta</h3>
+      <ul>
+        <li><strong>Estrategia:</strong> Plataforma de pensamiento sistémico con simuladores de ciclo del agua y agrosistemas - Entorno Virtual de Aprendizaje (EVA).</li>
+        <li><strong>Objetivo:</strong> Fortalecer el pensamiento sistémico mediante simulaciones interactivas del ciclo del agua.</li>
+        <li><strong>Población:</strong> Estudiantes de Grado Octavo (8°).</li>
+        <li><strong>Contexto:</strong> Pasto, Nariño, Colombia.</li>
+        <li><strong>Área:</strong> Ciencias Naturales y Educación Ambiental.</li>
+      </ul>
+    </div>
+
+    <hr class="divider">
+
+    <h3>Resumen de Roles en Laboratorios</h3>
+    <p>Roles del estudiante y del docente durante el desarrollo de los módulos de laboratorio (Introducción a Simulación 5).</p>
+    
+    <div class="table-responsive">
+      <table class="info-table">
+        <thead>
+          <tr>
+            <th>Módulo de Laboratorio</th>
+            <th>Rol y Actuar del Estudiante</th>
+            <th>Rol y Actuar del Docente</th>
+            <th>Enlace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Sim0: Introducción</strong></td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Explora ejemplos de sistemas y observa el video introductorio.<br>
+              <strong>Simuladores:</strong> Interactúa con la interfaz para explorar modelos analógicos.<br>
+              <strong>Evaluaciones:</strong> Escribe una "Lluvia de Ideas" y redacta una "Síntesis Final", guardando sus evidencias.
+            </td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Dirige la "Apropiación", guiando una reflexión grupal presencial.<br>
+              <strong>Evaluaciones:</strong> Revisa y califica de manera formativa las evidencias textuales.
+            </td>
+            <td class="text-center">
+              <a routerLink="/laboratorio/introduccion" (click)="togglePanel()" class="link-btn">Ir al Sim 0</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Sim1: Evaporación</strong></td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Sigue los pasos de actividad para explorar el "Agente Causal Térmico".<br>
+              <strong>Simuladores:</strong> Ajusta temperatura, radiación solar, humedad y viento para visualizar la evaporación.<br>
+              <strong>Evaluaciones:</strong> Desarrolla un cuestionario interactivo cronometrado (2 intentos).
+            </td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Encamina los 3 experimentos sugeridos.<br>
+              <strong>Simuladores:</strong> Ayuda a interpretar el panel de monitoreo y fórmulas matemáticas.<br>
+              <strong>Evaluaciones:</strong> Monitorea resultados de la evaluación interactiva.
+            </td>
+            <td class="text-center">
+              <a routerLink="/laboratorio/evaporacion" (click)="togglePanel()" class="link-btn">Ir al Sim 1</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Sim2: Condensación</strong></td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Ejecuta actividades sobre enfriamiento atmosférico.<br>
+              <strong>Simuladores:</strong> Modifica variables atmosféricas para generar niebla y observar la formación de nubes (LCL).<br>
+              <strong>Evaluaciones:</strong> Realiza una evaluación cronometrada de 25 preguntas.
+            </td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Supervisa ejercicios como la "formación orográfica".<br>
+              <strong>Simuladores:</strong> Explica el significado del gradiente adiabático y la fórmula de Magnus.<br>
+              <strong>Evaluaciones:</strong> Hace seguimiento de puntuaciones de los cuestionarios.
+            </td>
+            <td class="text-center">
+              <a routerLink="/laboratorio/condensacion" (click)="togglePanel()" class="link-btn">Ir al Sim 2</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Sim3: Precipitación</strong></td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Cuantifica volúmenes pluviales, analiza el tamaño de gota y energía cinética.<br>
+              <strong>Simuladores:</strong> Varía intensidad, duración y área de captación para ver el impacto.<br>
+              <strong>Evaluaciones:</strong> Completa el cuestionario sobre tipos de lluvia, nieve y granizo.
+            </td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Orienta los cálculos matemáticos manuales propuestos.<br>
+              <strong>Simuladores:</strong> Enlaza el comportamiento del simulador con los modelos reales (Método Racional, Marshall-Palmer).<br>
+              <strong>Evaluaciones:</strong> Valida las competencias matemáticas evidenciadas.
+            </td>
+            <td class="text-center">
+              <a routerLink="/laboratorio/precipitacion" (click)="togglePanel()" class="link-btn">Ir al Sim 3</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Sim4: Infiltración y Escorrentía</strong></td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Compara diferentes tipos de suelo y su respuesta dinámica.<br>
+              <strong>Simuladores:</strong> Selecciona tipos de suelo, altera pendientes y cobertura vegetal para observar el flujo.<br>
+              <strong>Evaluaciones:</strong> Ejecuta la acción "Guardar Resultados" y realiza la evaluación formal.
+            </td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Analiza por qué la cobertura vegetal o la pendiente exacerban la escorrentía.<br>
+              <strong>Simuladores:</strong> Aclara la teoría tras la partición hidráulica y el modelo de Horton.<br>
+              <strong>Evaluaciones:</strong> Revisa los análisis de resultados guardados y el examen.
+            </td>
+            <td class="text-center">
+              <a routerLink="/laboratorio/infiltracion" (click)="togglePanel()" class="link-btn">Ir al Sim 4</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Sim5: Ciclo Consolidado</strong></td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Integra procesos previos en un modelo continuo y autónomo.<br>
+              <strong>Simuladores:</strong> Usa la brújula y ajusta variables atmosféricas en 3D isométrica.<br>
+              <strong>Evaluaciones:</strong> Evaluación de nivel final sobre entendimiento sistémico.
+            </td>
+            <td>
+              <strong>Desarrollo/Actividades:</strong> Plantea el "Taller: Realidad y Sistemas" para integrar conocimientos.<br>
+              <strong>Simuladores:</strong> Media en la interpretación de los stocks y flujos del ecosistema.<br>
+              <strong>Evaluaciones:</strong> Monitorea la articulación de todas las variables como hito de evaluación.
+            </td>
+            <td class="text-center">
+              <a routerLink="/laboratorio/ciclo-consolidado" (click)="togglePanel()" class="link-btn">Ir al Sim 5</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

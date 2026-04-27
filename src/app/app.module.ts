@@ -29,6 +29,7 @@ import { ExamComponent } from './components/laboratorio/exam/exam.component';
 // Shared
 import { SimulationWrapperComponent } from './shared/simulation-wrapper/simulation-wrapper.component';
 import { SimCardComponent } from './shared/sim-card/sim-card.component';
+import { InfoPanelComponent } from './shared/info-panel/info-panel.component';
 
 // Simulaciones - Bloque 1: Ciclo del Agua
 import { Sim1EvaporacionComponent } from './components/laboratorio/sim1-evaporacion/sim1-evaporacion.component';
@@ -66,6 +67,7 @@ import { Sim8ResilienciaAgricolaComponent } from './components/laboratorio/sim8-
     // Shared
     SimulationWrapperComponent,
     SimCardComponent,
+    InfoPanelComponent,
 
     // Simulaciones - Bloque Agua
     Sim1EvaporacionComponent,
