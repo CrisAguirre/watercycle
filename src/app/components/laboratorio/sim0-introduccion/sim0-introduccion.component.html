@@ -68,21 +68,11 @@
             </picture>
             
             <div class="isometric-overlay house-circuit-overlay">
-              <div class="power-source" style="top: var(--h-pow-y, 10%); left: var(--h-pow-x, 10%);">
-                ⚡ <span class="source-text">Red Eléctrica</span>
-              </div>
-              
-              <!-- Cables de Ida -->
-              <div class="wire wire-main-v" style="top: var(--h-wire1-y, 20%); left: var(--h-wire1-x, 15%); width: var(--h-wire1-w, 4px); height: var(--h-wire1-h, 100px);"><div class="photon photon-v"></div></div>
-              <div class="wire wire-h1" style="top: var(--h-wire2-y, 40%); left: var(--h-wire2-x, 15%); width: var(--h-wire2-w, 200px); height: var(--h-wire2-h, 4px);"><div class="photon photon-h"></div></div>
-              
-              <!-- Cables de Retorno -->
-              <div class="wire-return wire-ret-v" style="top: var(--h-wire1-y, 20%); left: calc(var(--h-wire1-x, 15%) + 8px); width: var(--h-wire1-w, 4px); height: var(--h-wire1-h, 100px);"><div class="photon photon-v-ret"></div></div>
-              <div class="wire-return wire-ret-h1" style="top: calc(var(--h-wire2-y, 40%) + 8px); left: var(--h-wire2-x, 15%); width: var(--h-wire2-w, 200px); height: var(--h-wire2-h, 4px);"><div class="photon photon-h-ret"></div></div>
-              
-              <!-- Nodos Eléctricos (Focos) -->
-              <div class="circuit-node node-1" style="top: var(--h-n1-y, 40%); left: var(--h-n1-x, 50%);"><div class="bulb glow-pulse-1">💡</div></div>
-              <div class="circuit-node node-2" style="top: var(--h-n2-y, 60%); left: var(--h-n2-x, 70%);"><div class="bulb glow-pulse-2">💡</div></div>
+              <!-- Nodos Eléctricos (Luces brillando sobre la imagen) -->
+              <div class="circuit-node node-1" style="top: var(--h-n1-y, 40%); left: var(--h-n1-x, 35%);"><div class="bulb glow-pulse-1"></div></div>
+              <div class="circuit-node node-2" style="top: var(--h-n2-y, 65%); left: var(--h-n2-x, 40%);"><div class="bulb glow-pulse-2"></div></div>
+              <div class="circuit-node node-3" style="top: var(--h-n3-y, 45%); left: var(--h-n3-x, 65%);"><div class="bulb glow-pulse-3"></div></div>
+              <div class="circuit-node node-4" style="top: var(--h-n4-y, 75%); left: var(--h-n4-x, 65%);"><div class="bulb glow-pulse-1"></div></div>
             </div>
           </div>
           <p class="sim-caption">Un hogar cuenta con un sistema eléctrico compuesto por una fuente de energía, una red de conductores (cables) y nodos de consumo (focos, enchufes). Si un nodo falla, el sistema busca rutas alternas, pero si la fuente o la red principal se interrumpe, el sistema completo deja de funcionar y pierde su propósito.</p>

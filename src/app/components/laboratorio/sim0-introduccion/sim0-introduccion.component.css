@@ -1,30 +1,10 @@
-/* Variables de sincronización isométrica (Posiciones XY) */
-:root {
-  /* Ciudad - Escritorio */
-  --car-rd-1-x: 48%; --car-rd-1-y: 50%;
-  --car-rd-2-x: 52%; --car-rd-2-y: 50%;
-  
-  /* Casa - Escritorio */
-  --h-pow-x: 28%; --h-pow-y: 45%;
-  --h-wire1-x: 28%; --h-wire1-y: 35%; --h-wire1-w: 4px; --h-wire1-h: 120px;
-  --h-wire2-x: 28%; --h-wire2-y: 35%; --h-wire2-w: 220px; --h-wire2-h: 4px;
-  --h-n1-x: 42%; --h-n1-y: 35%;
-  --h-n2-x: 70%; --h-n2-y: 35%;
-}
-
-@media (max-width: 768px) {
-  :root {
-    /* Ciudad - Móvil (la IA la ajusta más abajo) */
-    --car-rd-1-x: 48%; --car-rd-1-y: 65%;
-    --car-rd-2-x: 52%; --car-rd-2-y: 65%;
-    
-    /* Casa - Móvil */
-    --h-pow-x: 20%; --h-pow-y: 55%;
-    --h-wire1-x: 20%; --h-wire1-y: 40%; --h-wire1-w: 4px; --h-wire1-h: 150px;
-    --h-wire2-x: 20%; --h-wire2-y: 40%; --h-wire2-w: 180px; --h-wire2-h: 4px;
-    --h-n1-x: 50%; --h-n1-y: 40%;
-    --h-n2-x: 80%; --h-n2-y: 40%;
-  }
+/* Variables de posición de luces (Casa Isométrica) */
+:host {
+  /* Casa — Posiciones de nodos de luz sobre la imagen */
+  --h-n1-x: 30%; --h-n1-y: 35%;
+  --h-n2-x: 55%; --h-n2-y: 60%;
+  --h-n3-x: 70%; --h-n3-y: 35%;
+  --h-n4-x: 70%; --h-n4-y: 65%;
 }
 
 .intro-lab-container {
@@ -367,115 +347,48 @@
 .orbit-neptune { width: 580px; height: 580px; animation: spin 100s linear infinite; }
 .planet-neptune { width: 15px; height: 15px; background: #2563eb; }
 
-/* 2. Electric System Full */
+/* 2. Electric System Full (Isometric) */
 .electric-visual {
-  background: #111827;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-.house-silhouette {
   position: relative;
-  width: 400px;
-  height: 280px;
-  margin-bottom: 20px;
+  background: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.roof {
+.house-circuit-overlay {
   position: absolute;
   top: 0;
   left: 0;
-  width: 0;
-  height: 0;
-  border-left: 200px solid transparent;
-  border-right: 200px solid transparent;
-  border-bottom: 80px solid #dc2626; /* Techo rojo */
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-.chimney {
+.circuit-node {
   position: absolute;
-  width: 25px;
-  height: 50px;
-  background: #991b1b;
-  top: 20px;
-  right: 80px;
-}
-
-.house-body {
-  position: absolute;
-  top: 80px;
-  left: 20px;
-  width: 360px;
-  height: 200px;
-  background: #fef3c7; /* Pared cálida */
-  border: 2px solid #b45309; /* Borde oscuro */
-  border-top: none;
-}
-
-.power-source {
-  position: absolute;
-  left: -80px;
-  top: 50px;
-  font-size: 2rem;
-  color: #facc15;
-}
-.source-text { font-size: 0.8rem; color: #9ca3af; display: block; margin-top: 5px; }
-
-.wire { position: absolute; background: #3b82f6; box-shadow: 0 0 5px #3b82f6; z-index: 10; overflow: visible; }
-.wire-main-v { width: 4px; height: 160px; left: 180px; top: 20px; }
-.wire-h1 { width: 240px; height: 4px; left: 60px; top: 50px; }
-.wire-h2 { width: 240px; height: 4px; left: 60px; top: 140px; }
-
-/* Cables de retorno */
-.wire-return { position: absolute; background: #475569; z-index: 9; opacity: 0.8; }
-.wire-ret-v { width: 4px; height: 160px; left: 188px; top: 20px; }
-.wire-ret-h1 { width: 240px; height: 4px; left: 60px; top: 58px; }
-.wire-ret-h2 { width: 240px; height: 4px; left: 60px; top: 148px; }
-
-/* Fotones viajando */
-.photon { position: absolute; width: 6px; height: 6px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff, 0 0 20px #60a5fa; }
-.photon-v { left: -1px; animation: beam-down 2s linear infinite; }
-.photon-h { top: -1px; animation: beam-right 3s linear infinite; }
-.photon-v-ret { left: -1px; animation: beam-up 2s linear infinite; }
-.photon-h-ret { top: -1px; animation: beam-left 3s linear infinite; }
-
-@keyframes beam-down { 0% { top: 0; } 100% { top: 100%; } }
-@keyframes beam-right { 0% { left: 0; } 100% { left: 100%; } }
-@keyframes beam-up { 0% { top: 100%; } 100% { top: 0; } }
-@keyframes beam-left { 0% { left: 100%; } 100% { left: 0; } }
-
-.room {
-  position: absolute;
-  width: 140px;
-  height: 80px;
-  border: 2px solid rgba(180, 83, 9, 0.2);
-  border-radius: 8px;
-}
-.room-bedroom { top: 15px; left: 15px; background: #bfdbfe; }
-.room-bathroom { top: 15px; right: 15px; background: #bae6fd; }
-.room-kitchen { bottom: 15px; left: 15px; background: #fed7aa; }
-.room-living { bottom: 15px; right: 15px; background: #fbcfe8; }
-
-.room-icon {
-  position: absolute;
-  bottom: 5px;
-  right: 10px;
-  font-size: 2rem;
-}
-
-.bulb-fixture {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 1.5rem;
   z-index: 20;
+}
+
+/* Bulb glow effects — radial light spots over the isometric house */
+.bulb {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(250,204,21,0.9) 0%, rgba(250,204,21,0.4) 40%, transparent 70%);
+  box-shadow: 0 0 20px rgba(250,204,21,0.8), 0 0 40px rgba(250,204,21,0.4), 0 0 60px rgba(250,204,21,0.2);
+  transform: translate(-50%, -50%);
 }
 
 .glow-pulse-1 { animation: pulse-light 2.5s infinite alternate; }
 .glow-pulse-2 { animation: pulse-light 3s infinite alternate-reverse; }
 .glow-pulse-3 { animation: pulse-light 2s infinite alternate; }
+
+@keyframes pulse-light {
+  0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.8); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+}
 
 /* 3. Transport System Full (Isometric) */
 .city-visual {
@@ -513,15 +426,19 @@
 .car-iso::before {
   content: ''; position: absolute; right: 0; top: 1px; width: 2px; height: 6px; background: #fef08a; box-shadow: 2px 0 5px #fef08a;
 }
-.car-iso-1 { background: #ef4444; top: -10px; left: var(--car-rd-1-x, 48%); transform: rotate(30deg); animation: iso-drive-1 6s linear infinite; }
-.car-iso-2 { background: #3b82f6; bottom: -10px; right: var(--car-rd-1-x, 48%); transform: rotate(-150deg); animation: iso-drive-2 7s linear infinite 1s; }
-.car-iso-3 { background: #10b981; top: var(--car-rd-1-y, 50%); left: -10px; transform: rotate(-25deg); animation: iso-drive-3 5s linear infinite; }
-.car-iso-4 { background: #facc15; bottom: var(--car-rd-2-y, 50%); right: -10px; transform: rotate(155deg); animation: iso-drive-4 8s linear infinite 2s; }
 
-@keyframes iso-drive-1 { 0% { top: -20px; left: var(--car-rd-1-x, 48%); } 100% { top: 120%; left: calc(var(--car-rd-1-x, 48%) + 60%); } }
-@keyframes iso-drive-2 { 0% { bottom: -20px; right: var(--car-rd-1-x, 48%); } 100% { bottom: 120%; right: calc(var(--car-rd-1-x, 48%) + 60%); } }
-@keyframes iso-drive-3 { 0% { top: var(--car-rd-1-y, 50%); left: -20px; } 100% { top: calc(var(--car-rd-1-y, 50%) + 60%); left: 120%; } }
-@keyframes iso-drive-4 { 0% { bottom: var(--car-rd-2-y, 50%); right: -20px; } 100% { bottom: calc(var(--car-rd-2-y, 50%) + 60%); right: 120%; } }
+/* Escritorio: los coches siguen dos avenidas en X con ángulo ~54° */
+.car-iso-1 { background: #ef4444; transform: rotate(54deg);  animation: iso-d1 6s linear infinite; }
+.car-iso-2 { background: #3b82f6; transform: rotate(-126deg); animation: iso-d2 7s linear infinite 1s; }
+.car-iso-3 { background: #10b981; transform: rotate(-54deg); animation: iso-d3 5s linear infinite; }
+.car-iso-4 { background: #facc15; transform: rotate(126deg); animation: iso-d4 8s linear infinite 2s; }
+
+/* Desktop keyframes — Road 1: bottom-left → top-right */
+@keyframes iso-d1 { 0% { top: 105%; left: 10%; } 100% { top: -5%; left: 90%; } }
+@keyframes iso-d2 { 0% { top: -5%;  left: 90%; } 100% { top: 105%; left: 10%; } }
+/* Desktop keyframes — Road 2: bottom-right → top-left */
+@keyframes iso-d3 { 0% { top: 105%; left: 90%; } 100% { top: -5%; left: 10%; } }
+@keyframes iso-d4 { 0% { top: -5%;  left: 10%; } 100% { top: 105%; left: 90%; } }
 
 /* (Removed 2D City blocks and traffic light legacy) */
 
@@ -556,4 +473,28 @@
   font-size: 3rem;
   display: block;
   margin-bottom: 15px;
+}
+
+/* Responsive — Móvil */
+@media (max-width: 768px) {
+  .sim-caption,
+  .section-desc,
+  h3, h4 {
+    text-align: center;
+  }
+
+  .solar-system-full {
+    transform: translate(-50%, -50%) scale(0.45);
+  }
+
+  /* Coches — Mobile: ángulo más cerrado (~38°) para la imagen portrait */
+  .car-iso-1 { transform: rotate(38deg);  animation: iso-m1 6s linear infinite; }
+  .car-iso-2 { transform: rotate(-142deg); animation: iso-m2 7s linear infinite 1s; }
+  .car-iso-3 { transform: rotate(-38deg); animation: iso-m3 5s linear infinite; }
+  .car-iso-4 { transform: rotate(142deg); animation: iso-m4 8s linear infinite 2s; }
+
+  @keyframes iso-m1 { 0% { top: 90%; left: -10%; } 100% { top: 10%; left: 110%; } }
+  @keyframes iso-m2 { 0% { top: 10%; left: 110%; } 100% { top: 90%; left: -10%; } }
+  @keyframes iso-m3 { 0% { top: 90%; left: 110%; } 100% { top: 10%; left: -10%; } }
+  @keyframes iso-m4 { 0% { top: 10%; left: -10%; } 100% { top: 90%; left: 110%; } }
 }
