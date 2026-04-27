@@ -33,6 +33,8 @@
         <div class="sim-item full-width">
           <h4>El Sistema Solar</h4>
           <div class="sim-visual solar-visual">
+            <div class="stars"></div>
+            <div class="shooting-star"></div>
             <div class="solar-system-full">
               <div class="sun-glow"></div>
               <div class="orbit orbit-mercury"><div class="planet planet-mercury"></div></div>
@@ -66,10 +68,15 @@
               <div class="house-body">
                 <div class="power-source">⚡ <span class="source-text">Red Eléctrica</span></div>
                 
-                <!-- Cables -->
-                <div class="wire wire-main-v"></div>
-                <div class="wire wire-h1"></div>
-                <div class="wire wire-h2"></div>
+                <!-- Cables de Ida -->
+                <div class="wire wire-main-v"><div class="photon photon-v"></div></div>
+                <div class="wire wire-h1"><div class="photon photon-h"></div></div>
+                <div class="wire wire-h2"><div class="photon photon-h"></div></div>
+                
+                <!-- Cables de Retorno -->
+                <div class="wire-return wire-ret-v"><div class="photon photon-v-ret"></div></div>
+                <div class="wire-return wire-ret-h1"><div class="photon photon-h-ret"></div></div>
+                <div class="wire-return wire-ret-h2"><div class="photon photon-h-ret"></div></div>
                 
                 <!-- Habitaciones con focos -->
                 <div class="room room-bedroom">
@@ -109,46 +116,16 @@
         <div class="sim-item full-width">
           <h4>Sistema de Transporte Urbano</h4>
           <div class="sim-visual city-visual">
-            <div class="city-map">
-              <!-- Manzanas (Bloques) -->
-              <div class="city-block block-1"><div class="building b1"></div><div class="building b2"></div></div>
-              <div class="city-block block-2 park">🌲 🌳 🌲</div>
-              <div class="city-block block-3"><div class="building b3"></div></div>
-              <div class="city-block block-4"><div class="building b4"></div><div class="building b5"></div></div>
-              <div class="city-block block-5 park">🌳 🌲</div>
-              <div class="city-block block-6"><div class="building b6"></div></div>
-              
-              <!-- Calles -->
-              <div class="street street-h1"></div>
-              <div class="street street-h2"></div>
-              <div class="street street-v1"></div>
-              <div class="street street-v2"></div>
-
-              <!-- Intersecciones con Semáforo -->
-              <div class="intersection int-1">
-                <div class="traffic-light">
-                  <div class="light red-light"></div>
-                  <div class="light yellow-light"></div>
-                  <div class="light green-light"></div>
-                </div>
-              </div>
-              <div class="intersection int-2">
-                <div class="traffic-light tl-right">
-                  <div class="light green-light"></div>
-                  <div class="light yellow-light"></div>
-                  <div class="light red-light"></div>
-                </div>
-              </div>
-              <div class="intersection int-3"></div>
-              <div class="intersection int-4"></div>
-
-              <!-- Vehículos -->
-              <div class="car car-red"></div>
-              <div class="car car-blue"></div>
-              <div class="car car-green"></div>
-              <div class="car car-yellow"></div>
-              <div class="car car-purple"></div>
-              <div class="car car-white"></div>
+            <picture>
+              <source media="(min-width: 769px)" srcset="assets/images/isometric_city.png">
+              <img src="assets/images/isometric_city_mobile.png" class="isometric-bg" alt="Ciudad Isométrica">
+            </picture>
+            <div class="city-map isometric-overlay">
+              <!-- Vehículos en 3D isométrico -->
+              <div class="car-iso car-iso-1"></div>
+              <div class="car-iso car-iso-2"></div>
+              <div class="car-iso car-iso-3"></div>
+              <div class="car-iso car-iso-4"></div>
             </div>
           </div>
           <p class="sim-caption">Una ciudad es una red de flujos continuos. Sus vías interconectadas, señales, vehículos y pasajeros forman el sistema de transporte. Desde una óptica sistémica, un embotellamiento en una pequeña intersección (cuello de botella) puede generar retrasos en cascada, paralizando zonas distantes de la urbe.</p>

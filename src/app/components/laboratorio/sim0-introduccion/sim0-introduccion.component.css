@@ -214,7 +214,48 @@
 
 /* 1. Solar System Full */
 .solar-visual {
-  background: radial-gradient(circle at center, #0b1021 0%, #02040a 100%);
+  background: radial-gradient(circle at bottom, #1b2735 0%, #090a0f 100%);
+  position: relative;
+}
+
+.stars {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: transparent;
+  box-shadow: 
+    10px 10px 1px rgba(255,255,255,0.8), 50px 200px 1px rgba(255,255,255,0.6), 
+    300px 50px 1px rgba(255,255,255,0.9), 400px 150px 1px rgba(255,255,255,0.4), 
+    550px 300px 1px rgba(255,255,255,0.7), 80px 300px 1px rgba(255,255,255,0.5), 
+    200px 180px 1px rgba(255,255,255,0.8), 700px 120px 1px rgba(255,255,255,0.9), 
+    150px 50px 1px rgba(255,255,255,0.4), 600px 10px 1px rgba(255,255,255,0.5),
+    450px 250px 1px rgba(255,255,255,0.6), 250px 80px 1px rgba(255,255,255,0.3),
+    800px 220px 1px rgba(255,255,255,0.8), 50px 350px 1px rgba(255,255,255,0.7),
+    350px 320px 1px rgba(255,255,255,0.5), 180px 10px 1px rgba(255,255,255,0.6),
+    650px 280px 1px rgba(255,255,255,0.4), 720px 40px 1px rgba(255,255,255,0.9),
+    120px 130px 1px rgba(255,255,255,0.8), 280px 200px 1px rgba(255,255,255,0.4),
+    320px 110px 1px rgba(255,255,255,0.5), 520px 80px 1px rgba(255,255,255,0.7),
+    10px 250px 1px rgba(255,255,255,0.6), 480px 330px 1px rgba(255,255,255,0.3);
+  animation: twinkle 4s infinite alternate;
+  opacity: 0.8;
+}
+@keyframes twinkle { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+
+.shooting-star {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
+  transform: rotate(-45deg);
+  animation: shooting 6s linear infinite;
+  opacity: 0;
+  z-index: 5;
+}
+@keyframes shooting {
+  0% { transform: translateX(600px) translateY(-50px) rotate(-45deg); opacity: 1; }
+  10% { transform: translateX(0px) translateY(550px) rotate(-45deg); opacity: 0; }
+  100% { opacity: 0; }
 }
 
 .solar-system-full {
@@ -352,18 +393,28 @@
 }
 .source-text { font-size: 0.8rem; color: #9ca3af; display: block; margin-top: 5px; }
 
-.wire { position: absolute; background: #3b82f6; box-shadow: 0 0 5px #3b82f6; z-index: 10; overflow: hidden; }
-.wire::before { content: ''; position: absolute; background: #fff; box-shadow: 0 0 10px #fff, 0 0 20px #60a5fa; }
-
+.wire { position: absolute; background: #3b82f6; box-shadow: 0 0 5px #3b82f6; z-index: 10; overflow: visible; }
 .wire-main-v { width: 4px; height: 160px; left: 180px; top: 20px; }
-.wire-main-v::before { width: 100%; height: 30px; left: 0; top: -30px; animation: beam-v 2s linear infinite; }
-
 .wire-h1 { width: 240px; height: 4px; left: 60px; top: 50px; }
 .wire-h2 { width: 240px; height: 4px; left: 60px; top: 140px; }
-.wire-h1::before, .wire-h2::before { width: 40px; height: 100%; top: 0; left: -40px; animation: beam-h 3s linear infinite; }
 
-@keyframes beam-v { 100% { top: 100%; } }
-@keyframes beam-h { 100% { left: 100%; } }
+/* Cables de retorno */
+.wire-return { position: absolute; background: #475569; z-index: 9; opacity: 0.8; }
+.wire-ret-v { width: 4px; height: 160px; left: 188px; top: 20px; }
+.wire-ret-h1 { width: 240px; height: 4px; left: 60px; top: 58px; }
+.wire-ret-h2 { width: 240px; height: 4px; left: 60px; top: 148px; }
+
+/* Fotones viajando */
+.photon { position: absolute; width: 6px; height: 6px; background: #fff; border-radius: 50%; box-shadow: 0 0 10px #fff, 0 0 20px #60a5fa; }
+.photon-v { left: -1px; animation: beam-down 2s linear infinite; }
+.photon-h { top: -1px; animation: beam-right 3s linear infinite; }
+.photon-v-ret { left: -1px; animation: beam-up 2s linear infinite; }
+.photon-h-ret { top: -1px; animation: beam-left 3s linear infinite; }
+
+@keyframes beam-down { 0% { top: 0; } 100% { top: 100%; } }
+@keyframes beam-right { 0% { left: 0; } 100% { left: 100%; } }
+@keyframes beam-up { 0% { top: 100%; } 100% { top: 0; } }
+@keyframes beam-left { 0% { left: 100%; } 100% { left: 0; } }
 
 .room {
   position: absolute;
@@ -397,142 +448,53 @@
 .glow-pulse-2 { animation: pulse-light 3s infinite alternate-reverse; }
 .glow-pulse-3 { animation: pulse-light 2s infinite alternate; }
 
-/* 3. Transport System Full */
+/* 3. Transport System Full (Isometric) */
 .city-visual {
-  background: #374151; /* Dark gray ground */
-}
-
-.city-map {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
-.city-block {
-  position: absolute;
-  background: #4b5563;
-  border-radius: 4px;
+  position: relative;
+  background: #0f172a;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
 }
 
-.city-block.park {
-  background: #064e3b;
-  font-size: 1.5rem;
-  letter-spacing: 5px;
+.isometric-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  filter: brightness(0.8) contrast(1.2);
 }
 
-.block-1 { top: 20px; left: 20px; width: 30%; height: 120px; }
-.block-2 { top: 20px; left: 35%; width: 40%; height: 120px; }
-.block-3 { top: 20px; right: 20px; width: 20%; height: 120px; }
-.block-4 { bottom: 20px; left: 20px; width: 40%; height: 140px; }
-.block-5 { bottom: 20px; left: 45%; width: 25%; height: 140px; }
-.block-6 { bottom: 20px; right: 20px; width: 25%; height: 140px; }
-
-.building {
-  background: #1f2937;
-  border: 1px solid #111827;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+.isometric-overlay {
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
-.b1 { width: 60px; height: 60px; left: 10px; top: 10px; }
-.b2 { width: 80px; height: 40px; right: 10px; bottom: 10px; }
-.b3 { width: 100%; height: 100%; }
-.b4 { width: 120px; height: 60px; top: 20px; left: 20px; }
-.b5 { width: 50px; height: 50px; bottom: 10px; right: 20px; }
-.b6 { width: 80%; height: 80%; border-radius: 50%; }
 
-.street {
-  position: absolute;
-  background: #111827;
-}
-.street::after {
-  content: '';
-  position: absolute;
-  background: transparent;
-}
-.street-h1 { top: 150px; left: 0; width: 100%; height: 40px; }
-.street-h1::after { border-top: 2px dashed #6b7280; width: 100%; height: 0; top: 20px; left: 0; }
-.street-h2 { bottom: 170px; left: 0; width: 100%; height: 40px; display: none; /* Just using h1 for now */ }
-
-.street-v1 { left: calc(30% + 20px); top: 0; width: 40px; height: 100%; }
-.street-v1::after { border-left: 2px dashed #6b7280; height: 100%; width: 0; left: 20px; top: 0; }
-.street-v2 { right: calc(20% + 20px); top: 0; width: 40px; height: 100%; }
-.street-v2::after { border-left: 2px dashed #6b7280; height: 100%; width: 0; left: 20px; top: 0; }
-
-.intersection {
-  position: absolute;
-  background: #111827;
-  width: 40px;
-  height: 40px;
-  top: 150px;
-}
-.int-1 { left: calc(30% + 20px); }
-.int-2 { right: calc(20% + 20px); }
-
-.car {
-  position: absolute;
-  width: 16px;
-  height: 10px;
-  border-radius: 3px;
+/* Vehículos Isométricos (diagonales) */
+.car-iso {
+  position: absolute; width: 14px; height: 8px; border-radius: 2px;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.8);
   z-index: 10;
-  box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
-.car::before { /* headlights */
-  content: ''; position: absolute; right: 0; top: 1px; width: 2px; height: 8px; background: #fef08a; box-shadow: 2px 0 5px #fef08a;
+.car-iso::before {
+  content: ''; position: absolute; right: 0; top: 1px; width: 2px; height: 6px; background: #fef08a; box-shadow: 2px 0 5px #fef08a;
 }
-.car-red { background: #ef4444; top: 154px; animation: drive-h-right-stop 8s linear infinite; }
-.car-blue { background: #3b82f6; top: 176px; transform: rotate(180deg); animation: drive-h-left-stop 10s linear infinite; }
-.car-green { background: #10b981; left: calc(30% + 24px); width: 10px; height: 16px; transform: rotate(90deg); animation: drive-v-down-stop 12s linear infinite; }
-.car-yellow { background: #eab308; right: calc(20% + 44px); width: 10px; height: 16px; transform: rotate(-90deg); animation: drive-v-up 9s linear infinite; }
-.car-purple { background: #a855f7; top: 154px; animation: drive-h-right 6s linear infinite 2s; }
-.car-white { background: #f3f4f6; left: calc(30% + 44px); width: 10px; height: 16px; transform: rotate(-90deg); animation: drive-v-up 11s linear infinite 3s; }
+.car-iso-1 { background: #ef4444; top: -10px; left: 30%; transform: rotate(30deg); animation: iso-drive-1 6s linear infinite; }
+.car-iso-2 { background: #3b82f6; bottom: -10px; right: 30%; transform: rotate(-150deg); animation: iso-drive-2 7s linear infinite 1s; }
+.car-iso-3 { background: #10b981; top: 30%; left: -10px; transform: rotate(-25deg); animation: iso-drive-3 5s linear infinite; }
+.car-iso-4 { background: #facc15; bottom: 30%; right: -10px; transform: rotate(155deg); animation: iso-drive-4 8s linear infinite 2s; }
 
-/* Traffic Light Animations */
-.traffic-light {
-  position: absolute; width: 14px; height: 36px; background: #1f2937;
-  border-radius: 4px; left: -18px; top: -10px;
-  display: flex; flex-direction: column; gap: 2px; padding: 3px; align-items: center; z-index: 20;
-}
-.tl-right { right: -18px; left: auto; }
+@keyframes iso-drive-1 { 0% { top: -20px; left: 30%; } 100% { top: 120%; left: 90%; } }
+@keyframes iso-drive-2 { 0% { bottom: -20px; right: 30%; } 100% { bottom: 120%; right: 90%; } }
+@keyframes iso-drive-3 { 0% { top: 30%; left: -20px; } 100% { top: 90%; left: 120%; } }
+@keyframes iso-drive-4 { 0% { bottom: 30%; right: -20px; } 100% { bottom: 90%; right: 120%; } }
 
-.light { width: 8px; height: 8px; border-radius: 50%; background: #4b5563; }
-.red-light { animation: light-red 8s infinite; }
-.yellow-light { animation: light-yellow 8s infinite; }
-.green-light { animation: light-green 8s infinite; }
-
-@keyframes light-red { 0%, 40% { background: #ef4444; box-shadow: 0 0 5px #ef4444; } 41%, 100% { background: #4b5563; box-shadow: none; } }
-@keyframes light-yellow { 0%, 80% { background: #4b5563; } 85%, 95% { background: #facc15; box-shadow: 0 0 5px #facc15; } 96%, 100% { background: #4b5563; } }
-@keyframes light-green { 0%, 40% { background: #4b5563; } 41%, 80% { background: #22c55e; box-shadow: 0 0 5px #22c55e; } 81%, 100% { background: #4b5563; } }
-
-/* Car stopping logic */
-@keyframes drive-h-right-stop { 
-  0% { left: -50px; } 
-  15% { left: calc(30% - 20px); } /* Stop at red light */
-  40% { left: calc(30% - 20px); } /* Wait for green */
-  100% { left: 105%; } 
-}
-@keyframes drive-h-left-stop { 
-  0% { right: -50px; } 
-  15% { right: calc(20% - 20px); } 
-  40% { right: calc(20% - 20px); } 
-  100% { right: 105%; } 
-}
-@keyframes drive-v-down-stop { 
-  0% { top: -50px; } 
-  35% { top: 130px; } /* Wait while horizontal is green */
-  75% { top: 130px; } 
-  100% { top: 105%; } 
-}
-@keyframes drive-h-right { 0% { left: -50px; } 100% { left: 105%; } }
-@keyframes drive-h-left { 0% { right: -50px; } 100% { right: 105%; } }
-@keyframes drive-v-down { 0% { top: -50px; } 100% { top: 105%; } }
-@keyframes drive-v-up { 0% { bottom: -50px; } 100% { bottom: 105%; } }
+/* (Removed 2D City blocks and traffic light legacy) */
 
 .inspiring-text {
   text-align: center;
