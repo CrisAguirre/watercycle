@@ -177,6 +177,6 @@
 @media (max-width: 900px) {
   .sim-main { flex-direction: column; }
   .sim-controls { min-width: 100%; border-left: none; }
-  .sim-visual-area { height: 45vh; }
+  .sim-visual-area { height: 45vh; min-height: 45vh; flex-shrink: 0; }
   .hud-panel { transform: scale(0.8); transform-origin: top right; }
 }

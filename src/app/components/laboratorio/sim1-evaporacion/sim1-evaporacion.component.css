@@ -217,6 +217,6 @@
 @media (max-width: 900px) {
   .sim-main { flex-direction: column; }
   .sim-controls { min-width: 100%; border-left: none; border-top: 1px solid rgba(255,255,255,0.1); }
-  .sim-visual-area { height: 50vh; }
+  .sim-visual-area { height: 50vh; min-height: 50vh; flex-shrink: 0; }
 }
 
