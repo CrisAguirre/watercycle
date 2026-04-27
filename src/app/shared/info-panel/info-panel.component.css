@@ -29,9 +29,9 @@
 .info-panel-container {
   position: fixed;
   top: 0;
-  right: -600px;
-  width: 550px;
-  max-width: 90vw;
+  right: -950px;
+  width: 900px;
+  max-width: 95vw;
   height: 100vh;
   background: rgba(10, 15, 30, 0.95);
   backdrop-filter: blur(15px);
@@ -56,6 +56,30 @@
   justify-content: space-between;
   align-items: center;
   background: rgba(0, 200, 255, 0.05);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.export-btn {
+  background: rgba(0, 200, 255, 0.2);
+  border: 1px solid #00c8ff;
+  color: #00c8ff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.export-btn:hover {
+  background: #00c8ff;
+  color: #000;
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
 }
 
 .info-panel-header h3 {
@@ -205,4 +229,79 @@
   background: #00c8ff;
   color: #0a0f1e;
   box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+}
+
+.raw-link {
+  display: block;
+  font-size: 0.75rem;
+  color: #00ffcc;
+  margin-top: 8px;
+  opacity: 0.8;
+  word-break: break-all;
+  font-family: monospace;
+}
+
+/* Responsividad para Móviles */
+@media (max-width: 768px) {
+  .info-panel-container {
+    width: 100vw;
+    right: -100vw;
+    max-width: 100vw;
+  }
+  
+  .info-panel-header {
+    padding: 15px 10px;
+  }
+  
+  .info-panel-header h3 {
+    font-size: 0.9rem;
+  }
+  
+  .header-actions {
+    gap: 10px;
+  }
+  
+  .export-btn {
+    padding: 5px 8px;
+    font-size: 0.75rem;
+  }
+  
+  .info-panel-content {
+    padding: 15px 10px;
+  }
+  
+  .propuesta-header {
+    padding: 15px;
+  }
+  
+  .propuesta-header h2 {
+    font-size: 1.1rem;
+  }
+  
+  .propuesta-header h3 {
+    font-size: 0.95rem;
+  }
+  
+  .propuesta-header li {
+    font-size: 0.8rem;
+  }
+  
+  .info-table {
+    font-size: 0.75rem;
+  }
+  
+  .info-table th, .info-table td {
+    padding: 8px 6px;
+  }
+  
+  .link-btn {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    white-space: normal;
+  }
+  
+  .raw-link {
+    font-size: 0.6rem;
+    word-break: break-all;
+  }
 }
