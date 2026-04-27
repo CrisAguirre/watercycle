@@ -1,3 +1,32 @@
+/* Variables de sincronización isométrica (Posiciones XY) */
+:root {
+  /* Ciudad - Escritorio */
+  --car-rd-1-x: 48%; --car-rd-1-y: 50%;
+  --car-rd-2-x: 52%; --car-rd-2-y: 50%;
+  
+  /* Casa - Escritorio */
+  --h-pow-x: 28%; --h-pow-y: 45%;
+  --h-wire1-x: 28%; --h-wire1-y: 35%; --h-wire1-w: 4px; --h-wire1-h: 120px;
+  --h-wire2-x: 28%; --h-wire2-y: 35%; --h-wire2-w: 220px; --h-wire2-h: 4px;
+  --h-n1-x: 42%; --h-n1-y: 35%;
+  --h-n2-x: 70%; --h-n2-y: 35%;
+}
+
+@media (max-width: 768px) {
+  :root {
+    /* Ciudad - Móvil (la IA la ajusta más abajo) */
+    --car-rd-1-x: 48%; --car-rd-1-y: 65%;
+    --car-rd-2-x: 52%; --car-rd-2-y: 65%;
+    
+    /* Casa - Móvil */
+    --h-pow-x: 20%; --h-pow-y: 55%;
+    --h-wire1-x: 20%; --h-wire1-y: 40%; --h-wire1-w: 4px; --h-wire1-h: 150px;
+    --h-wire2-x: 20%; --h-wire2-y: 40%; --h-wire2-w: 180px; --h-wire2-h: 4px;
+    --h-n1-x: 50%; --h-n1-y: 40%;
+    --h-n2-x: 80%; --h-n2-y: 40%;
+  }
+}
+
 .intro-lab-container {
   padding: 30px;
   max-width: 1000px;
@@ -484,15 +513,15 @@
 .car-iso::before {
   content: ''; position: absolute; right: 0; top: 1px; width: 2px; height: 6px; background: #fef08a; box-shadow: 2px 0 5px #fef08a;
 }
-.car-iso-1 { background: #ef4444; top: -10px; left: 30%; transform: rotate(30deg); animation: iso-drive-1 6s linear infinite; }
-.car-iso-2 { background: #3b82f6; bottom: -10px; right: 30%; transform: rotate(-150deg); animation: iso-drive-2 7s linear infinite 1s; }
-.car-iso-3 { background: #10b981; top: 30%; left: -10px; transform: rotate(-25deg); animation: iso-drive-3 5s linear infinite; }
-.car-iso-4 { background: #facc15; bottom: 30%; right: -10px; transform: rotate(155deg); animation: iso-drive-4 8s linear infinite 2s; }
+.car-iso-1 { background: #ef4444; top: -10px; left: var(--car-rd-1-x, 48%); transform: rotate(30deg); animation: iso-drive-1 6s linear infinite; }
+.car-iso-2 { background: #3b82f6; bottom: -10px; right: var(--car-rd-1-x, 48%); transform: rotate(-150deg); animation: iso-drive-2 7s linear infinite 1s; }
+.car-iso-3 { background: #10b981; top: var(--car-rd-1-y, 50%); left: -10px; transform: rotate(-25deg); animation: iso-drive-3 5s linear infinite; }
+.car-iso-4 { background: #facc15; bottom: var(--car-rd-2-y, 50%); right: -10px; transform: rotate(155deg); animation: iso-drive-4 8s linear infinite 2s; }
 
-@keyframes iso-drive-1 { 0% { top: -20px; left: 30%; } 100% { top: 120%; left: 90%; } }
-@keyframes iso-drive-2 { 0% { bottom: -20px; right: 30%; } 100% { bottom: 120%; right: 90%; } }
-@keyframes iso-drive-3 { 0% { top: 30%; left: -20px; } 100% { top: 90%; left: 120%; } }
-@keyframes iso-drive-4 { 0% { bottom: 30%; right: -20px; } 100% { bottom: 90%; right: 120%; } }
+@keyframes iso-drive-1 { 0% { top: -20px; left: var(--car-rd-1-x, 48%); } 100% { top: 120%; left: calc(var(--car-rd-1-x, 48%) + 60%); } }
+@keyframes iso-drive-2 { 0% { bottom: -20px; right: var(--car-rd-1-x, 48%); } 100% { bottom: 120%; right: calc(var(--car-rd-1-x, 48%) + 60%); } }
+@keyframes iso-drive-3 { 0% { top: var(--car-rd-1-y, 50%); left: -20px; } 100% { top: calc(var(--car-rd-1-y, 50%) + 60%); left: 120%; } }
+@keyframes iso-drive-4 { 0% { bottom: var(--car-rd-2-y, 50%); right: -20px; } 100% { bottom: calc(var(--car-rd-2-y, 50%) + 60%); right: 120%; } }
 
 /* (Removed 2D City blocks and traffic light legacy) */
 
