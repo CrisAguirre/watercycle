@@ -30,9 +30,8 @@ export class Sim5CicloConsolidadoComponent implements OnInit, OnDestroy {
   private audioInitialized = false;
   private currentRainLevel: 'none' | 'light' | 'heavy' = 'none';
 
-  private birdGain: GainNode | null = null;
+  private birdAudio = new Audio('assets/birds.mp3');
   private birdsActive = false;
-  private birdTimers: any[] = [];
 
   private userHasInteracted = false;
   private interactionListener: (() => void) | null = null;
@@ -260,73 +259,15 @@ export class Sim5CicloConsolidadoComponent implements OnInit, OnDestroy {
 
   private startBirds() {
     if (!this.userHasInteracted) return;
-    const ctx = this.ensureAudioCtx();
-    if (ctx.state === 'suspended') ctx.resume();
-    if (!this.audioInitialized) this.initAudio();
-    this.birdGain = ctx.createGain();
-    this.birdGain.gain.value = 0;
-    this.birdGain.connect(ctx.destination);
-    this.birdGain.gain.linearRampToValueAtTime(0.15, ctx.currentTime + 2);
+    this.birdAudio.loop = true;
+    this.birdAudio.volume = 0.15;
+    this.birdAudio.play().catch(e => console.log('Audio play failed:', e));
     this.birdsActive = true;
-    for (let bird = 0; bird < 3; bird++) {
-      this.scheduleBirdLoop(bird);
-    }
-  }
-
-  private scheduleBirdLoop(birdId: number) {
-    if (!this.birdsActive) return;
-    const baseIntervals = [2500, 4000, 6000];
-    const interval = baseIntervals[birdId] + Math.random() * 3000;
-    const timer = setTimeout(() => {
-      if (!this.birdsActive || !this.audioCtx || !this.birdGain) return;
-      this.playChirpSequence(birdId);
-      this.scheduleBirdLoop(birdId);
-    }, interval);
-    this.birdTimers.push(timer);
-  }
-
-  private playChirpSequence(birdId: number) {
-    if (!this.audioCtx || !this.birdGain) return;
-    const ctx = this.audioCtx;
-    const now = ctx.currentTime;
-    const birdProfiles = [
-      { freqBase: 3200, freqRange: 1200, noteCount: 3, noteLen: 0.08, gap: 0.1 },
-      { freqBase: 2400, freqRange: 800, noteCount: 2, noteLen: 0.15, gap: 0.2 },
-      { freqBase: 4000, freqRange: 1500, noteCount: 5, noteLen: 0.05, gap: 0.06 },
-    ];
-    const profile = birdProfiles[birdId % birdProfiles.length];
-    for (let i = 0; i < profile.noteCount; i++) {
-      const startTime = now + i * (profile.noteLen + profile.gap);
-      const freq1 = profile.freqBase + Math.random() * profile.freqRange;
-      const freq2 = freq1 + (Math.random() - 0.4) * 600;
-      const osc = ctx.createOscillator();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq1, startTime);
-      osc.frequency.linearRampToValueAtTime(freq2, startTime + profile.noteLen);
-      const env = ctx.createGain();
-      env.gain.setValueAtTime(0, startTime);
-      env.gain.linearRampToValueAtTime(0.6 + Math.random() * 0.4, startTime + 0.01);
-      env.gain.exponentialRampToValueAtTime(0.001, startTime + profile.noteLen);
-      osc.connect(env);
-      env.connect(this.birdGain);
-      osc.start(startTime);
-      osc.stop(startTime + profile.noteLen + 0.01);
-    }
   }
 
   private stopBirds() {
-    if (this.birdGain && this.audioCtx) {
-      this.birdGain.gain.linearRampToValueAtTime(0, this.audioCtx.currentTime + 1.5);
-    }
-    this.birdTimers.forEach(t => clearTimeout(t));
-    this.birdTimers = [];
+    this.birdAudio.pause();
     this.birdsActive = false;
-    setTimeout(() => {
-      if (this.birdGain) {
-        try { this.birdGain.disconnect(); } catch (e) { }
-        this.birdGain = null;
-      }
-    }, 2000);
   }
 
   ngOnDestroy() {
