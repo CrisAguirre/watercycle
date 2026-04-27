@@ -165,9 +165,18 @@
 }
 
 @media (max-width: 768px) {
+  .intro-header .subtitle {
+    padding: 0 25px;
+  }
+
   .tab-navigation {
     flex-direction: column;
     align-items: stretch;
+    padding: 0 25px;
+  }
+  
+  .tab-navigation button {
+    justify-content: center;
   }
 
   p,
@@ -186,6 +195,10 @@
 @media (min-width: 769px) {
   .solar-system-full {
     transform: translate(-50%, -50%) scale(0.85);
+  }
+
+  .solar-visual {
+    min-height: 520px;
   }
 }
 
@@ -799,6 +812,19 @@
 
 /* Responsive — Móvil */
 @media (max-width: 768px) {
+  
+  .intro-lab-container {
+    padding: 10px;
+  }
+  
+  .tab-content {
+    padding: 15px 10px;
+  }
+
+  .sim-item.full-width {
+    padding: 15px;
+    border-radius: 10px;
+  }
 
   .sim-caption,
   .section-desc,
@@ -932,7 +958,11 @@
     }
   }
 
-  /* Circuito SVG — Mobile: solo reposicionar fuente */
+  /* Circuito SVG — Mobile: reposicionar para subirlo respecto a la foto */
+  .house-circuit-overlay {
+    transform: translateY(-12%);
+  }
+
   .circuit-source {
     bottom: 6%;
     right: 6%;

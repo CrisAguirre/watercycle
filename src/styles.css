@@ -128,3 +128,20 @@ input:focus {
   padding: 20px;
 }
 
+/* ───── Responsive Typography (Mobile) ───── */
+@media (max-width: 768px) {
+  p, 
+  .sim-caption, 
+  .section-desc, 
+  .guide-content p, 
+  .activity-content p, 
+  .eval-content p, 
+  .step p {
+    text-align: justify !important;
+    text-align-last: center !important;
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+  }
+}
+
+
