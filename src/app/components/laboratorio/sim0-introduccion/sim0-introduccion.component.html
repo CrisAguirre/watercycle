@@ -68,11 +68,32 @@
             </picture>
             
             <div class="isometric-overlay house-circuit-overlay">
-              <!-- Nodos Eléctricos (Luces brillando sobre la imagen) -->
-              <div class="circuit-node node-1" style="top: var(--h-n1-y, 40%); left: var(--h-n1-x, 35%);"><div class="bulb glow-pulse-1"></div></div>
-              <div class="circuit-node node-2" style="top: var(--h-n2-y, 65%); left: var(--h-n2-x, 40%);"><div class="bulb glow-pulse-2"></div></div>
-              <div class="circuit-node node-3" style="top: var(--h-n3-y, 45%); left: var(--h-n3-x, 65%);"><div class="bulb glow-pulse-3"></div></div>
-              <div class="circuit-node node-4" style="top: var(--h-n4-y, 75%); left: var(--h-n4-x, 65%);"><div class="bulb glow-pulse-1"></div></div>
+              <!-- Fuente eléctrica (medidor exterior) -->
+              <div class="circuit-source">⚡</div>
+              
+              <!-- Troncal vertical principal (sube por la pared izquierda) -->
+              <div class="cw cw-trunk-v"><div class="photon ph-v"></div></div>
+              
+              <!-- Ramal Piso 1: horizontal hacia la derecha -->
+              <div class="cw cw-floor1-h"><div class="photon ph-h"></div></div>
+              
+              <!-- Ramal Piso 2: horizontal hacia la derecha -->
+              <div class="cw cw-floor2-h"><div class="photon ph-h ph-delay"></div></div>
+
+              <!-- Retorno vertical (baja por pared derecha) -->
+              <div class="cw-ret cw-ret-trunk"><div class="photon-ret ph-v-ret"></div></div>
+
+              <!-- Nodos de luz en cada habitación -->
+              <div class="light-node ln-sala">💡</div>
+              <div class="light-node ln-cocina">💡</div>
+              <div class="light-node ln-dormitorio">💡</div>
+              <div class="light-node ln-bano">💡</div>
+              
+              <!-- Junctions (puntos de conexión) -->
+              <div class="junction jn-1"></div>
+              <div class="junction jn-2"></div>
+              <div class="junction jn-3"></div>
+              <div class="junction jn-4"></div>
             </div>
           </div>
           <p class="sim-caption">Un hogar cuenta con un sistema eléctrico compuesto por una fuente de energía, una red de conductores (cables) y nodos de consumo (focos, enchufes). Si un nodo falla, el sistema busca rutas alternas, pero si la fuente o la red principal se interrumpe, el sistema completo deja de funcionar y pierde su propósito.</p>
