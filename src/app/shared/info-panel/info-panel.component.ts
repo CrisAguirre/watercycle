@@ -16,7 +16,21 @@ export class InfoPanelComponent {
 
   exportToWord() {
     if (!this.exportContent) return;
-    
+
+    // Clonar el contenido para no modificar el DOM original
+    const clone = this.exportContent.nativeElement.cloneNode(true) as HTMLElement;
+
+    // Reemplazar cada href relativo del botón con la URL absoluta del div .raw-link adyacente
+    clone.querySelectorAll('a.link-btn').forEach((anchor: Element) => {
+      const rawLinkDiv = anchor.nextElementSibling;
+      if (rawLinkDiv && rawLinkDiv.classList.contains('raw-link')) {
+        const fullUrl = rawLinkDiv.textContent?.trim() || '';
+        if (fullUrl.startsWith('https://')) {
+          (anchor as HTMLAnchorElement).href = fullUrl;
+        }
+      }
+    });
+
     const preHtml = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
     <head><meta charset='utf-8'><title>Resumen Laboratorios</title>
     <style>
@@ -30,7 +44,7 @@ export class InfoPanelComponent {
     </style>
     </head><body>`;
     const postHtml = "</body></html>";
-    const html = preHtml + this.exportContent.nativeElement.innerHTML + postHtml;
+    const html = preHtml + clone.innerHTML + postHtml;
 
     const blob = new Blob(['\ufeff', html], {
       type: 'application/msword'
