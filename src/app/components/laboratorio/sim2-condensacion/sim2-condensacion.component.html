@@ -20,51 +20,47 @@
       <hr class="separator" />
 
       <h3 class="mb-4">🔍 Ejemplos Prácticos</h3>
-      <p>Desliza para ver ejemplos de condensación. ¿De dónde proviene el fenómeno? ¿Cuáles son las condiciones para que se genere?</p>
+      <p>Pasa el cursor sobre la imagen para ver la descripción. Navega con los puntos inferiores.</p>
 
-      <!-- CSS Slider -->
-      <div class="apropiacion-slider">
-        <div class="slider-container">
-          
-          <!-- Slide 1 -->
-          <div class="slide">
-            <picture class="slide-img">
-              <source media="(min-width: 768px)" srcset="assets/images/apropiacion/cond_1.png">
-              <img src="assets/images/apropiacion/cond_1.png" alt="Rocío en hierba">
-            </picture>
-            <div class="slide-caption glass-panel">
-              <h4>1. Rocío en la Hierba</h4>
+      <div class="apropiacion-carousel">
+        <input type="radio" name="slider-cond" id="cond-s1" checked>
+        <input type="radio" name="slider-cond" id="cond-s2">
+        <input type="radio" name="slider-cond" id="cond-s3">
+
+        <div class="carousel-track">
+          <div class="carousel-slide">
+            <span class="slide-badge">1 / 3</span>
+            <img src="assets/images/apropiacion/cond_1.png" alt="Rocío en hierba">
+            <div class="carousel-overlay">
+              <h4>🌿 Rocío en la Hierba</h4>
               <p><strong>¿De dónde proviene?</strong> Del vapor de agua presente en el aire durante la noche.</p>
-              <p><strong>Condiciones:</strong> En la madrugada, la temperatura desciende. Si baja hasta alcanzar el punto de rocío, el vapor se condensa en superficies frías como las hojas.</p>
+              <p><strong>Condiciones:</strong> En la madrugada, la temperatura desciende hasta el punto de rocío y el vapor se condensa en superficies frías como las hojas.</p>
             </div>
           </div>
-
-          <!-- Slide 2 -->
-          <div class="slide">
-            <picture class="slide-img">
-              <source media="(min-width: 768px)" srcset="assets/images/apropiacion/cond_2.png">
-              <img src="assets/images/apropiacion/cond_2.png" alt="Vaso frío">
-            </picture>
-            <div class="slide-caption glass-panel">
-              <h4>2. Vaso de Agua Fría</h4>
+          <div class="carousel-slide">
+            <span class="slide-badge">2 / 3</span>
+            <img src="assets/images/apropiacion/cond_2.png" alt="Vaso frío">
+            <div class="carousel-overlay">
+              <h4>🥤 Vaso de Agua Fría</h4>
               <p><strong>¿De dónde proviene?</strong> Del vapor de agua ambiental en la habitación.</p>
-              <p><strong>Condiciones:</strong> El vaso frío enfría el aire inmediatamente a su alrededor por debajo del punto de rocío, forzando al agua gaseosa a volver a estado líquido sobre el vidrio.</p>
+              <p><strong>Condiciones:</strong> El vaso frío enfría el aire a su alrededor por debajo del punto de rocío, forzando al agua gaseosa a volver a estado líquido sobre el vidrio.</p>
             </div>
           </div>
-
-          <!-- Slide 3 -->
-          <div class="slide">
-            <picture class="slide-img">
-              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1549880193-16784d0b28e6?q=80&w=1000&auto=format&fit=crop">
-              <img src="https://images.unsplash.com/photo-1549880193-16784d0b28e6?q=80&w=1000&auto=format&fit=crop" alt="Ventana empañada">
-            </picture>
-            <div class="slide-caption glass-panel">
-              <h4>3. Ventana Empañada</h4>
+          <div class="carousel-slide">
+            <span class="slide-badge">3 / 3</span>
+            <img src="https://images.unsplash.com/photo-1549880193-16784d0b28e6?q=80&w=1000&auto=format&fit=crop" alt="Ventana empañada">
+            <div class="carousel-overlay">
+              <h4>🪟 Ventana Empañada</h4>
               <p><strong>¿De dónde proviene?</strong> Del vapor de agua de la respiración humana dentro del vehículo.</p>
-              <p><strong>Condiciones:</strong> Al chocar el aliento cálido y húmedo contra el cristal frío de la ventana en invierno, el aire pierde temperatura y no puede retener el vapor, condensándolo.</p>
+              <p><strong>Condiciones:</strong> Al chocar el aliento cálido contra el cristal frío en invierno, el aire no puede retener el vapor y lo condensa.</p>
             </div>
           </div>
+        </div>
 
+        <div class="carousel-dots">
+          <label for="cond-s1"></label>
+          <label for="cond-s2"></label>
+          <label for="cond-s3"></label>
         </div>
       </div>
     </div>

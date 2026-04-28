@@ -20,51 +20,48 @@
       <hr class="separator" />
 
       <h3 class="mb-4">🔍 Ejemplos Prácticos</h3>
-      <p>Desliza para ver ejemplos de evaporación. ¿De dónde proviene el fenómeno? ¿Cuáles son las condiciones para que se genere?</p>
+      <p>Pasa el cursor sobre la imagen para ver la descripción. Navega con los puntos inferiores.</p>
 
-      <!-- CSS Slider -->
-      <div class="apropiacion-slider">
-        <div class="slider-container">
-          
-          <!-- Slide 1 -->
-          <div class="slide">
-            <picture class="slide-img">
-              <source media="(min-width: 768px)" srcset="assets/images/apropiacion/evap_1.png">
-              <img src="assets/images/apropiacion/evap_1.png" alt="Olla hirviendo">
-            </picture>
-            <div class="slide-caption glass-panel">
-              <h4>1. Olla Hirviendo</h4>
+      <!-- CSS Carousel -->
+      <div class="apropiacion-carousel">
+        <input type="radio" name="slider-evap" id="evap-s1" checked>
+        <input type="radio" name="slider-evap" id="evap-s2">
+        <input type="radio" name="slider-evap" id="evap-s3">
+
+        <div class="carousel-track">
+          <div class="carousel-slide">
+            <span class="slide-badge">1 / 3</span>
+            <img src="assets/images/apropiacion/evap_1.png" alt="Olla hirviendo">
+            <div class="carousel-overlay">
+              <h4>🔥 Olla Hirviendo</h4>
               <p><strong>¿De dónde proviene?</strong> Del agua calentada artificialmente por la estufa.</p>
-              <p><strong>Condiciones:</strong> Requiere una temperatura muy alta (100°C) proporcionada por una fuente de calor (fuego o electricidad), forzando el cambio de fase rápido.</p>
+              <p><strong>Condiciones:</strong> Requiere una temperatura muy alta (100°C) proporcionada por una fuente de calor, forzando el cambio de fase rápido.</p>
             </div>
           </div>
-
-          <!-- Slide 2 -->
-          <div class="slide">
-            <picture class="slide-img">
-              <source media="(min-width: 768px)" srcset="assets/images/apropiacion/evap_2.png">
-              <img src="assets/images/apropiacion/evap_2.png" alt="Ropa secando">
-            </picture>
-            <div class="slide-caption glass-panel">
-              <h4>2. Secado de Ropa</h4>
+          <div class="carousel-slide">
+            <span class="slide-badge">2 / 3</span>
+            <img src="assets/images/apropiacion/evap_2.png" alt="Ropa secando">
+            <div class="carousel-overlay">
+              <h4>👕 Secado de Ropa</h4>
               <p><strong>¿De dónde proviene?</strong> De la humedad retenida en las fibras de la ropa mojada tras lavarla.</p>
-              <p><strong>Condiciones:</strong> Requiere la radiación solar y el viento continuo que renueve el aire alrededor de la prenda (evitando la saturación de humedad ambiental).</p>
+              <p><strong>Condiciones:</strong> Requiere la radiación solar y el viento continuo que renueve el aire alrededor de la prenda.</p>
             </div>
           </div>
-
-          <!-- Slide 3 -->
-          <div class="slide">
-            <picture class="slide-img">
-              <source media="(min-width: 768px)" srcset="assets/images/apropiacion/evap_3.png">
-              <img src="assets/images/apropiacion/evap_3.png" alt="Charco secando">
-            </picture>
-            <div class="slide-caption glass-panel">
-              <h4>3. Charco Secándose</h4>
+          <div class="carousel-slide">
+            <span class="slide-badge">3 / 3</span>
+            <img src="assets/images/apropiacion/evap_3.png" alt="Charco secando">
+            <div class="carousel-overlay">
+              <h4>💧 Charco Secándose</h4>
               <p><strong>¿De dónde proviene?</strong> De la acumulación de agua de lluvia en la superficie del suelo o asfalto.</p>
-              <p><strong>Condiciones:</strong> El calor residual del asfalto y la exposición directa a la radiación solar calientan la delgada capa de agua, evaporándola lentamente.</p>
+              <p><strong>Condiciones:</strong> El calor residual del asfalto y la radiación solar calientan la delgada capa de agua, evaporándola lentamente.</p>
             </div>
           </div>
+        </div>
 
+        <div class="carousel-dots">
+          <label for="evap-s1"></label>
+          <label for="evap-s2"></label>
+          <label for="evap-s3"></label>
         </div>
       </div>
     </div>

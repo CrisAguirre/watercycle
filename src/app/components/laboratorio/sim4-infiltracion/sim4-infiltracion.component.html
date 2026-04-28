@@ -20,51 +20,47 @@
       <hr class="separator" />
 
       <h3 class="mb-4">🔍 Ejemplos Prácticos</h3>
-      <p>Desliza para ver ejemplos de infiltración. ¿De dónde proviene el fenómeno? ¿Cuáles son las condiciones para que se genere?</p>
+      <p>Pasa el cursor sobre la imagen para ver la descripción. Navega con los puntos inferiores.</p>
 
-      <!-- CSS Slider -->
-      <div class="apropiacion-slider">
-        <div class="slider-container">
-          
-          <!-- Slide 1 -->
-          <div class="slide">
-            <picture class="slide-img">
-              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1416879598056-0c1828d09d66?q=80&w=1000&auto=format&fit=crop">
-              <img src="https://images.unsplash.com/photo-1416879598056-0c1828d09d66?q=80&w=1000&auto=format&fit=crop" alt="Regando el jardín">
-            </picture>
-            <div class="slide-caption glass-panel">
-              <h4>1. Regando el Jardín</h4>
-              <p><strong>¿De dónde proviene?</strong> Del agua de lluvia o riego artificial cayendo sobre la tierra desnuda o cultivada.</p>
-              <p><strong>Condiciones:</strong> Requiere un suelo poroso y no compactado. La gravedad y la succión capilar atraen el agua hacia los espacios vacíos entre las partículas de tierra.</p>
+      <div class="apropiacion-carousel">
+        <input type="radio" name="slider-infil" id="infil-s1" checked>
+        <input type="radio" name="slider-infil" id="infil-s2">
+        <input type="radio" name="slider-infil" id="infil-s3">
+
+        <div class="carousel-track">
+          <div class="carousel-slide">
+            <span class="slide-badge">1 / 3</span>
+            <img src="https://images.unsplash.com/photo-1416879598056-0c1828d09d66?q=80&w=1000&auto=format&fit=crop" alt="Regando el jardín">
+            <div class="carousel-overlay">
+              <h4>🌱 Regando el Jardín</h4>
+              <p><strong>¿De dónde proviene?</strong> Del agua de lluvia o riego artificial cayendo sobre la tierra cultivada.</p>
+              <p><strong>Condiciones:</strong> Requiere un suelo poroso y no compactado. La gravedad y la succión capilar atraen el agua hacia los espacios vacíos entre las partículas.</p>
             </div>
           </div>
-
-          <!-- Slide 2 -->
-          <div class="slide">
-            <picture class="slide-img">
-              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1589820713735-1abcbdd6114e?q=80&w=1000&auto=format&fit=crop">
-              <img src="https://images.unsplash.com/photo-1589820713735-1abcbdd6114e?q=80&w=1000&auto=format&fit=crop" alt="Agua en arena">
-            </picture>
-            <div class="slide-caption glass-panel">
-              <h4>2. Agua Desapareciendo en la Arena</h4>
+          <div class="carousel-slide">
+            <span class="slide-badge">2 / 3</span>
+            <img src="https://images.unsplash.com/photo-1589820713735-1abcbdd6114e?q=80&w=1000&auto=format&fit=crop" alt="Agua en arena">
+            <div class="carousel-overlay">
+              <h4>🏖️ Agua Desapareciendo en la Arena</h4>
               <p><strong>¿De dónde proviene?</strong> Del oleaje del mar o lluvia sobre dunas y playas.</p>
-              <p><strong>Condiciones:</strong> La arena tiene macroporos (espacios muy grandes entre granos) que permiten una conductividad hidráulica casi instantánea, absorbiendo el agua superficial inmediatamente.</p>
+              <p><strong>Condiciones:</strong> La arena tiene macroporos que permiten una conductividad hidráulica casi instantánea, absorbiendo el agua superficial inmediatamente.</p>
             </div>
           </div>
-
-          <!-- Slide 3 -->
-          <div class="slide">
-            <picture class="slide-img">
-              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1618585093551-7ef1da169991?q=80&w=1000&auto=format&fit=crop">
-              <img src="https://images.unsplash.com/photo-1618585093551-7ef1da169991?q=80&w=1000&auto=format&fit=crop" alt="Esponja absorbiendo">
-            </picture>
-            <div class="slide-caption glass-panel">
-              <h4>3. Esponja de Cocina (Analogía)</h4>
+          <div class="carousel-slide">
+            <span class="slide-badge">3 / 3</span>
+            <img src="https://images.unsplash.com/photo-1618585093551-7ef1da169991?q=80&w=1000&auto=format&fit=crop" alt="Esponja absorbiendo">
+            <div class="carousel-overlay">
+              <h4>🧽 Esponja de Cocina (Analogía)</h4>
               <p><strong>¿De dónde proviene?</strong> El contacto del material poroso con cualquier líquido.</p>
-              <p><strong>Condiciones:</strong> Al igual que un suelo rico en materia orgánica, la esponja tiene innumerables cavidades (porosidad) que se llenan de agua hasta alcanzar su capacidad de retención (saturación).</p>
+              <p><strong>Condiciones:</strong> Al igual que un suelo rico en materia orgánica, la esponja tiene innumerables cavidades (porosidad) que se llenan de agua hasta alcanzar la saturación.</p>
             </div>
           </div>
+        </div>
 
+        <div class="carousel-dots">
+          <label for="infil-s1"></label>
+          <label for="infil-s2"></label>
+          <label for="infil-s3"></label>
         </div>
       </div>
     </div>
