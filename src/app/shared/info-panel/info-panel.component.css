@@ -305,3 +305,33 @@
     word-break: break-all;
   }
 }
+
+/* ══════ Bloque separador Agro ══════ */
+.block-separator-row td {
+  padding: 0 !important;
+  border-bottom: none !important;
+}
+
+.block-separator-label {
+  background: linear-gradient(90deg, rgba(0, 200, 100, 0.15), rgba(0, 200, 100, 0.05));
+  border-top: 2px solid rgba(0, 200, 100, 0.5);
+  border-bottom: 2px solid rgba(0, 200, 100, 0.5);
+  color: #00cc66;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding: 10px 15px;
+  text-transform: uppercase;
+}
+
+/* Lineamiento label bajo el nombre del sim */
+.sim-lineamiento {
+  display: block;
+  font-size: 0.75rem;
+  color: #00cc66;
+  font-weight: 400;
+  font-style: italic;
+  margin-top: 4px;
+  opacity: 0.85;
+}

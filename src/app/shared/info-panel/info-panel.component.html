@@ -46,6 +46,14 @@
           </tr>
         </thead>
         <tbody>
+          <!-- ══════════ SEPARADOR BLOQUE AGUA ══════════ -->
+          <tr class="block-separator-row">
+            <td colspan="4">
+              <div class="block-separator-label" style="background: linear-gradient(90deg, rgba(0,200,255,0.15), rgba(0,200,255,0.05)); border-top-color: rgba(0,200,255,0.5); border-bottom-color: rgba(0,200,255,0.5); color: #00c8ff;">
+                💧 Bloque Ciclo del Agua — Lineamientos: Pensamiento Sistémico, Ciclos Hidrológicos y Balance Hídrico
+              </div>
+            </td>
+          </tr>
           <!-- SIM 0 -->
           <tr>
             <td><strong>Sim0: Introducción</strong></td>
@@ -196,6 +204,94 @@
             <td class="text-center">
               <a routerLink="/laboratorio/ciclo-consolidado" (click)="togglePanel()" class="link-btn">Ir al Sim 5</a>
               <div class="raw-link">https://app.watercycle.com/laboratorio/ciclo-consolidado</div>
+            </td>
+          </tr>
+
+          <!-- ══════════ SEPARADOR BLOQUE AGRO ══════════ -->
+          <tr class="block-separator-row">
+            <td colspan="4">
+              <div class="block-separator-label">🌱 Bloque Agrosistemas — Lineamientos: Componentes, Causalidad, Escalas y Resiliencia</div>
+            </td>
+          </tr>
+
+          <!-- SIM 6 -->
+          <tr>
+            <td><strong>Sim6: Factores del Cultivo</strong><br><span class="sim-lineamiento">Lineamientos 1 y 2: Componentes y Causalidad</span></td>
+            <td>
+              <strong>Pestaña: Actividad (15 min)</strong><br>
+              Identifica componentes bióticos (planta, plagas) y abióticos (temperatura, agua, nutrientes) del agroecosistema y sus relaciones de causalidad.<br><br>
+              <strong>Pestaña: Simulador (25 min)</strong><br>
+              Ajusta temperatura, disponibilidad de agua, nutrientes N-P-K y presión de plagas para observar cómo varía la salud del cultivo, la biomasa y el rendimiento estimado (Ley de Liebig). Identifica el factor limitante.<br><br>
+              <strong>Pestaña: Evaluación (10 min)</strong><br>
+              Resuelve el cuestionario interactivo cronometrado (2 intentos, 25 preguntas) sobre componentes e interacciones del agroecosistema.<br><br>
+              <strong>Justificación:</strong> Sitúa al estudiante en el rol de investigador agrícola: al manipular variables independientes y observar sus efectos sobre la salud del cultivo, comprende de forma empírica la causalidad múltiple y el concepto de factor limitante (Ley de Liebig), base del pensamiento sistémico aplicado a la producción agrícola.
+            </td>
+            <td>
+              <strong>Pestaña: Actividad (15 min)</strong><br>
+              Orienta la distinción conceptual entre componentes bióticos y abióticos. Propone los 3 experimentos sugeridos como punto de partida estructurado.<br><br>
+              <strong>Pestaña: Simulador (25 min)</strong><br>
+              Acompaña la interpretación de las fórmulas implementadas (ETc = Kc × ET0; crecimiento logístico; Ley de Liebig). Facilita la identificación del factor limitante en el panel de monitoreo.<br><br>
+              <strong>Pestaña: Evaluación (10 min)</strong><br>
+              Monitorea los resultados del cuestionario anti-cheat y retroalimenta conceptualmente los errores más frecuentes.<br><br>
+              <strong>Justificación:</strong> El docente actúa como puente entre la representación gráfica del simulador y los principios científicos subyacentes (fisiología vegetal, ecología de plagas), evitando que el estudiante opere el simulador sin comprensión conceptual profunda.
+            </td>
+            <td class="text-center">
+              <a routerLink="/laboratorio/factores-cultivo" (click)="togglePanel()" class="link-btn">Ir al Sim 6</a>
+              <div class="raw-link">https://app.watercycle.com/laboratorio/factores-cultivo</div>
+            </td>
+          </tr>
+
+          <!-- SIM 7 -->
+          <tr>
+            <td><strong>Sim7: Escalas Productivas</strong><br><span class="sim-lineamiento">Lineamiento 3: Escalas</span></td>
+            <td>
+              <strong>Pestaña: Actividad (15 min)</strong><br>
+              Resuelve el problema de escala comparando el requerimiento hídrico de 1 m² (maceta) frente a 10 000 m² (hectárea). Analiza proporcionalidad y economías de escala.<br><br>
+              <strong>Pestaña: Simulador (25 min)</strong><br>
+              Selecciona tipo de cultivo (Papa, Maíz, Café), escala de producción (1–10 000 m²) y método de riego (Goteo 90%, Aspersión 75%, Gravedad 50%). Calcula el requerimiento hídrico, costos, ingreso y margen de ganancia. Optimiza la fertilización (curva de rendimientos decrecientes).<br><br>
+              <strong>Pestaña: Evaluación (10 min)</strong><br>
+              Cuestionario de 25 preguntas sobre cálculos de volumen de agua, eficiencia de riego y márgenes de rentabilidad agrícola.<br><br>
+              <strong>Justificación:</strong> Desarrolla el pensamiento matemático y de escalas: el estudiante experimenta concretamente que duplicar el área no duplica necesariamente los beneficios, comprendiendo la lógica de rendimientos decrecientes y la eficiencia comparativa entre métodos de riego — competencias directamente aplicables a la gestión sostenible del agua en agricultura.
+            </td>
+            <td>
+              <strong>Pestaña: Actividad (15 min)</strong><br>
+              Plantea preguntas generadoras sobre la diferencia entre agricultura de subsistencia y comercial. Sugiere los 3 experimentos comparativos para guiar la exploración.<br><br>
+              <strong>Pestaña: Simulador (25 min)</strong><br>
+              Explica las fórmulas implementadas: rendimiento en función de fertilización y riego (curva asintótica), volumen de agua requerido y margen de ganancia. Conecta el simulador con el cálculo del costo real del agua en el contexto de Nariño.<br><br>
+              <strong>Pestaña: Evaluación (10 min)</strong><br>
+              Revisa los cálculos numéricos de los estudiantes y refuerza la interdisciplinariedad con el área de matemáticas (proporciones, porcentajes, razones).<br><br>
+              <strong>Justificación:</strong> Posiciona al docente como facilitador del pensamiento cuantitativo interdisciplinar, aprovechando el simulador como herramienta matemática real. Permite vincular Ciencias Naturales con Matemáticas y Economía Agraria de manera integrada.
+            </td>
+            <td class="text-center">
+              <a routerLink="/laboratorio/escalas-productivas" (click)="togglePanel()" class="link-btn">Ir al Sim 7</a>
+              <div class="raw-link">https://app.watercycle.com/laboratorio/escalas-productivas</div>
+            </td>
+          </tr>
+
+          <!-- SIM 8 -->
+          <tr>
+            <td><strong>Sim8: Resiliencia Agrícola</strong><br><span class="sim-lineamiento">Lineamiento 7: Estabilidad y Resiliencia</span></td>
+            <td>
+              <strong>Pestaña: Actividad (15 min)</strong><br>
+              Reflexiona sobre el propósito del agroecosistema ante escenarios de crisis climática. Responde: ¿cuántos "días" resiste el sistema ante sequía severa (severidad 5) sin intervención?<br><br>
+              <strong>Pestaña: Simulador (30 min)</strong><br>
+              Selecciona el escenario de crisis (Sequía, Plaga, Inundación, Helada), ajusta la severidad (1–10) y aplica la intervención más adecuada (Riego, Biocontrol, Drenaje, Protección Térmica) con intensidad variable. Observa la trayectoria de salud del sistema y el punto de inflexión (tipping point, < 15%).<br><br>
+              <strong>Pestaña: Evaluación (15 min)</strong><br>
+              Evaluación comprensiva de cierre del bloque Agro: 25 preguntas sobre gestión de crisis, resiliencia sistémica y toma de decisiones bajo incertidumbre (2 intentos, cronometrada).<br><br>
+              <strong>Justificación:</strong> Representa la cúspide del bloque Agro: el estudiante ya no analiza factores aislados sino que gestiona un sistema dinámico bajo presión, comprendiendo el concepto de resiliencia y los puntos de inflexión irreversibles. Consolida el pensamiento de sistemas aplicado a la soberanía alimentaria y la adaptación al cambio climático.
+            </td>
+            <td>
+              <strong>Pestaña: Actividad (15 min)</strong><br>
+              Plantea retos complejos y contextualizados (ej. "¿cómo salvarías el cultivo ante una helada imprevista?"). Promueve la reflexión ética sobre alimentación comunitaria y seguridad alimentaria.<br><br>
+              <strong>Pestaña: Simulador (30 min)</strong><br>
+              Supervisa la correcta interpretación del "Panel de Crisis": eficacia de la intervención, tasa de recuperación y daño acumulado. Facilita la conexión entre el modelo matemático (Salud = f(daño acumulado, recuperación)) y la realidad agropecuaria local de Nariño.<br><br>
+              <strong>Pestaña: Evaluación (15 min)</strong><br>
+              Aplica y avala la evaluación de cierre del bloque Agro. Retroalimenta la capacidad de decisión bajo incertidumbre y certifica el alcance del pensamiento sistémico en el contexto de agrosistemas.<br><br>
+              <strong>Justificación:</strong> Permite al docente certificar la integración de todos los aprendizajes del bloque Agro: el estudiante demuestra comprensión de la resiliencia como propiedad emergente del sistema, conectando los contenidos de biología, ecología, climatología y gestión agrícola en una sola experiencia de evaluación auténtica.
+            </td>
+            <td class="text-center">
+              <a routerLink="/laboratorio/resiliencia-agricola" (click)="togglePanel()" class="link-btn">Ir al Sim 8</a>
+              <div class="raw-link">https://app.watercycle.com/laboratorio/resiliencia-agricola</div>
             </td>
           </tr>
         </tbody>
