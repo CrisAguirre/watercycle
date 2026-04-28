@@ -12,7 +12,9 @@
         "El calor interno de la Tierra",
         "El viento"
       ],
-      "correctAnswers": ["El Sol"],
+      "correctAnswers": [
+        "El Sol"
+      ],
       "timeLimit": 90
     },
     {
@@ -26,7 +28,9 @@
         "Efecto Doppler",
         "Ley de gravitación universal"
       ],
-      "correctAnswers": ["Balance de Masa (o Conservación de la Materia)"],
+      "correctAnswers": [
+        "Balance de Masa (o Conservación de la Materia)"
+      ],
       "timeLimit": 90
     },
     {
@@ -57,7 +61,9 @@
         "Más del 70%",
         "Exactamente el 10%"
       ],
-      "correctAnswers": ["Menos del 3%"],
+      "correctAnswers": [
+        "Menos del 3%"
+      ],
       "timeLimit": 90
     },
     {
@@ -71,22 +77,10 @@
         "Las nubes",
         "Las piscinas"
       ],
-      "correctAnswers": ["Aguas subterráneas (acuíferos)"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q6",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si en una cuenca entran 100 mm de lluvia, se evaporan 40 mm y se infiltran 20 mm, ¿cuánta escorrentía superficial queda?",
-      "options": [
-        "40 mm",
-        "60 mm",
-        "160 mm",
-        "20 mm"
+      "correctAnswers": [
+        "Aguas subterráneas (acuíferos)"
       ],
-      "correctAnswers": ["40 mm"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q7",
@@ -99,7 +93,9 @@
         "El vapor que sale de los volcanes",
         "La lluvia que cae sobre el mar"
       ],
-      "correctAnswers": ["El agua que fluye sobre la superficie del suelo hacia los cauces"],
+      "correctAnswers": [
+        "El agua que fluye sobre la superficie del suelo hacia los cauces"
+      ],
       "timeLimit": 90
     },
     {
@@ -113,7 +109,9 @@
         "Solo sirven de adorno",
         "Hacen que llueva menos"
       ],
-      "correctAnswers": ["Aumentan la infiltración y regulan el flujo de agua"],
+      "correctAnswers": [
+        "Aumentan la infiltración y regulan el flujo de agua"
+      ],
       "timeLimit": 90
     },
     {
@@ -134,20 +132,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q10",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si la transpiración de los bosques se reduce a la mitad por deforestación, ¿qué se espera que ocurra en el ciclo local?",
-      "options": [
-        "Menor humedad atmosférica y posibles cambios en la lluvia",
-        "Más lluvia inmediata",
-        "No pasará nada",
-        "El sol brillará más fuerte"
-      ],
-      "correctAnswers": ["Menor humedad atmosférica y posibles cambios en la lluvia"],
-      "timeLimit": 180
-    },
-    {
       "id": "q11",
       "type": "theory",
       "subtype": "single",
@@ -158,7 +142,9 @@
         "La duración de una tormenta",
         "La edad del océano"
       ],
-      "correctAnswers": ["El tiempo promedio que una molécula de agua permanece en un reservorio"],
+      "correctAnswers": [
+        "El tiempo promedio que una molécula de agua permanece en un reservorio"
+      ],
       "timeLimit": 90
     },
     {
@@ -172,7 +158,9 @@
         "Ríos",
         "Plantas"
       ],
-      "correctAnswers": ["Glaciares y Acuíferos profundos"],
+      "correctAnswers": [
+        "Glaciares y Acuíferos profundos"
+      ],
       "timeLimit": 90
     },
     {
@@ -203,22 +191,10 @@
         "El sudor de los animales",
         "La formación de granizo"
       ],
-      "correctAnswers": ["La suma de la evaporación del suelo y la transpiración de las plantas"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q15",
-      "type": "practice",
-      "subtype": "single",
-      "text": "En el simulador consolidado, si eliminas toda la vegetación, ¿cuál será el efecto inmediato en el gráfico de escorrentía?",
-      "options": [
-        "Aumentará drásticamente el pico de escorrentía",
-        "Disminuirá",
-        "Se volverá negativo",
-        "La línea será perfectamente recta"
+      "correctAnswers": [
+        "La suma de la evaporación del suelo y la transpiración de las plantas"
       ],
-      "correctAnswers": ["Aumentará drásticamente el pico de escorrentía"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q16",
@@ -231,7 +207,9 @@
         "La desembocadura de un río únicamente",
         "Un tipo de nube"
       ],
-      "correctAnswers": ["El área de terreno que drena toda el agua hacia un mismo punto de salida"],
+      "correctAnswers": [
+        "El área de terreno que drena toda el agua hacia un mismo punto de salida"
+      ],
       "timeLimit": 90
     },
     {
@@ -245,7 +223,9 @@
         "La rotación de la Tierra únicamente",
         "La luz de la luna"
       ],
-      "correctAnswers": ["La Gravedad"],
+      "correctAnswers": [
+        "La Gravedad"
+      ],
       "timeLimit": 90
     },
     {
@@ -276,22 +256,10 @@
         "El agua se congela más rápido",
         "No tiene ningún impacto"
       ],
-      "correctAnswers": ["Se acelera (más evaporación y más energía en el sistema)"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q20",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si una ciudad pavimenta el 80% de su superficie, ¿qué proceso del ciclo se verá más reducido?",
-      "options": [
-        "La infiltración",
-        "La evaporación",
-        "La precipitación",
-        "La sublimación"
+      "correctAnswers": [
+        "Se acelera (más evaporación y más energía en el sistema)"
       ],
-      "correctAnswers": ["La infiltración"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q21",
@@ -304,7 +272,9 @@
         "Agua con colorante",
         "Agua del pantano"
       ],
-      "correctAnswers": ["El agua almacenada en el suelo que utilizan las plantas"],
+      "correctAnswers": [
+        "El agua almacenada en el suelo que utilizan las plantas"
+      ],
       "timeLimit": 90
     },
     {
@@ -318,7 +288,9 @@
         "Agua del mar profundo",
         "Hielo azul de glaciar"
       ],
-      "correctAnswers": ["El agua en ríos, lagos y acuíferos"],
+      "correctAnswers": [
+        "El agua en ríos, lagos y acuíferos"
+      ],
       "timeLimit": 90
     },
     {
@@ -339,20 +311,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q24",
-      "type": "practice",
-      "subtype": "single",
-      "text": "En el simulador consolidado, ¿qué variable conecta la fase de 'Agua Subterránea' con la 'Atmósfera' indirectamente?",
-      "options": [
-        "La vegetación (mediante la transpiración)",
-        "Las rocas",
-        "El color del cielo",
-        "La velocidad de los peces"
-      ],
-      "correctAnswers": ["La vegetación (mediante la transpiración)"],
-      "timeLimit": 180
-    },
-    {
       "id": "q25",
       "type": "theory",
       "subtype": "single",
@@ -363,7 +321,9 @@
         "Cerrado en todo sentido",
         "Abierto en todo sentido"
       ],
-      "correctAnswers": ["Cerrado en masa, pero abierto en energía"],
+      "correctAnswers": [
+        "Cerrado en masa, pero abierto en energía"
+      ],
       "timeLimit": 90
     }
   ]

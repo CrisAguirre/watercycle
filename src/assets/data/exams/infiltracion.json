@@ -12,7 +12,9 @@
         "La evaporación del agua desde las hojas",
         "La purificación química del agua"
       ],
-      "correctAnswers": ["El proceso por el cual el agua en la superficie penetra en el suelo"],
+      "correctAnswers": [
+        "El proceso por el cual el agua en la superficie penetra en el suelo"
+      ],
       "timeLimit": 90
     },
     {
@@ -26,7 +28,9 @@
         "La profundidad del lecho rocoso únicamente",
         "La presencia de lombrices"
       ],
-      "correctAnswers": ["La porosidad y textura del suelo"],
+      "correctAnswers": [
+        "La porosidad y textura del suelo"
+      ],
       "timeLimit": 90
     },
     {
@@ -57,7 +61,9 @@
         "Se mantiene igual",
         "El agua sale disparada hacia arriba"
       ],
-      "correctAnswers": ["Disminuye hasta alcanzar una tasa constante (capacidad de infiltración final)"],
+      "correctAnswers": [
+        "Disminuye hasta alcanzar una tasa constante (capacidad de infiltración final)"
+      ],
       "timeLimit": 90
     },
     {
@@ -71,22 +77,10 @@
         "No tiene ningún efecto",
         "Hace que el agua se evapore antes de tocar el suelo"
       ],
-      "correctAnswers": ["La favorece al reducir el impacto de la lluvia y mantener la estructura del suelo"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q6",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si la intensidad de la lluvia es de 20 mm/h y la capacidad de infiltración del suelo es de 15 mm/h, ¿cuánta escorrentía superficial se generará?",
-      "options": [
-        "5 mm/h",
-        "35 mm/h",
-        "0 mm/h",
-        "20 mm/h"
+      "correctAnswers": [
+        "La favorece al reducir el impacto de la lluvia y mantener la estructura del suelo"
       ],
-      "correctAnswers": ["5 mm/h"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q7",
@@ -99,7 +93,9 @@
         "El agua que beben las plantas",
         "La formación de cuevas por erosión"
       ],
-      "correctAnswers": ["El movimiento vertical del agua a través de las capas profundas del suelo hacia el acuífero"],
+      "correctAnswers": [
+        "El movimiento vertical del agua a través de las capas profundas del suelo hacia el acuífero"
+      ],
       "timeLimit": 90
     },
     {
@@ -113,7 +109,9 @@
         "La pendiente no influye",
         "La pendiente solo afecta a la nieve"
       ],
-      "correctAnswers": ["A mayor pendiente, menor infiltración (el agua corre más rápido)"],
+      "correctAnswers": [
+        "A mayor pendiente, menor infiltración (el agua corre más rápido)"
+      ],
       "timeLimit": 90
     },
     {
@@ -134,20 +132,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q10",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si un suelo arenoso tiene una porosidad del 40%, ¿qué significa?",
-      "options": [
-        "Que el 40% del volumen total son espacios vacíos que pueden contener aire o agua",
-        "Que el 40% del suelo es agua",
-        "Que el suelo filtrará el 40% de la suciedad",
-        "Que el suelo es 40% más pesado que el agua"
-      ],
-      "correctAnswers": ["Que el 40% del volumen total son espacios vacíos que pueden contener aire o agua"],
-      "timeLimit": 180
-    },
-    {
       "id": "q11",
       "type": "theory",
       "subtype": "single",
@@ -158,7 +142,9 @@
         "La zona donde todo el espacio está lleno de agua",
         "Las nubes"
       ],
-      "correctAnswers": ["La capa de suelo donde los poros contienen tanto aire como agua"],
+      "correctAnswers": [
+        "La capa de suelo donde los poros contienen tanto aire como agua"
+      ],
       "timeLimit": 90
     },
     {
@@ -172,7 +158,9 @@
         "Magnetismo",
         "Presión del viento"
       ],
-      "correctAnswers": ["Succión matricial (capilaridad) y Gravedad"],
+      "correctAnswers": [
+        "Succión matricial (capilaridad) y Gravedad"
+      ],
       "timeLimit": 90
     },
     {
@@ -203,22 +191,10 @@
         "Cuando el agua se vuelve vapor",
         "La cantidad de sal en el agua"
       ],
-      "correctAnswers": ["Cuando todos los poros del suelo están llenos de agua"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q15",
-      "type": "practice",
-      "subtype": "single",
-      "text": "En el simulador, si seleccionas un suelo arcilloso y aplicas lluvia intensa, ¿qué observarás?",
-      "options": [
-        "Mucha escorrentía superficial y poca infiltración",
-        "Infiltración instantánea",
-        "El suelo se convierte en arena",
-        "El agua desaparece hacia el centro de la Tierra"
+      "correctAnswers": [
+        "Cuando todos los poros del suelo están llenos de agua"
       ],
-      "correctAnswers": ["Mucha escorrentía superficial y poca infiltración"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q16",
@@ -231,7 +207,9 @@
         "Un tipo de planta acuática",
         "La parte más profunda del mar"
       ],
-      "correctAnswers": ["Una formación geológica que almacena y transmite agua subterránea"],
+      "correctAnswers": [
+        "Una formación geológica que almacena y transmite agua subterránea"
+      ],
       "timeLimit": 90
     },
     {
@@ -245,7 +223,9 @@
         "La temperatura no tiene ningún efecto",
         "El agua caliente flota sobre el suelo"
       ],
-      "correctAnswers": ["El agua caliente se infiltra más rápido porque es menos viscosa"],
+      "correctAnswers": [
+        "El agua caliente se infiltra más rápido porque es menos viscosa"
+      ],
       "timeLimit": 90
     },
     {
@@ -276,22 +256,10 @@
         "La velocidad de las olas del mar",
         "El magnetismo del suelo"
       ],
-      "correctAnswers": ["La facilidad con la que el agua se mueve a través de los poros del suelo"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q20",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si aplicamos 50 mm de agua y el suelo solo puede retener 20 mm antes de saturarse, ¿qué pasa con los 30 mm restantes?",
-      "options": [
-        "Se convierten en escorrentía o percolan hacia capas profundas",
-        "Desaparecen por arte de magia",
-        "Se evaporan instantáneamente",
-        "Se convierten en rocas"
+      "correctAnswers": [
+        "La facilidad con la que el agua se mueve a través de los poros del suelo"
       ],
-      "correctAnswers": ["Se convierten en escorrentía o percolan hacia capas profundas"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q21",
@@ -304,7 +272,9 @@
         "Un suelo que vive bajo el mar",
         "Un suelo hecho de esponja"
       ],
-      "correctAnswers": ["Un suelo que repele el agua (común después de incendios)"],
+      "correctAnswers": [
+        "Un suelo que repele el agua (común después de incendios)"
+      ],
       "timeLimit": 90
     },
     {
@@ -318,7 +288,9 @@
         "Anemómetro",
         "Sismógrafo"
       ],
-      "correctAnswers": ["Infiltrómetro de doble anillo"],
+      "correctAnswers": [
+        "Infiltrómetro de doble anillo"
+      ],
       "timeLimit": 90
     },
     {
@@ -339,20 +311,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q24",
-      "type": "practice",
-      "subtype": "single",
-      "text": "En el simulador, si compactas el suelo al máximo, ¿qué parámetro se verá más afectado negativamente?",
-      "options": [
-        "La porosidad y por ende la infiltración",
-        "El color del suelo",
-        "La gravedad",
-        "La temperatura del sol"
-      ],
-      "correctAnswers": ["La porosidad y por ende la infiltración"],
-      "timeLimit": 180
-    },
-    {
       "id": "q25",
       "type": "theory",
       "subtype": "single",
@@ -363,35 +321,10 @@
         "El centro del sol",
         "Las galaxias vecinas"
       ],
-      "correctAnswers": ["El sistema de aguas subterráneas"],
-    },
-    {
-      "id": "q26",
-      "type": "theory",
-      "subtype": "single",
-      "text": "Cuando llueve, ¿qué pasa con el agua que cae al suelo?",
-      "options": [
-        "Se infiltra, se evapora o fluye como escorrentía superficial",
-        "Desaparece completamente",
-        "Viaja directamente al centro de la tierra sin interactuar con el suelo",
-        "Solo se convierte en nubes instantáneamente"
+      "correctAnswers": [
+        "El sistema de aguas subterráneas"
       ],
-      "correctAnswers": ["Se infiltra, se evapora o fluye como escorrentía superficial"],
       "timeLimit": 90
-    },
-    {
-      "id": "q27",
-      "type": "theory",
-      "subtype": "single",
-      "text": "En cuál material el agua penetra más rápido?, ¿en cuál se queda en la superficie?, ¿qué relación tiene esto con el suelo que encontramos en nuestro entorno?",
-      "options": [
-        "Penetra más rápido en arena, se queda en la superficie en arcilla; esto explica por qué las zonas arenosas drenan rápido y las arcillosas se inundan",
-        "Penetra más rápido en arcilla, se queda en la superficie en arena; esto no tiene relación con el entorno",
-        "Penetra igual en todos los materiales; el entorno no afecta",
-        "El agua no penetra en ningún material natural"
-      ],
-      "correctAnswers": ["Penetra más rápido en arena, se queda en la superficie en arcilla; esto explica por qué las zonas arenosas drenan rápido y las arcillosas se inundan"],
-      "timeLimit": 120
     }
   ]
 }

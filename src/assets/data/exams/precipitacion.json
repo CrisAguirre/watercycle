@@ -12,7 +12,9 @@
         "El viento debe soplar hacia abajo",
         "La presión debe bajar a cero"
       ],
-      "correctAnswers": ["Las gotas deben crecer hasta que su peso venza la resistencia del aire"],
+      "correctAnswers": [
+        "Las gotas deben crecer hasta que su peso venza la resistencia del aire"
+      ],
       "timeLimit": 90
     },
     {
@@ -26,7 +28,9 @@
         "Sublimación inversa",
         "Fisión nuclear"
       ],
-      "correctAnswers": ["Colisión y Coalescencia"],
+      "correctAnswers": [
+        "Colisión y Coalescencia"
+      ],
       "timeLimit": 90
     },
     {
@@ -57,7 +61,9 @@
         "Lluvia ácida",
         "Nieve de colores"
       ],
-      "correctAnswers": ["Precipitación que se evapora antes de llegar al suelo"],
+      "correctAnswers": [
+        "Precipitación que se evapora antes de llegar al suelo"
+      ],
       "timeLimit": 90
     },
     {
@@ -71,22 +77,10 @@
         "Medir la temperatura de la lluvia",
         "Medir la profundidad del mar"
       ],
-      "correctAnswers": ["Medir la cantidad de precipitación líquida acumulada"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q6",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si un pluviómetro registra 25 mm de lluvia en un área de 1 m², ¿cuántos litros de agua han caído?",
-      "options": [
-        "25 Litros",
-        "2.5 Litros",
-        "250 Litros",
-        "0.25 Litros"
+      "correctAnswers": [
+        "Medir la cantidad de precipitación líquida acumulada"
       ],
-      "correctAnswers": ["25 Litros"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q7",
@@ -99,7 +93,9 @@
         "Nieve",
         "Granizo"
       ],
-      "correctAnswers": ["Aguanieve (Sleet)"],
+      "correctAnswers": [
+        "Aguanieve (Sleet)"
+      ],
       "timeLimit": 90
     },
     {
@@ -113,7 +109,9 @@
         "Por el impacto de meteoritos en la atmósfera",
         "Por la evaporación rápida del hielo"
       ],
-      "correctAnswers": ["Por fuertes corrientes ascendentes que llevan gotas de agua a zonas muy frías repetidamente"],
+      "correctAnswers": [
+        "Por fuertes corrientes ascendentes que llevan gotas de agua a zonas muy frías repetidamente"
+      ],
       "timeLimit": 90
     },
     {
@@ -134,20 +132,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q10",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si una tormenta deja 100 mm de lluvia en 2 horas, ¿cuál es la intensidad promedio?",
-      "options": [
-        "50 mm/h",
-        "100 mm/h",
-        "25 mm/h",
-        "200 mm/h"
-      ],
-      "correctAnswers": ["50 mm/h"],
-      "timeLimit": 180
-    },
-    {
       "id": "q11",
       "type": "theory",
       "subtype": "single",
@@ -158,7 +142,9 @@
         "Frontal",
         "Ciclónica"
       ],
-      "correctAnswers": ["Orográfica"],
+      "correctAnswers": [
+        "Orográfica"
+      ],
       "timeLimit": 90
     },
     {
@@ -172,7 +158,9 @@
         "Infiltración aérea",
         "Calentamiento global local"
       ],
-      "correctAnswers": ["Efecto Bergeron (crecimiento de cristales de hielo a expensas de gotas superenfriadas)"],
+      "correctAnswers": [
+        "Efecto Bergeron (crecimiento de cristales de hielo a expensas de gotas superenfriadas)"
+      ],
       "timeLimit": 90
     },
     {
@@ -203,22 +191,10 @@
         "Agua con hielo seco",
         "Agua que no puede hervir"
       ],
-      "correctAnswers": ["Agua en estado líquido a temperaturas bajo cero"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q15",
-      "type": "practice",
-      "subtype": "single",
-      "text": "En el simulador, si fijas la temperatura en -10°C y aumentas la humedad, ¿qué tipo de precipitación observarás?",
-      "options": [
-        "Nieve",
-        "Lluvia intensa",
-        "Niebla cálida",
-        "Vapor invisible"
+      "correctAnswers": [
+        "Agua en estado líquido a temperaturas bajo cero"
       ],
-      "correctAnswers": ["Nieve"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q16",
@@ -231,7 +207,9 @@
         "Esfera perfecta",
         "Forma de estrella"
       ],
-      "correctAnswers": ["Aplastada (como un pan de hamburguesa) por la resistencia del aire"],
+      "correctAnswers": [
+        "Aplastada (como un pan de hamburguesa) por la resistencia del aire"
+      ],
       "timeLimit": 90
     },
     {
@@ -245,7 +223,9 @@
         "0.05 mm",
         "50 mm"
       ],
-      "correctAnswers": ["0.5 mm"],
+      "correctAnswers": [
+        "0.5 mm"
+      ],
       "timeLimit": 90
     },
     {
@@ -276,22 +256,10 @@
         "El agua desaparece",
         "La lluvia vuelve a subir"
       ],
-      "correctAnswers": ["La escorrentía aumenta drásticamente (inundaciones)"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q20",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si caen 500 m³ de lluvia sobre una hectárea (10,000 m²), ¿a cuántos mm equivale?",
-      "options": [
-        "50 mm",
-        "5 mm",
-        "500 mm",
-        "0.5 mm"
+      "correctAnswers": [
+        "La escorrentía aumenta drásticamente (inundaciones)"
       ],
-      "correctAnswers": ["50 mm"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q21",
@@ -304,7 +272,9 @@
         "Lluvia en el frente de batalla",
         "Lluvia sin nubes"
       ],
-      "correctAnswers": ["Lluvia causada por el encuentro de dos masas de aire con diferente temperatura"],
+      "correctAnswers": [
+        "Lluvia causada por el encuentro de dos masas de aire con diferente temperatura"
+      ],
       "timeLimit": 90
     },
     {
@@ -318,7 +288,9 @@
         "Argón",
         "Helio"
       ],
-      "correctAnswers": ["Dióxido de Carbono (CO2)"],
+      "correctAnswers": [
+        "Dióxido de Carbono (CO2)"
+      ],
       "timeLimit": 90
     },
     {
@@ -339,20 +311,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q24",
-      "type": "practice",
-      "subtype": "single",
-      "text": "En el simulador, si aumentas la presión pero bajas la humedad al 5%, ¿habrá precipitación?",
-      "options": [
-        "No, no hay suficiente agua para condensar y formar gotas",
-        "Sí, la presión genera agua",
-        "Sí, caerá lluvia seca",
-        "Se formarán nubes pero no lloverá"
-      ],
-      "correctAnswers": ["No, no hay suficiente agua para condensar y formar gotas"],
-      "timeLimit": 180
-    },
-    {
       "id": "q25",
       "type": "theory",
       "subtype": "single",
@@ -363,7 +321,9 @@
         "El núcleo del sol",
         "La ionosfera"
       ],
-      "correctAnswers": ["La litosfera e hidrosfera"],
+      "correctAnswers": [
+        "La litosfera e hidrosfera"
+      ],
       "timeLimit": 90
     }
   ]

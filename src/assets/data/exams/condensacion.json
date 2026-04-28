@@ -12,7 +12,9 @@
         "De sólido a líquido",
         "De gas a sólido"
       ],
-      "correctAnswers": ["De gas (vapor) a líquido"],
+      "correctAnswers": [
+        "De gas (vapor) a líquido"
+      ],
       "timeLimit": 90
     },
     {
@@ -26,7 +28,9 @@
         "Que la presión atmosférica sea cero",
         "Que no haya núcleos de condensación"
       ],
-      "correctAnswers": ["Que el aire alcance su punto de rocío"],
+      "correctAnswers": [
+        "Que el aire alcance su punto de rocío"
+      ],
       "timeLimit": 90
     },
     {
@@ -57,7 +61,9 @@
         "Gotas de lluvia gigantes",
         "Moléculas de nitrógeno puro"
       ],
-      "correctAnswers": ["Partículas microscópicas (polvo, sal) donde el vapor se adhiere"],
+      "correctAnswers": [
+        "Partículas microscópicas (polvo, sal) donde el vapor se adhiere"
+      ],
       "timeLimit": 90
     },
     {
@@ -71,22 +77,10 @@
         "Se convierte en luz solar",
         "No hay transferencia de calor"
       ],
-      "correctAnswers": ["Se libera al ambiente"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q6",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si el aire a 25°C puede contener 20g/m³ de vapor y actualmente tiene 10g/m³, ¿cuál es su Humedad Relativa?",
-      "options": [
-        "50%",
-        "100%",
-        "25%",
-        "75%"
+      "correctAnswers": [
+        "Se libera al ambiente"
       ],
-      "correctAnswers": ["50%"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q7",
@@ -99,7 +93,9 @@
         "Radiación solar directa",
         "Efecto invernadero inverso"
       ],
-      "correctAnswers": ["Enfriamiento adiabático"],
+      "correctAnswers": [
+        "Enfriamiento adiabático"
+      ],
       "timeLimit": 90
     },
     {
@@ -113,7 +109,9 @@
         "La temperatura del agua únicamente",
         "No hay ninguna diferencia, son términos idénticos"
       ],
-      "correctAnswers": ["La altitud (la niebla es una nube a nivel del suelo)"],
+      "correctAnswers": [
+        "La altitud (la niebla es una nube a nivel del suelo)"
+      ],
       "timeLimit": 90
     },
     {
@@ -134,20 +132,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q10",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si una masa de aire se enfría por debajo de su punto de rocío, ¿qué cantidad de agua se condensará aproximadamente?",
-      "options": [
-        "El exceso de vapor por encima de la capacidad de saturación",
-        "Toda el agua presente en el aire",
-        "Exactamente la mitad",
-        "Ninguna, el aire simplemente se vuelve más denso"
-      ],
-      "correctAnswers": ["El exceso de vapor por encima de la capacidad de saturación"],
-      "timeLimit": 180
-    },
-    {
       "id": "q11",
       "type": "theory",
       "subtype": "single",
@@ -158,7 +142,9 @@
         "La densidad no cambia",
         "El aire desaparece"
       ],
-      "correctAnswers": ["El aire se vuelve más denso (si la presión es constante)"],
+      "correctAnswers": [
+        "El aire se vuelve más denso (si la presión es constante)"
+      ],
       "timeLimit": 90
     },
     {
@@ -172,7 +158,9 @@
         "La infiltración",
         "La escorrentía"
       ],
-      "correctAnswers": ["La evaporación"],
+      "correctAnswers": [
+        "La evaporación"
+      ],
       "timeLimit": 90
     },
     {
@@ -203,22 +191,10 @@
         "La presión no afecta el punto de rocío",
         "El punto de rocío solo depende de la luz solar"
       ],
-      "correctAnswers": ["A mayor presión, mayor es el punto de rocío"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q15",
-      "type": "practice",
-      "subtype": "single",
-      "text": "En el simulador, si bajas la temperatura del aire a 10°C y la humedad es alta, ¿qué efecto visual observarás?",
-      "options": [
-        "Aparición de niebla o nubes espesas",
-        "El agua desaparece por completo",
-        "Rayos solares más brillantes",
-        "Crecimiento de plantas instantáneo"
+      "correctAnswers": [
+        "A mayor presión, mayor es el punto de rocío"
       ],
-      "correctAnswers": ["Aparición de niebla o nubes espesas"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q16",
@@ -231,7 +207,9 @@
         "La velocidad a la que llueve",
         "La presión del aire seco"
       ],
-      "correctAnswers": ["La masa total de vapor de agua por unidad de volumen de aire"],
+      "correctAnswers": [
+        "La masa total de vapor de agua por unidad de volumen de aire"
+      ],
       "timeLimit": 90
     },
     {
@@ -245,7 +223,9 @@
         "El motor genera humedad líquida",
         "Es un efecto óptico por la refracción de la luz"
       ],
-      "correctAnswers": ["El vapor de agua interior se enfría al contacto con el vidrio y se condensa"],
+      "correctAnswers": [
+        "El vapor de agua interior se enfría al contacto con el vidrio y se condensa"
+      ],
       "timeLimit": 90
     },
     {
@@ -276,22 +256,10 @@
         "Calentar los océanos",
         "Generar viento fuerte"
       ],
-      "correctAnswers": ["Transportar el agua de la fase gaseosa a la fase líquida para permitir la precipitación"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q20",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si una nube se forma a 2000 metros, ¿qué tipo de enfriamiento ha experimentado probablemente la masa de aire?",
-      "options": [
-        "Orográfico o Convectivo",
-        "Por contacto con el suelo caliente",
-        "Por compresión adiabática",
-        "Por radiación gamma"
+      "correctAnswers": [
+        "Transportar el agua de la fase gaseosa a la fase líquida para permitir la precipitación"
       ],
-      "correctAnswers": ["Orográfico o Convectivo"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q21",
@@ -304,7 +272,9 @@
         "El agua se calienta",
         "El aire se vuelve transparente"
       ],
-      "correctAnswers": ["El vapor se condensa directamente en hielo (escarcha)"],
+      "correctAnswers": [
+        "El vapor se condensa directamente en hielo (escarcha)"
+      ],
       "timeLimit": 90
     },
     {
@@ -318,7 +288,9 @@
         "Temperatura de ebullición",
         "Temperatura absoluta"
       ],
-      "correctAnswers": ["Temperatura del punto de rocío"],
+      "correctAnswers": [
+        "Temperatura del punto de rocío"
+      ],
       "timeLimit": 90
     },
     {
@@ -339,20 +311,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q24",
-      "type": "practice",
-      "subtype": "single",
-      "text": "En el simulador, si la presión aumenta pero la temperatura se mantiene constante, ¿cómo cambia la probabilidad de condensación?",
-      "options": [
-        "Aumenta",
-        "Disminuye",
-        "Se mantiene igual",
-        "El agua se evapora más rápido"
-      ],
-      "correctAnswers": ["Aumenta"],
-      "timeLimit": 180
-    },
-    {
       "id": "q25",
       "type": "theory",
       "subtype": "single",
@@ -363,7 +321,9 @@
         "La hora del día",
         "El lugar donde se forman"
       ],
-      "correctAnswers": ["La temperatura (líquido vs sólido)"],
+      "correctAnswers": [
+        "La temperatura (líquido vs sólido)"
+      ],
       "timeLimit": 90
     }
   ]

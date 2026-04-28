@@ -12,7 +12,9 @@
         "Exportación masiva a mercados internacionales",
         "Grandes extensiones de monocultivo"
       ],
-      "correctAnswers": ["Producción destinada principalmente al autoconsumo familiar"],
+      "correctAnswers": [
+        "Producción destinada principalmente al autoconsumo familiar"
+      ],
       "timeLimit": 90
     },
     {
@@ -26,7 +28,9 @@
         "Huertos caseros",
         "Pastoreo nómada"
       ],
-      "correctAnswers": ["Agricultura industrial o a gran escala"],
+      "correctAnswers": [
+        "Agricultura industrial o a gran escala"
+      ],
       "timeLimit": 90
     },
     {
@@ -57,7 +61,9 @@
         "Solo exportar alimentos caros",
         "Producir solo un tipo de alimento"
       ],
-      "correctAnswers": ["Cuando todas las personas tienen acceso físico y económico a alimentos suficientes y nutritivos"],
+      "correctAnswers": [
+        "Cuando todas las personas tienen acceso físico y económico a alimentos suficientes y nutritivos"
+      ],
       "timeLimit": 90
     },
     {
@@ -71,22 +77,10 @@
         "No tiene ninguna relación",
         "Solo las parcelas circulares son eficientes"
       ],
-      "correctAnswers": ["Las escalas grandes suelen usar sistemas más tecnificados (riego por goteo) que aumentan la eficiencia"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q6",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si una granja industrial consume 50,000 litros de agua para producir 100 kg de carne y una pequeña granja usa 5,000 litros para 200 kg de vegetales, ¿cuál es más eficiente en litros/kg?",
-      "options": [
-        "La pequeña granja de vegetales (25 L/kg vs 500 L/kg)",
-        "La granja industrial de carne",
-        "Ambas son iguales",
-        "La carne siempre es más eficiente"
+      "correctAnswers": [
+        "Las escalas grandes suelen usar sistemas más tecnificados (riego por goteo) que aumentan la eficiencia"
       ],
-      "correctAnswers": ["La pequeña granja de vegetales (25 L/kg vs 500 L/kg)"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q7",
@@ -99,7 +93,9 @@
         "Un cultivo manejado por una sola persona",
         "Un cultivo que dura solo un mes"
       ],
-      "correctAnswers": ["La siembra de una sola especie en grandes extensiones de terreno"],
+      "correctAnswers": [
+        "La siembra de una sola especie en grandes extensiones de terreno"
+      ],
       "timeLimit": 90
     },
     {
@@ -113,7 +109,9 @@
         "Requiere menos trabajo",
         "Elimina la necesidad de agua"
       ],
-      "correctAnswers": ["Mejora la resiliencia ante plagas y variaciones del clima"],
+      "correctAnswers": [
+        "Mejora la resiliencia ante plagas y variaciones del clima"
+      ],
       "timeLimit": 90
     },
     {
@@ -134,20 +132,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q10",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si un agricultor familiar dedica el 70% de su tierra a comida para su casa y el 30% para vender, ¿cuál es su enfoque productivo?",
-      "options": [
-        "Mixto con énfasis en subsistencia",
-        "Netamente comercial",
-        "Industrial",
-        "Agroforestal"
-      ],
-      "correctAnswers": ["Mixto con énfasis en subsistencia"],
-      "timeLimit": 180
-    },
-    {
       "id": "q11",
       "type": "theory",
       "subtype": "single",
@@ -158,7 +142,9 @@
         "El color del agua de riego",
         "La profundidad de la raíz"
       ],
-      "correctAnswers": ["El volumen total de agua dulce utilizada para producir el producto"],
+      "correctAnswers": [
+        "El volumen total de agua dulce utilizada para producir el producto"
+      ],
       "timeLimit": 90
     },
     {
@@ -172,7 +158,9 @@
         "Solo existen mercados para la pequeña escala",
         "El mercado prohíbe el uso de tecnología"
       ],
-      "correctAnswers": ["Los mercados globales demandan grandes volúmenes y estándares uniformes, favoreciendo la gran escala"],
+      "correctAnswers": [
+        "Los mercados globales demandan grandes volúmenes y estándares uniformes, favoreciendo la gran escala"
+      ],
       "timeLimit": 90
     },
     {
@@ -203,22 +191,10 @@
         "Saber exactamente cuántas hormigas hay en el campo",
         "Plantar las semillas en línea recta perfecta usando reglas"
       ],
-      "correctAnswers": ["El uso de tecnología (GPS, sensores) para aplicar insumos de forma exacta"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q15",
-      "type": "practice",
-      "subtype": "single",
-      "text": "En el simulador de escalas, si aumentas la 'Tecnificación' en la Pequeña Escala, ¿qué indicador se espera que mejore?",
-      "options": [
-        "La Eficiencia del Uso del Agua y la Productividad",
-        "El tamaño de la familia",
-        "La cantidad de lluvia",
-        "El precio del petróleo"
+      "correctAnswers": [
+        "El uso de tecnología (GPS, sensores) para aplicar insumos de forma exacta"
       ],
-      "correctAnswers": ["La Eficiencia del Uso del Agua y la Productividad"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q16",
@@ -231,7 +207,9 @@
         "Solo comer comida producida por reyes",
         "No depender de la lluvia para cultivar"
       ],
-      "correctAnswers": ["El derecho de los pueblos a definir sus propias políticas agrícolas y alimentarias"],
+      "correctAnswers": [
+        "El derecho de los pueblos a definir sus propias políticas agrícolas y alimentarias"
+      ],
       "timeLimit": 90
     },
     {
@@ -245,7 +223,9 @@
         "No tiene ningún impacto",
         "Hace que las personas trabajen más horas"
       ],
-      "correctAnswers": ["Suele reducir la necesidad de mano de obra no calificada pero aumenta la productividad"],
+      "correctAnswers": [
+        "Suele reducir la necesidad de mano de obra no calificada pero aumenta la productividad"
+      ],
       "timeLimit": 90
     },
     {
@@ -276,22 +256,10 @@
         "Usar solo agua con azúcar",
         "Cultivar dentro de laboratorios estériles"
       ],
-      "correctAnswers": ["Un sistema que evita el uso de fertilizantes y pesticidas sintéticos"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q20",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si una hectárea industrial produce 10 toneladas de grano y una hectárea tradicional produce 4 toneladas, pero la industrial gasta el triple en costos, ¿cuál es más rentable por dólar invertido?",
-      "options": [
-        "Depende de los precios del mercado y el costo exacto de los insumos",
-        "La industrial siempre es mejor",
-        "La tradicional siempre es mejor",
-        "Ninguna es rentable"
+      "correctAnswers": [
+        "Un sistema que evita el uso de fertilizantes y pesticidas sintéticos"
       ],
-      "correctAnswers": ["Depende de los precios del mercado y el costo exacto de los insumos"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q21",
@@ -304,7 +272,9 @@
         "El precio de los alimentos en el supermercado",
         "Una fórmula matemática para el riego"
       ],
-      "correctAnswers": ["El conjunto de etapas desde la producción hasta el consumo final"],
+      "correctAnswers": [
+        "El conjunto de etapas desde la producción hasta el consumo final"
+      ],
       "timeLimit": 90
     },
     {
@@ -318,7 +288,9 @@
         "Las escalas pequeñas no necesitan transporte",
         "El transporte gratuito es ley para los agricultores"
       ],
-      "correctAnswers": ["Es un costo crítico para la gran escala que busca mercados lejanos"],
+      "correctAnswers": [
+        "Es un costo crítico para la gran escala que busca mercados lejanos"
+      ],
       "timeLimit": 90
     },
     {
@@ -339,20 +311,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q24",
-      "type": "practice",
-      "subtype": "single",
-      "text": "En el simulador, si el 'Mercado' entra en crisis, ¿cuál escala productiva suele tener mayor resiliencia gracias a su capacidad de autoconsumo?",
-      "options": [
-        "La pequeña escala (subsistencia)",
-        "La gran escala industrial",
-        "Ambas sufren por igual",
-        "El mercado no afecta a la agricultura"
-      ],
-      "correctAnswers": ["La pequeña escala (subsistencia)"],
-      "timeLimit": 180
-    },
-    {
       "id": "q25",
       "type": "theory",
       "subtype": "single",
@@ -363,7 +321,9 @@
         "Solo de la cantidad de dinero disponible",
         "Solo de la voluntad del gobierno"
       ],
-      "correctAnswers": ["El contexto socioeconómico, geográfico y los objetivos del productor"],
+      "correctAnswers": [
+        "El contexto socioeconómico, geográfico y los objetivos del productor"
+      ],
       "timeLimit": 90
     }
   ]

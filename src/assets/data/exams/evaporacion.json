@@ -12,7 +12,9 @@
         "El viento superficial",
         "La presión atmosférica"
       ],
-      "correctAnswers": ["La energía solar térmica"],
+      "correctAnswers": [
+        "La energía solar térmica"
+      ],
       "timeLimit": 90
     },
     {
@@ -33,20 +35,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q3",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si una piscina de 50 m² pierde 2 mm de agua por evaporación diaria debido a una radiación neta de 15 MJ/m², ¿cuántos litros de agua se evaporan en total al día? (Recuerda: 1 mm = 1 L/m²)",
-      "options": [
-        "50 Litros",
-        "100 Litros",
-        "200 Litros",
-        "25 Litros"
-      ],
-      "correctAnswers": ["100 Litros"],
-      "timeLimit": 180
-    },
-    {
       "id": "q4",
       "type": "theory",
       "subtype": "single",
@@ -57,7 +45,9 @@
         "Se transforman en átomos de hidrógeno y oxígeno",
         "Aumentan su densidad para ascender al aire"
       ],
-      "correctAnswers": ["Ganan energía cinética y rompen puentes de hidrógeno"],
+      "correctAnswers": [
+        "Ganan energía cinética y rompen puentes de hidrógeno"
+      ],
       "timeLimit": 90
     },
     {
@@ -71,7 +61,9 @@
         "La cantidad de agua líquida en las nubes",
         "La velocidad del viento multiplicada por la humedad"
       ],
-      "correctAnswers": ["La diferencia entre la presión de vapor de saturación y la presión de vapor actual"],
+      "correctAnswers": [
+        "La diferencia entre la presión de vapor de saturación y la presión de vapor actual"
+      ],
       "timeLimit": 90
     },
     {
@@ -85,7 +77,9 @@
         "Se mantiene constante independientemente del viento",
         "El agua comienza a hervir espontáneamente"
       ],
-      "correctAnswers": ["Se detiene porque el aire está saturado"],
+      "correctAnswers": [
+        "Se detiene porque el aire está saturado"
+      ],
       "timeLimit": 90
     },
     {
@@ -116,7 +110,9 @@
         "Generar nubes directamente en la superficie",
         "Eliminar el nitrógeno del aire"
       ],
-      "correctAnswers": ["Proveer la energía necesaria para el cambio de fase"],
+      "correctAnswers": [
+        "Proveer la energía necesaria para el cambio de fase"
+      ],
       "timeLimit": 90
     },
     {
@@ -130,22 +126,10 @@
         "Inversamente proporcional",
         "No existe relación entre ambas"
       ],
-      "correctAnswers": ["Exponencial (Ecuación de Clausius-Clapeyron)"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q10",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si la presión de saturación (Ps) es 3.2 kPa y la presión actual (Pa) es 1.2 kPa, ¿cuál es el VPD?",
-      "options": [
-        "2.0 kPa",
-        "4.4 kPa",
-        "1.0 kPa",
-        "0.37 kPa"
+      "correctAnswers": [
+        "Exponencial (Ecuación de Clausius-Clapeyron)"
       ],
-      "correctAnswers": ["2.0 kPa"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q11",
@@ -158,7 +142,9 @@
         "Solidificación",
         "Condensación"
       ],
-      "correctAnswers": ["Sublimación"],
+      "correctAnswers": [
+        "Sublimación"
+      ],
       "timeLimit": 90
     },
     {
@@ -172,7 +158,9 @@
         "Porque el agua salada no absorbe radiación solar",
         "Porque los peces bloquean el ascenso del vapor"
       ],
-      "correctAnswers": ["Porque los solutos reducen la presión de vapor de la mezcla"],
+      "correctAnswers": [
+        "Porque los solutos reducen la presión de vapor de la mezcla"
+      ],
       "timeLimit": 90
     },
     {
@@ -203,22 +191,10 @@
         "Se destruye",
         "Se convierte en gravedad"
       ],
-      "correctAnswers": ["Se absorbe (calor latente)"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q15",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si duplicamos la velocidad del viento en condiciones de alta humedad, ¿qué se espera que ocurra con la tasa de evaporación si el aire ya está casi saturado?",
-      "options": [
-        "Aumentará ligeramente al remover el poco vapor presente",
-        "Disminuirá a la mitad",
-        "Se detendrá por completo",
-        "Aumentará diez veces"
+      "correctAnswers": [
+        "Se absorbe (calor latente)"
       ],
-      "correctAnswers": ["Aumentará ligeramente al remover el poco vapor presente"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q16",
@@ -231,7 +207,9 @@
         "Las ciudades",
         "El subsuelo profundo"
       ],
-      "correctAnswers": ["Los océanos"],
+      "correctAnswers": [
+        "Los océanos"
+      ],
       "timeLimit": 90
     },
     {
@@ -245,7 +223,9 @@
         "Barómetro",
         "Termómetro de mercurio"
       ],
-      "correctAnswers": ["Tanque evaporímetro (Clase A)"],
+      "correctAnswers": [
+        "Tanque evaporímetro (Clase A)"
+      ],
       "timeLimit": 90
     },
     {
@@ -276,22 +256,10 @@
         "El color del agua",
         "El magnetismo terrestre"
       ],
-      "correctAnswers": ["La temperatura"],
-      "timeLimit": 90
-    },
-    {
-      "id": "q20",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Calcula el flujo de calor latente si se evaporan 5 kg de agua. (Dato: Calor latente de vaporización ≈ 2.45 MJ/kg)",
-      "options": [
-        "12.25 MJ",
-        "2.45 MJ",
-        "0.49 MJ",
-        "24.5 MJ"
+      "correctAnswers": [
+        "La temperatura"
       ],
-      "correctAnswers": ["12.25 MJ"],
-      "timeLimit": 180
+      "timeLimit": 90
     },
     {
       "id": "q21",
@@ -304,7 +272,9 @@
         "La presión no tiene ninguna influencia",
         "La presión solo afecta a la congelación"
       ],
-      "correctAnswers": ["A menor presión (altas altitudes), la evaporación es más fácil"],
+      "correctAnswers": [
+        "A menor presión (altas altitudes), la evaporación es más fácil"
+      ],
       "timeLimit": 90
     },
     {
@@ -318,7 +288,9 @@
         "La distancia entre el sol y el agua",
         "La profundidad máxima de un lago"
       ],
-      "correctAnswers": ["Una fina capa de aire saturado justo encima de la superficie del agua"],
+      "correctAnswers": [
+        "Una fina capa de aire saturado justo encima de la superficie del agua"
+      ],
       "timeLimit": 90
     },
     {
@@ -339,20 +311,6 @@
       "timeLimit": 90
     },
     {
-      "id": "q24",
-      "type": "practice",
-      "subtype": "single",
-      "text": "Si en el simulador fijas la temperatura en 100°C y la humedad en 0%, ¿qué observarás en el indicador de 'Estado de Fase'?",
-      "options": [
-        "Ebullición / Vaporización rápida",
-        "Hielo / Sublimación",
-        "Condensación / Rocío",
-        "Infiltración profunda"
-      ],
-      "correctAnswers": ["Ebullición / Vaporización rápida"],
-      "timeLimit": 180
-    },
-    {
       "id": "q25",
       "type": "theory",
       "subtype": "single",
@@ -363,7 +321,9 @@
         "Solo transferencia de energía",
         "Ninguna de las anteriores"
       ],
-      "correctAnswers": ["Transferencia de masa y energía"],
+      "correctAnswers": [
+        "Transferencia de masa y energía"
+      ],
       "timeLimit": 90
     }
   ]
