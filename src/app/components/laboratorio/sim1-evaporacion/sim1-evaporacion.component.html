@@ -3,7 +3,73 @@
   simDescription="Control de radiación solar y temperatura. Visualización del cambio de fase líquido-gaseoso."
   [simNumber]="1"
   lineamientos="Lineamientos 1 y 2: Componentes y Causalidad"
-  bloque="agua">
+  bloque="agua"
+  [hasApropiacion]="true">
+
+  <!-- ═══════════ TAB 0: APROPIACIÓN ═══════════ -->
+  <div apropiacion>
+    <div class="apropiacion-content animate-fade">
+      <h2 class="text-neon-blue">🛠️ Apropiación: Evaporación en la Vida Real</h2>
+      <p class="section-desc">Observa este video introductorio y luego explora los ejemplos prácticos de cómo ocurre la evaporación en nuestro entorno cotidiano.</p>
+      
+      <!-- Video Header -->
+      <div class="video-wrapper mt-3 mb-5">
+        <iframe src="https://www.youtube.com/embed/sCnCk6GvL84" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <hr class="separator" />
+
+      <h3 class="mb-4">🔍 Ejemplos Prácticos</h3>
+      <p>Desliza para ver ejemplos de evaporación. ¿De dónde proviene el fenómeno? ¿Cuáles son las condiciones para que se genere?</p>
+
+      <!-- CSS Slider -->
+      <div class="apropiacion-slider">
+        <div class="slider-container">
+          
+          <!-- Slide 1 -->
+          <div class="slide">
+            <picture class="slide-img">
+              <source media="(min-width: 768px)" srcset="assets/images/apropiacion/evap_1.png">
+              <img src="assets/images/apropiacion/evap_1.png" alt="Olla hirviendo">
+            </picture>
+            <div class="slide-caption glass-panel">
+              <h4>1. Olla Hirviendo</h4>
+              <p><strong>¿De dónde proviene?</strong> Del agua calentada artificialmente por la estufa.</p>
+              <p><strong>Condiciones:</strong> Requiere una temperatura muy alta (100°C) proporcionada por una fuente de calor (fuego o electricidad), forzando el cambio de fase rápido.</p>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide">
+            <picture class="slide-img">
+              <source media="(min-width: 768px)" srcset="assets/images/apropiacion/evap_2.png">
+              <img src="assets/images/apropiacion/evap_2.png" alt="Ropa secando">
+            </picture>
+            <div class="slide-caption glass-panel">
+              <h4>2. Secado de Ropa</h4>
+              <p><strong>¿De dónde proviene?</strong> De la humedad retenida en las fibras de la ropa mojada tras lavarla.</p>
+              <p><strong>Condiciones:</strong> Requiere la radiación solar y el viento continuo que renueve el aire alrededor de la prenda (evitando la saturación de humedad ambiental).</p>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide">
+            <picture class="slide-img">
+              <source media="(min-width: 768px)" srcset="assets/images/apropiacion/evap_3.png">
+              <img src="assets/images/apropiacion/evap_3.png" alt="Charco secando">
+            </picture>
+            <div class="slide-caption glass-panel">
+              <h4>3. Charco Secándose</h4>
+              <p><strong>¿De dónde proviene?</strong> De la acumulación de agua de lluvia en la superficie del suelo o asfalto.</p>
+              <p><strong>Condiciones:</strong> El calor residual del asfalto y la exposición directa a la radiación solar calientan la delgada capa de agua, evaporándola lentamente.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
   <div actividad>

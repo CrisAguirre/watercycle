@@ -15,9 +15,15 @@ export class SimulationWrapperComponent implements OnInit {
   @Input() simNumber: number = 0; // 1:Evaporación, 2:Condensación, etc.
   @Input() lineamientos: string = '';
   @Input() bloque: 'agua' | 'agro' = 'agua';
+  @Input() hasApropiacion: boolean = false;
 
-  activeTab: 'actividad' | 'simulador' | 'evaluacion' = 'simulador';
+  activeTab: 'apropiacion' | 'actividad' | 'simulador' | 'evaluacion' = 'simulador';
   evalLocked: boolean = false;
+
+  evidenciaText: string = '';
+  isEvidenciaSaved: boolean = false;
+  isSaving: boolean = false;
+  saveMessage: string = '';
 
   constructor(
     private progressService: ProgressService,
@@ -27,6 +33,14 @@ export class SimulationWrapperComponent implements OnInit {
 
   ngOnInit() {
     this.checkPrerequisites();
+    // Check if evidence already exists for this lab
+    this.evidenciaService.getEvidencias().subscribe(evidencias => {
+      const existing = evidencias.find(e => e.titulo === `Evidencia ${this.simTitle}`);
+      if (existing) {
+        this.evidenciaText = existing.contenido;
+        this.isEvidenciaSaved = true;
+      }
+    });
   }
 
   checkPrerequisites() {
@@ -70,11 +84,33 @@ export class SimulationWrapperComponent implements OnInit {
     });
   }
 
-  setTab(tab: 'actividad' | 'simulador' | 'evaluacion') {
+  setTab(tab: 'apropiacion' | 'actividad' | 'simulador' | 'evaluacion') {
     if (tab === 'evaluacion' && this.evalLocked) {
       alert('🔒 Esta evaluación está bloqueada. Debes completar las actividades y evaluaciones de las sesiones anteriores para desbloquearla.');
       return;
     }
     this.activeTab = tab;
+  }
+
+  saveEvidencia() {
+    if (!this.evidenciaText.trim() || this.isSaving) return;
+    this.isSaving = true;
+    
+    this.evidenciaService.saveTextEvidencia({
+      titulo: `Evidencia ${this.simTitle}`,
+      contenido: this.evidenciaText
+    }).subscribe({
+      next: () => {
+        this.isEvidenciaSaved = true;
+        this.isSaving = false;
+        this.saveMessage = '✅ Evidencia guardada exitosamente';
+        setTimeout(() => this.saveMessage = '', 3000);
+      },
+      error: () => {
+        this.isSaving = false;
+        this.saveMessage = '❌ Error al guardar la evidencia';
+        setTimeout(() => this.saveMessage = '', 3000);
+      }
+    });
   }
 }

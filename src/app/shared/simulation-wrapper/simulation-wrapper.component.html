@@ -13,6 +13,9 @@
 
   <!-- Tab Navigation -->
   <div class="sim-tabs">
+    <button *ngIf="hasApropiacion" class="sim-tab" [class.active]="activeTab === 'apropiacion'" (click)="setTab('apropiacion')">
+      <span class="tab-icon">🛠️</span> Apropiación
+    </button>
     <button class="sim-tab" [class.active]="activeTab === 'actividad'" (click)="setTab('actividad')">
       <span class="tab-icon">📋</span> Actividad
     </button>
@@ -26,9 +29,31 @@
 
   <!-- Tab Content -->
   <div class="sim-tab-content">
+    <div class="tab-panel" *ngIf="activeTab === 'apropiacion' && hasApropiacion">
+      <ng-content select="[apropiacion]"></ng-content>
+    </div>
+    
     <div class="tab-panel" *ngIf="activeTab === 'actividad'">
       <ng-content select="[actividad]"></ng-content>
+      
+      <!-- Cuadro de texto para evidencias (Labs 1 al 8) -->
+      <div class="evidencia-box glass-panel mt-4">
+        <h3 class="text-neon-blue">📝 Evidencia de la Actividad</h3>
+        <p class="section-desc">Responde a las preguntas de la actividad en este espacio para que queden registradas como evidencia.</p>
+        <div class="input-group">
+          <textarea [(ngModel)]="evidenciaText" [disabled]="isEvidenciaSaved"
+            placeholder="Escribe tus respuestas y observaciones aquí..." class="glass-textarea" rows="8"></textarea>
+        </div>
+        <div class="action-footer mt-3">
+          <button class="btn-save" (click)="saveEvidencia()"
+            [disabled]="isEvidenciaSaved || !evidenciaText.trim() || isSaving">
+            {{ isEvidenciaSaved ? '✓ Evidencia Guardada' : (isSaving ? 'Guardando...' : 'Guardar Evidencia') }}
+          </button>
+          <span class="status-msg ml-3" *ngIf="saveMessage">{{ saveMessage }}</span>
+        </div>
+      </div>
     </div>
+    
     <div class="tab-panel" *ngIf="activeTab === 'simulador'">
       <ng-content select="[simulador]"></ng-content>
     </div>

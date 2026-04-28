@@ -3,7 +3,73 @@
   simDescription="Ajuste de variables pluviales (intensidad, tiempo) con reporte de cantidades numéricas."
   [simNumber]="3"
   lineamientos="Lineamiento 3: Escalas"
-  bloque="agua">
+  bloque="agua"
+  [hasApropiacion]="true">
+
+  <!-- ═══════════ TAB 0: APROPIACIÓN ═══════════ -->
+  <div apropiacion>
+    <div class="apropiacion-content animate-fade">
+      <h2 class="text-neon-blue">🛠️ Apropiación: Precipitación en la Vida Real</h2>
+      <p class="section-desc">Observa este video introductorio y luego explora los ejemplos prácticos de cómo ocurre la precipitación en nuestro entorno cotidiano.</p>
+      
+      <!-- Video Header -->
+      <div class="video-wrapper mt-3 mb-5">
+        <iframe src="https://www.youtube.com/embed/JfF9o3y3beA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <hr class="separator" />
+
+      <h3 class="mb-4">🔍 Ejemplos Prácticos</h3>
+      <p>Desliza para ver ejemplos de precipitación. ¿De dónde proviene el fenómeno? ¿Cuáles son las condiciones para que se genere?</p>
+
+      <!-- CSS Slider -->
+      <div class="apropiacion-slider">
+        <div class="slider-container">
+          
+          <!-- Slide 1 -->
+          <div class="slide">
+            <picture class="slide-img">
+              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=1000&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=1000&auto=format&fit=crop" alt="Lluvia en la ciudad">
+            </picture>
+            <div class="slide-caption glass-panel">
+              <h4>1. Lluvia en la Ciudad</h4>
+              <p><strong>¿De dónde proviene?</strong> Del vapor de agua condensado en las nubes que se agrupa formando gotas pesadas.</p>
+              <p><strong>Condiciones:</strong> Cuando las nubes se saturan y las gotas de agua crecen lo suficiente, la gravedad supera a las corrientes ascendentes, haciendo que caigan en forma líquida.</p>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide">
+            <picture class="slide-img">
+              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1478265409131-1f65c88f965c?q=80&w=1000&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1478265409131-1f65c88f965c?q=80&w=1000&auto=format&fit=crop" alt="Nieve en las montañas">
+            </picture>
+            <div class="slide-caption glass-panel">
+              <h4>2. Nieve en las Montañas</h4>
+              <p><strong>¿De dónde proviene?</strong> De las mismas nubes de precipitación, pero en un entorno bajo cero.</p>
+              <p><strong>Condiciones:</strong> Requiere que la temperatura atmosférica desde la nube hasta el suelo esté por debajo del punto de congelación (0°C), permitiendo que los cristales de hielo caigan sin derretirse.</p>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide">
+            <picture class="slide-img">
+              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1483706600674-e0c87d3fe85b?q=80&w=1000&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1483706600674-e0c87d3fe85b?q=80&w=1000&auto=format&fit=crop" alt="Tormenta de granizo">
+            </picture>
+            <div class="slide-caption glass-panel">
+              <h4>3. Tormenta de Granizo</h4>
+              <p><strong>¿De dónde proviene?</strong> De cumulonimbos muy desarrollados durante fuertes tormentas.</p>
+              <p><strong>Condiciones:</strong> Fuertes corrientes de aire ascendente arrastran gotas de agua hacia las partes altas y frías de la nube, congelándolas en capas hasta que son demasiado pesadas y caen.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
   <div actividad>

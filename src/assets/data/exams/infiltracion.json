@@ -364,7 +364,34 @@
         "Las galaxias vecinas"
       ],
       "correctAnswers": ["El sistema de aguas subterráneas"],
+    },
+    {
+      "id": "q26",
+      "type": "theory",
+      "subtype": "single",
+      "text": "Cuando llueve, ¿qué pasa con el agua que cae al suelo?",
+      "options": [
+        "Se infiltra, se evapora o fluye como escorrentía superficial",
+        "Desaparece completamente",
+        "Viaja directamente al centro de la tierra sin interactuar con el suelo",
+        "Solo se convierte en nubes instantáneamente"
+      ],
+      "correctAnswers": ["Se infiltra, se evapora o fluye como escorrentía superficial"],
       "timeLimit": 90
+    },
+    {
+      "id": "q27",
+      "type": "theory",
+      "subtype": "single",
+      "text": "En cuál material el agua penetra más rápido?, ¿en cuál se queda en la superficie?, ¿qué relación tiene esto con el suelo que encontramos en nuestro entorno?",
+      "options": [
+        "Penetra más rápido en arena, se queda en la superficie en arcilla; esto explica por qué las zonas arenosas drenan rápido y las arcillosas se inundan",
+        "Penetra más rápido en arcilla, se queda en la superficie en arena; esto no tiene relación con el entorno",
+        "Penetra igual en todos los materiales; el entorno no afecta",
+        "El agua no penetra en ningún material natural"
+      ],
+      "correctAnswers": ["Penetra más rápido en arena, se queda en la superficie en arcilla; esto explica por qué las zonas arenosas drenan rápido y las arcillosas se inundan"],
+      "timeLimit": 120
     }
   ]
 }

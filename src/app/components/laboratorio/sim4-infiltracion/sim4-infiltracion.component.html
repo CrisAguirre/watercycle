@@ -3,7 +3,73 @@
   simDescription="Modelado de suelos (arcilloso, arenoso) para observar el flujo de agua superficial y profunda."
   [simNumber]="4"
   lineamientos="Lineamiento 4: Representación"
-  bloque="agua">
+  bloque="agua"
+  [hasApropiacion]="true">
+
+  <!-- ═══════════ TAB 0: APROPIACIÓN ═══════════ -->
+  <div apropiacion>
+    <div class="apropiacion-content animate-fade">
+      <h2 class="text-neon-blue">🛠️ Apropiación: Infiltración en la Vida Real</h2>
+      <p class="section-desc">Observa este video introductorio y luego explora los ejemplos prácticos de cómo ocurre la infiltración en nuestro entorno cotidiano.</p>
+      
+      <!-- Video Header -->
+      <div class="video-wrapper mt-3 mb-5">
+        <iframe src="https://www.youtube.com/embed/j1aa2TeEPME" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+
+      <hr class="separator" />
+
+      <h3 class="mb-4">🔍 Ejemplos Prácticos</h3>
+      <p>Desliza para ver ejemplos de infiltración. ¿De dónde proviene el fenómeno? ¿Cuáles son las condiciones para que se genere?</p>
+
+      <!-- CSS Slider -->
+      <div class="apropiacion-slider">
+        <div class="slider-container">
+          
+          <!-- Slide 1 -->
+          <div class="slide">
+            <picture class="slide-img">
+              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1416879598056-0c1828d09d66?q=80&w=1000&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1416879598056-0c1828d09d66?q=80&w=1000&auto=format&fit=crop" alt="Regando el jardín">
+            </picture>
+            <div class="slide-caption glass-panel">
+              <h4>1. Regando el Jardín</h4>
+              <p><strong>¿De dónde proviene?</strong> Del agua de lluvia o riego artificial cayendo sobre la tierra desnuda o cultivada.</p>
+              <p><strong>Condiciones:</strong> Requiere un suelo poroso y no compactado. La gravedad y la succión capilar atraen el agua hacia los espacios vacíos entre las partículas de tierra.</p>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide">
+            <picture class="slide-img">
+              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1589820713735-1abcbdd6114e?q=80&w=1000&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1589820713735-1abcbdd6114e?q=80&w=1000&auto=format&fit=crop" alt="Agua en arena">
+            </picture>
+            <div class="slide-caption glass-panel">
+              <h4>2. Agua Desapareciendo en la Arena</h4>
+              <p><strong>¿De dónde proviene?</strong> Del oleaje del mar o lluvia sobre dunas y playas.</p>
+              <p><strong>Condiciones:</strong> La arena tiene macroporos (espacios muy grandes entre granos) que permiten una conductividad hidráulica casi instantánea, absorbiendo el agua superficial inmediatamente.</p>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide">
+            <picture class="slide-img">
+              <source media="(min-width: 768px)" srcset="https://images.unsplash.com/photo-1618585093551-7ef1da169991?q=80&w=1000&auto=format&fit=crop">
+              <img src="https://images.unsplash.com/photo-1618585093551-7ef1da169991?q=80&w=1000&auto=format&fit=crop" alt="Esponja absorbiendo">
+            </picture>
+            <div class="slide-caption glass-panel">
+              <h4>3. Esponja de Cocina (Analogía)</h4>
+              <p><strong>¿De dónde proviene?</strong> El contacto del material poroso con cualquier líquido.</p>
+              <p><strong>Condiciones:</strong> Al igual que un suelo rico en materia orgánica, la esponja tiene innumerables cavidades (porosidad) que se llenan de agua hasta alcanzar su capacidad de retención (saturación).</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- ═══════════ TAB 1: ACTIVIDAD ═══════════ -->
   <div actividad>
