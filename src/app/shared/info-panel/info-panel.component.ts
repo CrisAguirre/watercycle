@@ -33,14 +33,20 @@ export class InfoPanelComponent {
 
     const preHtml = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
     <head><meta charset='utf-8'><title>Resumen Laboratorios</title>
+    <xml><w:WordDocument><w:View>Print</w:View><w:Zoom>90</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml>
     <style>
-      body { font-family: Arial, sans-serif; }
-      table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-      th, td { border: 1px solid #000; padding: 8px; text-align: left; vertical-align: top; }
-      th { background-color: #f2f2f2; }
+      @page {
+        size: landscape;
+        mso-page-orientation: landscape;
+        margin: 1.5cm 1.8cm 1.5cm 1.8cm;
+      }
+      body { font-family: Arial, sans-serif; font-size: 10pt; }
+      table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+      th, td { border: 1px solid #000; padding: 6px 8px; text-align: left; vertical-align: top; font-size: 9pt; }
+      th { background-color: #f2f2f2; font-weight: bold; }
       .text-center { text-align: center; }
-      .raw-link { font-size: 0.8em; color: #555; margin-top: 5px; word-break: break-all; }
-      .link-btn { display: inline-block; margin-bottom: 5px; }
+      .raw-link { font-size: 8pt; color: #555; margin-top: 4px; word-break: break-all; }
+      .link-btn { display: inline-block; margin-bottom: 4px; }
     </style>
     </head><body>`;
     const postHtml = "</body></html>";
